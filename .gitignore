@@ -1,0 +1,72 @@
+### --- GLOBAL / OS --- ###
+.DS_Store
+Thumbs.db
+*.log
+
+### --- IDE & EDITOR --- ###
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+### --- BACKEND (SPRING BOOT / JAVA) --- ###
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/resources/*.properties
+!**/src/main/resources/*.yaml
+
+# Gradle (se usi Gradle invece di Maven)
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Spring Boot logs e file temporanei
+logs/
+*.pid
+
+### --- FRONTEND (ANGULAR / NODE) --- ###
+# Dipendenze Node (MAI committare questa cartella)
+node_modules/
+
+# Build output di Angular
+dist/
+tmp/
+/out-tsc
+
+# Cache e file temporanei di Angular
+.angular/
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+typings/
+
+# System Files
+.trash/
+
+### --- SICUREZZA & ENVIRONMENT (CRUCIALE) --- ###
+# Ignora file che contengono password, chiavi API o configurazioni locali
+.env
+.env.local
+env.js
+
+# Ignora file di configurazione Spring che potrebbero contenere password (opzionale)
+# Scommenta le righe sotto se hai file specifici per le password locali
+# application-secret.properties
+# application-dev.properties
