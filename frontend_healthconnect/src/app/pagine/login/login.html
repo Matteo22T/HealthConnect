@@ -1,4 +1,60 @@
-<p>negro</p>
-<input type="text" [(ngModel)]="email">
-<input type="text" [(ngModel)]="password">
-<button (click)="login()">accedi</button>
+<div class="login-page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo">Health<span>Connect</span></div>
+
+      <div class="login-header">
+        <h1>Bentornato</h1>
+        <p>Accedi al tuo account per continuare</p>
+      </div>
+
+      <form class="login-form" (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="tuo@email.com"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="••••••••"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="btn-login">
+          Accedi
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>Non hai un account? <a href="#" class="link-register" routerLink="/register">Registrati</a></p>
+      </div>
+    </div>
+
+    <div class="back-home">
+      <a class="link-back" routerLink="">← Torna alla Home</a>
+    </div>
+  </div>
+</div>

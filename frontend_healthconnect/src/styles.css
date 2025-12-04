@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #0066cc; /* Blu Medico */
+  --secondary-color: #00c4cc; /* Verde Acqua/Teal */
+  --accent-color: #f0f7ff; /* Azzurrino chiaro */
+  --text-dark: #1a2b4b;
+  --text-light: #5e6d82;
+  --white: #ffffff;
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 40px rgba(0, 50, 100, 0.1);
+}
+:host {
+  display: block;
+  font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+  background: #f8faff; /* Sfondo chiarissimo */
+  color: var(--text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
