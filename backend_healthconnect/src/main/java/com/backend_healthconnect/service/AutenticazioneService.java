@@ -1,7 +1,9 @@
 package com.backend_healthconnect.service;
 
 
+import com.backend_healthconnect.dao.medicoDAO;
 import com.backend_healthconnect.dao.utenteDAO;
+import com.backend_healthconnect.model.Ruolo;
 import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,30 +16,31 @@ public class AutenticazioneService {
     private utenteDAO utenteDAO;
 
     @Autowired
+    private medicoDAO medicoDAO;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
 
-    public utenteDTO login(String email, String password){
-
-        if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()){
-            return null;
-        }
-
-        utenteDTO utente = utenteDAO.getUtenteByEmail(email.trim());
-
-        if (utente == null){
-            return null;
-        }
-
-        if (!passwordEncoder.matches(password, utente.getPassword())){
-            return null;
-        }
-
-        utente.setPassword(null);
+    public utenteDTO getUtenteByEmail(String email){
+        utenteDTO utente = this.utenteDAO.getUtenteByEmail(email);
+        if (utente != null) utente.setPassword(null);
 
         return utente;
-
     }
 
+    public void registraUtente(utenteDTO utente){
+        if (this.utenteDAO.getUtenteByEmail(utente.getEmail()) != null){
+            throw new IllegalArgumentException("Email già registrata!");
+        }
 
+        String cryptedPassword = passwordEncoder.encode(utente.getPassword());
+        utente.setPassword(cryptedPassword);
+
+        utenteDTO nuovoUtente = this.utenteDAO.save(utente);
+
+        if ( nuovoUtente.getRuolo() == Ruolo.MEDICO){
+            this.medicoDAO.save(nuovoUtente.getId(), nuovoUtente.getSpecializzazione_id(), nuovoUtente.getNumero_albo(), nuovoUtente.getBiografia(), nuovoUtente.getIndirizzo_studio(), nuovoUtente.getStato_approvazione());
+        }
+    }
 }

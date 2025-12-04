@@ -8,4 +8,10 @@ export interface utenteDTO{
   dataNascita: string
   ruolo: string
   dataCreazione: string
+
+  specializzazione_id?: number;
+  numero_albo?: string;
+  biografia?: string;
+  indirizzo_studio?: string;
+  stato_approvazione?: 'PENDING' | 'APPROVATO' | 'RIFIUTATO';
 }

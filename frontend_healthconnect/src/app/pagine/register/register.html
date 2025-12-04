@@ -1,1 +1,81 @@
-<p>register works!</p>
+<div class="register-container">
+  <div class="card">
+    <h2>Crea Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" formControlName="nome" placeholder="Il tuo nome">
+        </div>
+        <div class="form-group">
+          <label>Cognome</label>
+          <input type="text" formControlName="cognome" placeholder="Il tuo cognome">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="nome@esempio.com">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="********">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Telefono</label>
+          <input type="tel" formControlName="telefono" placeholder="1234567890">
+        </div>
+        <div class="form-group">
+          <label>Data di Nascita</label>
+          <input type="date" formControlName="dataNascita">
+          <input type="text" formControlName="sesso">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Registrati come:</label>
+        <select formControlName="ruolo">
+          <option value="PAZIENTE">Paziente</option>
+          <option value="MEDICO">Medico</option>
+        </select>
+      </div>
+
+      <div *ngIf="isMedico" class="medico-section">
+        <h3>Dati Professionali</h3>
+
+        <div class="form-group">
+          <label>ID Specializzazione (Provvisorio)</label>
+          <input type="number" formControlName="specializzazione_id" placeholder="Es. 1">
+        </div>
+
+        <div class="form-group">
+          <label>Numero Albo</label>
+          <input type="text" formControlName="numero_albo" placeholder="Es. A1234">
+        </div>
+
+        <div class="form-group">
+          <label>Indirizzo Studio</label>
+          <input type="text" formControlName="indirizzo_studio" placeholder="Via Roma 1, Milano">
+        </div>
+
+        <div class="form-group">
+          <label>Biografia</label>
+          <textarea formControlName="biografia" rows="3" placeholder="Breve descrizione..."></textarea>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-msg">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid">REGISTRATI</button>
+
+      <p class="login-link">Hai già un account? <a routerLink="/login">Accedi</a></p>
+    </form>
+  </div>
+</div>

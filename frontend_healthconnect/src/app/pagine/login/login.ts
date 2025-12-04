@@ -19,19 +19,39 @@ export class Login {
 
   email=""
   password=""
+  errorMessage=""
 
   login(){
     this.auth.login(this.email, this.password).subscribe({
-      next:(utenteTrovato: utenteDTO) => {
-        if (utenteTrovato){
-          localStorage.setItem('userId', utenteTrovato.id.toString())
-          this.router.navigate(['/home'])
-        }
-        else{
-          this.password=""
-        }
-      }
-    })
-  }
+      next: (utente) => {
+        if (utente) {
+          // 1. SUCCESSO: L'utente è arrivato
+          console.log('Benvenuto ' + utente.nome);
 
+          // Reindirizza in base al ruolo (opzionale)
+          if (utente.ruolo === 'ADMIN') {
+            this.router.navigate(['/admin/dashboard']);
+          }
+
+          else if (utente.ruolo === 'MEDICO') {
+            this.router.navigate(['/medico/dashboard']);
+          }
+
+          else if (utente.ruolo === 'PAZIENTE') {
+            console.log('Paziente loggato');
+            this.router.navigate(['/paziente/dashboard']);
+          }
+
+        } else {
+          // 2. FALLIMENTO GESTITO: Il service ha restituito null (401 intercettato)
+          this.errorMessage = 'Email o Password errati.';
+        }
+      },
+      error: (err) => {
+        // 3. ERRORE GRAVE: Server spento o altro codice (500, 404)
+        console.error('Errore server', err);
+        this.errorMessage = 'Si è verificato un errore di connessione.';
+      }
+    });
+  }
 }

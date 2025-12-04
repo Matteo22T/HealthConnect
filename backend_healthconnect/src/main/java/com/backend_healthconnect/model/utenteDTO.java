@@ -18,4 +18,12 @@ public class utenteDTO {
     private LocalDate dataNascita;
     private Ruolo ruolo;
     private LocalDate dataCreazione;
+    private String sesso;
+
+    //attributi dettaglio medico
+    private Long specializzazione_id;
+    private String numero_albo;
+    private String biografia;
+    private String indirizzo_studio;
+    private StatoApprovazione stato_approvazione;
 }
