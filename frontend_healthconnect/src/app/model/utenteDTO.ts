@@ -8,6 +8,7 @@ export interface utenteDTO{
   dataNascita: string
   ruolo: string
   dataCreazione: string
+  sesso: string
 
   specializzazione_id?: number;
   numero_albo?: string;

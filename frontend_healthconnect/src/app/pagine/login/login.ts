@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../service/auth-service';
 import {utenteDTO} from '../../model/utenteDTO';
@@ -15,7 +15,7 @@ import {Router, RouterLink} from '@angular/router';
 })
 export class Login {
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private cdr: ChangeDetectorRef) {
   }
 
   email=""
@@ -23,6 +23,7 @@ export class Login {
   errorMessage=""
 
   login(){
+    this.errorMessage="";
     this.auth.login(this.email, this.password).subscribe({
       next: (utente) => {
         if (utente) {
@@ -46,12 +47,13 @@ export class Login {
         } else {
           // 2. FALLIMENTO GESTITO: Il service ha restituito null (401 intercettato)
           this.errorMessage = 'Email o Password errati.';
+          this.cdr.detectChanges();
         }
       },
       error: (err) => {
-        // 3. ERRORE GRAVE: Server spento o altro codice (500, 404)
         console.error('Errore server', err);
         this.errorMessage = 'Si è verificato un errore di connessione.';
+        this.cdr.detectChanges();
       }
     });
   }

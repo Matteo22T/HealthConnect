@@ -1,81 +1,264 @@
-<div class="register-container">
-  <div class="card">
-    <h2>Crea Account</h2>
+<div class="login-page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo">Health<span>Connect</span></div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Nome</label>
-          <input type="text" formControlName="nome" placeholder="Il tuo nome">
-        </div>
-        <div class="form-group">
-          <label>Cognome</label>
-          <input type="text" formControlName="cognome" placeholder="Il tuo cognome">
-        </div>
+      <div class="login-header">
+        <h1>Crea il tuo account</h1>
+        <p>Registrati per iniziare a utilizzare i nostri servizi</p>
       </div>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" formControlName="email" placeholder="nome@esempio.com">
-      </div>
+      <form class="login-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" formControlName="password" placeholder="********">
-      </div>
-
-      <div class="form-row">
+        <!-- Selezione Ruolo -->
         <div class="form-group">
-          <label>Telefono</label>
-          <input type="tel" formControlName="telefono" placeholder="1234567890">
-        </div>
-        <div class="form-group">
-          <label>Data di Nascita</label>
-          <input type="date" formControlName="dataNascita">
-          <input type="text" formControlName="sesso">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Registrati come:</label>
-        <select formControlName="ruolo">
-          <option value="PAZIENTE">Paziente</option>
-          <option value="MEDICO">Medico</option>
-        </select>
-      </div>
-
-      <div *ngIf="isMedico" class="medico-section">
-        <h3>Dati Professionali</h3>
-
-        <div class="form-group">
-          <label>ID Specializzazione (Provvisorio)</label>
-          <input type="number" formControlName="specializzazione_id" placeholder="Es. 1">
+          <label for="ruolo">Tipo di Account</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <select id="ruolo" formControlName="ruolo" class="form-select">
+              <option value="PAZIENTE">Paziente</option>
+              <option value="MEDICO">Medico</option>
+            </select>
+          </div>
         </div>
 
+        <!-- Nome e Cognome -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👨</span>
+              <input
+                type="text"
+                id="nome"
+                formControlName="nome"
+                placeholder="Mario"
+                [class.error]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched">
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched">
+              Il nome è obbligatorio
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👨</span>
+              <input
+                type="text"
+                id="cognome"
+                formControlName="cognome"
+                placeholder="Rossi"
+                [class.error]="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched">
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched">
+              Il cognome è obbligatorio
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
         <div class="form-group">
-          <label>Numero Albo</label>
-          <input type="text" formControlName="numero_albo" placeholder="Es. A1234">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="tuo@email.com"
+              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          </div>
+          <span class="field-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email è obbligatoria</span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">Email non valida</span>
+          </span>
         </div>
 
         <div class="form-group">
-          <label>Indirizzo Studio</label>
-          <input type="text" formControlName="indirizzo_studio" placeholder="Via Roma 1, Milano">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder="••••••••"
+              [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          </div>
+
+          <span class="field-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <span *ngIf="registerForm.get('password')?.errors?.['required']">La password è obbligatoria</span>
+            <div *ngIf="registerForm.get('password')?.errors?.['pattern']" class="password-requirements">
+            <p>La password deve contenere:</p>
+            <ul>
+              <li>Almeno 8 caratteri</li>
+              <li>Una lettera <strong>maiuscola</strong> e una <strong>minuscola</strong></li>
+              <li>Un <strong>numero</strong></li>
+              <li>Un carattere <strong>speciale</strong> (@ $ ! % * ? &)</li>
+            </ul>
+          </div>
+          </span>
         </div>
 
+
+
+        <!-- Telefono -->
         <div class="form-group">
-          <label>Biografia</label>
-          <textarea formControlName="biografia" rows="3" placeholder="Breve descrizione..."></textarea>
+          <label for="telefono">Telefono</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📱</span>
+            <input
+              type="tel"
+              id="telefono"
+              formControlName="telefono"
+              placeholder="3331234567"
+              [class.error]="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched">
+          </div>
+          <span class="field-error" *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched">
+            <span *ngIf="registerForm.get('telefono')?.errors?.['required']">Il telefono è obbligatorio</span>
+            <span *ngIf="registerForm.get('telefono')?.errors?.['pattern']">Solo numeri</span>
+          </span>
         </div>
+
+        <!-- Data di Nascita e Sesso -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dataNascita">Data di Nascita</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📅</span>
+              <input
+                type="date"
+                id="dataNascita"
+                formControlName="dataNascita"
+                [class.error]="registerForm.get('dataNascita')?.invalid && registerForm.get('dataNascita')?.touched">
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('dataNascita')?.invalid && registerForm.get('dataNascita')?.touched">
+              Età minima richiesta: 18 anni.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="sesso">Sesso</label>
+            <div class="input-wrapper">
+              <span class="input-icon">⚥</span>
+              <select
+                id="sesso"
+                formControlName="sesso"
+                class="form-select"
+                [class.error]="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched">
+                <option value="">Seleziona</option>
+                <option value="M">Maschio</option>
+                <option value="F">Femmina</option>
+                <option value="N">Altro</option>
+              </select>
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched">
+              Obbligatorio
+            </span>
+          </div>
+        </div>
+
+        <!-- Campi Medico -->
+        <div *ngIf="isMedico" class="medico-section">
+          <div class="section-divider">
+            <span>Dati Professionali</span>
+          </div>
+
+          <div class="form-group">
+            <label for="specializzazione_id">Specializzazione</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🏥</span>
+              <select
+                id="specializzazione_id"
+                formControlName="specializzazione_id"
+                class="form-select"
+                [class.error]="registerForm.get('specializzazione_id')?.invalid && registerForm.get('specializzazione_id')?.touched">
+                <option *ngFor="let spec of specializzazioni" [ngValue]="spec.id">
+                  {{ spec.nome }}
+                </option>
+              </select>
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('specializzazione_id')?.invalid && registerForm.get('specializzazione_id')?.touched">
+              La specializzazione è obbligatoria
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="numero_albo">Numero Albo</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🆔</span>
+              <input
+                type="text"
+                id="numero_albo"
+                formControlName="numero_albo"
+                placeholder="es. 12345"
+                [class.error]="registerForm.get('numero_albo')?.invalid && registerForm.get('numero_albo')?.touched">
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('numero_albo')?.invalid && registerForm.get('numero_albo')?.touched">
+              Il numero di albo è obbligatorio
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="indirizzo_studio">Indirizzo Studio</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📍</span>
+              <input
+                type="text"
+                id="indirizzo_studio"
+                formControlName="indirizzo_studio"
+                placeholder="Via, Numero, Città"
+                [class.error]="registerForm.get('indirizzo_studio')?.invalid && registerForm.get('indirizzo_studio')?.touched">
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('indirizzo_studio')?.invalid && registerForm.get('indirizzo_studio')?.touched">
+              L'indirizzo è obbligatorio
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="biografia">Biografia</label>
+            <div class="input-wrapper">
+              <textarea
+                id="biografia"
+                formControlName="biografia"
+                class="form-textarea"
+                rows="3"
+                placeholder="Descrivi la tua esperienza..."
+                [class.error]="registerForm.get('biografia')?.invalid && registerForm.get('biografia')?.touched"></textarea>
+            </div>
+            <span class="field-error" *ngIf="registerForm.get('biografia')?.invalid && registerForm.get('biografia')?.touched">
+              La biografia è obbligatoria
+            </span>
+          </div>
+
+          <div class="info-box">
+            ⚠️ Il tuo account sarà sottoposto ad approvazione
+          </div>
+        </div>
+
+        <!-- Messaggio Errore -->
+        <div class="error-message" *ngIf="errorMessage">
+          <span class="error-icon">⚠</span>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Pulsante Submit -->
+        <button
+          type="submit"
+          class="btn-login"
+          [disabled]="registerForm.invalid">
+          Registrati
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>Hai già un account? <a routerLink="/login" class="link-register">Accedi</a></p>
       </div>
+    </div>
 
-      <div *ngIf="errorMessage" class="error-msg">
-        {{ errorMessage }}
-      </div>
-
-      <button type="submit" [disabled]="registerForm.invalid">REGISTRATI</button>
-
-      <p class="login-link">Hai già un account? <a routerLink="/login">Accedi</a></p>
-    </form>
+    <div class="back-home">
+      <a class="link-back" routerLink="/">← Torna alla Home</a>
+    </div>
   </div>
 </div>
