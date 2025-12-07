@@ -16,7 +16,7 @@ public class medicoDAOpostgres implements medicoDAO {
 
     @Override
     public void save(Long idUtente, Long specializzazione, String  numeroAlbo, String biografia, String indirizzo_studio, StatoApprovazione stato_approvazione) {
-        String query = "INSERT INTO dettagli_medici (utente_id, specializzazione_id, numero_albo, biografia, indirizzo_studio, stato_approvazione) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO dettagli_medici (utente_id, specializzazione_id, numero_albo, biografia, indirizzo_studio, stato_approvazione) VALUES (?, ?, ?, ?, ?, ?::stato_approvazione_enum)";
         try(PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(query)){
             preparedStatement.setLong(1, idUtente);
             preparedStatement.setLong(2, specializzazione);

@@ -23,7 +23,7 @@ export class Register implements OnInit {
   registerForm!: FormGroup;
   isMedico: boolean = false;
   errorMessage: string = '';
-  specializzazioni: SpecializzazioneDTO[] = [{ id:0, nome: 'Cardiologia'}, { id:0, nome: "Cardiologia"}];
+  specializzazioni: SpecializzazioneDTO[] = [{ id:0, nome: 'Cardiologia'}];
 
 
   constructor(
@@ -91,7 +91,7 @@ export class Register implements OnInit {
       } else {
         // Se è medico, imposta stato default
         payload.stato_approvazione = 'PENDING';
-        payload.specializzazione_id = payload.specializzazione_id ? Number(payload.specializzazione_id) : null;
+        payload.specializzazione_id = Number(payload.specializzazione_id);
       }
 
       this.authService.register(payload).subscribe({

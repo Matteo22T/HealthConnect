@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 @Repository
@@ -87,7 +84,7 @@ public class utenteDAOpostgres implements utenteDAO {
     @Override
     public utenteDTO save(utenteDTO utente) {
         String query = "INSERT INTO utenti ( email, password, nome, cognome, telefono, data_nascita,ruolo, sesso) VALUES (?, ?, ?, ?, ?, ?, ?::ruolo_enum,?)";
-        try (PreparedStatement preparedStatement = this.dataSource.getConnection().prepareStatement(query)){
+        try (PreparedStatement preparedStatement = this.dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, utente.getEmail());
             preparedStatement.setString(2, utente.getPassword());
             preparedStatement.setString(3, utente.getNome());
@@ -106,13 +103,11 @@ public class utenteDAOpostgres implements utenteDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             return utente;
 
 
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException("Errore durante il salvataggio dell'utente",e);
         }
-        return null;
     }
 }
