@@ -19,7 +19,7 @@ public class utenteDAOpostgres implements utenteDAO {
 
     @Override
     public utenteDTO getUtenteById(Long id) {
-        String query="SELECT * FROM utente WHERE id=?";
+        String query="SELECT * FROM utenti WHERE id=?";
         try(PreparedStatement statement=dataSource.getConnection().prepareStatement(query)){
             statement.setLong(1, id);
             ResultSet rs=statement.executeQuery();
