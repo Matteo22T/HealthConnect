@@ -1,0 +1,44 @@
+<header>
+  <div class="logo">HealthConnect</div>
+
+  <div class="header-right">
+    <nav class="nav-links">
+      <a routerLink="/medico/calendario" routerLinkActive="active-link">
+        <span>📅</span> Calendario
+      </a>
+      <a routerLink="/medico/pazienti" routerLinkActive="active-link">
+        <span>👥</span> Pazienti
+      </a>
+      <a routerLink="/medico/chat" routerLinkActive="active-link">
+        <span>💬</span> Chat
+        <span class="badge">3</span>
+      </a>
+    </nav>
+
+    <div class="profile-container">
+      <div class="user-profile" (click)="toggleProfileMenu()">
+        <div class="user-avatar">{{nomeMedico.trim().charAt(0).toUpperCase() + cognomeMedico.trim().charAt(0).toUpperCase()}}</div>
+        <div class="user-info">
+          <span class="user-name">{{ nomeMedico + " " + cognomeMedico}}</span>
+          <span class="user-role">{{specializzazione?.nome}}</span>
+        </div>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+
+      <div class="custom-dropdown shadow" *ngIf="isProfileMenuOpen">
+        <a routerLink="/medico/profilo" (click)="closeProfileMenu()" class="dropdown-item">
+          👤 Il mio Profilo
+        </a>
+        <a routerLink="/medico/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
+          ⚙️ Impostazioni
+        </a>
+        <div class="dropdown-divider"></div>
+        <button (click)="logout()" class="dropdown-item text-danger">
+          🚪 Esci
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown-overlay" *ngIf="isProfileMenuOpen" (click)="closeProfileMenu()"></div>
+</header>
