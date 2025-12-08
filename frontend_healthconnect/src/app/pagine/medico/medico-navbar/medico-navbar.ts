@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../service/auth-service';
 import {NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
-import {utenteDTO} from '../../../model/utenteDTO';
 import {SpecializzazioniService} from '../../../service/specializzazioni-service';
 import {SpecializzazioneDTO} from '../../../model/specializzazioneDTO';
 
