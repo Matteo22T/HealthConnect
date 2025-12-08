@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {catchError, Observable, of, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, Observable, of, tap, throwError} from 'rxjs';
 import {utenteDTO} from '../model/utenteDTO';
 
 @Injectable({
@@ -10,7 +10,23 @@ export class AuthService {
 
   private API_URL = "http://localhost:8080/api/auth";
 
+  private currentUserSubject = new BehaviorSubject<utenteDTO | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
   constructor(private http: HttpClient) {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      try {
+        this.currentUserSubject.next(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Errore nel parsing utente', e);
+        localStorage.removeItem('currentUser');
+      }
+    }
+  }
+
+  public get currentUserValue(): utenteDTO | null {
+    return this.currentUserSubject.value;
   }
 
   login(email: string, password: string): Observable<utenteDTO | null>{
@@ -23,7 +39,10 @@ export class AuthService {
     }).pipe(
       tap(user => {
         console.log('Login effettuato, utente:', user);
-        // Qui potresti salvare l'utente in una variabile locale dello stato (Subject/Signal)
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // 2. Aggiorniamo lo stato dell'app
+        this.currentUserSubject.next(user);
       }),
       catchError(error => {
         if (error.status === 401) {
@@ -48,7 +67,13 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true });
+    return this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        // Rimuoviamo tutto al logout
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
+      })
+    );
   }
 
 }

@@ -2,6 +2,7 @@ package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.utenteDAO;
 import com.backend_healthconnect.model.Ruolo;
+import com.backend_healthconnect.model.StatoApprovazione;
 import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,7 +46,7 @@ public class utenteDAOpostgres implements utenteDAO {
 
     @Override
     public utenteDTO getUtenteByEmail(String email) {
-        String query="SELECT * FROM utenti WHERE email=?";
+        String query="SELECT u.*, \n" + "dm.specializzazione_id, \n" + "dm.numero_albo, \n" + "dm.biografia, \n" + "dm.indirizzo_studio, \n" + "dm.stato_approvazione\n" + "FROM utenti u\n" + "LEFT JOIN dettagli_medici dm ON u.id = dm.utente_id\n" + "WHERE u.email = ?";
         try(PreparedStatement statement=dataSource.getConnection().prepareStatement(query)){
             statement.setString(1, email);
             ResultSet rs=statement.executeQuery();
@@ -71,6 +72,23 @@ public class utenteDAOpostgres implements utenteDAO {
                 } else {
                     utente.setDataCreazione(null);
                 }
+                utente.setSesso(rs.getString("sesso"));
+
+                //prendo dati medico
+                long specId = rs.getLong("specializzazione_id");
+                if (!rs.wasNull()) {
+                    utente.setSpecializzazione_id(specId);
+                }
+
+                utente.setNumero_albo(rs.getString("numero_albo"));
+                utente.setBiografia(rs.getString("biografia"));
+                utente.setIndirizzo_studio(rs.getString("indirizzo_studio"));
+
+                String stato = rs.getString("stato_approvazione");
+                if (stato != null) {
+                    utente.setStato_approvazione(StatoApprovazione.valueOf(stato));
+                }
+
                 return utente;
             }
         }

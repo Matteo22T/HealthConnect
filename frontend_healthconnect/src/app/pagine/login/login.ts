@@ -36,7 +36,7 @@ export class Login {
           }
 
           else if (utente.ruolo === 'MEDICO') {
-            this.router.navigate(['/medico/dashboard']);
+            this.router.navigate(['/medico']);
           }
 
           else if (utente.ruolo === 'PAZIENTE') {
