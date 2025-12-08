@@ -1,28 +1,13 @@
 <main class="container">
-  <div class="welcome-section">...</div>
-
-  <div class="dashboard-grid">
-    <app-stat-card type="pending"  icon="⏳" label="In attesa" [count]="7"></app-stat-card>
-    <app-stat-card type="today"    icon="📋" label="Visite oggi" [count]="6"></app-stat-card>
-    <app-stat-card type="patients" icon="👥" label="Pazienti" [count]="142"></app-stat-card>
-    <app-stat-card type="messages" icon="💬" label="Messaggi" [count]="3"></app-stat-card>
+  <div class="welcome-section">
+    <h1>Buongiorno, Dott. (da aggiungere nome)! 👨‍⚕️</h1>
+    <p>Ecco una panoramica della tua giornata</p>
   </div>
 
-  <div class="main-grid">
-    <div>
-      <app-lista-richiesta>
-        [requests]="richiestePendenti"
-        (accept)="gestisciAccettazione($event)"
-        (reject)="gestisciRifiuto($event)">
-      </app-lista-richiesta>
-
-      <app-lista-visita> [appointments]="visiteOdierne"></app-lista-visita>
-    </div>
-
-    <div>
-      <app-messaggi [messages]="ultimiMessaggi"></app-messaggi>
-
-      <app-quick-actions></app-quick-actions>
-    </div>
+  <div class="dashboard-grid">
+    <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="7"></app-stat-card>
+    <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="6"></app-stat-card>
+    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="142"></app-stat-card>
+    <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="3"></app-stat-card>
   </div>
 </main>
