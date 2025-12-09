@@ -1,0 +1,174 @@
+/* Reset di base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+}
+
+/* --- STILI NAVBAR --- */
+header {
+  background: white;
+  padding: 1rem 3rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo span {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-links a:hover {
+  color: #667eea;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: background 0.3s;
+}
+
+.user-profile:hover {
+  background: #f0f2f5;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsività (Tablet/Mobile) */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 1.5rem;
+  }
+
+  /* Nasconde i link testuali su schermi piccoli */
+  .nav-links {
+    display: none;
+  }
+}
+
+
+/* --- STILI PROFILO E DROPDOWN --- */
+.profile-container { position: relative; }
+
+.user-profile {
+  display: flex; align-items: center; gap: 0.8rem;
+  cursor: pointer; padding: 0.5rem 1rem;
+  border-radius: 25px; transition: background 0.3s;
+  user-select: none;
+}
+.user-profile:hover { background: #f0f2f5; }
+
+.user-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: bold; font-size: 1.1rem;
+}
+
+.user-info { text-align: right; }
+.user-name { font-weight: 600; color: #333; display: block; font-size: 0.95rem; }
+.user-role { font-size: 0.75rem; color: #2ecc71; font-weight: 500; }
+.dropdown-arrow { font-size: 0.7rem; color: #999; margin-left: 5px; }
+
+/* Menu a tendina */
+.custom-dropdown {
+  position: absolute; top: 120%; right: 0;
+  width: 220px; background: white;
+  border-radius: 12px; padding: 0.5rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 1000; animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-item {
+  padding: 12px 20px; color: #333;
+  text-decoration: none; display: block;
+  cursor: pointer; transition: background 0.2s;
+  border: none; background: none; width: 100%; text-align: left;
+  font-size: 0.95rem;
+}
+.dropdown-item:hover { background-color: #f8f9fa; color: #667eea; }
+.text-danger { color: #dc3545 !important; }
+.text-danger:hover { background-color: #fff5f5; }
+.dropdown-divider { height: 1px; background-color: #eee; margin: 4px 0; }
+
+.dropdown-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 99; background: transparent;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

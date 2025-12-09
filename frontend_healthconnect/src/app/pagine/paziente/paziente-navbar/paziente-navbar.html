@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Component</title>
+</head>
+<body>
+
+<header>
+  <a class= "logo" routerLink="/"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
+  <div class="header-right">
+    <nav class="nav-links">
+      <a href="#"><span>🔍</span> Trova Medico</a>
+      <a href="#"><span>📋</span> Cartella Clinica</a>
+      <a href="#"><span>💬</span> Chat</a>
+      <a href="#"><span>🤖</span> Assistente AI</a>
+    </nav>
+    <div class="profile-container">
+      <div class="user-profile" (click)="toggleProfileMenu()">
+        <div class="user-avatar">{{nomePaziente.trim().charAt(0).toUpperCase() + cognomePaziente.trim().charAt(0).toUpperCase()}}</div>
+        <div class="user-info">
+          <span class="user-name">{{ nomePaziente + " " + cognomePaziente}}</span>
+        </div>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+
+      <div class="custom-dropdown shadow" *ngIf="isProfileMenuOpen">
+        <a routerLink="/medico/profilo" (click)="closeProfileMenu()" class="dropdown-item">
+          👤 Il mio Profilo
+        </a>
+        <a routerLink="/medico/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
+          ⚙️ Impostazioni
+        </a>
+        <div class="dropdown-divider"></div>
+        <button (click)="logout()" class="dropdown-item text-danger">
+          🚪 Esci
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+</body>
+</html>
