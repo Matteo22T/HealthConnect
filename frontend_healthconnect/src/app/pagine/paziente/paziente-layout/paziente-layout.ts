@@ -6,7 +6,6 @@ import {PazienteNavbar} from '../paziente-navbar/paziente-navbar';
 @Component({
   selector: 'app-paziente-layout',
   imports: [
-    MedicoNavbar,
     RouterOutlet,
     PazienteNavbar
   ],
