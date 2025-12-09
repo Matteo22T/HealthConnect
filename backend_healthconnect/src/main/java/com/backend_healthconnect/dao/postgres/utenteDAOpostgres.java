@@ -19,7 +19,7 @@ public class utenteDAOpostgres implements utenteDAO {
 
     @Override
     public utenteDTO getUtenteById(Long id) {
-        String query="SELECT * FROM utenti WHERE id=?";
+        String query="SELECT u.*, \n" + "dm.specializzazione_id, \n" + "dm.numero_albo, \n" + "dm.biografia, \n" + "dm.indirizzo_studio, \n" + "dm.stato_approvazione\n" + "FROM utenti u\n" + "LEFT JOIN dettagli_medici dm ON u.id = dm.utente_id\n" + "WHERE u.id = ?";
         try(Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
             statement.setLong(1, id);
             ResultSet rs=statement.executeQuery();
@@ -34,7 +34,23 @@ public class utenteDAOpostgres implements utenteDAO {
                 utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
                 Ruolo ruolo = Ruolo.valueOf(rs.getString("ruolo"));
                 utente.setRuolo(ruolo);
-                utente.setDataCreazione(rs.getDate("data_creazione").toLocalDate());
+                utente.setDataCreazione(rs.getDate("created_at").toLocalDate());
+                utente.setSesso(rs.getString("sesso"));
+                //dati medico
+                long specId = rs.getLong("specializzazione_id");
+                if (!rs.wasNull()) {
+                    utente.setSpecializzazione_id(specId);
+                }
+
+                utente.setNumero_albo(rs.getString("numero_albo"));
+                utente.setBiografia(rs.getString("biografia"));
+                utente.setIndirizzo_studio(rs.getString("indirizzo_studio"));
+
+                String stato = rs.getString("stato_approvazione");
+                if (stato != null) {
+                    utente.setStato_approvazione(StatoApprovazione.valueOf(stato));
+                }
+
                 return utente;
             }
         }
@@ -47,7 +63,8 @@ public class utenteDAOpostgres implements utenteDAO {
     @Override
     public utenteDTO getUtenteByEmail(String email) {
         String query="SELECT u.*, \n" + "dm.specializzazione_id, \n" + "dm.numero_albo, \n" + "dm.biografia, \n" + "dm.indirizzo_studio, \n" + "dm.stato_approvazione\n" + "FROM utenti u\n" + "LEFT JOIN dettagli_medici dm ON u.id = dm.utente_id\n" + "WHERE u.email = ?";
-        try(Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+        try(Connection connection = this.dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)){
             statement.setString(1, email);
             ResultSet rs=statement.executeQuery();
             while (rs.next()) {
