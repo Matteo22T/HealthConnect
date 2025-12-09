@@ -20,7 +20,7 @@ public class utenteDAOpostgres implements utenteDAO {
     @Override
     public utenteDTO getUtenteById(Long id) {
         String query="SELECT * FROM utenti WHERE id=?";
-        try(PreparedStatement statement=dataSource.getConnection().prepareStatement(query)){
+        try(Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
             statement.setLong(1, id);
             ResultSet rs=statement.executeQuery();
             while (rs.next()) {
@@ -47,7 +47,7 @@ public class utenteDAOpostgres implements utenteDAO {
     @Override
     public utenteDTO getUtenteByEmail(String email) {
         String query="SELECT u.*, \n" + "dm.specializzazione_id, \n" + "dm.numero_albo, \n" + "dm.biografia, \n" + "dm.indirizzo_studio, \n" + "dm.stato_approvazione\n" + "FROM utenti u\n" + "LEFT JOIN dettagli_medici dm ON u.id = dm.utente_id\n" + "WHERE u.email = ?";
-        try(PreparedStatement statement=dataSource.getConnection().prepareStatement(query)){
+        try(Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
             statement.setString(1, email);
             ResultSet rs=statement.executeQuery();
             while (rs.next()) {
