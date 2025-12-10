@@ -12,15 +12,30 @@ header {
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #667eea;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
-.logo::before { content: "⚕️"; font-size: 2rem; }
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo span {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
 
 .header-right { display: flex; align-items: center; gap: 2rem; }
 .nav-links { display: flex; gap: 1.5rem; align-items: center; }

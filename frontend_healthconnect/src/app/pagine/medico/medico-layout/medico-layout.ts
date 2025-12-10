@@ -6,7 +6,7 @@ import {RouterOutlet} from '@angular/router';
   selector: 'app-medico-layout',
   imports: [
     MedicoNavbar,
-    RouterOutlet
+    RouterOutlet,
   ],
   templateUrl: './medico-layout.html',
   styleUrl: './medico-layout.css',

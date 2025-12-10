@@ -1,1 +1,13 @@
-<p>dashboard-medico works!</p>
+<main class="container">
+  <div class="welcome-section">
+    <h1>Buongiorno, Dott. {{cognomeMedico}} 👨‍⚕️</h1>
+    <p>Ecco una panoramica della tua giornata</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length"></app-stat-card>
+    <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length"></app-stat-card>
+    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="142"></app-stat-card>
+    <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="3"></app-stat-card>
+  </div>
+</main>
