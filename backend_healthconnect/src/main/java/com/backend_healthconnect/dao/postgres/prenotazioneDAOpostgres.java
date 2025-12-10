@@ -1,6 +1,8 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.prenotazioneDAO;
+import com.backend_healthconnect.dao.utenteDAO;
+import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.StatoPrenotazione;
 import com.backend_healthconnect.model.prenotazioneDTO;
 import com.backend_healthconnect.model.utenteDTO;
@@ -20,7 +22,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     private DataSource dataSource;
 
     @Autowired
-    private utenteDAOpostgres utenteDAO;
+    private utenteDAO utenteDAO;
 
     @Override
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id) {
@@ -77,7 +79,8 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
                 utenteDTO utente = utenteDAO.getUtenteById(idPaziente);
                 prenotazione.setPaziente(utente);
 
-                utenteDTO medico = utenteDAO.getUtenteById(id);
+                Long idMedico = rs.getLong("medico_id");
+                utenteDTO medico = utenteDAO.getUtenteById(idMedico);
                 prenotazione.setMedico(medico);
 
                 Date data = rs.getDate("data_visita");
@@ -93,5 +96,40 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
             throw new RuntimeException("Errore nella richiesta della prenotazione dal database", e);
         }
         return null;
+    }
+
+    @Override
+    public prenotazioneDTO accettaPrenotazione(Long id) {
+        String query = "UPDATE prenotazioni SET stato = 'CONFERMATA' WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+
+            if (stmt.executeUpdate() > 0) {
+                prenotazioneDTO prenotazione = this.getPrenotazioneById(id);
+                if (prenotazione == null) {
+                    throw new RuntimeException("Errore durante l'accettazione della prenotazione");
+                }
+
+                return prenotazione;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante l'accettazione della prenotazione", e);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean rifiutaPrenotazione(Long id) {
+        String query = "UPDATE prenotazioni SET stato = 'RIFIUTATA' WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante l'accettazione della prenotazione", e);
+        }
     }
 }

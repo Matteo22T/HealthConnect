@@ -19,8 +19,12 @@ export class PrenotazioneService {
     });
   }
 
-  getPrenotazioniInAttesaPaziente(id: number){
+  accettaPrenotazione(id: number){
+    return this.http.patch<Boolean>(`${this.API_URL}/accetta/${id}`, {}, {withCredentials: true});
+  }
 
+  rifiutaPrenotazione(id: number){
+    return this.http.patch<Boolean>(`${this.API_URL}/rifiuta/${id}`, {}, {withCredentials: true});
   }
 
 }
