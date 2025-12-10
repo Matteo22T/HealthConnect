@@ -1,0 +1,13 @@
+package com.backend_healthconnect.model;
+
+import java.time.LocalDate;
+
+public class metricheSaluteDTO {
+    private Long id;
+    private utenteDTO paziente;
+    private utenteDTO medico;
+    private TipoMetrica tipoMetrica;
+    private Double valore;
+    private String unità_misura;
+    private LocalDate data;
+}
