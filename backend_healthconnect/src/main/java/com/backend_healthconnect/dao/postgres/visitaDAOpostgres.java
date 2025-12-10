@@ -63,7 +63,6 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     @Override
-<<<<<<< HEAD
     public visitaDTO getVisitaById(Long id) {
         String query = "SELECT * FROM visite WHERE id = ?";
 
@@ -130,8 +129,7 @@ public class visitaDAOpostgres implements visitaDAO {
             throw new RuntimeException(e);
         }
     }
-}
-=======
+
     public List<utenteDTO> getListaPazientiMedico(Long id) {
         List<utenteDTO> pazienti = new ArrayList<>();
         String query = "SELECT DISTINCT paziente_id FROM visite WHERE medico_id = ?";
@@ -170,4 +168,3 @@ public class visitaDAOpostgres implements visitaDAO {
         }
     }
 }
->>>>>>> home_medico

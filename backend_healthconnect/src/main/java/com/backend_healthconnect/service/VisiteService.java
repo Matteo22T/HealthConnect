@@ -20,7 +20,6 @@ public class VisiteService {
         return visitaDAO.getVisiteOdierneByMedico(id);
     }
 
-<<<<<<< HEAD
     public visitaDTO getVisitaById(Long id){
         return visitaDAO.getVisitaById(id);
     }
@@ -28,7 +27,5 @@ public class VisiteService {
     public List<visitaDTO> getVisiteByPaziente(Long id){
         return visitaDAO.getVisiteByPaziente(id);
     }
-=======
     public List<utenteDTO> getListaPazientiVisiteMedico(Long id){ return visitaDAO.getListaPazientiMedico(id); }
->>>>>>> home_medico
 }
