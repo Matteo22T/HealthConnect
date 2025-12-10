@@ -1,0 +1,9 @@
+package com.backend_healthconnect.dao;
+
+import com.backend_healthconnect.model.prescrizioneDTO;
+
+import java.util.List;
+
+public interface prescrizioneDAO {
+    List<prescrizioneDTO> getPrescrizioniByVisita(Long id);
+}
