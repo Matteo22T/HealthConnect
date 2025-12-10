@@ -5,6 +5,6 @@ export interface prescrizioneDTO{
   visita: VisitaDTO;
   nome_farmaco: string;
   dosaggio: string;
-  data_emissione: string;
-  data_fine: string;
+  dataEmissione: string;
+  dataFine: string;
 }

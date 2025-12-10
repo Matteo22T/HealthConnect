@@ -46,8 +46,8 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
                 utenteDTO utente = utenteDAO.getUtenteById(idPaziente);
                 prenotazione.setPaziente(utente);
 
-                Date data = rs.getDate("data_visita");
-                prenotazione.setDataVisita(data.toLocalDate());
+                Timestamp timestamp = rs.getTimestamp("data_visita");
+                prenotazione.setDataVisita(timestamp.toLocalDateTime());
 
                 StatoPrenotazione stato = StatoPrenotazione.valueOf(rs.getString("stato"));
                 prenotazione.setStato(stato);
@@ -83,8 +83,8 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
                 utenteDTO medico = utenteDAO.getUtenteById(idMedico);
                 prenotazione.setMedico(medico);
 
-                Date data = rs.getDate("data_visita");
-                prenotazione.setDataVisita(data.toLocalDate());
+                Timestamp timestamp = rs.getTimestamp("data_visita");
+                prenotazione.setDataVisita(timestamp.toLocalDateTime());
 
                 StatoPrenotazione stato = StatoPrenotazione.valueOf(rs.getString("stato"));
                 prenotazione.setStato(stato);

@@ -20,12 +20,5 @@ public class VisiteService {
         return visitaDAO.getVisiteOdierneByMedico(id);
     }
 
-    public visitaDTO getVisitaById(Long id){
-        return visitaDAO.getVisitaById(id);
-    }
-
-    public List<visitaDTO> getVisiteByPaziente(Long id){
-        return visitaDAO.getVisiteByPaziente(id);
-    }
     public List<utenteDTO> getListaPazientiVisiteMedico(Long id){ return visitaDAO.getListaPazientiMedico(id); }
 }

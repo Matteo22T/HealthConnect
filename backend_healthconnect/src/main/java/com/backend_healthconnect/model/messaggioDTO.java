@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,5 +17,5 @@ public class messaggioDTO {
     private utenteDTO destinatario;
     private String testo;
     private Boolean letto;
-    private LocalDate dataInvio;
+    private LocalDateTime dataInvio;
 }

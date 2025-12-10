@@ -51,6 +51,7 @@ export class DashboardMedico implements OnInit{
       }).subscribe({
         next: result => {
           this.prenotazioni = result.pren;
+          console.log(result.pren[0].dataVisita);
           this.visite = result.visit;
           this.pazienti = result.paz;
           this.messaggi = result.mex;

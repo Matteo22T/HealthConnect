@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +19,6 @@ public class visitaDTO {
     utenteDTO medico;
     String diagnosi;
     String noteMedico;
-    LocalDate dataVisita;
+    LocalDateTime dataVisita;
 
 }

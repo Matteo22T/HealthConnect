@@ -4,7 +4,7 @@ export interface prenotazioneDTO {
   id: number;
   paziente: utenteDTO;
   idMedico: number;
-  data: string;
+  dataVisita: string;
   stato: string;
   motivo: string;
 }

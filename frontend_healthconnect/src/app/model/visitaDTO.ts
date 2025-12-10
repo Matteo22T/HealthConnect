@@ -7,6 +7,6 @@ export interface VisitaDTO {
   paziente: utenteDTO;
   medico: utenteDTO;
   diagnosi: string;
-  note: string;
-  data: string;
+  noteMedico: string;
+  dataVisita: string;
 }

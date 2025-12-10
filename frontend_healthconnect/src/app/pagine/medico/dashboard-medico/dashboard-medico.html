@@ -14,7 +14,7 @@
   <div class="main-grid">
     <div>
       <app-lista-richiesta
-        [prenotazioniInAttesa]="prenotazioni"
+        [prenotazioniInAttesa]="prenotazioni.slice(0,5)"
         (accettaPrenotazione)="gestisciAccettazionePrenotazione($event)"
         (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
       </app-lista-richiesta>

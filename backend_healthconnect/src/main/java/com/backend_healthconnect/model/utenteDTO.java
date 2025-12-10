@@ -3,6 +3,7 @@ package com.backend_healthconnect.model;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor

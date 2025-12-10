@@ -12,7 +12,7 @@
     <div class="request-info">
       <h4>{{ pren.paziente.nome + " " + pren.paziente.cognome}}</h4>
 
-      <p>📅 {{ pren.data | date:'dd MMMM yyyy' }} - 🕐 {{ pren.data }}</p>
+      <p>📅 {{ pren.dataVisita | date: 'dd/MM/yyyy'}} - 🕐 {{ pren.dataVisita | date: 'HH:mm'}}</p>
 
       <p>{{pren.motivo}}</p>
 

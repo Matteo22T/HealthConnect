@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -15,7 +16,7 @@ public class prenotazioneDTO {
     private Long id;
     private utenteDTO paziente;
     private utenteDTO medico;
-    private LocalDate dataVisita;
+    private LocalDateTime dataVisita;
     private StatoPrenotazione stato;
     private String motivo;
 }

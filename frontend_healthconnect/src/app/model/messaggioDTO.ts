@@ -6,5 +6,5 @@ export interface MessaggioDTO {
   destinatario: utenteDTO;
   testo: string;
   letto: boolean;
-  data_invio: string;
+  dataInvio: string;
 }

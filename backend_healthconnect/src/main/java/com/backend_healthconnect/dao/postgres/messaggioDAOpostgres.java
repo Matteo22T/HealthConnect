@@ -38,7 +38,7 @@ public class messaggioDAOpostgres implements messaggioDAO {
                 messaggio.setDestinatario(utenteDAO.getUtenteById(rs.getLong("destinatario_id")));
                 messaggio.setMittente(utenteDAO.getUtenteById(rs.getLong("mittente_id")));
                 messaggio.setLetto(rs.getBoolean("letto"));
-                messaggio.setDataInvio(rs.getDate("data_invio").toLocalDate());
+                messaggio.setDataInvio(rs.getTimestamp("data_invio").toLocalDateTime());
                 messaggi.add(messaggio);
             }
             return messaggi;
