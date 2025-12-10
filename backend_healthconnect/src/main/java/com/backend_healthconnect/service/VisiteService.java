@@ -3,6 +3,7 @@ package com.backend_healthconnect.service;
 import com.backend_healthconnect.dao.specializzazioneDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.specializzazioneDTO;
+import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.model.visitaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,6 @@ public class VisiteService {
     public List<visitaDTO> getListaVisiteOdierne(Long id){
         return visitaDAO.getVisiteOdierneByMedico(id);
     }
+
+    public List<utenteDTO> getListaPazientiVisiteMedico(Long id){ return visitaDAO.getListaPazientiMedico(id); }
 }

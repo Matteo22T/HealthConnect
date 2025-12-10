@@ -1,6 +1,7 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.prenotazioneDAO;
+import com.backend_healthconnect.dao.utenteDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.prenotazioneDTO;
 import com.backend_healthconnect.model.utenteDTO;
@@ -17,7 +18,7 @@ import java.util.List;
 public class visitaDAOpostgres implements visitaDAO {
 
     @Autowired
-    utenteDAOpostgres utenteDAO;
+    utenteDAO utenteDAO;
 
     @Autowired
     prenotazioneDAO prenotazioneDAO;
@@ -58,6 +59,45 @@ public class visitaDAOpostgres implements visitaDAO {
 
         } catch (SQLException e){
             throw new RuntimeException("Errore nella richiesta delle visite al database", e);
+        }
+    }
+
+    @Override
+    public List<utenteDTO> getListaPazientiMedico(Long id) {
+        List<utenteDTO> pazienti = new ArrayList<>();
+        String query = "SELECT DISTINCT paziente_id FROM visite WHERE medico_id = ?";
+
+        try(Connection conn = this.dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query)){
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                Long idPaziente = rs.getLong("paziente_id");
+                utenteDTO paziente = utenteDAO.getUtenteById(idPaziente);
+                pazienti.add(paziente);
+            }
+            return pazienti;
+
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta lista pazienti al db",e);
+        }
+    }
+
+    @Override
+    public boolean creaVisita(prenotazioneDTO prenotazione) {
+        String query = "INSERT INTO visite (prenotazione_id, paziente_id, medico_id, diagnosi, note_medico, data_visita) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection connection = this.dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setLong(1,prenotazione.getId());
+            statement.setLong(2,prenotazione.getPaziente().getId());
+            statement.setLong(3,prenotazione.getMedico().getId());
+            statement.setString(4,null);
+            statement.setString(5,null);
+            statement.setDate(6, Date.valueOf(prenotazione.getDataVisita()));
+            return statement.executeUpdate() > 0;
+
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la creazione della visita", e);
         }
     }
 }
