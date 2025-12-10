@@ -1,0 +1,48 @@
+.quick-stat {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.quick-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+  font-size: 3rem;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.stat-icon.appointments {
+  background: #e3f2fd;
+}
+
+.stat-icon.prescriptions {
+  background: #f3e5f5;
+}
+
+.stat-icon.doctors {
+  background: #e8f5e9;
+}
+
+.stat-content h3 {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 0.3rem;
+}
+
+.stat-content p {
+  color: #666;
+  font-size: 0.95rem;
+}

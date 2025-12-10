@@ -19,4 +19,8 @@ export class PrenotazioneService {
     });
   }
 
+  getPrenotazioniInAttesaPaziente(id: number){
+
+  }
+
 }
