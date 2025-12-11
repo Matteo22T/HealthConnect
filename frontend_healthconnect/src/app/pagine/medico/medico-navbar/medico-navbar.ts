@@ -31,6 +31,9 @@ export class MedicoNavbar implements OnInit{
 
   ngOnInit(){
     const currentUser = this.auth.currentUserValue;
+    this.prenService.refreshNeeded$.subscribe(() => {
+      this.caricaVisiteOdierne();
+    });
 
     if (currentUser) {
       this.nomeMedico = currentUser.nome;
@@ -70,5 +73,16 @@ export class MedicoNavbar implements OnInit{
 
   closeProfileMenu() {
     this.isProfileMenuOpen = false;
+  }
+
+  caricaVisiteOdierne() {
+    this.prenService.getPrenotazioniInAttesaMedico(this.auth.currentUserValue!.id) .subscribe({
+      next:(res)=>{
+        this.richiesteInAttesa=res;
+        this.changeDet.detectChanges();
+      }, error:(err)=>{
+        console.error('Errore server', err);
+      }
+    });
   }
 }

@@ -44,6 +44,10 @@ export class DashboardMedico implements OnInit{
 
   ngOnInit(){
     const currentUser = this.auth.currentUserValue;
+    this.visitaService.refreshNeeded$.subscribe(() => {
+      this.caricaVisiteOdierne();
+    });
+
 
     if (currentUser) {
       forkJoin({
@@ -76,6 +80,8 @@ export class DashboardMedico implements OnInit{
       next: (res) => {
         console.log('Prenotazione accettata', res);
         this.prenotazioni = this.prenotazioni.filter(p => p.id !== idPrenotazione);
+        this.visitaService.triggerRefresh();
+        this.prenotazioneService.triggerRefresh();
         this.changeDet.detectChanges();
       },
       error: (err) => {
@@ -95,5 +101,16 @@ export class DashboardMedico implements OnInit{
         console.error('Errore server', err);
       }
     })
+  }
+
+  caricaVisiteOdierne() {
+    this.visitaService.getVisiteOdierneByMedico(this.auth.currentUserValue!.id) .subscribe({
+      next:(res)=>{
+        this.visite=res;
+        this.changeDet.detectChanges();
+      }, error:(err)=>{
+        console.error('Errore server', err);
+      }
+    });
   }
 }
