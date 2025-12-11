@@ -1,12 +1,15 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.prenotazioneDAO;
+import com.backend_healthconnect.dao.prescrizioneDAO;
 import com.backend_healthconnect.dao.utenteDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.prenotazioneDTO;
 import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.model.visitaDTO;
+import com.backend_healthconnect.model.visitaDTOProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -23,6 +26,10 @@ public class visitaDAOpostgres implements visitaDAO {
     @Autowired
     prenotazioneDAO prenotazioneDAO;
 
+    @Lazy
+    @Autowired
+    prescrizioneDAO prescrizioneDAO;
+
     @Autowired
     private DataSource dataSource;
 
@@ -30,13 +37,17 @@ public class visitaDAOpostgres implements visitaDAO {
     public List<visitaDTO> getVisiteOdierneByMedico(Long id) {
         List<visitaDTO> visite = new ArrayList<>();
 
-        String query = "SELECT * FROM visite WHERE medico_id = ? and data_visita = CURRENT_DATE";
+        String query = "SELECT * FROM visite WHERE medico_id = ? AND data_visita >= CURRENT_TIMESTAMP" +
+                "  AND data_visita < CURRENT_DATE + INTERVAL '1 day'" + "ORDER BY data_visita ASC";
+
         try(Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setLong(1, id);
 
             ResultSet rs = stmt.executeQuery();
+            System.out.println("id ->" + id);
             while (rs.next()){
+                System.out.println("sono dentro");
                 visitaDTO visita = new visitaDTO();
                 visita.setId(rs.getLong("id"));
 
@@ -52,6 +63,7 @@ public class visitaDAOpostgres implements visitaDAO {
                 visita.setDiagnosi(rs.getString("diagnosi"));
                 visita.setNoteMedico(rs.getString("note_medico"));
                 Timestamp data = rs.getTimestamp("data_visita");
+                System.out.println(data);
                 visita.setDataVisita(data.toLocalDateTime());
                 visite.add(visita);
             }

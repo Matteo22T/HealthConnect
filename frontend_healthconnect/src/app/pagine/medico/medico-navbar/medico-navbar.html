@@ -1,17 +1,23 @@
 <header>
-  <a class= "logo" routerLink="/"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
+  <a class= "logo" routerLink="/medico"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
 
   <div class="header-right">
     <nav class="nav-links">
       <a routerLink="/medico/calendario" routerLinkActive="active-link">
         <span>📅</span> Calendario
       </a>
+
+      <a routerLink="/medico" routerLinkActive="active-link">
+        <span></span> Richieste Appuntamenti
+        <span class="badge" *ngIf="richiesteInAttesa.length > 0">{{richiesteInAttesa.length}}</span>
+      </a>
+
       <a routerLink="/medico/pazienti" routerLinkActive="active-link">
         <span>👥</span> Pazienti
       </a>
       <a routerLink="/medico/chat" routerLinkActive="active-link">
         <span>💬</span> Chat
-        <span class="badge">3</span>
+        <span class="badge" *ngIf="messaggi.length > 0">{{messaggi.length}}</span>
       </a>
     </nav>
 
