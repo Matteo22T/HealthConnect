@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class utenteDAOpostgres implements utenteDAO {
@@ -118,6 +120,7 @@ public class utenteDAOpostgres implements utenteDAO {
 
     @Override
     public utenteDTO save(utenteDTO utente) {
+
         String query = "INSERT INTO utenti ( email, password, nome, cognome, telefono, data_nascita,ruolo, sesso) VALUES (?, ?, ?, ?, ?, ?, ?::ruolo_enum,?)";
         try (PreparedStatement preparedStatement = this.dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, utente.getEmail());

@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ titolo }}</h2>
+    <a href="#" class="view-all">Vedi tutte →</a>
+  </div>
+
+  <div class="appointment-item" *ngFor="let app of visite">
+
+    <div class="appointment-date">
+      <span class="appointment-day">{{ app.dataVisita | date:'dd' }}</span>
+      <span class="appointment-month">{{ app.dataVisita | date:'MMM' }}</span>
+    </div>
+
+    <div class="appointment-details">
+      <h4>Dott. {{ app.medico.nome }} {{ app.medico.cognome }}</h4>
+
+      <p>{{  getSpecializzazione(app.medico) }} - {{ app.prenotazione.motivo }}</p>
+
+      <span class="appointment-time">🕐 {{ app.dataVisita | date:'HH:mm' }}</span>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="visite.length === 0">
+    <p>Nessuna visita in programma.</p>
+  </div>
+</div>
