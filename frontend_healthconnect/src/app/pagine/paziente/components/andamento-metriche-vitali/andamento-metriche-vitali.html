@@ -1,54 +1,37 @@
-<div class="metriche-container">
-  <div class="card">
+<div class="metriche-grid">
+
+  <div class="card metriche-card" *ngIf="pesoData.datasets.length > 0">
     <div class="card-header">
-      <h2>📈 Andamento Metriche Vitali</h2>
+      <h3>⚖️ Peso</h3>
     </div>
-
-    <div class="metriche-grid">
-      <!-- Grafico Peso -->
-      <div class="chart-section" *ngIf="pesoChartData.datasets.length > 0">
-        <h3>⚖️ Peso</h3>
-        <div class="chart-container">
-          <canvas
-            baseChart
-            [data]="pesoChartData"
-            [options]="lineChartOptions"
-            [type]="lineChartType">
-          </canvas>
-        </div>
-      </div>
-
-      <!-- Grafico Pressione -->
-      <div class="chart-section" *ngIf="pressioneChartData.datasets.length > 0">
-        <h3>🩸 Pressione Arteriosa</h3>
-        <div class="chart-container">
-          <canvas
-            baseChart
-            [data]="pressioneChartData"
-            [options]="lineChartOptions"
-            [type]="lineChartType">
-          </canvas>
-        </div>
-      </div>
-
-      <!-- Grafico Glicemia -->
-      <div class="chart-section" *ngIf="glicemiaChartData.datasets.length > 0">
-        <h3>🩺 Glicemia</h3>
-        <div class="chart-container">
-          <canvas
-            baseChart
-            [data]="glicemiaChartData"
-            [options]="lineChartOptions"
-            [type]="lineChartType">
-          </canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stato vuoto -->
-    <div class="empty-state" *ngIf="pesoChartData.datasets.length === 0 && pressioneChartData.datasets.length === 0 && glicemiaChartData.datasets.length === 0">
-      <p>📊 Nessuna metrica vitale disponibile</p>
-      <small>I dati verranno visualizzati dopo le visite mediche</small>
+    <div class="chart-container">
+      <canvas baseChart [data]="pesoData" [options]="lineChartOptions" [type]="'line'"></canvas>
     </div>
   </div>
+
+  <div class="card metriche-card" *ngIf="pressioneData.datasets.length > 0">
+    <div class="card-header">
+      <h3>❤️ Pressione Sanguigna</h3>
+    </div>
+    <div class="chart-container">
+      <canvas baseChart [data]="pressioneData" [options]="lineChartOptions" [type]="'line'"></canvas>
+    </div>
+  </div>
+
+  <div class="card metriche-card" *ngIf="glicemiaData.datasets.length > 0">
+    <div class="card-header">
+      <h3>🩸 Glicemia</h3>
+    </div>
+    <div class="chart-container">
+      <canvas baseChart [data]="glicemiaData" [options]="lineChartOptions" [type]="'line'"></canvas>
+    </div>
+  </div>
+
+  <div class="empty-state-card card"
+       *ngIf="pesoData.datasets.length === 0 && pressioneData.datasets.length === 0 && glicemiaData.datasets.length === 0">
+    <div class="empty-content">
+      <p>Nessuna misurazione registrata negli ultimi 6 mesi.</p>
+    </div>
+  </div>
+
 </div>
