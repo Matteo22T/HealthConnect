@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class prescrizioneDTO {
     private Long id;
-    private visitaDTO visita;
+    private Long id_visita;
     private String nome_farmaco;
     private String dosaggio;
     private LocalDate dataEmissione;

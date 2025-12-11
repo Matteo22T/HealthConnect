@@ -20,9 +20,6 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    visitaDAOpostgres visitaDAO;
-
     @Override
     public List<prescrizioneDTO> getPrescrizioniPaziente(Long id){
 
@@ -47,11 +44,7 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
                 prescrizioneDTO prescrizioneDTO = new prescrizioneDTO();
 
                 prescrizioneDTO.setId(rs.getLong("id"));
-
-                Long id_visita = rs.getLong("visita_id");
-
-                visitaDTO visitaDTO = visitaDAO.getVisitaById(id_visita);
-                prescrizioneDTO.setVisita(visitaDTO);
+                prescrizioneDTO.setId_visita(rs.getLong("visita_id"));
 
                 prescrizioneDTO.setNome_farmaco(rs.getString("nome_farmaco"));
                 prescrizioneDTO.setDosaggio(rs.getString("dosaggio"));
@@ -68,6 +61,33 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
         }
         catch (SQLException e){
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<prescrizioneDTO> getPrescrizioniByVisita(Long id) {
+        String query = "SELECT * FROM prescrizioni WHERE visita_id = ?";
+        try(Connection conn = dataSource.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+            List<prescrizioneDTO> prescrizioni = new ArrayList<>();
+            while (rs.next()){
+                prescrizioneDTO prescrizioneDTO = new prescrizioneDTO();
+                prescrizioneDTO.setId(rs.getLong("id"));
+                prescrizioneDTO.setId_visita(id);
+                prescrizioneDTO.setNome_farmaco(rs.getString("nome_farmaco"));
+                prescrizioneDTO.setDosaggio(rs.getString("dosaggio"));
+                prescrizioneDTO.setDataEmissione(rs.getDate("data_emissione").toLocalDate());
+                java.sql.Date dataFine = rs.getDate("data_fine");
+                if (dataFine != null) {
+                    prescrizioneDTO.setDataFine(dataFine.toLocalDate());
+                }
+                prescrizioni.add(prescrizioneDTO);
+            }
+            return prescrizioni;
+        } catch (SQLException e) {
+            throw new RuntimeException("errore durante connessione al database per le prescizioni", e);
         }
     }
 }
