@@ -28,7 +28,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id) {
         List<prenotazioneDTO> prenotazioni = new ArrayList<>();
 
-        String query = "SELECT * FROM prenotazioni WHERE medico_id = ? AND stato = 'RICHIESTA'";
+        String query = "SELECT * FROM prenotazioni WHERE medico_id = ? AND stato = 'RICHIESTA' AND data_visita > CURRENT_TIMESTAMP";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setLong(1, id);

@@ -48,4 +48,19 @@ public class messaggioDAOpostgres implements messaggioDAO {
             throw new RuntimeException("Errore durante la lettura dei messaggi",e);
         }
     }
+
+    @Override
+    public boolean inviaMessaggio(Long idMittente, Long idDestinatario, String testo){
+        String query = "INSERT INTO messaggi (mittente_id, destinatario_id, testo) VALUES (?, ?, ?)";
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setLong(1, idMittente);
+            statement.setLong(2, idDestinatario);
+            statement.setString(3, testo);
+            return statement.executeUpdate() > 0;
+
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante l'invio del messaggio",e);
+        }
+    }
 }
