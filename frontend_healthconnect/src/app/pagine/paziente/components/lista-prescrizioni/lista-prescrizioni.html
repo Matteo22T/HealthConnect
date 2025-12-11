@@ -1,1 +1,16 @@
-<p>lista-prescrizioni works!</p>
+<div class="card">
+  <div class="card-header">
+    <h2>{{ titolo }}</h2>
+    <a href="#" class="view-all">Vedi tutte →</a>
+  </div>
+
+  <div class="prescription-item" *ngFor="let pren of prescrizioni">
+    <h4>{{ pren.nome_farmaco }}</h4>
+    <p>{{ pren.dosaggio }}</p>
+    <p class="prescription-date">Prescritta il {{ pren.dataEmissione | date: 'dd MMM yyyy' }}</p>
+  </div>
+
+  <div class="empty-state" *ngIf="prescrizioni.length === 0">
+    <p>Nessuna prescrizione attiva.</p>
+  </div>
+</div>

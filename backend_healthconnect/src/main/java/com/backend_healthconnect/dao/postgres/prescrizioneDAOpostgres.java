@@ -24,11 +24,18 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
     visitaDAOpostgres visitaDAO;
 
     @Override
-    public List<prescrizioneDTO> getPrescrizioniByVisita(Long id){
+    public List<prescrizioneDTO> getPrescrizioniPaziente(Long id){
 
         List<prescrizioneDTO> prescrizioni = new ArrayList<>();
 
-        String query = "SELECT * FROM prescrizioni WHERE visita_id = ?";
+        String query = """
+            SELECT p.* FROM prescrizioni p
+            INNER JOIN visite v ON p.visita_id = v.id
+            WHERE v.paziente_id = ? 
+            AND (p.data_fine IS NULL OR p.data_fine >= CURRENT_DATE)
+            ORDER BY p.data_emissione DESC
+            """;
+
 
         try(Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)){
@@ -49,7 +56,10 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
                 prescrizioneDTO.setNome_farmaco(rs.getString("nome_farmaco"));
                 prescrizioneDTO.setDosaggio(rs.getString("dosaggio"));
                 prescrizioneDTO.setDataEmissione(rs.getDate("data_emissione").toLocalDate());
-                prescrizioneDTO.setDataFine(rs.getDate("data_fine").toLocalDate());
+                java.sql.Date dataFine = rs.getDate("data_fine");
+                if (dataFine != null) {
+                    prescrizioneDTO.setDataFine(dataFine.toLocalDate());
+                }
 
 
                 prescrizioni.add(prescrizioneDTO);

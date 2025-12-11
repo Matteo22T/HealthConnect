@@ -30,4 +30,16 @@ public class VisiteController {
         if (lista != null) return ResponseEntity.ok(lista);
         else return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/medici/paziente/{id}")
+    public List<utenteDTO> getListaMediciPaziente(@PathVariable Long id){
+        return visiteService.getListaMediciPaziente(id);
+    }
+
+    @GetMapping("/future/pazienti/{id}")
+    public ResponseEntity<List<visitaDTO>> getVisiteFutureByPaziente(@PathVariable Long id){
+        List<visitaDTO> lista = visiteService.getVisiteFutureByPaziente(id);
+        if (lista != null) return ResponseEntity.ok(lista);
+        else return ResponseEntity.notFound().build();
+    }
 }

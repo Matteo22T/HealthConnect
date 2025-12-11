@@ -16,7 +16,7 @@ public class PrescrizioneController {
     private PrescrizioneService prescrizioneService;
 
     @GetMapping("/paziente/{id}")
-    public List<prescrizioneDTO> getPrescrizioniByVisita(@PathVariable Long id){
-        return prescrizioneService.getPrescrizioniByVisita(id);
+    public List<prescrizioneDTO> getPrescrizioniPaziente(@PathVariable Long id){
+        return prescrizioneService.getPrescrizioniPaziente(id);
     }
 }

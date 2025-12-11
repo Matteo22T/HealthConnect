@@ -5,5 +5,5 @@ import com.backend_healthconnect.model.prescrizioneDTO;
 import java.util.List;
 
 public interface prescrizioneDAO {
-    List<prescrizioneDTO> getPrescrizioniByVisita(Long id);
+    List<prescrizioneDTO> getPrescrizioniPaziente(Long id);
 }

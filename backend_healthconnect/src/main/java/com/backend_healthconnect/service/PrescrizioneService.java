@@ -13,8 +13,8 @@ public class PrescrizioneService {
     @Autowired
     private prescrizioneDAO prescrizioneDAO;
 
-    public List<prescrizioneDTO> getPrescrizioniByVisita(Long id){
-        return prescrizioneDAO.getPrescrizioniByVisita(id);
+    public List<prescrizioneDTO> getPrescrizioniPaziente(Long id){
+        return prescrizioneDAO.getPrescrizioniPaziente(id);
     }
 
 }

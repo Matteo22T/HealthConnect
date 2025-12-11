@@ -26,4 +26,16 @@ export class VisitaService {
     });
   }
 
+  getVisiteFuturePaziente(id: number): Observable<VisitaDTO[]>{
+    return this.http.get<VisitaDTO[]>(`${this.API_URL}/future/pazienti/${id}`, {
+      withCredentials: true
+    })
+  }
+
+  getListaMediciPaziente(id: number): Observable<utenteDTO[]>{
+    return this.http.get<utenteDTO[]>(`${this.API_URL}/medici/paziente/${id}`, {
+      withCredentials: true
+    })
+  }
+
 }
