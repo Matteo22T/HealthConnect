@@ -1,1 +1,59 @@
-<p>pazienti-medico works!</p>
+<div class="container">
+  <div class="title-section">
+    <h1 class="title">I miei pazienti</h1>
+    <p class="patient-number">({{pazientiFiltrati.length}})</p>
+  </div>
+
+  <div class="table-section">
+
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        placeholder="Cerca per nome o cognome..."
+        [(ngModel)]="campoRicerca"
+        (input)="ricercaPazienti()"
+        class="search-bar"
+      >
+    </div>
+
+    <div class="patient-list-container">
+
+      <div *ngIf="pazientiFiltrati.length === 0" class="no-results">
+        Nessun paziente trovato.
+      </div>
+
+      <div
+        *ngFor="let paz of pazientiFiltrati"
+        class="patient-row"
+        (click)="apriProfilo(paz)"
+      >
+
+        <div class="row-left">
+          <div class="avatar-circle">
+            {{ paz.nome ? paz.nome[0].toUpperCase() : '' }}{{ paz.cognome ? paz.cognome[0].toUpperCase() : '' }}
+          </div>
+
+          <div class="patient-info">
+            <div class="full-name">{{ paz.nome }} {{ paz.cognome }}</div>
+            <div class="sub-details">
+              <span class="detail-item">📅 {{ paz.dataNascita | date:'dd/MM/yyyy' }}</span>
+              <span class="detail-item separator">•</span>
+              <span class="detail-item">👤 Sesso: {{ paz.sesso }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-right">
+          <a
+            class="btn-message link-style"
+            [routerLink]="['/chat', paz.id]"
+            (click)="$event.stopPropagation()"
+          >
+            💬 Invia Messaggio
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
