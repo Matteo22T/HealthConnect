@@ -1,10 +1,12 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.prenotazioneDAO;
+import com.backend_healthconnect.dao.prescrizioneDAO;
 import com.backend_healthconnect.dao.utenteDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -21,6 +23,10 @@ public class visitaDAOpostgres implements visitaDAO {
     @Autowired
     prenotazioneDAO prenotazioneDAO;
 
+    @Lazy
+    @Autowired
+    prescrizioneDAO prescrizioneDAO;
+
     @Autowired
     private DataSource dataSource;
 
@@ -28,7 +34,9 @@ public class visitaDAOpostgres implements visitaDAO {
     public List<visitaDTO> getVisiteOdierneByMedico(Long id) {
         List<visitaDTO> visite = new ArrayList<>();
 
-        String query = "SELECT * FROM visite WHERE medico_id = ? and data_visita = CURRENT_DATE";
+        String query = "SELECT * FROM visite WHERE medico_id = ? AND data_visita >= CURRENT_TIMESTAMP" +
+                "  AND data_visita < CURRENT_DATE + INTERVAL '1 day'" + "ORDER BY data_visita ASC";
+
         try(Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setLong(1, id);

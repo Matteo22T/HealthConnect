@@ -25,7 +25,7 @@ public class messaggioDAOpostgres implements messaggioDAO {
     @Override
     public List<messaggioDTO> getMessaggiNonLettiById(Long id) {
         List<messaggioDTO> messaggi = new ArrayList<>();
-        String query = "SELECT * FROM messaggi WHERE destinatario_id = ? AND letto = false";
+        String query = "SELECT * FROM messaggi WHERE destinatario_id = ? AND letto = false" + " ORDER BY data_invio DESC";
 
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)){

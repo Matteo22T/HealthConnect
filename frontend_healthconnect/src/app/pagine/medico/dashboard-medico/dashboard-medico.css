@@ -32,43 +32,6 @@
   gap: 2rem;
   margin-bottom: 2rem;
 }
-/*.appointment-item {*/
-/*  display: flex;*/
-/*  gap: 1.2rem;*/
-/*  padding: 1.2rem;*/
-/*  border-radius: 8px;*/
-/*  background: #e3f2fd;*/
-/*  margin-bottom: 1rem;*/
-/*  border-left: 4px solid #2196f3;*/
-/*}*/
-
-/*.appointment-time-block {*/
-/*  text-align: center;*/
-/*  min-width: 70px;*/
-/*}*/
-
-/*.time-display {*/
-/*  font-size: 1.5rem;*/
-/*  font-weight: bold;*/
-/*  color: #2196f3;*/
-/*  display: block;*/
-/*}*/
-
-/*.time-period {*/
-/*  color: #666;*/
-/*  font-size: 0.85rem;*/
-/*}*/
-
-/*.appointment-details h4 {*/
-/*  font-size: 1.05rem;*/
-/*  margin-bottom: 0.4rem;*/
-/*}*/
-
-/*.appointment-details p {*/
-/*  color: #666;*/
-/*  font-size: 0.9rem;*/
-/*  margin-bottom: 0.2rem;*/
-/*}*/
 
 /*.patient-badge {*/
 /*  display: inline-block;*/
@@ -78,50 +41,6 @@
 /*  border-radius: 12px;*/
 /*  font-size: 0.8rem;*/
 /*  font-weight: 500;*/
-/*}*/
-
-/*.message-item {*/
-/*  padding: 1rem;*/
-/*  border-bottom: 1px solid #f0f2f5;*/
-/*  cursor: pointer;*/
-/*  transition: background 0.3s;*/
-/*}*/
-
-/*.message-item:hover {*/
-/*  background: #f8f9fa;*/
-/*}*/
-
-/*.message-item:last-child {*/
-/*  border-bottom: none;*/
-/*}*/
-
-/*.message-header {*/
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*  margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.message-sender {*/
-/*  font-weight: 600;*/
-/*  color: #333;*/
-/*}*/
-
-/*.message-time {*/
-/*  font-size: 0.8rem;*/
-/*  color: #999;*/
-/*}*/
-
-/*.message-preview {*/
-/*  color: #666;*/
-/*  font-size: 0.9rem;*/
-/*}*/
-
-/*.unread {*/
-/*  background: #f0f7ff;*/
-/*}*/
-
-/*.unread .message-sender {*/
-/*  color: #667eea;*/
 /*}*/
 
 /*.quick-actions {*/

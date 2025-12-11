@@ -10,13 +10,17 @@ import {utenteDTO} from '../../../model/utenteDTO';
 import {MessaggioService} from '../../../service/messaggio-service';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
 import {ListaRichiesta} from '../components/lista-richiesta/lista-richiesta';
+import {ListaVisita} from '../components/lista-visita/lista-visita';
+import {Messaggi} from '../components/messaggi/messaggi';
 
 
 @Component({
   selector: 'app-dashboard-medico',
   imports: [
     StatCard,
-    ListaRichiesta
+    ListaRichiesta,
+    ListaVisita,
+    Messaggi
   ],
   templateUrl: './dashboard-medico.html',
   styleUrl: './dashboard-medico.css',
@@ -51,7 +55,6 @@ export class DashboardMedico implements OnInit{
       }).subscribe({
         next: result => {
           this.prenotazioni = result.pren;
-          console.log(result.pren[0].dataVisita);
           this.visite = result.visit;
           this.pazienti = result.paz;
           this.messaggi = result.mex;

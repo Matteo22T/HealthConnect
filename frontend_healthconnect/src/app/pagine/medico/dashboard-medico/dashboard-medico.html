@@ -12,12 +12,20 @@
   </div>
 
   <div class="main-grid">
-    <div>
+
+    <div class="left-column">
+      <app-lista-visita [prossimeVisite]="visite.slice(0,3)"></app-lista-visita>
+
       <app-lista-richiesta
-        [prenotazioniInAttesa]="prenotazioni.slice(0,5)"
+        [prenotazioniInAttesa]="prenotazioni.slice(0,3)"
         (accettaPrenotazione)="gestisciAccettazionePrenotazione($event)"
         (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
       </app-lista-richiesta>
     </div>
+
+    <div class="right-column">
+      <app-messaggi [ultimiMessaggi]="messaggi.slice(0,5)"></app-messaggi>
+    </div>
+
   </div>
 </main>
