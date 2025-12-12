@@ -7,4 +7,5 @@ import java.util.List;
 public interface prescrizioneDAO {
     List<prescrizioneDTO> getPrescrizioniPaziente(Long id);
     List<prescrizioneDTO> getPrescrizioniByVisita(Long id);
+    List<prescrizioneDTO> getAllPrescrizioniPaziente(Long id);
 }

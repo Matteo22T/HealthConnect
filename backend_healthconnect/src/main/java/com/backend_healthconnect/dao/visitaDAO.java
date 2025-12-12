@@ -18,4 +18,6 @@ public interface visitaDAO {
 
     List<utenteDTO> getListaMediciPaziente(Long id);
 
+    List<visitaDTO> getStoricoVisitePaziente(Long id);
+
 }

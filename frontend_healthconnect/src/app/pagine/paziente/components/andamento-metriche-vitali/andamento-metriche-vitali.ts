@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
@@ -44,7 +44,8 @@ export class AndamentoMetricheVitali implements OnInit {
   constructor(
     private metricheService: MetricheService,
     private auth: AuthService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cd: ChangeDetectorRef
   ) {}
 
   // --- DATI PER I 3 GRAFICI ---
@@ -92,6 +93,8 @@ export class AndamentoMetricheVitali implements OnInit {
 
     // 3. GRAFICO GLICEMIA
     this.glicemiaData = this.creaConfigurazioneGrafico(dati, [TipoMetrica.GLICEMIA], ['#3b82f6'], ['Glicemia']);
+
+    this.cd.detectChanges();
   }
 
   // Metodo generico per creare la configurazione di un singolo grafico

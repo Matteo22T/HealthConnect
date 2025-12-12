@@ -1,0 +1,29 @@
+<div class="timeline-container fade-in">
+  <div class="timeline-item" *ngFor="let visita of storico">
+    <div class="date-column">
+      <span class="day">{{ visita.dataVisita | date:'dd' }}</span>
+      <span class="month">{{ visita.dataVisita | date:'MMM yyyy' }}</span>
+    </div>
+
+    <div class="content-column card">
+      <div class="card-header-time">
+        <h4>{{ visita.prenotazione.motivo }}</h4>
+        <span class="badge-medico">Dott. {{ visita.medico.cognome }}</span>
+      </div>
+
+      <div class="diagnosi-box" *ngIf="visita.diagnosi">
+        <strong>Diagnosi:</strong> {{ visita.diagnosi }}
+      </div>
+
+      <p class="note" *ngIf="visita.noteMedico">
+        📝 <em>"{{ visita.noteMedico }}"</em>
+      </p>
+
+      <div class="no-data" *ngIf="!visita.diagnosi && !visita.noteMedico">
+        <small>Nessun referto inserito per questa visita.</small>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="storico.length === 0" class="empty-msg">Nessuna visita nello storico.</div>
+</div>

@@ -90,4 +90,35 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
             throw new RuntimeException("errore durante connessione al database per le prescizioni", e);
         }
     }
+
+    @Override
+    public List<prescrizioneDTO> getAllPrescrizioniPaziente(Long id) {
+        List<prescrizioneDTO> prescrizioni = new ArrayList<>();
+        String query = """
+        SELECT p.* FROM prescrizioni p
+        INNER JOIN visite v ON p.visita_id = v.id
+        WHERE v.paziente_id = ? 
+        ORDER BY p.data_emissione DESC
+        """;
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                prescrizioneDTO dto = new prescrizioneDTO();
+                dto.setId(rs.getLong("id"));
+                dto.setNome_farmaco(rs.getString("nome_farmaco"));
+                dto.setDosaggio(rs.getString("dosaggio"));
+                dto.setDataEmissione(rs.getDate("data_emissione").toLocalDate());
+                java.sql.Date fine = rs.getDate("data_fine");
+                if(fine != null) dto.setDataFine(fine.toLocalDate());
+
+                prescrizioni.add(dto);
+            }
+            return prescrizioni;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

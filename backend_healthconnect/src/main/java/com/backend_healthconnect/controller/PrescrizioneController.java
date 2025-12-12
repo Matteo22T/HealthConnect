@@ -21,4 +21,9 @@ public class PrescrizioneController {
     public List<prescrizioneDTO> getPrescrizioniPaziente(@PathVariable Long id){
         return prescrizioneService.getPrescrizioniPaziente(id);
     }
+
+    @GetMapping("/storico/paziente/{id}")
+    public List<prescrizioneDTO> getAllPrescrizioni(@PathVariable Long id){
+        return prescrizioneService.getAllPrescrizioni(id);
+    }
 }

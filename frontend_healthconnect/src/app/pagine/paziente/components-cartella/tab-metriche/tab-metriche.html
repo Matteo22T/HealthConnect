@@ -1,0 +1,46 @@
+<div class="fade-in metriche-wrapper">
+
+  <app-andamento-metriche-vitali></app-andamento-metriche-vitali>
+
+  <div class="tabella-container card" *ngIf="!loading && elencoMetriche.length > 0">
+    <div class="card-header">
+      <h3>📋 Storico Dettagliato</h3>
+    </div>
+
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Data</th>
+          <th>Misurazione</th>
+          <th>Valore</th>
+          <th>Medico</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of elencoMetriche">
+          <td class="date-cell">{{ item.data | date:'dd MMM yyyy - HH:mm' }}</td>
+
+          <td class="type-cell">{{ formattaLabel(item.tipoMetrica) }}</td>
+
+          <td class="value-cell">
+            <strong>{{ item.valore }}</strong> <small>{{ item['unità_misura'] }}</small>
+          </td>
+
+          <td class="doctor-cell">
+            <div *ngIf="item.medico" class="medico-badge">
+              👨‍⚕️ Dr. {{ item.medico.cognome }}
+            </div>
+            <span *ngIf="!item.medico" class="no-data">-</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && elencoMetriche.length === 0">
+    <p>Nessun dato presente nello storico.</p>
+  </div>
+
+</div>

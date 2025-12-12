@@ -49,6 +49,11 @@ public class metricheSaluteDAOpostgres implements metricheSaluteDAO {
                 Timestamp ts = rs.getTimestamp("data_misurazione");
                 if (ts != null) dto.setData(ts.toLocalDateTime());
 
+                Long medicoId = rs.getLong("medico_id");
+                if (medicoId > 0) {
+                    dto.setMedico(utenteDAO.getUtenteById(medicoId));
+                }
+
                 metriche.add(dto);
             }
         } catch (SQLException e) {

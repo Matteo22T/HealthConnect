@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="header-section">
+    <h1>📂 Cartella Clinica</h1>
+    <p>Il tuo storico sanitario completo</p>
+  </div>
+
+  <div class="tabs-nav">
+    <button [class.active]="activeTab === 'visite'" (click)="setTab('visite')">📅 Storia Visite</button>
+    <button [class.active]="activeTab === 'prescrizioni'" (click)="setTab('prescrizioni')">💊 Farmaci</button>
+    <button [class.active]="activeTab === 'metriche'" (click)="setTab('metriche')">📈 Metriche</button>
+  </div>
+
+  <div class="tab-content">
+
+    <app-tab-storia-visite *ngIf="activeTab === 'visite'"></app-tab-storia-visite>
+
+    <app-tab-prescrizioni *ngIf="activeTab === 'prescrizioni'"></app-tab-prescrizioni>
+
+    <app-tab-metriche *ngIf="activeTab === 'metriche'"></app-tab-metriche>
+
+  </div>
+</div>

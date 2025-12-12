@@ -1,0 +1,21 @@
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+.header-section h1 { margin-bottom: 0.5rem; color: #333; }
+.header-section p { color: #666; margin-bottom: 2rem; }
+
+.tabs-nav {
+  display: flex; gap: 1rem; border-bottom: 2px solid #eee; margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.tabs-nav button {
+  background: none; border: none; padding: 1rem 1.5rem;
+  font-size: 1rem; font-weight: 600; color: #666; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.tabs-nav button:hover { color: #0066cc; background: #f8faff; }
+.tabs-nav button.active { color: #0066cc; border-bottom-color: #0066cc; }
+
+.tab-content { min-height: 400px; }

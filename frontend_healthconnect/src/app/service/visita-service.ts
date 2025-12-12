@@ -38,4 +38,10 @@ export class VisitaService {
     })
   }
 
+  getStoricoVisite(pazienteId: number): Observable<VisitaDTO[]> {
+    return this.http.get<VisitaDTO[]>(`${this.API_URL}/storico/pazienti/${pazienteId}`, {
+      withCredentials: true
+    });
+  }
+
 }

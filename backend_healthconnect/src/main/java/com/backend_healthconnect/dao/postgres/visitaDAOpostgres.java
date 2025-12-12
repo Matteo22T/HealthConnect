@@ -191,4 +191,33 @@ public class visitaDAOpostgres implements visitaDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<visitaDTO> getStoricoVisitePaziente(Long id) {
+        List<visitaDTO> storico = new ArrayList<>();
+        // Ordine decrescente (dalla più recente alla più vecchia)
+        String query = "SELECT * FROM visite WHERE paziente_id = ? AND data_visita < CURRENT_DATE ORDER BY data_visita DESC";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                visitaDTO v = new visitaDTO();
+                v.setId(rs.getLong("id"));
+                v.setDiagnosi(rs.getString("diagnosi"));
+                v.setNoteMedico(rs.getString("note_medico"));
+                v.setDataVisita(rs.getTimestamp("data_visita").toLocalDateTime());
+
+                // Importante: Carica anche i dati del medico e della prenotazione per mostrarli nella timeline
+                v.setMedico(utenteDAO.getUtenteById(rs.getLong("medico_id")));
+                v.setPrenotazione(prenotazioneDAO.getPrenotazioneById(rs.getLong("prenotazione_id")));
+
+                storico.add(v);
+            }
+            return storico;
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore storico visite", e);
+        }
+    }
 }

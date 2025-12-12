@@ -17,4 +17,8 @@ public class PrescrizioneService {
         return prescrizioneDAO.getPrescrizioniPaziente(id);
     }
 
+    public List<prescrizioneDTO> getAllPrescrizioni(Long id){
+        return prescrizioneDAO.getAllPrescrizioniPaziente(id);
+    }
+
 }
