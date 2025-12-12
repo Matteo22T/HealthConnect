@@ -1,0 +1,15 @@
+<div class="switch-container">
+  <button
+    class="switch-btn"
+    [class.active]="currentMode === 'support'"
+    (click)="onModeClick('support')">
+    🤖 Supporto App
+  </button>
+
+  <button
+    class="switch-btn"
+    [class.active]="currentMode === 'medical'"
+    (click)="onModeClick('medical')">
+    🩺 Controllo Sintomi
+  </button>
+</div>

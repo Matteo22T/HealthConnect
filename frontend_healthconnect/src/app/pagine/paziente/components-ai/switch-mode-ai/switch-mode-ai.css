@@ -1,0 +1,27 @@
+.switch-container {
+  display: flex;
+  background: #f1f3f5;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.switch-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.switch-btn.active {
+  background: white;
+  color: #3498db;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}

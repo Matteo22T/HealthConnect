@@ -1,1 +1,32 @@
-<p>assistente-ai works!</p>
+<div class="assistant-wrapper">
+
+  <div class="header">
+    <h2>Assistente Virtuale</h2>
+    <app-mode-switch
+      [currentMode]="mode"
+      (modeChanged)="switchMode($event)">
+    </app-mode-switch>
+
+    <div class="disclaimer" *ngIf="mode === 'medical'">
+      ⚠️ Le risposte sono generate da AI (Demo). Consulta un medico.
+    </div>
+  </div>
+
+  <div class="chat-area" #scrollContainer>
+    <app-chat-message
+      *ngFor="let msg of messages"
+      [message]="msg"
+      (choiceSelected)="onChoiceSelected($event)">
+    </app-chat-message>
+
+    <div class="typing-indicator" *ngIf="isLoading">
+      <span>●</span><span>●</span><span>●</span>
+    </div>
+  </div>
+
+  <app-chat-input
+    [isDisabled]="isLoading"
+    (sendText)="onUserSend($event)">
+  </app-chat-input>
+
+</div>
