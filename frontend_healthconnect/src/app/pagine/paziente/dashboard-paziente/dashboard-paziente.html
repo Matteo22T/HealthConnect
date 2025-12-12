@@ -3,9 +3,10 @@
     <h1>Bentornato, {{nomePaziente}} {{cognomePaziente}} 👨‍⚕️</h1>
 
     <div class="dashboard-grid">
-      <app-stat-card-paziente tipo="pending"  icona="📅" etichetta="Prossime visite" [contatore]="visite.length"></app-stat-card-paziente>
+      <app-stat-card-paziente tipo="appointments"  icona="📅" etichetta="Prossime visite" [contatore]="visite.length"></app-stat-card-paziente>
       <app-stat-card-paziente tipo="prescriptions"    icona="💊" etichetta="Prescrizioni attive" [contatore]="prescrizioni.length"></app-stat-card-paziente>
-      <app-stat-card-paziente tipo="doctors" icona="👨&zwj;" etichetta="Medici in Cura" [contatore]="medici.length"></app-stat-card-paziente>
+      <app-stat-card-paziente tipo="doctors" icona="👨‍⚕️" etichetta="Medici in Cura" [contatore]="medici.length"></app-stat-card-paziente>
+      <app-stat-card-paziente tipo="messages" icona="💬" etichetta="Ultimi messaggi" [contatore]="messaggi.length"></app-stat-card-paziente>
     </div>
   </div>
 
@@ -16,6 +17,11 @@
     <app-lista-prescrizioni
       [prescrizioni]="prescrizioni">
     </app-lista-prescrizioni>
+    <app-messaggi-paziente
+      [ultimiMessaggi]="messaggi">
+    </app-messaggi-paziente>
+    <app-medici-paziente [medici]="medici"></app-medici-paziente>
+
   </div>
   <div class="charts-section">
     <app-andamento-metriche-vitali></app-andamento-metriche-vitali>

@@ -1,6 +1,6 @@
 .quick-stat {
   background: white;
-  padding: 1.8rem;
+  padding: 0.5rem 1.8rem 0.5rem 1.8rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   display: flex;
@@ -34,6 +34,10 @@
 
 .stat-icon.doctors {
   background: #e8f5e9;
+}
+
+.stat-icon.messages {
+  background: #f8d7da;
 }
 
 .stat-content h3 {

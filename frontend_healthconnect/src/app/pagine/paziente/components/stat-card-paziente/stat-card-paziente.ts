@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
-export type StatCardType = 'pending' | 'prescriptions' | 'doctors';
+export type StatCardType = 'appointments' | 'prescriptions' | 'doctors' | 'messages';
 
 
 @Component({
@@ -25,6 +25,6 @@ export class StatCardPaziente {
   etichetta: string = '';
 
   @Input()
-  tipo: StatCardType = 'pending';
+  tipo: StatCardType = 'appointments';
 
 }
