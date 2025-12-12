@@ -1,6 +1,7 @@
 package com.backend_healthconnect.service;
 
 
+import com.backend_healthconnect.dao.messaggioDAO;
 import com.backend_healthconnect.dao.prenotazioneDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.prenotazioneDTO;
@@ -18,6 +19,9 @@ public class PrenotazioneService {
     @Autowired
     private visitaDAO visitaDAO;
 
+    @Autowired
+    private messaggioDAO messaggioDAO;
+
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id){
         System.out.println(id);
         return prenotazioneDAO.getPrenotazioniInAttesaByMedico(id);
@@ -25,7 +29,7 @@ public class PrenotazioneService {
 
     public boolean accettaPrenotazione(Long id){
         prenotazioneDTO pren = prenotazioneDAO.accettaPrenotazione(id);
-        if (pren != null) return visitaDAO.creaVisita(pren);
+        if (pren != null) return visitaDAO.creaVisita(pren) && messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");
         return false;
     }
 

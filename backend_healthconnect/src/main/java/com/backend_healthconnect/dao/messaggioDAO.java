@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface messaggioDAO {
     List<messaggioDTO> getMessaggiNonLettiById(Long id);
+    boolean inviaMessaggio(Long idMittente, Long idDestinatario, String testo);
 }
