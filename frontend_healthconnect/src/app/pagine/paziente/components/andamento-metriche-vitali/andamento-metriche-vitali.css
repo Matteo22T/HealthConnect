@@ -1,6 +1,6 @@
 .metriche-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive: 1 o 2 colonne */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive: 1 o 2 colonne */
   gap: 1.5rem;
   width: 100%;
 }

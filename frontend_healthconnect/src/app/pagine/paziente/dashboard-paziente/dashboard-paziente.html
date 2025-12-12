@@ -11,11 +11,13 @@
 
   <div class="main-grid">
     <app-lista-visite
-      [visite]="visite.slice(0,5)">
+      [visite]="visite">
     </app-lista-visite>
     <app-lista-prescrizioni
-      [prescrizioni]="prescrizioni.slice(0,5)">
+      [prescrizioni]="prescrizioni">
     </app-lista-prescrizioni>
+  </div>
+  <div class="charts-section">
     <app-andamento-metriche-vitali></app-andamento-metriche-vitali>
   </div>
 </main>

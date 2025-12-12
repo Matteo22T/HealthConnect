@@ -1,3 +1,26 @@
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 .card {
   background: white;
   border-radius: 12px;
@@ -76,4 +99,14 @@
   color: #667eea;
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #999;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

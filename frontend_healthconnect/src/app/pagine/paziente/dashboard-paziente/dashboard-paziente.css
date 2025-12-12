@@ -33,3 +33,22 @@
   gap: 2rem;
   margin-bottom: 2rem;
 }
+
+.charts-section {
+  width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
+
+

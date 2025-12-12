@@ -4,13 +4,16 @@
     <a href="#" class="view-all">Vedi tutte →</a>
   </div>
 
+  <div class="scroll-container">
+
   <div class="prescription-item" *ngFor="let pren of prescrizioni">
     <h4>{{ pren.nome_farmaco }}</h4>
     <p>{{ pren.dosaggio }}</p>
-    <p class="prescription-date">Prescritta il {{ pren.dataEmissione | date: 'dd MMM yyyy' }}</p>
+    <p class="prescription-date">Prescritta il {{ pren.dataEmissione | date: 'dd MMM yyyy' }} / Scadenza il {{ pren.dataFine | date: 'dd MMM yyyy' }}</p>
   </div>
 
   <div class="empty-state" *ngIf="prescrizioni.length === 0">
     <p>Nessuna prescrizione attiva.</p>
+  </div>
   </div>
 </div>

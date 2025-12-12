@@ -50,3 +50,8 @@
   color: #999;
 }
 
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
