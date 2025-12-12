@@ -1,1 +1,16 @@
-<p>dettaglio-paziente-medico works!</p>
+<main>
+  <a routerLink="/medico/pazienti" class="back-link">← Torna ai Pazienti</a>
+
+  <div class="container">
+
+    <app-informazioni-paziente-medico [utente]="paziente"></app-informazioni-paziente-medico>
+
+    <div class="content-grid">
+
+       <app-visite-paziente-medico [visite]="visite"></app-visite-paziente-medico>
+
+      <app-prescrizioni-paziente-medico [prescrizioni]="prescrizioniPaziente"></app-prescrizioni-paziente-medico>
+
+    </div>
+  </div>
+</main>

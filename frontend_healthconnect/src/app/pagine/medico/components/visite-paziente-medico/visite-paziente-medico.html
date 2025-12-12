@@ -1,0 +1,23 @@
+<div class="section-card">
+  <h2 class="section-title">
+    <span class="section-icon">📋</span>
+    Ultime Visite
+  </h2>
+
+  <div class="scroll-container">
+
+  <div *ngIf="visite.length === 0" class="no-results">
+    <p>Nessuna visita recente.</p>
+  </div>
+
+  <div class="list-item" *ngFor="let visita of visite">
+    <div class="list-item-header">
+      <span class="list-item-title">{{visita.prenotazione.motivo}}</span>
+      <span class="list-item-date">{{visita.dataVisita | date:'d MMM y'}}</span>
+    </div>
+    <p class="list-item-content">{{visita.noteMedico}}</p>
+  </div>
+
+  </div>
+
+</div>

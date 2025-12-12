@@ -3,6 +3,7 @@ package com.backend_healthconnect.dao;
 import com.backend_healthconnect.model.prenotazioneDTO;
 import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.model.visitaDTO;
+import com.backend_healthconnect.model.visitaDettaglioDTO;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface visitaDAO {
 
     List<utenteDTO> getListaMediciPaziente(Long id);
 
+    List<visitaDettaglioDTO> getVisitePassatePazienteByMedico(Long idPaziente, Long idMedico);
 }

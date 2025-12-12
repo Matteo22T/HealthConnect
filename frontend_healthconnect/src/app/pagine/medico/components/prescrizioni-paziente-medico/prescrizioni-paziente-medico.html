@@ -1,0 +1,23 @@
+<div class="section-card">
+  <h2 class="section-title">
+    <span class="section-icon">💊</span>
+    Ultime Prescrizioni
+  </h2>
+
+  <div class="no-results" *ngIf="prescrizioni.length === 0">
+    Nessuna prescrizione.
+  </div>
+
+  <div class="scroll-container">
+
+  <div class="list-item" *ngFor="let prescrizione of prescrizioni">
+    <div class="list-item-header">
+      <span class="list-item-title">{{prescrizione.nome_farmaco}}</span>
+      <span class="list-item-date">{{prescrizione.dataEmissione | date:'d MMM y' }}</span>
+    </div>
+    <p class="list-item-content">{{prescrizione.dosaggio}}.   Fine assunzione: {{prescrizione.dataFine | date: 'd MMM y' }}</p>
+  </div>
+
+  </div>
+
+</div>

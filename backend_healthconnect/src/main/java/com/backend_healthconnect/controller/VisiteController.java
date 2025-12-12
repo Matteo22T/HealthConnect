@@ -2,6 +2,7 @@ package com.backend_healthconnect.controller;
 
 import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.model.visitaDTO;
+import com.backend_healthconnect.model.visitaDettaglioDTO;
 import com.backend_healthconnect.service.VisiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,13 @@ public class VisiteController {
     public ResponseEntity<List<visitaDTO>> getVisiteFutureByPaziente(@PathVariable Long id){
         List<visitaDTO> lista = visiteService.getVisiteFutureByPaziente(id);
         if (lista != null) return ResponseEntity.ok(lista);
+        else return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/paziente/{id}/medico/{id_med}")
+    public ResponseEntity<List<visitaDettaglioDTO>> getVisitePassatePazienteByMedico (@PathVariable("id") Long idPaziente, @PathVariable("id_med") Long idMedico){
+        List<visitaDettaglioDTO> list = visiteService.getVisitePassatePazienteByMedico(idPaziente,idMedico);
+        if (list != null) return ResponseEntity.ok(list);
         else return ResponseEntity.notFound().build();
     }
 }

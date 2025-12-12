@@ -4,6 +4,7 @@ import {prenotazioneDTO} from '../model/prenotazioneDTO';
 import {VisitaDTO} from '../model/visitaDTO';
 import {Observable, Subject} from 'rxjs';
 import {utenteDTO} from '../model/utenteDTO';
+import {VisitaDettaglioDTO} from '../model/visitaDettaglioDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -52,4 +53,9 @@ export class VisitaService {
     })
   }
 
+  getVisitePazientePassateByMedico(pazienteId: string, id: number) {
+    return this.http.get<VisitaDettaglioDTO[]>(`${this.API_URL}/paziente/${pazienteId}/medico/${id}`, {
+      withCredentials: true
+    });
+  }
 }

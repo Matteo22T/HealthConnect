@@ -1,0 +1,48 @@
+<div class="profile-header" *ngIf="utente; else loadingTemplate">
+
+  <div class="avatar">
+    {{ utente.nome | slice:0:1 | uppercase }}{{ utente.cognome | slice:0:1 | uppercase }}
+  </div>
+
+  <div class="patient-info">
+    <h1 class="patient-name">{{ utente.nome }} {{ utente.cognome }}</h1>
+    <p class="patient-id">ID Paziente: #{{ utente.id }}</p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Data di Nascita</span>
+        <span class="info-value">{{ utente.dataNascita | date:'d MMM y' }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Età</span>
+        <span class="info-value">{{ etaReale }} anni</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Sesso</span>
+        <span class="info-value">{{ utente.sesso }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Telefono</span>
+        <span class="info-value">{{ utente.telefono }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Email</span>
+        <span class="info-value">{{ utente.email }}</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-message" routerLink="/messaggi">
+    💬 Invia Messaggio
+  </button>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="profile-header skeleton-loader">
+    <p>Caricamento profilo paziente...</p>
+  </div>
+</ng-template>

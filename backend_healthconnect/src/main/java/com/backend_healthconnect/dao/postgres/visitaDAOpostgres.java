@@ -191,4 +191,32 @@ public class visitaDAOpostgres implements visitaDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<visitaDettaglioDTO> getVisitePassatePazienteByMedico(Long idPaziente, Long idMedico) {
+        String query = "SELECT * FROM visite WHERE paziente_id = ?" + " AND medico_id = ? " + "AND data_visita < CURRENT_TIMESTAMP " + "ORDER BY data_visita DESC";
+        try (Connection conn = this.dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query)){
+            statement.setLong(1, idPaziente);
+            statement.setLong(2, idMedico);
+            ResultSet rs = statement.executeQuery();
+            List<visitaDettaglioDTO> visite = new ArrayList<>();
+            while (rs.next()){
+                visitaDettaglioDTO visita = new visitaDTOProxy(prescrizioneDAO);
+                visita.setId(rs.getLong("id"));
+                visita.setPrenotazione(prenotazioneDAO.getPrenotazioneById(rs.getLong("prenotazione_id")));
+                visita.setPaziente(utenteDAO.getUtenteById(rs.getLong("paziente_id")));
+                visita.setMedico(utenteDAO.getUtenteById(rs.getLong("medico_id")));
+                visita.setDiagnosi(rs.getString("diagnosi"));
+                visita.setNoteMedico(rs.getString("note_medico"));
+                Timestamp data = rs.getTimestamp("data_visita");
+                visita.setDataVisita(data.toLocalDateTime());
+                visite.add(visita);
+            }
+            return visite;
+
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta lista visite al db",e);
+        }
+    }
 }
