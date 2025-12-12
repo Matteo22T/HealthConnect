@@ -75,4 +75,18 @@ export class DashboardPaziente implements OnInit{
     }
   }
 
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      element.classList.add('highlight-glow');
+
+      setTimeout(() => {
+        element.classList.remove('highlight-glow');
+      }, 2000);
+    }
+  }
+
 }

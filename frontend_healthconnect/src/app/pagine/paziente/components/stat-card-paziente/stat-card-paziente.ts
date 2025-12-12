@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 export type StatCardType = 'appointments' | 'prescriptions' | 'doctors' | 'messages';
@@ -26,5 +26,12 @@ export class StatCardPaziente {
 
   @Input()
   tipo: StatCardType = 'appointments';
+
+
+  @Output() cardClick = new EventEmitter<string>();
+
+  onClick() {
+    this.cardClick.emit(this.tipo);
+  }
 
 }
