@@ -1,0 +1,66 @@
+.ai-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 80vh;
+}
+
+/* HEADER */
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.back-btn {
+  background: none; border: none; color: #667eea;
+  font-weight: 600; cursor: pointer; font-size: 1rem;
+}
+.back-btn:hover { text-decoration: underline; }
+
+/* SELECTION MENU */
+.selection-menu { text-align: center; margin-top: 3rem; }
+.selection-menu h1 { color: #333; margin-bottom: 0.5rem; }
+.subtitle { color: #666; margin-bottom: 3rem; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.ai-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.support-card:hover { border-color: #667eea; }
+.symptoms-card:hover { border-color: #e91e63; }
+
+.icon-wrapper { font-size: 3rem; margin-bottom: 1.5rem; }
+.ai-card h3 { font-size: 1.4rem; color: #333; margin-bottom: 0.8rem; }
+.ai-card p { color: #666; line-height: 1.6; }
+
+.badge-ai {
+  position: absolute; top: 1rem; right: 1rem;
+  background: #e91e63; color: white;
+  font-size: 0.6rem; padding: 0.3rem 0.6rem;
+  border-radius: 10px; font-weight: bold; text-transform: uppercase;
+}
+
+.chat-view {
+  animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

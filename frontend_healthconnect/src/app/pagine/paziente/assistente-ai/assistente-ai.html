@@ -1,32 +1,32 @@
-<div class="assistant-wrapper">
+<div class="ai-container">
 
-  <div class="header">
-    <h2>Assistente Virtuale</h2>
-    <app-mode-switch
-      [currentMode]="mode"
-      (modeChanged)="switchMode($event)">
-    </app-mode-switch>
-
-    <div class="disclaimer" *ngIf="mode === 'medical'">
-      ⚠️ Le risposte sono generate da AI (Demo). Consulta un medico.
+    <div class="ai-header" *ngIf="currentMode !== 'SELEZIONE'">
+        <button class="back-btn" (click)="tornaIndietro()">← Torna al menu</button>
+        <h2>{{ currentMode === 'SUPPORTO' ? 'Supporto Generale' : 'Controllo Sintomi' }}</h2>
     </div>
-  </div>
 
-  <div class="chat-area" #scrollContainer>
-    <app-chat-message
-      *ngFor="let msg of messages"
-      [message]="msg"
-      (choiceSelected)="onChoiceSelected($event)">
-    </app-chat-message>
+    <div class="selection-menu" *ngIf="currentMode === 'SELEZIONE'">
+        <h1>Come posso aiutarti oggi?</h1>
+        <p class="subtitle">Scegli il servizio di cui hai bisogno</p>
 
-    <div class="typing-indicator" *ngIf="isLoading">
-      <span>●</span><span>●</span><span>●</span>
+        <div class="cards-grid">
+            <div class="ai-card support-card" (click)="selezionaModalita('SUPPORTO')">
+                <div class="icon-wrapper">ℹ️</div>
+                <h3>Info & Supporto</h3>
+                <p>Domande su prenotazioni, ricette, orari e utilizzo della piattaforma.</p>
+            </div>
+
+            <div class="ai-card symptoms-card" (click)="selezionaModalita('SINTOMI')">
+                <div class="icon-wrapper">🩺</div>
+                <h3>Check Sintomi</h3>
+                <p>Descrivi come ti senti e ricevi una pre-valutazione basata sull'IA.</p>
+                <span class="badge-ai">Powered by Infermedica</span>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <app-chat-input
-    [isDisabled]="isLoading"
-    (sendText)="onUserSend($event)">
-  </app-chat-input>
+    <app-chat-supporto *ngIf="currentMode === 'SUPPORTO'" class="chat-view"></app-chat-supporto>
+
+    <app-chat-sintomi *ngIf="currentMode === 'SINTOMI'" class="chat-view"></app-chat-sintomi>
 
 </div>

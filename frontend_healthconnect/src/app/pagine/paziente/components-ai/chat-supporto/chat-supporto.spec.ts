@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SwitchModeAi } from './switch-mode-ai';
+import { ChatSupporto } from './chat-supporto';
 
-describe('SwitchModeAi', () => {
-  let component: SwitchModeAi;
-  let fixture: ComponentFixture<SwitchModeAi>;
+describe('ChatSupporto', () => {
+  let component: ChatSupporto;
+  let fixture: ComponentFixture<ChatSupporto>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SwitchModeAi]
+      imports: [ChatSupporto]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SwitchModeAi);
+    fixture = TestBed.createComponent(ChatSupporto);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
