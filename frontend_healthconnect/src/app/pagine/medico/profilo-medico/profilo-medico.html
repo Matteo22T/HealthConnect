@@ -1,0 +1,152 @@
+<div class="container profile-wrapper" *ngIf="medico; else loading">
+
+  <header class="profile-header shadow-sm">
+    <div class="header-content">
+      <div class="profile-avatar">
+        {{medico.nome.charAt(0).toUpperCase() + medico.cognome.charAt(0).toUpperCase()}}
+      </div>
+      <div class="profile-title">
+        <h1>Dr. {{ medico.nome }} {{ medico.cognome }}</h1>
+        <p class="subtitle">{{nomeSpec}}</p>
+        <span class="badge-ruolo">Medico Certificato</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-details-grid">
+
+    <section class="detail-card shadow-sm">
+      <div class="card-title-row">
+        <h2><span class="icon">📋</span> Dati Personali</h2>
+        <button class="btn-edit-icon" (click)="ModificaDatiPersonali()" *ngIf="!isEditingPersonal" title="Modifica">
+          ✏️
+        </button>
+      </div>
+
+      <div *ngIf="!isEditingPersonal">
+        <div class="detail-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ medico.email }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Telefono:</span>
+          <span class="value">{{ medico.telefono ? medico.telefono : 'Non specificato' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Data di Nascita:</span>
+          <span class="value">{{ medico.dataNascita | date: 'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Sesso:</span>
+          <span class="value" style="text-transform: capitalize;">{{ medico.sesso }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="isEditingPersonal" class="edit-form">
+        <div class="form-group-edit">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="medico.email" class="form-input">
+        </div>
+
+        <div class="form-group-edit">
+          <label>Telefono</label>
+          <input type="number" [(ngModel)]="medico.telefono" class="form-input">
+        </div>
+
+        <div class="form-group-edit">
+          <label>Data di Nascita</label>
+          <input type="date" [value]="medico.dataNascita" disabled class="input-readonly">
+        </div>
+
+        <div class="form-group-edit">
+          <label>Sesso</label>
+          <select [value]="medico.sesso" disabled class="input-readonly">
+            <option value="M">Maschio</option>
+            <option value="F">Femmina</option>
+            <option value="N">Altro</option>
+          </select>
+        </div>
+
+        <div class="edit-actions">
+          <button class="btn-cancel" (click)="ModificaDatiPersonali()">Annulla</button>
+          <button class="btn-save" (click)="salvaDatiPersonali()">Salva</button>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="detail-card shadow-sm">
+      <div class="card-title-row">
+        <h2><span class="icon">🏥</span> Info Professionali</h2>
+        <button class="btn-edit-icon" (click)="modificaDatiProfessionali()" *ngIf="!isEditingProfessional" title="Modifica">
+          ✏️
+        </button>
+      </div>
+
+      <div *ngIf="!isEditingProfessional">
+        <div class="detail-item">
+          <span class="label">Numero Albo:</span>
+          <span class="value fw-bold">{{ medico.numero_albo ? medico.numero_albo : 'N/D' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Stato:</span>
+          <span class="badge status-badge" [ngClass]="{'status-ok': medico.stato_approvazione === 'APPROVATO', 'status-pending': medico.stato_approvazione === 'PENDING'}">
+            {{ medico.stato_approvazione }}
+          </span>
+        </div>
+        <hr>
+        <div class="detail-block">
+          <span class="label display-block mb-2">📍 Indirizzo Studio:</span>
+          <p class="value address-box">
+            {{ medico.indirizzo_studio ? medico.indirizzo_studio : 'Non inserito.' }}
+          </p>
+        </div>
+        <div class="detail-block mt-4">
+          <span class="label display-block mb-2">📝 Biografia:</span>
+          <p class="value bio-box">
+            {{ medico.biografia ? medico.biografia : 'Nessuna biografia.' }}
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="isEditingProfessional" class="edit-form">
+
+        <div class="form-group-edit">
+          <label>Numero Albo</label>
+          <input type="text" [value]="medico.numero_albo" disabled class="input-readonly">
+        </div>
+
+        <div class="form-group-edit">
+          <label>Stato Approvazione</label>
+          <span class="badge status-badge" [ngClass]="{'status-ok': medico.stato_approvazione === 'APPROVATO', 'status-pending': medico.stato_approvazione === 'PENDING'}">
+                {{ medico.stato_approvazione }}
+            </span>
+        </div>
+
+        <div class="form-group-edit">
+          <label>Indirizzo Studio</label>
+          <input type="text" [(ngModel)]="medico.indirizzo_studio" class="form-input" placeholder="Via Roma 1, Milano">
+        </div>
+
+        <div class="form-group-edit">
+          <label>Biografia</label>
+          <textarea [(ngModel)]="medico.biografia" class="form-textarea" rows="5"></textarea>
+        </div>
+
+        <div class="edit-actions">
+          <button class="btn-cancel" (click)="modificaDatiProfessionali()">Annulla</button>
+          <button class="btn-save" (click)="salvaDatiProfessionali()">Salva</button>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Caricamento profilo...</p>
+  </div>
+</ng-template>

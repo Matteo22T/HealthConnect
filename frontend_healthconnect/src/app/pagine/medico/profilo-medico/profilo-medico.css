@@ -1,0 +1,272 @@
+/* Wrapper principale */
+.profile-wrapper {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+/* --- STYLE HEADER --- */
+.profile-header {
+  background: linear-gradient(135deg, #0056b3 0%, #0088ff 100%); /* Blu medico */
+  color: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.profile-title h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 5px 0 10px 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.badge-ruolo {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* --- LAYOUT GRIGLIA --- */
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Due colonne uguali */
+  gap: 25px;
+}
+
+/* --- STYLE CARD --- */
+.detail-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid #eef2f6;
+}
+
+.detail-card h2 {
+  color: #0056b3;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-card .icon {
+  font-size: 1.6rem;
+}
+
+/* --- STYLE ELEMENTI DATI --- */
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.value {
+  font-weight: 500;
+  color: #212529;
+}
+
+.fw-bold { font-weight: 700; }
+.display-block { display: block; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+/* Box specifici per indirizzo e bio */
+.address-box, .bio-box {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #0056b3;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Mantiene gli a capo se presenti nel testo */
+}
+
+/* Badges di stato */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.status-ok { background-color: #d4edda; color: #155724; }
+.status-pending { background-color: #fff3cd; color: #856404; }
+
+/* Ombreggiatura generica */
+.shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+/* --- RESPONSIVE (Per cellulari) --- */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-details-grid {
+    grid-template-columns: 1fr; /* Una sola colonna su schermi piccoli */
+    gap: 15px;
+  }
+}
+
+/* --- LOADING SPINNER --- */
+.loading-container {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+}
+
+/* ... Il tuo CSS precedente ... */
+
+/* --- PULSANTI E EDITING --- */
+.card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Bottone matita */
+.btn-edit-icon {
+  background: #f0f7ff;
+  border: 1px solid #cce5ff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit-icon:hover {
+  background: #0066cc;
+  border-color: #0066cc;
+  /* L'emoji non cambia colore col css color,
+     ma lo sfondo blu fa capire l'azione */
+  transform: scale(1.1);
+}
+
+/* Form Editing */
+.edit-form {
+  background: #fafbfc;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px dashed #ced4da;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-group-edit {
+  margin-bottom: 15px;
+}
+
+.form-group-edit label {
+  display: block;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.form-input, .form-textarea, .input-readonly {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.input-readonly {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Bottoni Azione (Salva/Annulla) */
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-cancel {
+  background: white;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-save {
+  background: #0066cc;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 102, 204, 0.2);
+}
+
+.btn-save:hover {
+  background: #0052a3;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

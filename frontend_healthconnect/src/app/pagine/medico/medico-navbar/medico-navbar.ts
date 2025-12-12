@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../service/auth-service';
 import {NgIf} from '@angular/common';
-import {Router, RouterLink} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {SpecializzazioniService} from '../../../service/specializzazioni-service';
 import {SpecializzazioneDTO} from '../../../model/specializzazioneDTO';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
@@ -14,7 +14,8 @@ import {PrenotazioneService} from '../../../service/prenotazione-service';
   selector: 'app-medico-navbar',
   imports: [
     NgIf,
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './medico-navbar.html',
   styleUrl: './medico-navbar.css',
