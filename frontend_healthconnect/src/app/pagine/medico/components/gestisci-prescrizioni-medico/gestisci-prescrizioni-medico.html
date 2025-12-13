@@ -1,0 +1,53 @@
+<div class="card farmaci-section">
+  <h2 class="card-title"><span class="card-icon">💊</span> Prescrizione Farmaci</h2>
+
+  <div class="farmaci-layout">
+    <!-- COLONNA SINISTRA: FORM AGGIUNGI -->
+    <div>
+      <h3>Aggiungi Farmaco</h3>
+      <div class="farmaci-form">
+        <div class="form-group">
+          <label class="form-label">Nome Farmaco</label>
+          <input [(ngModel)]="nuovoFarmaco.nome_farmaco" class="form-input" placeholder="Es. Paracetamolo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dosaggio</label>
+          <input [(ngModel)]="nuovoFarmaco.dosaggio" class="form-input" placeholder="Es. 500mg">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Data Fine</label>
+          <input type="date" [(ngModel)]="nuovoFarmaco.dataFine" class="form-input">
+        </div>
+        <div class="error-message" *ngIf="errore">
+          ⚠️ {{ errore }}
+        </div>
+        <button class="btn btn-primary" (click)="aggiungi()" style="width: 100%;">
+          <span>➕</span> Aggiungi
+        </button>
+      </div>
+    </div>
+
+    <!-- COLONNA DESTRA: LISTA FARMACI -->
+    <div>
+      <h3>Farmaci Prescritti ({{ prescrizioni.length }})</h3>
+      <div class="farmaci-list-wrapper">
+        <div class="farmaci-list">
+          <div class="empty-state" *ngIf="prescrizioni.length === 0">
+            Nessun farmaco prescritto
+          </div>
+
+          <div class="farmaco-item" *ngFor="let prescr of prescrizioni; let i = index">
+            <div class="farmaco-header">
+              <span class="farmaco-nome">{{ prescr.nome_farmaco }}</span>
+              <button class="farmaco-delete" (click)="rimuovi(i)">✕</button>
+            </div>
+            <div class="farmaco-info">
+              <span class="farmaco-dosaggio"><strong>Dosaggio:</strong> {{ prescr.dosaggio }}</span>
+              <span class="farmaco-scadenza">⏱ Fino al: {{ prescr.dataFine | date:'d MMM y' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

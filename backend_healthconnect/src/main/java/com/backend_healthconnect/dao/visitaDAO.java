@@ -10,7 +10,7 @@ import java.util.List;
 public interface visitaDAO {
     List<visitaDTO> getVisiteOdierneByMedico(Long id);
 
-    visitaDTO getVisitaById(Long id);
+    visitaDettaglioDTO getVisitaById(Long id);
 
     List<visitaDTO> getVisiteFutureByPaziente(Long id);
 
@@ -20,4 +20,6 @@ public interface visitaDAO {
     List<utenteDTO> getListaMediciPaziente(Long id);
 
     List<visitaDettaglioDTO> getVisitePassatePazienteByMedico(Long idPaziente, Long idMedico);
+
+    Boolean salvaVisita(Long id, visitaDettaglioDTO visita);
 }

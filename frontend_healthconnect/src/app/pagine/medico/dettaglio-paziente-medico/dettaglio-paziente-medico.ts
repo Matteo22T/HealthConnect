@@ -3,12 +3,11 @@ import {InformazioniPazienteMedico} from '../components/informazioni-paziente-me
 import {VisitePazienteMedico} from '../components/visite-paziente-medico/visite-paziente-medico';
 import {PrescrizioniPazienteMedico} from '../components/prescrizioni-paziente-medico/prescrizioni-paziente-medico';
 import {utenteDTO} from '../../../model/utenteDTO';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {VisitaService} from '../../../service/visita-service';
 import {UtenteService} from '../../../service/utente-service';
 import {AuthService} from '../../../service/auth-service';
 import {forkJoin} from 'rxjs';
-import {VisitaDTO} from '../../../model/visitaDTO';
 import {VisitaDettaglioDTO} from '../../../model/visitaDettaglioDTO';
 import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
 
@@ -30,7 +29,7 @@ export class DettaglioPazienteMedico implements OnInit{
   visite: VisitaDettaglioDTO[] = []
   prescrizioniPaziente: prescrizioneDTO[] = []
 
-  constructor(private route: ActivatedRoute, private visService: VisitaService, private changeDet: ChangeDetectorRef, private utService: UtenteService, private auth: AuthService) {}
+  constructor(private route: ActivatedRoute, private visService: VisitaService, private changeDet: ChangeDetectorRef, private utService: UtenteService, private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
     const pazienteId = this.route.snapshot.paramMap.get('id');
@@ -59,6 +58,13 @@ export class DettaglioPazienteMedico implements OnInit{
       for (let prescr of visita.prescrizioni){
         this.prescrizioniPaziente.push(prescr)
       }
+    }
+  }
+
+  apriVisita($event: any) {
+    const id_visita: number = $event
+    if (id_visita !== null){
+      this.router.navigate(['/medico/visite', id_visita])
     }
   }
 }

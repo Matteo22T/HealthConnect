@@ -1,0 +1,240 @@
+/* --- VISITA HEADER COMPONENT CSS --- */
+
+.visita-header {
+  background: var(--white, #ffffff);
+  padding: 2.5rem 3rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: headerSlide 0.6s ease-out;
+}
+
+@keyframes headerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.visita-header:hover {
+  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Barra colorata in alto con animazione */
+.visita-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #0066cc, #00c4cc, #0066cc);
+  background-size: 200% 100%;
+  animation: gradientFlow 3s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 1;
+}
+
+/* Icona rotonda con gradiente e animazione */
+.header-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e6f2ff 0%, rgba(0, 196, 204, 0.25) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+  flex-shrink: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: iconPulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3);
+  }
+}
+
+.header-icon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 102, 204, 0.2);
+  opacity: 0;
+  animation: ripple 2s ease-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+.visita-header:hover .header-icon {
+  transform: rotate(10deg) scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 102, 204, 0.35);
+}
+
+/* Info del titolo */
+.header-info {
+  flex: 1;
+  min-width: 0; /* Per permettere l'ellipsis se necessario */
+}
+
+.header-info h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text-dark, #1a1a1a);
+  letter-spacing: -0.5px;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0066cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Data */
+.header-date {
+  font-size: 1.05rem;
+  color: #666666;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
+.header-date::before {
+  content: '📅';
+  font-size: 1.1rem;
+}
+
+/* Badge dello stato */
+.status-badge {
+  background: rgba(0, 102, 204, 0.12);
+  color: #0066cc;
+  padding: 0.6rem 1.4rem;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 2px solid rgba(0, 102, 204, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s ease-out 0.4s backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.status-badge:hover::before {
+  left: 100%;
+}
+
+.status-badge:hover {
+  background: rgba(0, 102, 204, 0.18);
+  border-color: rgba(0, 102, 204, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+}
+
+/* --- RESPONSIVE (MOBILE) --- */
+@media (max-width: 768px) {
+  .visita-header {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .header-title {
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .header-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.8rem;
+  }
+
+  .header-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-date {
+    font-size: 0.95rem;
+  }
+
+  .status-badge {
+    align-self: flex-start;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+}

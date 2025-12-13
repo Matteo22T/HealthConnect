@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +63,7 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
 
     @Override
     public List<prescrizioneDTO> getPrescrizioniByVisita(Long id) {
-        String query = "SELECT * FROM prescrizioni WHERE visita_id = ?";
+        String query = "SELECT * FROM prescrizioni WHERE visita_id = ? ORDER BY data_fine DESC";
         try(Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setLong(1,id);
@@ -86,6 +83,40 @@ public class prescrizioneDAOpostgres implements prescrizioneDAO {
                 prescrizioni.add(prescrizioneDTO);
             }
             return prescrizioni;
+        } catch (SQLException e) {
+            throw new RuntimeException("errore durante connessione al database per le prescizioni", e);
+        }
+    }
+
+    @Override
+    public Boolean aggiornaPrescrizioni(List<prescrizioneDTO> prescrizioni, Long idVisita) {
+        String queryDelete = "DELETE FROM prescrizioni WHERE visita_id = ?";
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(queryDelete)){
+            statement.setLong(1, idVisita);
+            statement.executeUpdate();
+
+            if (prescrizioni != null){
+                for (prescrizioneDTO prescrizione : prescrizioni) {
+                    String queryInsert = "INSERT INTO prescrizioni (visita_id, nome_farmaco, dosaggio, data_emissione, data_fine) VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement preparedStatement = conn.prepareStatement(queryInsert)) {
+                        preparedStatement.setLong(1,idVisita);
+                        preparedStatement.setString(2, prescrizione.getNome_farmaco());
+                        preparedStatement.setString(3, prescrizione.getDosaggio());
+
+                        Date date = Date.valueOf(prescrizione.getDataEmissione());
+                        preparedStatement.setDate(4, date);
+
+                        date = Date.valueOf(prescrizione.getDataFine());
+                        preparedStatement.setDate(5, date);
+                        
+                        if (preparedStatement.executeUpdate() <= 0){
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException("errore durante connessione al database per le prescizioni", e);
         }

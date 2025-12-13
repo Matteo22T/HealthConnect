@@ -58,4 +58,14 @@ export class VisitaService {
       withCredentials: true
     });
   }
+
+  getVisitaById(visitaId: string) {
+    return this.http.get<VisitaDettaglioDTO>(`${this.API_URL}/medico/${visitaId}`, {
+      withCredentials: true
+    })
+  }
+
+  salvaVisita(visita: VisitaDettaglioDTO){
+    return this.http.put<boolean>(`${this.API_URL}/medico/salva/${visita.id}`, visita, {withCredentials: true});
+  }
 }

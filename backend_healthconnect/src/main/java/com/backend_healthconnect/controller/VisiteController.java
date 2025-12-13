@@ -50,4 +50,19 @@ public class VisiteController {
         if (list != null) return ResponseEntity.ok(list);
         else return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/medico/{id}")
+    public ResponseEntity<visitaDettaglioDTO> getVisitaById(@PathVariable Long id){
+        visitaDettaglioDTO visita = visiteService.getVisitaById(id);
+        if (visita != null) return ResponseEntity.ok(visita);
+        else return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/medico/salva/{id}")
+    public ResponseEntity<Boolean> salvaVisita(@PathVariable Long id, @RequestBody visitaDettaglioDTO visita){
+        if (id == null || visita == null || !id.equals(visita.getId())) return ResponseEntity.badRequest().build();
+        Boolean esito = visiteService.salvaVisita(id, visita);
+        if (esito) return ResponseEntity.ok(esito);
+        else return ResponseEntity.notFound().build();
+    }
 }

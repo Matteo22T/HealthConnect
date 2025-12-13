@@ -7,7 +7,7 @@
 
     <div class="content-grid">
 
-       <app-visite-paziente-medico [visite]="visite"></app-visite-paziente-medico>
+       <app-visite-paziente-medico [visite]="visite" (apriVisita)="apriVisita($event)"></app-visite-paziente-medico>
 
       <app-prescrizioni-paziente-medico [prescrizioni]="prescrizioniPaziente"></app-prescrizioni-paziente-medico>
 

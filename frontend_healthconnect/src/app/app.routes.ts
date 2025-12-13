@@ -12,6 +12,7 @@ import {PazientiMedico} from './pagine/medico/pazienti-medico/pazienti-medico';
 import {ChatMedico} from './pagine/medico/chat-medico/chat-medico';
 import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
 import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
+import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 
 
 
@@ -33,7 +34,8 @@ export const routes: Routes = [
       {path: 'pazienti', component: PazientiMedico},
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'chat', component: ChatMedico},
-      {path: 'richieste', component: AppuntamentiMedico}
+      {path: 'richieste', component: AppuntamentiMedico},
+      {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
 

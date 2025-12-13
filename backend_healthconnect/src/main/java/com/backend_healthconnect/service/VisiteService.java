@@ -30,4 +30,12 @@ public class VisiteService {
     public List<visitaDTO> getVisiteFutureByPaziente(Long id){ return visitaDAO.getVisiteFutureByPaziente(id); }
 
     public List<visitaDettaglioDTO> getVisitePassatePazienteByMedico(Long idPaziente, Long idMedico){ return visitaDAO.getVisitePassatePazienteByMedico(idPaziente,idMedico); }
+
+    public visitaDettaglioDTO getVisitaById(Long id){
+        return this.visitaDAO.getVisitaById(id);
+    }
+
+    public Boolean salvaVisita(Long id, visitaDettaglioDTO visita){
+        return this.visitaDAO.salvaVisita(id,visita);
+    }
 }

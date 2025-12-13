@@ -1,0 +1,54 @@
+<div class="container">
+
+  <button class="back-link" (click)="tornaIndietro()">
+    <span>←</span> Torna al Paziente
+  </button>
+
+  <ng-container *ngIf="visita; else loading">
+
+    <app-visita-dettaglio-header
+      [paziente]="visita.paziente"
+      [data]="visita.dataVisita">
+    </app-visita-dettaglio-header>
+
+    <div class="main-layout">
+
+      <div class="diagnosis-notes-layout">
+
+        <div class="card">
+          <h2 class="card-title"><span class="card-icon">🔍</span> Diagnosi</h2>
+          <div class="form-group">
+            <label class="form-label">Diagnosi principale</label>
+            <textarea [(ngModel)]="visita.diagnosi" class="form-textarea" placeholder="Inserisci diagnosi..."></textarea>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><span class="card-icon">📝</span> Note</h2>
+          <div class="form-group">
+            <label class="form-label">Note visita</label>
+            <textarea [(ngModel)]="visita.noteMedico" class="form-textarea" placeholder="Inserisci note..."></textarea>
+          </div>
+        </div>
+
+      </div>
+      <app-gestisci-prescrizioni-medico
+        [prescrizioni]="visita.prescrizioni" [idVisita]="visita.id">
+      </app-gestisci-prescrizioni-medico>
+
+
+      <div class="actions">
+        <button class="btn btn-primary" (click)="salva()"><span>💾</span> Salva Visita</button>
+        <p *ngIf=" messaggio_successo!=='' " class="status-alert">{{messaggio_successo}}</p>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #loading>
+    <div style="text-align: center; padding: 3rem; color: #666;">
+      <p>Caricamento visita in corso...</p>
+    </div>
+  </ng-template>
+
+</div>

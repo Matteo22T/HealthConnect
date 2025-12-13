@@ -108,8 +108,28 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     @Override
-    public visitaDTO getVisitaById(Long id) {
-        return null;
+    public visitaDettaglioDTO getVisitaById(Long id) {
+        String query = "SELECT * FROM visite WHERE id = ?";
+        try (Connection conn = this.dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query)){
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                visitaDettaglioDTO visita = new visitaDTOProxy(prescrizioneDAO);
+                visita.setId(rs.getLong("id"));
+                visita.setPrenotazione(prenotazioneDAO.getPrenotazioneById(rs.getLong("prenotazione_id")));
+                visita.setPaziente(utenteDAO.getUtenteById(rs.getLong("paziente_id")));
+                visita.setMedico(utenteDAO.getUtenteById(rs.getLong("medico_id")));
+                visita.setDiagnosi(rs.getString("diagnosi"));
+                visita.setNoteMedico(rs.getString("note_medico"));
+                Timestamp data = rs.getTimestamp("data_visita");
+                visita.setDataVisita(data.toLocalDateTime());
+                return visita;
+            }
+            return null;
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta della visita", e);
+        }
     }
 
     @Override
@@ -214,6 +234,25 @@ public class visitaDAOpostgres implements visitaDAO {
                 visite.add(visita);
             }
             return visite;
+
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta lista visite al db",e);
+        }
+    }
+
+    @Override
+    public Boolean salvaVisita(Long id, visitaDettaglioDTO visita) {
+        String query = "UPDATE visite SET diagnosi = ?, note_medico = ? WHERE id = ?";
+
+        try (Connection conn = this.dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query)){
+            statement.setString(1, visita.getDiagnosi());
+            statement.setString(2, visita.getNoteMedico());
+            statement.setLong(3, id);
+            if (statement.executeUpdate() > 0) {
+                return prescrizioneDAO.aggiornaPrescrizioni(visita.getPrescrizioni(), id);
+            }
+            return false;
 
         } catch (SQLException e){
             throw new RuntimeException("Errore durante la richiesta lista visite al db",e);

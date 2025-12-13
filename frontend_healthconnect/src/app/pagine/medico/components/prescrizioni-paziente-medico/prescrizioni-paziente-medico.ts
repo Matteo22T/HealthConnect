@@ -14,5 +14,4 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 })
 export class PrescrizioniPazienteMedico {
   @Input({required:true}) prescrizioni: prescrizioneDTO[] = []
-
 }
