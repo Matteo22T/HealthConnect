@@ -39,6 +39,9 @@ export class DashboardPaziente implements OnInit{
 
   messaggi: MessaggioDTO[] = []
 
+  user: utenteDTO = {} as utenteDTO;
+
+
 
   get nomePaziente(): string {
     return this.auth.currentUserValue?.nome || "";
@@ -52,7 +55,9 @@ export class DashboardPaziente implements OnInit{
   ngOnInit() {
     const currentUser = this.auth.currentUserValue;
 
+
     if (currentUser) {
+      this.user=currentUser;
 
       forkJoin({
         visit: this.visitaService.getVisiteFuturePaziente(currentUser.id),
@@ -74,6 +79,8 @@ export class DashboardPaziente implements OnInit{
 
     }
   }
+
+
 
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);

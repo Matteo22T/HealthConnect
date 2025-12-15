@@ -1,6 +1,6 @@
 <div class="fade-in metriche-wrapper">
 
-  <app-andamento-metriche-vitali></app-andamento-metriche-vitali>
+  <app-andamento-metriche-vitali [user]="user"></app-andamento-metriche-vitali>
 
   <div class="tabella-container card" *ngIf="!loading && elencoMetriche.length > 0">
     <div class="card-header">

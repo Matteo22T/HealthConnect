@@ -4,6 +4,7 @@ import { AndamentoMetricheVitali } from '../../components/andamento-metriche-vit
 import { AuthService } from '../../../../service/auth-service';
 import { MetricheService } from '../../../../service/metriche-service';
 import { MetricheSaluteDTO } from '../../../../model/metricheSaluteDTO';
+import {utenteDTO} from '../../../../model/utenteDTO';
 
 @Component({
   selector: 'app-tab-metriche',
@@ -18,6 +19,8 @@ export class TabMetriche implements OnInit {
   elencoMetriche: MetricheSaluteDTO[] = [];
   loading: boolean = true;
 
+  user: utenteDTO = {} as utenteDTO;
+
   constructor(
     private cd: ChangeDetectorRef,
     private auth: AuthService,
@@ -27,6 +30,7 @@ export class TabMetriche implements OnInit {
   ngOnInit() {
     const user = this.auth.currentUserValue;
     if (user) {
+      this.user = user;
       this.metricheService.getMetricheUltimi6Mesi(user.id).subscribe({
         next: (data) => {
           // Ordina per data decrescente (dal più recente)

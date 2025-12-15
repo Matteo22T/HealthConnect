@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
@@ -18,6 +18,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
+import {utenteDTO} from '../../../../model/utenteDTO';
 
 Chart.register(
   CategoryScale,
@@ -53,6 +54,8 @@ export class AndamentoMetricheVitali implements OnInit {
   public pressioneData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
   public glicemiaData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
 
+  @Input({required: true}) user: utenteDTO = {} as utenteDTO;
+
   // --- OPZIONI CONDIVISE ---
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
@@ -66,10 +69,7 @@ export class AndamentoMetricheVitali implements OnInit {
   };
 
   ngOnInit(): void {
-    const user = this.auth.currentUserValue;
-    if (user) {
-      this.caricaDati(user.id);
-    }
+    this.caricaDati(this.user.id)
   }
 
   caricaDati(id: number) {
