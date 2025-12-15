@@ -1,0 +1,71 @@
+<h1 style="color: red; z-index: 9999;">TEST DATI: {{ contatti.length }}</h1>
+<div class="chat-container">
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>I tuoi Medici</h3>
+    </div>
+
+    <div class="contact-list">
+      <div *ngFor="let contatto of contatti"
+           class="contact-item"
+           [class.active]="contatto.id === chatSelezionata?.id"
+           (click)="selezionaChat(contatto)">
+
+        <div class="avatar">
+          {{ getInitials(contatto.nome, contatto.cognome) }}
+        </div>
+        <div class="info">
+          <span class="name">Dr. {{ contatto.cognome }}</span>
+          <span class="role">{{ contatto.nome }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="contatti.length === 0" class="empty-list">
+        Nessuna conversazione attiva.
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-area">
+
+    <div class="chat-header" *ngIf="chatSelezionata">
+      <div class="avatar small">
+        {{ getInitials(chatSelezionata.nome, chatSelezionata.cognome) }}
+      </div>
+      <div class="chat-info">
+        <span class="name">Dr. {{ chatSelezionata.nome }} {{ chatSelezionata.cognome }}</span>
+        <span class="status">Online</span>
+      </div>
+    </div>
+
+    <div class="messages-container" #scrollContainer *ngIf="chatSelezionata">
+      <div *ngFor="let msg of messaggi"
+           class="message-bubble"
+           [ngClass]="{'sent': msg.senderId === mioId, 'received': msg.senderId !== mioId}">
+
+        <div class="message-content">
+          {{ msg.contenuto }}
+          <span class="timestamp" *ngIf="msg.dataInvio">
+             {{ msg.dataInvio | date:'HH:mm' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area" *ngIf="chatSelezionata">
+      <input type="text"
+             [(ngModel)]="nuovoMessaggio"
+             (keyup.enter)="inviaMessaggio()"
+             placeholder="Scrivi un messaggio...">
+      <button class="send-btn" (click)="inviaMessaggio()">
+        ➤
+      </button>
+    </div>
+
+    <div class="no-chat-selected" *ngIf="!chatSelezionata">
+      <p>⬅️ Seleziona un medico per iniziare a chattare</p>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,134 @@
+/* CONTENITORE PRINCIPALE */
+.chat-container {
+  display: flex;
+  height: 80vh; /* Altezza fissa per permettere lo scroll */
+  background: #f5f7fb;
+  border-radius: 12px;
+  overflow: hidden; /* Nasconde ciò che esce dai bordi */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- SIDEBAR (SINISTRA) --- */
+.sidebar {
+  width: 300px; /* Larghezza fissa */
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: #007bff;
+  color: white;
+}
+.sidebar-header h3 { margin: 0; font-size: 18px; }
+
+.contact-list {
+  flex: 1; /* Prende tutto lo spazio rimanente */
+  overflow-y: auto; /* Scroll se ci sono tanti medici */
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.contact-item:hover { background: #f9f9f9; }
+.contact-item.active { background: #e3f2fd; border-left: 4px solid #007bff; }
+
+.avatar {
+  width: 40px; height: 40px;
+  background: #ccc;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold; color: white;
+  margin-right: 10px;
+}
+.avatar.small { width: 32px; height: 32px; font-size: 12px; }
+
+.info { display: flex; flex-direction: column; }
+.name { font-weight: 600; font-size: 14px; }
+.role { font-size: 12px; color: #666; }
+.empty-list { padding: 20px; color: #999; text-align: center; }
+
+/* --- AREA CHAT (DESTRA) --- */
+.chat-area {
+  flex: 1; /* Prende tutto lo spazio rimanente a destra */
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex; align-items: center;
+  background: white;
+}
+
+.messages-container {
+  flex: 1; /* Spazio per i messaggi */
+  padding: 20px;
+  overflow-y: auto; /* SCROLL FONDAMENTALE */
+  background: #f5f7fb;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* BOLLE MESSAGGI */
+.message-bubble {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.sent {
+  align-self: flex-end; /* A destra */
+  background: #007bff;
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.received {
+  align-self: flex-start; /* A sinistra */
+  background: #e9ecef;
+  color: #333;
+  border-bottom-left-radius: 2px;
+}
+
+.timestamp {
+  display: block; font-size: 10px; margin-top: 5px; text-align: right; opacity: 0.7;
+}
+
+/* AREA INPUT */
+.input-area {
+  padding: 15px;
+  background: white;
+  border-top: 1px solid #eee;
+  display: flex; gap: 10px;
+}
+
+.input-area input {
+  flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none;
+}
+
+.send-btn {
+  background: #007bff; color: white; border: none;
+  width: 40px; height: 40px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+
+.no-chat-selected {
+  flex: 1; display: flex; align-items: center; justify-content: center; color: #888; font-size: 18px;
+}
