@@ -38,5 +38,19 @@ public class AutenticazioneController {
         return ResponseEntity.status(401).build();
     }
 
+    @PutMapping("/modifica/emailtelefono")
+    public ResponseEntity<utenteDTO> modificaDatiPersonaliUtente(@RequestBody utenteDTO utente){
+        utenteDTO nuovoUtente = authService.modificaDatiPersonaliUtente(utente.getId(), utente.getEmail(), utente.getTelefono());
+        if (nuovoUtente != null) return ResponseEntity.ok(nuovoUtente);
+        else return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("modifica/indirizzobiografia")
+    public ResponseEntity<utenteDTO> modificaDatiProfessionaliUtente(@RequestBody utenteDTO utente){
+        utenteDTO nuovoUtente = authService.modificaDatiProfessionaliUtente(utente.getId(), utente.getIndirizzo_studio(), utente.getBiografia());
+        if (nuovoUtente != null) return ResponseEntity.ok(nuovoUtente);
+        else return ResponseEntity.notFound().build();
+    }
+
 
 }

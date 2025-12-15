@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.rmi.server.RemoteRef;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,32 @@ public class visitaDAOpostgres implements visitaDAO {
         } catch (SQLException e){
             throw new RuntimeException("Errore durante la richiesta lista pazienti al db",e);
         }
+    }
+
+    @Override
+    public List<visitaDTO> getVisiteByMedico(Long id) {
+        List<visitaDTO> visite = new ArrayList<>();
+        String query = "SELECT * FROM visite WHERE medico_id = ?";
+        try (Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                visitaDTO visita = new visitaDTO();
+                visita.setId(rs.getLong("id"));
+                visita.setPrenotazione(prenotazioneDAO.getPrenotazioneById(rs.getLong("prenotazione_id")));
+                visita.setPaziente(utenteDAO.getUtenteById(rs.getLong("paziente_id")));
+                visita.setMedico(utenteDAO.getUtenteById(rs.getLong("medico_id")));
+                visita.setDiagnosi(rs.getString("diagnosi"));
+                visita.setNoteMedico(rs.getString("note_medico"));
+                visita.setDataVisita(rs.getTimestamp("data_visita").toLocalDateTime());
+                visite.add(visita);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta di tutte le visite al db",e);
+        }
+        return visite;
     }
 
     @Override

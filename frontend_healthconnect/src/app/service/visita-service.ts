@@ -35,6 +35,12 @@ export class VisitaService {
     });
   }
 
+  getVisiteByMedico(id: number){
+    return this.http.get<VisitaDTO[]>(`${this.API_URL}/tutti/medici/${id}`,{
+      withCredentials: true
+    });
+  }
+
   getListaPazientiMedico(id: number): Observable<utenteDTO[]>{
     return this.http.get<utenteDTO[]>(`${this.API_URL}/pazienti/medici/${id}`, {
       withCredentials: true

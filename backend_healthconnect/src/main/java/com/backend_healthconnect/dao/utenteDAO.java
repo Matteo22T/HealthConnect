@@ -9,4 +9,6 @@ public interface utenteDAO {
     utenteDTO getUtenteById (Long id);
     utenteDTO getUtenteByEmail(String email);
     utenteDTO save(utenteDTO utente);
+    utenteDTO modificaProfilo(Long id, String email, Long telefono);
+    utenteDTO modificaProfiloProfessionale(Long id, String indirizzo, String biografia);
 }

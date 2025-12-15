@@ -148,4 +148,46 @@ public class utenteDAOpostgres implements utenteDAO {
             throw new RuntimeException("Errore durante il salvataggio dell'utente",e);
         }
     }
+
+    @Override
+    public utenteDTO modificaProfilo(Long id, String email, Long telefono) {
+        String query = "UPDATE utenti SET email = ?, telefono = ? WHERE id = ?";
+        try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, email);
+            statement.setString(2, telefono.toString());
+            statement.setLong(3, id);
+
+            if (statement.executeUpdate()>0){
+                utenteDTO utente = getUtenteById(id);
+                utente.setEmail(email);
+                utente.setTelefono(telefono);
+                return utente;
+            }
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
+        }
+        System.out.println("ritorna null");
+        return null;
+    }
+
+    @Override
+    public utenteDTO modificaProfiloProfessionale(Long id, String indrizzo, String biografia){
+        String query = "UPDATE dettagli_medici SET indirizzo_studio = ?, biografia = ? WHERE utente_id = ?";
+        try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, indrizzo);
+            statement.setString(2, biografia);
+            statement.setLong(3, id);
+
+            if (statement.executeUpdate()>0){
+                utenteDTO utente = getUtenteById(id);
+                utente.setIndirizzo_studio(indrizzo);
+                utente.setBiografia(biografia);
+                return utente;
+            }
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
+        }
+        System.out.println("ritorna null");
+        return null;
+    }
 }

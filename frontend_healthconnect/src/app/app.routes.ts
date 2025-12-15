@@ -11,10 +11,6 @@ import {CalendarioMedico} from './pagine/medico/calendario-medico/calendario-med
 import {PazientiMedico} from './pagine/medico/pazienti-medico/pazienti-medico';
 import {ChatMedico} from './pagine/medico/chat-medico/chat-medico';
 import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
-import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
-import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
-import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
-import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
 
 
 
@@ -33,15 +29,13 @@ export const routes: Routes = [
 
   {path: 'medico', component: MedicoLayout, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'profilo', component: ProfiloMedico},
       {path: 'dashboard', component: DashboardMedico},
       {path: 'calendario', component: CalendarioMedico},
       {path: 'pazienti', component: PazientiMedico},
-      {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'chat', component: ChatMedico},
-      {path: 'richieste', component: AppuntamentiMedico},
-      {path: 'visite/:id', component: VisitaDettaglioMedico}
+      {path: 'richieste', component: AppuntamentiMedico}
     ]},
-
 
   { path: '**', component: Home}
 ];
