@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface visitaDAO {
     List<visitaDTO> getVisiteOdierneByMedico(Long id);
+    List<visitaDTO> getVisiteByMedico(Long id);
 
     visitaDTO getVisitaById(Long id);
 

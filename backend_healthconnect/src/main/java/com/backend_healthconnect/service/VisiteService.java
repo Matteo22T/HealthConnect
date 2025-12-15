@@ -27,4 +27,6 @@ public class VisiteService {
     }
 
     public List<visitaDTO> getVisiteFutureByPaziente(Long id){ return visitaDAO.getVisiteFutureByPaziente(id); }
+
+    public List<visitaDTO> getVisiteByMedico(Long id){ return visitaDAO.getVisiteByMedico(id); }
 }
