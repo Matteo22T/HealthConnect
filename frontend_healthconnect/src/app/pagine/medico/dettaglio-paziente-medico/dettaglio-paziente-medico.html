@@ -12,5 +12,9 @@
       <app-prescrizioni-paziente-medico [prescrizioni]="prescrizioniPaziente"></app-prescrizioni-paziente-medico>
 
     </div>
+
+    <div class = patient-graphics *ngIf="paziente">
+      <app-andamento-metriche-vitali [user]="paziente"></app-andamento-metriche-vitali>
+    </div>
   </div>
 </main>

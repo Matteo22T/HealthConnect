@@ -10,6 +10,8 @@ import {AuthService} from '../../../service/auth-service';
 import {forkJoin} from 'rxjs';
 import {VisitaDettaglioDTO} from '../../../model/visitaDettaglioDTO';
 import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
+import {AndamentoMetricheVitali} from '../../paziente/components/andamento-metriche-vitali/andamento-metriche-vitali';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-dettaglio-paziente-medico',
@@ -17,7 +19,9 @@ import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
     InformazioniPazienteMedico,
     VisitePazienteMedico,
     PrescrizioniPazienteMedico,
-    RouterLink
+    RouterLink,
+    AndamentoMetricheVitali,
+    NgIf
   ],
   templateUrl: './dettaglio-paziente-medico.html',
   styleUrl: './dettaglio-paziente-medico.css',

@@ -48,8 +48,8 @@ export class TabPrescrizioni implements OnInit {
     });
 
     // Ordiniamo: le attive per data emissione decrescente (più recenti in alto)
-    this.prescrizioniAttive.sort((a, b) => new Date(b.dataEmissione).getTime() - new Date(a.dataEmissione).getTime());
+    this.prescrizioniAttive.sort((a, b) => new Date(b.dataEmissione!).getTime() - new Date(a.dataEmissione!).getTime());
     // Le scadute idem
-    this.prescrizioniScadute.sort((a, b) => new Date(b.dataEmissione).getTime() - new Date(a.dataEmissione).getTime());
+    this.prescrizioniScadute.sort((a, b) => new Date(b.dataEmissione!).getTime() - new Date(a.dataEmissione!).getTime());
   }
 }
