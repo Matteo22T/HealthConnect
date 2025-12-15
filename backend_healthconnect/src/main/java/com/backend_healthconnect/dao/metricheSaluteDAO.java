@@ -8,8 +8,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface metricheSaluteDAO {
-    List<metricheSaluteDTO> findByPazienteId(Long pazienteId);
     List<metricheSaluteDTO> findByPazienteIdUltimi6Mesi(Long pazienteId);
-    List<metricheSaluteDTO> findByPazienteIdAndTipo(Long pazienteId, TipoMetrica tipoMetrica);
-    Map<String, Object> getStatisticheMetriche(Long pazienteId);
 }

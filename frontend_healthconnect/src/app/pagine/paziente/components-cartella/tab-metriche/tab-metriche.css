@@ -1,0 +1,126 @@
+.metriche-wrapper {
+  padding-top: 1rem;
+}
+
+/* Stile Card Contenitore */
+.tabella-container {
+  margin-top: 2rem;
+  background: white;
+  border-radius: 24px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Usa var(--shadow-md) se disponibile */
+  border: 1px solid rgba(0, 102, 204, 0.08);
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 0.8rem;
+}
+
+/* Tabella */
+.table-responsive {
+  max-height: 450px; /* Scroll se diventa troppo lunga */
+  overflow-y: auto;
+  width: 100%;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 1rem;
+  background: #f8faff;
+  color: #5e6d82;
+  font-size: 0.9rem;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* L'intestazione resta fissa mentre scorri */
+}
+
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.data-table tr:hover {
+  background-color: #fcfcfc;
+}
+
+/* Celle specifiche */
+.type-cell {
+  text-transform: capitalize; /* Rende la prima lettera maiuscola */
+  font-weight: 500;
+  color: #0066cc;
+}
+
+.date-cell {
+  color: #666;
+  font-size: 0.9rem;
+  width: 25%;
+}
+
+.value-cell strong {
+  font-size: 1.1rem;
+  color: #1a2b4b;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+}
+
+.doctor-cell {
+  vertical-align: middle;
+}
+
+.medico-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f0f7ff; /* Azzurrino chiaro */
+  color: #0066cc;            /* Blu scuro */
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid rgba(0, 102, 204, 0.15);
+}
+
+.no-data {
+  color: #ccc;
+  font-style: italic;
+  padding-left: 10px;
+}
+
+/* Aggiustiamo le larghezze se serve */
+.date-cell {
+  width: 25%;
+  color: #666;
+}
+
+.type-cell {
+  width: 25%;
+  text-transform: capitalize;
+  font-weight: 500;
+  color: #0066cc;
+}
+
+.value-cell {
+  width: 25%;
+}
+
+
+
+/* Animazione */
+.fade-in { animation: fadeIn 0.5s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

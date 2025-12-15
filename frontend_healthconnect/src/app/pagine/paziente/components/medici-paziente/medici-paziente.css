@@ -1,0 +1,211 @@
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 102, 204, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid rgba(0, 102, 204, 0.1);
+}
+
+.card-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
+}
+
+/* Stato vuoto */
+.card > div[style*="text-align: center"] {
+  padding: 3rem 2rem !important;
+  text-align: center;
+  color: var(--text-light) !important;
+}
+
+.card > div[style*="text-align: center"] p {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.view-all {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.view-all:hover {
+  background: var(--accent-color);
+  transform: translateX(3px);
+}
+
+
+
+.scroll-container {
+  height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+
+/* Stile della singola card medico */
+.med-item {
+  min-width: 140px; /* Larghezza fissa per ogni medico */
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.med-item:hover {
+  border-color: #b3d7ff;
+}
+
+/* Testi */
+.med-info h4 {
+  font-size: 0.95rem;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.med-info p {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Contenitore Bottoni */
+.med-actions {
+  display: flex;
+  gap: 10px;           /* Spazio tra i bottoni */
+  width: 100%;
+  margin-top: auto;
+  padding-top: 10px;
+  justify-content: center; /* MODIFICA: Centra i bottoni nella card */
+  /* Se li vuoi agli estremi (uno a sx, uno a dx) usa: justify-content: space-between; */
+}
+
+/* Stile comune (Altezza fissa) */
+.btn-contact,
+.btn-prenota {
+  height: 38px;            /* Altezza fissa identica */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Bottone Contatta (Messaggio) */
+.btn-contact {
+  margin-left: auto;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;     /* O 50% se lo vuoi rotondo perfetto */
+  width: 38px;             /* Larghezza fissa = Altezza (Quadrato/Rotondo) */
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #555;
+  padding: 0;              /* Reset padding perché ha width fissa */
+}
+
+.btn-contact:hover {
+  background: #f1f3f5;
+  color: #333;
+  border-color: #ced4da;
+  transform: translateY(-1px);
+}
+
+/* Bottone Prenota */
+.btn-prenota {
+  /* flex: 1;  <-- RIMOSSO: Non si allarga più */
+  width: auto;            /* Larghezza automatica ("il giusto") */
+  min-width: 100px;       /* Opzionale: larghezza minima per non farlo sembrare minuscolo */
+  padding-left: 20px;     /* Padding laterale generoso */
+  padding-right: 20px;
+
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 6px;
+}
+
+.btn-prenota:hover {
+  background-color: #bbdefb;
+  transform: translateY(-1px);
+}
+
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem 0;
+  color: #95a5a6;
+}
+
+
+.avatar-placeholder.emoji-avatar {
+
+  background-color: #f5f5f5; /* Grigio chiaro */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem; /* Emoji grande */
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+

@@ -22,4 +22,6 @@ public interface visitaDAO {
     List<visitaDettaglioDTO> getVisitePassatePazienteByMedico(Long idPaziente, Long idMedico);
 
     Boolean salvaVisita(Long id, visitaDettaglioDTO visita);
+    List<visitaDTO> getStoricoVisitePaziente(Long id);
+
 }

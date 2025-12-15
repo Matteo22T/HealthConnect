@@ -1,0 +1,128 @@
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 102, 204, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid rgba(0, 102, 204, 0.1);
+}
+
+.card-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
+}
+
+/* Stato vuoto */
+.card > div[style*="text-align: center"] {
+  padding: 3rem 2rem !important;
+  text-align: center;
+  color: var(--text-light) !important;
+}
+
+.card > div[style*="text-align: center"] p {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.view-all {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.view-all:hover {
+  background: var(--accent-color);
+  transform: translateX(3px);
+}
+
+.message-item {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f2f5;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.message-item:hover {
+  background: #f8f9fa;
+}
+
+.message-item:last-child {
+  border-bottom: none;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.message-sender {
+  font-weight: 600;
+  color: #333;
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.message-preview {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.unread {
+  background: #f0f7ff;
+}
+
+.unread .message-sender {
+  color: #667eea;
+}
+
+.scroll-container {
+  height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+

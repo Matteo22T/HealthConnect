@@ -68,4 +68,10 @@ export class VisitaService {
   salvaVisita(visita: VisitaDettaglioDTO){
     return this.http.put<boolean>(`${this.API_URL}/medico/salva/${visita.id}`, visita, {withCredentials: true});
   }
+  getStoricoVisite(pazienteId: number): Observable<VisitaDTO[]> {
+    return this.http.get<VisitaDTO[]>(`${this.API_URL}/storico/pazienti/${pazienteId}`, {
+      withCredentials: true
+    });
+  }
+
 }

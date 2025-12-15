@@ -25,11 +25,23 @@ export class ListaVisite implements OnChanges{
 
   @Input({required: true}) visite: VisitaDTO[] = [];
 
+  visiteMostrate: VisitaDTO[] = [];
+
+  ITEMS_PER_PAGE = 5;
+  currentIndex = 0;
+
   specializzazioni: { [medicoId: number]: string } = {};
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['visite'] && this.visite && this.visite.length > 0) {
-      this.caricaSpecializzazioni();
+    if (changes['visite'] && this.visite) {
+      this.visiteMostrate = [];
+      this.currentIndex = 0;
+
+      this.caricaAltriElementi();
+
+      if (this.visite.length > 0) {
+        this.caricaSpecializzazioni();
+      }
     }
   }
 
@@ -41,7 +53,6 @@ export class ListaVisite implements OnChanges{
         return visita.medico.specializzazione_id;
       })
       .filter(id => id !== null && id !== undefined))] as number[];
-
 
     // Per ogni ID specializzazione, ottieni il nome dal backend
     specializzazioniIds.forEach(specializzazioneId => {
@@ -73,6 +84,24 @@ export class ListaVisite implements OnChanges{
     ) return '';
     return this.specializzazioni[medico.specializzazione_id] || 'Caricamento...';
   }
+
+
+  onScroll(event: any) {
+    const element = event.target;
+    // Verifica se siamo arrivati in fondo (con un margine di tolleranza di 1px)
+    if (element.scrollHeight - element.scrollTop <= element.clientHeight + 1) {
+      this.caricaAltriElementi();
+    }
+  }
+
+  caricaAltriElementi() {
+    if (this.currentIndex >= this.visite.length) return;
+
+    const nextBatch = this.visite.slice(this.currentIndex, this.currentIndex + this.ITEMS_PER_PAGE);
+    this.visiteMostrate = [...this.visiteMostrate, ...nextBatch];
+    this.currentIndex += this.ITEMS_PER_PAGE;
+  }
+
 }
 
 

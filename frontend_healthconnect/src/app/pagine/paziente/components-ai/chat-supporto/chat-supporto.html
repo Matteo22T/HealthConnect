@@ -1,0 +1,44 @@
+<div class="chat-wrapper">
+
+  <div class="messages-area" #scrollContainer>
+
+    <div *ngFor="let msg of messages"
+         class="message-row"
+         [ngClass]="{'user-row': msg.sender === 'USER', 'bot-row': msg.sender === 'BOT'}">
+
+      <div class="avatar" *ngIf="msg.sender === 'BOT'">🤖</div>
+
+      <div class="bubble" [ngClass]="msg.sender === 'USER' ? 'user-bubble' : 'bot-bubble'">
+        <p>{{ msg.text }}</p>
+
+        <button *ngIf="msg.actionUrl"
+                class="action-btn"
+                (click)="navigate(msg.actionUrl)">
+          Vai alla pagina →
+        </button>
+
+        <span class="timestamp">{{ msg.timestamp | date:'HH:mm' }}</span>
+      </div>
+    </div>
+
+    <div class="message-row bot-row" *ngIf="isTyping">
+      <div class="avatar">🤖</div>
+      <div class="bubble bot-bubble typing">
+        <span>.</span><span>.</span><span>.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="input-area">
+    <input type="text"
+           [(ngModel)]="userInput"
+           (keyup.enter)="sendMessage()"
+           placeholder="Scrivi qui la tua domanda..." />
+
+    <button class="send-btn" (click)="sendMessage()" [disabled]="!userInput.trim()">
+      ➤
+    </button>
+  </div>
+
+</div>

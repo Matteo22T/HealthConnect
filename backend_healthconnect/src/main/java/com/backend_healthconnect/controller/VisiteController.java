@@ -65,4 +65,10 @@ public class VisiteController {
         if (esito) return ResponseEntity.ok(esito);
         else return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/storico/pazienti/{id}")
+    public ResponseEntity<List<visitaDTO>> getStoricoVisite(@PathVariable Long id){
+        List<visitaDTO> storico = visiteService.getStoricoVisite(id);
+        return ResponseEntity.ok(storico);
+    }
 }

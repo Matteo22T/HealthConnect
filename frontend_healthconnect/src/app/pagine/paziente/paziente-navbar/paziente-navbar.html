@@ -8,13 +8,13 @@
 <body>
 
 <header>
-  <a class= "logo" routerLink="/"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
+  <a class= "logo" routerLink="/paziente/dashboard"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
   <div class="header-right">
     <nav class="nav-links">
       <a href="#"><span>🔍</span> Trova Medico</a>
-      <a href="#"><span>📋</span> Cartella Clinica</a>
+      <a href="#" routerLink="/paziente/cartella"><span>📋</span> Cartella Clinica</a>
       <a href="#"><span>💬</span> Chat</a>
-      <a href="#"><span>🤖</span> Assistente AI</a>
+      <a href="#" routerLink="/paziente/ai" ><span>🤖</span> Assistente AI</a>
     </nav>
     <div class="profile-container">
       <div class="user-profile" (click)="toggleProfileMenu()">
@@ -26,10 +26,10 @@
       </div>
 
       <div class="custom-dropdown shadow" *ngIf="isProfileMenuOpen">
-        <a routerLink="/medico/profilo" (click)="closeProfileMenu()" class="dropdown-item">
+        <a routerLink="/paziente/profilo" (click)="closeProfileMenu()" class="dropdown-item">
           👤 Il mio Profilo
         </a>
-        <a routerLink="/medico/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
+        <a routerLink="/paziente/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
           ⚙️ Impostazioni
         </a>
         <div class="dropdown-divider"></div>

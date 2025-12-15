@@ -1,0 +1,60 @@
+<div class="prescrizioni-container fade-in" *ngIf="!loading; else loader">
+
+  <section class="section-attive">
+    <h3 class="section-title">
+      💊 Terapie in Corso
+      <span class="badge-count">{{ prescrizioniAttive.length }}</span>
+    </h3>
+
+    <div class="cards-grid" *ngIf="prescrizioniAttive.length > 0; else noAttive">
+      <div class="med-card active-card" *ngFor="let p of prescrizioniAttive">
+        <div class="card-status">🟢 Attiva</div>
+        <div class="card-body">
+          <h4>{{ p.nome_farmaco }}</h4>
+          <p class="dosage">{{ p.dosaggio }}</p>
+
+          <div class="card-dates">
+            <div>
+              <small>Inizio</small>
+              <span>{{ p.dataEmissione | date:'dd MMM yyyy' }}</span>
+            </div>
+            <div>
+              <small>Fine Prevista</small>
+              <span [class.infinity]="!p.dataFine">{{ p.dataFine ? (p.dataFine | date:'dd MMM yyyy') : 'Cronica' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noAttive>
+      <div class="empty-msg">Nessuna terapia attiva al momento.</div>
+    </ng-template>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section-scadute">
+    <h3 class="section-title text-muted">
+      🗄️ Storico / Scadute
+    </h3>
+
+    <div class="list-view" *ngIf="prescrizioniScadute.length > 0">
+      <div class="list-item" *ngFor="let p of prescrizioniScadute">
+        <div class="item-main">
+          <h5>{{ p.nome_farmaco }}</h5>
+          <span class="item-dosage">{{ p.dosaggio }}</span>
+        </div>
+        <div class="item-dates">
+          Dal {{ p.dataEmissione | date:'dd/MM/yy' }} al {{ p.dataFine | date:'dd/MM/yy' }}
+        </div>
+        <span class="status-badge expired">Scaduta</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<ng-template #loader>
+  <div style="text-align: center; padding: 3rem; color: #999;">Caricamento prescrizioni...</div>
+</ng-template>

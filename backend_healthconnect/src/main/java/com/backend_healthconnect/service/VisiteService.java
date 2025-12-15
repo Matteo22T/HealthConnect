@@ -38,4 +38,8 @@ public class VisiteService {
     public Boolean salvaVisita(Long id, visitaDettaglioDTO visita){
         return this.visitaDAO.salvaVisita(id,visita);
     }
+
+    public List<visitaDTO> getStoricoVisite(Long id){
+        return visitaDAO.getStoricoVisitePaziente(id);
+    }
 }
