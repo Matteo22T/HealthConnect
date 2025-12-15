@@ -60,13 +60,21 @@
 
 .appointment-item {
   display: flex;
-  align-items: center; /* 1. Questo centra verticalmente orario e testo */
-  gap: 1.2rem; /* 2. Ho scommentato questo: ti serve spazio tra orario e nome! */
-  padding: 1.2rem;
-  border-radius: 8px;
+  align-items: center;
+  gap: 1.2rem;          /* Uniformato al paziente */
+  padding: 1.2rem;      /* Uniformato al paziente */
+  border-radius: 8px;   /* Uniformato al paziente */
+  margin-bottom: 1rem;  /* Uniformato al paziente */
+
+  /* Stile visivo Medico (puoi cambiarlo se vuoi lo stesso grigio del paziente) */
   background: #e3f2fd;
-  margin-bottom: 1rem;
   border-left: 4px solid #2196f3;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.appointment-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
 }
 
 .appointment-details h4 {
@@ -100,4 +108,28 @@
 .time-period {
   color: #666;
   font-size: 0.85rem;
+}
+
+
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }

@@ -14,6 +14,7 @@ import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamen
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
+import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
 
 
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
   {path: 'medico', component: MedicoLayout, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'profilo', component: ProfiloMedico},
+      {path: 'impostazioni', component: ImpostazioniMedico},
       {path: 'dashboard', component: DashboardMedico},
       {path: 'calendario', component: CalendarioMedico},
       {path: 'pazienti', component: PazientiMedico},
