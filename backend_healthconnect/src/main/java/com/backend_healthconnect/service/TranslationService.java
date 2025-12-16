@@ -16,21 +16,34 @@ public class TranslationService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public String translateToEnglish(String textInItalian) {
-        String url = String.format("%s?q=%s&langpair=it|en&de=%s",
-                myMemoryUrl, textInItalian, myMemoryEmail);
+    public String translateToEnglish(String text) {
+        return callMyMemory(text, "it|en");
+    }
+
+    public String translateToItalian(String text) {
+        return callMyMemory(text, "en|it");
+    }
+
+    private String callMyMemory(String text, String langPair) {
+        if (text == null || text.trim().isEmpty()) return text;
+
+        String url = String.format("%s?q=%s&langpair=%s&de=%s",
+                myMemoryUrl, text, langPair, myMemoryEmail);
 
         try {
             Map response = restTemplate.getForObject(url, Map.class);
             if (response != null && response.containsKey("responseData")) {
                 Map responseData = (Map) response.get("responseData");
-                return (String) responseData.get("translatedText");
+                String translated = (String) responseData.get("translatedText");
+
+                // Pulizia minima per apostrofi codificati male da MyMemory
+                return translated.replace("&#39;", "'").replace("&quot;", "\"");
             }
         } catch (Exception e) {
-            System.err.println("Errore traduzione: " + e.getMessage());
+            System.err.println("Errore traduzione (" + langPair + "): " + e.getMessage());
         }
 
-        return textInItalian;
+        return text;
     }
 
 }

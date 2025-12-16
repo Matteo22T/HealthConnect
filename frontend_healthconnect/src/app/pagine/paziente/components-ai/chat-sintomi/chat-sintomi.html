@@ -1,4 +1,9 @@
 <div class="container">
+  <!-- Disclaimer permanente -->
+  <div class="disclaimer">
+    ⚠️ <strong>Attenzione:</strong> Questa è solo un'analisi indicativa. Non sostituisce il parere medico professionale. In caso di sintomi gravi, contatta immediatamente un medico.
+  </div>
+
   <!-- Step: Start -->
   <div *ngIf="step === 'start'" class="card">
     <h2>Descrivi come ti senti</h2>
@@ -18,7 +23,7 @@
       </label>
     </div>
 
-    <button (click)="startDiagnosis()" [disabled]="isLoading" class="btn-primary">
+    <button (click)="startDiagnosis()" [disabled]="isLoading" class="btn-primary" [class.loading]="isLoading">
       {{ isLoading ? 'Analisi in corso...' : 'Inizia Diagnosi' }}
     </button>
   </div>
@@ -36,8 +41,9 @@
       <div class="checkbox-list">
         <div *ngFor="let item of currentQuestion.items"
              class="checkbox-item"
-             (click)="toggleSelection(item.id)"
-             [class.selected]="selectedSymptomIds.has(item.id)">
+             (click)="!isLoading && toggleSelection(item.id)"
+             [class.selected]="selectedSymptomIds.has(item.id)"
+             [class.disabled]="isLoading">
           <div class="custom-checkbox">
             <span *ngIf="selectedSymptomIds.has(item.id)">✔</span>
           </div>
@@ -45,7 +51,7 @@
         </div>
       </div>
 
-      <button class="btn-confirm" (click)="submitGroupMultiple()">
+      <button class="btn-confirm" (click)="submitGroupMultiple()" [disabled]="isLoading" [class.loading]="isLoading">
         Conferma e Continua
       </button>
     </div>
@@ -55,7 +61,9 @@
       <div class="choices-vertical">
         <button *ngFor="let item of currentQuestion?.items"
                 (click)="submitAnswer(item.id, 'present')"
-                class="btn-option">
+                [disabled]="isLoading"
+                class="btn-option"
+                [class.loading]="isLoading">
           {{ item.name }}
         </button>
       </div>
@@ -69,7 +77,9 @@
         <div class="choices">
           <button *ngFor="let choice of item.choices"
                   (click)="submitAnswer(item.id, choice.id)"
-                  class="btn-choice">
+                  [disabled]="isLoading"
+                  class="btn-choice"
+                  [class.loading]="isLoading">
             {{ choice.label }}
           </button>
         </div>

@@ -42,5 +42,5 @@ export interface DiagnosisRequest {
   sex: string;
   age: { value: number; unit: string };
   evidence: Evidence[];
-  text?: string; // Opzionale, serve solo per la prima chiamata
+  text?: string;
 }

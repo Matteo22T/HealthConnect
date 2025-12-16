@@ -98,19 +98,15 @@ public class InfermedicaService {
         HttpEntity<richiestaDiagnosisDTO> entity = new HttpEntity<>(diagnosisRequest, headers);
 
         try {
-            // 1. NON fare subito return! Salva la risposta in una variabile.
             rispostaDiagnosisDTO response = restTemplate.postForObject(url, entity, rispostaDiagnosisDTO.class);
 
-            // ============================================================
-            // ✋ LOGICA FRENO A MANO (STOP INTELLIGENTE)
-            // ============================================================
+            if (response != null) {
+                traduciRispostaInItaliano(response);
+            }
 
-            // CONFIGURAZIONE
-            int MAX_DOMANDE = 10;          // Dopo 10 prove totali, fermati
-            double SOGLIA_SICUREZZA = 0.65; // Se sei sicuro al 65%, fermati
+            int MAX_DOMANDE = 10;
+            double SOGLIA_SICUREZZA = 0.65;
 
-            // A. CONTROLLO EMERGENZA (Priorità Massima)
-            // Nota: Assicurati di aver aggiunto il campo "has_emergency_evidence" nel DTO
             if (response.isHasEmergencyEvidence()) {
                 System.out.println("🚨 Rilevata emergenza! STOP Immediato.");
                 response.setShouldStop(true);
@@ -118,9 +114,7 @@ public class InfermedicaService {
                 return response;
             }
 
-            // B. CONTROLLO PROBABILITÀ (Sei abbastanza sicuro?)
             if (response.getConditions() != null && !response.getConditions().isEmpty()) {
-                // Prendi la prima malattia (la più probabile)
                 double prob = response.getConditions().get(0).getProbability();
 
                 if (prob >= SOGLIA_SICUREZZA) {
@@ -131,7 +125,6 @@ public class InfermedicaService {
                 }
             }
 
-            // C. CONTROLLO NOIA (Troppe domande?)
             if (evidence.size() >= MAX_DOMANDE) {
                 System.out.println("✋ Raggiunto limite domande (" + evidence.size() + "). STOP.");
                 response.setShouldStop(true);
@@ -139,13 +132,9 @@ public class InfermedicaService {
                 return response;
             }
 
-            // ============================================================
-
-            // 2. Se non siamo stati fermati dai freni, restituisci la risposta normale
             return response;
 
         } catch (HttpClientErrorException e) {
-            // ... (Gestione errori invariata) ...
             String errorJson = e.getResponseBodyAsString();
             System.err.println(">>> STATUS CODE: " + e.getStatusCode());
             System.err.println(">>> JSON ERRORE GREZZO: " + errorJson);
@@ -190,12 +179,19 @@ public class InfermedicaService {
        System.out.println("aggiornaDiagnosis");
 
         if (simulationMode) {
+            int risposte = request.getEvidence().size();
+
+            if (risposte == 1) return getMockGroupSingle(2);
+            if (risposte == 2) return getMockMultipleChoiceMock();
+
+            return getMockResultResponse();
+        }
+
+        if (simulationMode) {
             int currentSize = request.getEvidence().size();
             System.out.println("Simulazione - Evidence size: " + currentSize);
 
-            // Se abbiamo meno di 3 risposte, facciamo una NUOVA domanda
-            if (currentSize < 3) {
-                // Passiamo 'currentSize' per generare un ID diverso ogni volta
+            if (currentSize < 2) {
                 return getMockQuestionResponse(currentSize);
             } else {
                 return getMockResultResponse();
@@ -208,6 +204,44 @@ public class InfermedicaService {
                 request.getSex()
         );
     }
+
+    private void traduciRispostaInItaliano(rispostaDiagnosisDTO response) {
+        if (response == null) return;
+
+        if (response.getQuestion() != null) {
+            String questionText = response.getQuestion().getText();
+            response.getQuestion().setText(translationService.translateToItalian(questionText));
+
+            if (response.getQuestion().getItems() != null) {
+                for (rispostaDiagnosisDTO.Item item : response.getQuestion().getItems()) {
+                    item.setName(translationService.translateToItalian(item.getName()));
+
+                    if (item.getChoices() != null) {
+                        for (rispostaDiagnosisDTO.Choice choice : item.getChoices()) {
+                            String label = choice.getLabel().toLowerCase();
+                            switch (label) {
+                                case "yes": choice.setLabel("Sì"); break;
+                                case "no": choice.setLabel("No"); break;
+                                case "don't know": choice.setLabel("Non so"); break;
+                                default:
+                                    choice.setLabel(translationService.translateToItalian(choice.getLabel()));
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (response.getConditions() != null) {
+            for (rispostaDiagnosisDTO.Condition condition : response.getConditions()) {
+                String translatedName = translationService.translateToItalian(condition.getCommonName());
+                condition.setCommonName(translatedName);
+            }
+        }
+    }
+
+
 
     private rispostaParseDTO getMockParseResponse() {
         rispostaParseDTO mock = new rispostaParseDTO();
@@ -224,46 +258,142 @@ public class InfermedicaService {
 
     private rispostaDiagnosisDTO getMockQuestionResponse(int index) {
         rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
-        mock.setShouldStop(false); // CONTINUA
+        mock.setShouldStop(false);
+        mock.setHasEmergencyEvidence(false);
 
         rispostaDiagnosisDTO.Question q = new rispostaDiagnosisDTO.Question();
-        q.setType("group_single");
-        q.setText("[SIMULAZIONE] Il dolore è pulsante?");
+        q.setType("single");
+        q.setText("[MOCK #" + index + "] Avverti una sensazione di pressione dietro gli occhi?");
 
         rispostaDiagnosisDTO.Item item = new rispostaDiagnosisDTO.Item();
-        item.setId("s_mock_1"+ index);
-        item.setName("Dolore pulsante");
+        item.setId("s_mock_" + index);
+        item.setName("Pressione oculare");
 
         rispostaDiagnosisDTO.Choice c1 = new rispostaDiagnosisDTO.Choice();
-        c1.setId("present"); c1.setLabel("Sì");
-        rispostaDiagnosisDTO.Choice c2 = new rispostaDiagnosisDTO.Choice();
-        c2.setId("absent"); c2.setLabel("No");
+        c1.setId("present");
+        c1.setLabel("Sì");
 
-        item.setChoices(List.of(c1, c2));
+        rispostaDiagnosisDTO.Choice c2 = new rispostaDiagnosisDTO.Choice();
+        c2.setId("absent");
+        c2.setLabel("No");
+
+        rispostaDiagnosisDTO.Choice c3 = new rispostaDiagnosisDTO.Choice();
+        c3.setId("unknown");
+        c3.setLabel("Non so");
+
+        item.setChoices(List.of(c1, c2, c3));
         q.setItems(List.of(item));
 
         mock.setQuestion(q);
-        mock.setConditions(new ArrayList<>()); // Lista vuota mentre fa domande
+        mock.setConditions(new ArrayList<>());
         return mock;
     }
 
     private rispostaDiagnosisDTO getMockResultResponse() {
         rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
-        mock.setShouldStop(true); // STOP -> Mostra risultati
-        mock.setQuestion(null);
+        mock.setShouldStop(true);
+        mock.setHasEmergencyEvidence(false);
 
         rispostaDiagnosisDTO.Condition c1 = new rispostaDiagnosisDTO.Condition();
-        c1.setId("c_1");
-        c1.setCommonName("Emicrania (Simulata)");
-        c1.setProbability(0.95);
+        c1.setCommonName("Emicrania da stress (MOCK)");
+        c1.setProbability(0.88);
 
         rispostaDiagnosisDTO.Condition c2 = new rispostaDiagnosisDTO.Condition();
-        c2.setId("c_2");
-        c2.setCommonName("Cefalea tensiva (Simulata)");
-        c2.setProbability(0.70);
+        c2.setCommonName("Sinusite (MOCK)");
+        c2.setProbability(0.45);
 
         mock.setConditions(List.of(c1, c2));
         return mock;
     }
 
+    private rispostaDiagnosisDTO getMockEmergencyResponse() {
+        rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
+        mock.setShouldStop(true);
+        mock.setHasEmergencyEvidence(true);
+
+        rispostaDiagnosisDTO.Condition c = new rispostaDiagnosisDTO.Condition();
+        c.setCommonName("Sospetta crisi ipertensiva (URGENTE)");
+        c.setProbability(0.99);
+
+        mock.setConditions(List.of(c));
+        return mock;
+    }
+
+    private List<rispostaDiagnosisDTO.Choice> getStandardChoices() {
+        rispostaDiagnosisDTO.Choice c1 = new rispostaDiagnosisDTO.Choice();
+        c1.setId("present"); c1.setLabel("Sì");
+        rispostaDiagnosisDTO.Choice c2 = new rispostaDiagnosisDTO.Choice();
+        c2.setId("absent"); c2.setLabel("No");
+        rispostaDiagnosisDTO.Choice c3 = new rispostaDiagnosisDTO.Choice();
+        c3.setId("unknown"); c3.setLabel("Non so");
+        return List.of(c1, c2, c3);
+    }
+
+    private rispostaDiagnosisDTO getMockMultipleChoiceMock() {
+        rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
+        mock.setShouldStop(false);
+        mock.setHasEmergencyEvidence(false);
+
+        rispostaDiagnosisDTO.Question q = new rispostaDiagnosisDTO.Question();
+        q.setType("group_multiple");
+        q.setText("[MOCK MULTIPLO] Quali di questi altri fastidi avverti?");
+
+        rispostaDiagnosisDTO.Item item1 = new rispostaDiagnosisDTO.Item();
+        item1.setId("s_mock_m1");
+        item1.setName("Nausea");
+        item1.setChoices(getStandardChoices());
+
+        rispostaDiagnosisDTO.Item item2 = new rispostaDiagnosisDTO.Item();
+        item2.setId("s_mock_m2");
+        item2.setName("Fastidio alla luce");
+        item2.setChoices(getStandardChoices());
+
+        q.setItems(List.of(item1, item2));
+        mock.setQuestion(q);
+        return mock;
+    }
+
+    private rispostaDiagnosisDTO getMockGroupSingle(int index) {
+        rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
+        mock.setShouldStop(false);
+        mock.setHasEmergencyEvidence(false);
+
+        rispostaDiagnosisDTO.Question q = new rispostaDiagnosisDTO.Question();
+        q.setType("group_single");
+        q.setText("[MOCK #" + index + "] Come descriveresti l'intensità del dolore?");
+
+        rispostaDiagnosisDTO.Item i1 = new rispostaDiagnosisDTO.Item();
+        i1.setId("s_lieve_" + index); i1.setName("Lieve");
+
+        rispostaDiagnosisDTO.Item i2 = new rispostaDiagnosisDTO.Item();
+        i2.setId("s_medio_" + index); i2.setName("Moderato");
+
+        rispostaDiagnosisDTO.Item i3 = new rispostaDiagnosisDTO.Item();
+        i3.setId("s_forte_" + index); i3.setName("Severo");
+
+        q.setItems(List.of(i1, i2, i3));
+        mock.setQuestion(q);
+        mock.setConditions(new ArrayList<>());
+        return mock;
+    }
+
+    private rispostaDiagnosisDTO getMockSingleQuestion(int index) {
+        rispostaDiagnosisDTO mock = new rispostaDiagnosisDTO();
+        mock.setShouldStop(false);
+        mock.setHasEmergencyEvidence(false);
+
+        rispostaDiagnosisDTO.Question q = new rispostaDiagnosisDTO.Question();
+        q.setType("single");
+        q.setText("[MOCK #" + index + "] Avverti una sensazione di pressione dietro gli occhi?");
+
+        rispostaDiagnosisDTO.Item item = new rispostaDiagnosisDTO.Item();
+        item.setId("s_mock_" + index);
+        item.setName("Pressione oculare");
+        item.setChoices(getStandardChoices());
+
+        q.setItems(List.of(item));
+        mock.setQuestion(q);
+        mock.setConditions(new ArrayList<>());
+        return mock;
+    }
 }

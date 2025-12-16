@@ -12,9 +12,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class richiestaDiagnosisDTO {
     private String sex;
-    private richiestaParseDTO.Age age; // Riutilizziamo la classe Age che avevi già
+    private richiestaParseDTO.Age age;
     private List<Evidence> evidence;
-    private Object extras; // Opzionale, può essere una Map vuota
+    private Object extras;
 
     public richiestaDiagnosisDTO(String sex, richiestaParseDTO.Age age, List<Evidence> evidence) {
         this.sex = sex;
@@ -39,6 +39,6 @@ public class richiestaDiagnosisDTO {
     @Data
     public static class Extras {
         @JsonProperty("disable_groups")
-        private boolean disableGroups = true; // Consiglio: metti true per semplificare le domande
+        private boolean disableGroups = true;
     }
 }

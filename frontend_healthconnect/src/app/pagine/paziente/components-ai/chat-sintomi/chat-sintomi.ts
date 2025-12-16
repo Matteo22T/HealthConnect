@@ -27,7 +27,7 @@ export class ChatSintomi {
   currentQuestion: Question | null = null;
   conditions: Condition[] = [];
 
-  // NUOVO: Set per tenere traccia delle checkbox selezionate
+  //Set per tenere traccia delle checkbox selezionate
   selectedSymptomIds: Set<string> = new Set();
 
   constructor(private symptomService: AiService, private cd: ChangeDetectorRef) {}
@@ -63,13 +63,13 @@ export class ChatSintomi {
     }
   }
 
-  // Modificato: Gestisce solo l'aggiunta della prova singola
+  //Gestisce solo l'aggiunta della prova singola
   submitAnswer(itemId: string, choiceId: string) {
     this.addEvidence(itemId, choiceId);
     this.callDiagnosisBackend();
   }
 
-  // NUOVO: Gestisce il click sulle checkbox (aggiunge/rimuove dal Set)
+  //Gestisce il click sulle checkbox (aggiunge/rimuove dal Set)
   toggleSelection(itemId: string) {
     if (this.selectedSymptomIds.has(itemId)) {
       this.selectedSymptomIds.delete(itemId);
@@ -78,11 +78,11 @@ export class ChatSintomi {
     }
   }
 
-  // NUOVO: Invia le risposte multiple (Group Multiple)
+  //Invia le risposte multiple (Group Multiple)
   submitGroupMultiple() {
     if (!this.currentQuestion) return;
 
-    // Per ogni item della domanda, controlliamo se è stato selezionato
+    //Per ogni item della domanda, controlliamo se è stato selezionato
     this.currentQuestion.items.forEach((item: any) => {
       const choiceId = this.selectedSymptomIds.has(item.id) ? 'present' : 'absent';
       this.addEvidence(item.id, choiceId);
@@ -91,19 +91,18 @@ export class ChatSintomi {
     this.callDiagnosisBackend();
   }
 
-  // NUOVO: Metodo helper per aggiungere evidence evitando duplicati
+  //Metodo helper per aggiungere evidence evitando duplicati
   private addEvidence(itemId: string, choiceId: string) {
     const newEvidence: Evidence = {
       id: itemId,
       choice_id: choiceId,
       source: 'initial'
     };
-    // Rimuovi se esiste già per evitare duplicati
+    // Rimuovo se esiste già per evitare duplicati
     this.evidence = this.evidence.filter(e => e.id !== itemId);
     this.evidence.push(newEvidence);
   }
 
-  // NUOVO: Metodo centralizzato per chiamare il backend
   private callDiagnosisBackend() {
     const request = {
       sex: this.sex,

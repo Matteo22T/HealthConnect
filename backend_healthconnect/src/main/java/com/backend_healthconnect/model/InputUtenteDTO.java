@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InputUtenteDTO {
-    private String text;  // Es: "Ho mal di testa"
-    private int age;      // Es: 30
-    private String sex;   // Es: "male" o "female"
+    private String text;
+    private int age;
+    private String sex;
 }
