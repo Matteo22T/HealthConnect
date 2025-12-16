@@ -42,7 +42,6 @@ export const routes: Routes = [
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
       {path: 'chat', component: ChatMedico},
-      {path: 'richieste', component: AppuntamentiMedico},
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
