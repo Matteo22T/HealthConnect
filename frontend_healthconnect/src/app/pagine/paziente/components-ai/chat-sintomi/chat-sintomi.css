@@ -1,0 +1,387 @@
+/* Reset e Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typography */
+h2 {
+  color: #2d3748;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+h3 {
+  color: #2d3748;
+  font-size: 22px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Textarea */
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s;
+  margin-bottom: 20px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 150px;
+  color: #4a5568;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.controls input,
+.controls select {
+  padding: 10px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.controls input:focus,
+.controls select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 14px 28px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #2d3748;
+  padding: 12px 24px;
+  margin-top: 16px;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e0;
+}
+
+.btn-option {
+  background: white;
+  color: #2d3748;
+  padding: 16px 24px;
+  border: 2px solid #e2e8f0;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.btn-option:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+  transform: translateX(4px);
+}
+
+.btn-choice {
+  background: #f7fafc;
+  color: #2d3748;
+  padding: 10px 20px;
+  border: 2px solid #e2e8f0;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.btn-choice:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  padding: 14px 28px;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+}
+
+.btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(72, 187, 120, 0.5);
+}
+
+/* Question */
+.question-header {
+  margin-bottom: 24px;
+}
+
+.instruction {
+  color: #718096;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+/* Multiple Choice */
+.multiple-choice-container {
+  margin-top: 20px;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: white;
+}
+
+.checkbox-item:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+}
+
+.checkbox-item.selected {
+  border-color: #667eea;
+  background: #ebf4ff;
+}
+
+.custom-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #cbd5e0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.checkbox-item.selected .custom-checkbox {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+.label-text {
+  color: #2d3748;
+  font-size: 15px;
+}
+
+/* Single Choice */
+.single-choice-container {
+  margin-top: 20px;
+}
+
+.choices-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Item Block */
+.item-block {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.item-block:last-child {
+  border-bottom: none;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Result */
+.result-card {
+  padding: 40px 32px;
+}
+
+.condition-row {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.cond-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cond-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 16px;
+}
+
+.cond-prob {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 18px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+  margin: 20px 0;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card {
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls label {
+    min-width: 100%;
+  }
+}
