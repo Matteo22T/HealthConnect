@@ -34,16 +34,15 @@ public class RicercaMediciDAO {
     public List<MedicoCardDTO> executeRicerca(String ricerca) {
         StringBuilder sql = new StringBuilder();
 
-        // Selezioniamo ID, Nome, Cognome, Indirizzo e ID Specializzazione
         sql.append("SELECT u.id, u.nome, u.cognome, d.indirizzo_studio, ");
         sql.append("CAST(d.specializzazione_id AS VARCHAR) as spec_id ");
         sql.append("FROM dettagli_medici d ");
         sql.append("JOIN utenti u ON d.utente_id = u.id ");
-        sql.append("WHERE u.ruolo = 'MEDICO' ");
+        // La clausola corretta per gli Enum
+        sql.append("WHERE CAST(u.ruolo AS VARCHAR) = 'MEDICO' ");
 
         List<Object> params = new ArrayList<>();
 
-        // Se l'utente ha scritto qualcosa nella barra di ricerca
         if (ricerca != null && !ricerca.trim().isEmpty()) {
             sql.append("AND (LOWER(u.nome) LIKE LOWER(?) OR LOWER(u.cognome) LIKE LOWER(?)) ");
             String searchPattern = "%" + ricerca.trim() + "%";

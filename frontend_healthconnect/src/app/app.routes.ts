@@ -15,7 +15,7 @@ import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico
 import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
-
+import { TrovaMedicoComponent } from './pagine/paziente/trova-medico/trova-medico';
 
 
 export const routes: Routes = [
@@ -28,7 +28,8 @@ export const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
-      {path: 'cartella', component: CartellaClinicaPaziente}
+      {path: 'cartella', component: CartellaClinicaPaziente},
+      {path: "trova-medico" , component : TrovaMedicoComponent}
     ]},
 
   {path: 'medico', component: MedicoLayout, children: [
