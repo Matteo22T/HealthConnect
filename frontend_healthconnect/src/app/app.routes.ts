@@ -16,6 +16,7 @@ import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-pazien
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
 import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
+import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 
 
 
@@ -41,7 +42,8 @@ export const routes: Routes = [
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
       {path: 'chat', component: ChatMedico},
-      {path: 'richieste', component: AppuntamentiMedico}
+      {path: 'richieste', component: AppuntamentiMedico},
+      {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
   { path: '**', component: Home}
