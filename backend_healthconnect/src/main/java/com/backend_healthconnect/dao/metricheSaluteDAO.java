@@ -9,4 +9,5 @@ import java.util.Map;
 
 public interface metricheSaluteDAO {
     List<metricheSaluteDTO> findByPazienteIdUltimi6Mesi(Long pazienteId);
+    Boolean salvaNuovaMetrica(metricheSaluteDTO metrica);
 }

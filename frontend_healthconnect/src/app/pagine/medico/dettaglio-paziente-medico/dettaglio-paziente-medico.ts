@@ -12,6 +12,9 @@ import {VisitaDettaglioDTO} from '../../../model/visitaDettaglioDTO';
 import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
 import {AndamentoMetricheVitali} from '../../paziente/components/andamento-metriche-vitali/andamento-metriche-vitali';
 import {NgIf} from '@angular/common';
+import {AggiungiMetricaForm} from '../aggiungi-metrica-form/aggiungi-metrica-form';
+import {MetricheSaluteDTO} from '../../../model/metricheSaluteDTO';
+import {MetricheService} from '../../../service/metriche-service';
 
 @Component({
   selector: 'app-dettaglio-paziente-medico',
@@ -21,7 +24,8 @@ import {NgIf} from '@angular/common';
     PrescrizioniPazienteMedico,
     RouterLink,
     AndamentoMetricheVitali,
-    NgIf
+    NgIf,
+    AggiungiMetricaForm
   ],
   templateUrl: './dettaglio-paziente-medico.html',
   styleUrl: './dettaglio-paziente-medico.css',
@@ -32,12 +36,14 @@ export class DettaglioPazienteMedico implements OnInit{
   paziente: utenteDTO | undefined
   visite: VisitaDettaglioDTO[] = []
   prescrizioniPaziente: prescrizioneDTO[] = []
+  medico: utenteDTO | null = null
 
-  constructor(private route: ActivatedRoute, private visService: VisitaService, private changeDet: ChangeDetectorRef, private utService: UtenteService, private auth: AuthService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private visService: VisitaService, private changeDet: ChangeDetectorRef, private utService: UtenteService, private auth: AuthService, private router: Router, private metricheService: MetricheService) {}
 
   ngOnInit() {
     const pazienteId = this.route.snapshot.paramMap.get('id');
     const currentUser = this.auth.currentUserValue;
+    this.medico = currentUser
 
     if (currentUser && pazienteId){
       forkJoin({
@@ -70,5 +76,18 @@ export class DettaglioPazienteMedico implements OnInit{
     if (id_visita !== null){
       this.router.navigate(['/medico/visite', id_visita])
     }
+  }
+
+  metricaAggiunta($event: MetricheSaluteDTO) {
+    this.metricheService.salvaNuovaMetrica($event).subscribe({
+      next: res => {
+        console.log('Metrica salvata con successo', res);
+        this.changeDet.detectChanges();
+        this.metricheService.triggerRefresh();
+      },
+      error: err => {
+        console.error('Errore server', err);
+      }
+    })
   }
 }
