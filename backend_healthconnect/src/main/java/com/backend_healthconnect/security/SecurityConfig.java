@@ -29,13 +29,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 1. Endpoint Pubblici (Login, Register, CheckAuth)
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/check").permitAll()
-
+                        .requestMatchers("/api/medici/**").permitAll()
                         // 2. Protezione per Ruolo
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/paziente/**").hasRole("PAZIENTE")
 
                         // 3. Tutto il resto richiede autenticazione
+
                         .anyRequest().authenticated()
                 )
 
