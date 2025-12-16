@@ -15,6 +15,7 @@ import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
+import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
 
 
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
       {path: 'impostazioni', component: ImpostazioniMedico},
       {path: 'dashboard', component: DashboardMedico},
       {path: 'calendario', component: CalendarioMedico},
+      {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
       {path: 'chat', component: ChatMedico},
       {path: 'richieste', component: AppuntamentiMedico}
