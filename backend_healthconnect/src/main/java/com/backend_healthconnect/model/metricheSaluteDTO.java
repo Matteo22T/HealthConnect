@@ -19,5 +19,5 @@ public class metricheSaluteDTO {
     private TipoMetrica tipoMetrica;
     private Double valore;
     private String unità_misura;
-    private LocalDateTime data;
+    private LocalDate data;
 }

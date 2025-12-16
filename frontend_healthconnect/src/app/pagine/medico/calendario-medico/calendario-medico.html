@@ -1,1 +1,41 @@
-<p>calendario-medico works!</p>
+<div class="calendar-container">
+
+  <div class="calendar-header">
+    <div class="btn-group">
+      <button
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate">
+        Indietro
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        Oggi
+      </button>
+      <button
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate">
+        Avanti
+      </button>
+    </div>
+
+    <h3>{{ viewDate | date:'MMMM yyyy' }}</h3>
+  </div>
+
+  <br>
+
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [dayStartHour]="8"
+    [dayEndHour]="20"
+    (eventClicked)="alert('Visita: ' + $event.event.title)">
+  </mwl-calendar-week-view>
+
+</div>

@@ -1,3 +1,7 @@
+::ng-deep .pac-container {
+  z-index: 10000 !important;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
 

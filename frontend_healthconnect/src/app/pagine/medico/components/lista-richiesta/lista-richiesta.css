@@ -75,43 +75,31 @@
   font-weight: 500;
 }
 
-/* Request Item */
+/* --- REQUEST ITEM --- */
 .request-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-radius: 16px;
+  /* flex-start evita che i bottoni si disallineino se il testo è lungo */
+  align-items: flex-start;
+
+  /* Dimensioni e Spazi identici al Paziente */
+  padding: 1.2rem;
+  gap: 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1rem; /* Spazio gestito qui, non nel container */
+
+  /* Stile visivo */
   background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
-  margin-bottom: 1rem;
-  border-left: 5px solid var(--warning-color);
+  border-left: 4px solid var(--warning-color);
   box-shadow: var(--shadow-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
-.request-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, rgba(245, 158, 11, 0.06) 100%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
 .request-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
-  border-left-color: #d97706;
-}
-
-.request-item:hover::before {
-  opacity: 1;
 }
 
 .request-item:last-child {
@@ -125,29 +113,23 @@
 }
 
 .request-info h4 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.4rem 0;
   color: var(--text-dark);
 }
 
 .request-info p {
-  color: var(--text-light);
-  font-size: 0.95rem;
-  margin-bottom: 0.4rem;
-  line-height: 1.6;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin: 0 0 0.3rem 0;
+  line-height: 1.4;
 }
 
 .request-info p:last-child {
-  margin-bottom: 0;
-  font-weight: 500;
-  color: #92400e;
-}
-
-.request-time {
-  font-size: 0.85rem;
-  color: #999;
-  margin-top: 0.3rem;
+  font-weight: 600;
+  color: #b45309;
+  margin-top: 0.5rem;
 }
 
 /* Request Actions */
@@ -156,6 +138,8 @@
   gap: 0.8rem;
   position: relative;
   z-index: 1;
+  flex-shrink: 0; /* Impedisce ai bottoni di schiacciarsi */
+  margin-top: 0.2rem; /* Allinea visivamente i bottoni alla prima riga di testo */
 }
 
 .btn-icon {
@@ -174,24 +158,6 @@
   overflow: hidden;
 }
 
-.btn-icon::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-}
-
-.btn-icon:hover::before {
-  width: 120px;
-  height: 120px;
-}
-
 .btn-accept {
   background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
   color: #10b981;
@@ -201,11 +167,6 @@
 
 .btn-accept:hover {
   transform: translateY(-2px);
-}
-
-.btn-accept:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .btn-reject {
@@ -219,25 +180,27 @@
   transform: translateY(-2px);
 }
 
-.btn-reject:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+/* --- SCROLL CONTAINER CORRETTO --- */
+/* Rimosso flex/gap per usare il rendering standard a blocchi come nel paziente */
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
-/* Responsive bottoni */
-@media (max-width: 768px) {
-  .btn-icon {
-    width: 42px;
-    height: 42px;
-  }
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
 }
-
-@media (max-width: 480px) {
-  .btn-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 /* Responsive */
@@ -247,58 +210,19 @@
     border-radius: 20px;
   }
 
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
-  }
-
-  .card-header h2 {
-    font-size: 1.4rem;
-  }
-
-  .view-all {
-    align-self: flex-end;
-  }
-
   .request-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.2rem;
-    padding: 1.3rem;
   }
 
   .request-actions {
-    align-self: stretch;
-    justify-content: flex-end;
-  }
-
-  .btn-icon {
-    width: 42px;
-    height: 42px;
+    align-self: flex-end;
+    margin-top: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .card {
     padding: 1.5rem;
-  }
-
-  .card-header h2 {
-    font-size: 1.3rem;
-  }
-
-  .request-info h4 {
-    font-size: 1.05rem;
-  }
-
-  .request-info p {
-    font-size: 0.9rem;
-  }
-
-  .btn-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
   }
 }

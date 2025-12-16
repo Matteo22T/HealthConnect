@@ -22,6 +22,15 @@ public class PrenotazioneService {
     @Autowired
     private messaggioDAO messaggioDAO;
 
+    @Autowired
+    private NotificaService notificaService;
+
+    @Autowired
+    public PrenotazioneService(prenotazioneDAO prenotazioneRepository, NotificaService notificaService) {
+        this.prenotazioneDAO = prenotazioneRepository;
+        this.notificaService = notificaService;
+    }
+
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id){
         System.out.println(id);
         return prenotazioneDAO.getPrenotazioniInAttesaByMedico(id);

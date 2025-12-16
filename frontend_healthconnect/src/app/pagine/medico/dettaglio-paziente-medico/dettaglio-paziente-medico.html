@@ -16,5 +16,13 @@
     <div class = patient-graphics *ngIf="paziente">
       <app-andamento-metriche-vitali [user]="paziente"></app-andamento-metriche-vitali>
     </div>
+
+    <div class = form-metric-adding *ngIf="paziente && medico">
+      <app-aggiungi-metrica-form
+        [paziente]="paziente"
+        [medico]="medico"
+        (metricaAggiunta)="metricaAggiunta($event)"
+      ></app-aggiungi-metrica-form>
+    </div>
   </div>
 </main>

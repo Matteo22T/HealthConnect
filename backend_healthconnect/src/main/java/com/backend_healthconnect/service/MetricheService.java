@@ -16,4 +16,8 @@ public class MetricheService {
     public List<metricheSaluteDTO> getMetrichePazienteUltimi6Mesi(Long pazienteId) {
         return metricheDAO.findByPazienteIdUltimi6Mesi(pazienteId);
     }
+
+    public Boolean salvaNuovaMetrica(metricheSaluteDTO metrica){
+        return metricheDAO.salvaNuovaMetrica(metrica);
+    }
 }

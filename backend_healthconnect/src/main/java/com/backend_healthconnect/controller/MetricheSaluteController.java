@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,5 +24,15 @@ public class MetricheSaluteController {
     public ResponseEntity<List<metricheSaluteDTO>> getMetricheUltimi6Mesi(@PathVariable Long pazienteId) {
         List<metricheSaluteDTO> metriche = metricheService.getMetrichePazienteUltimi6Mesi(pazienteId);
         return ResponseEntity.ok(metriche);
+    }
+
+    @PostMapping("/medico/inserisci")
+    public ResponseEntity<Boolean> inserisciMetriche(@RequestBody metricheSaluteDTO metrica){
+        if (metrica == null || metrica.getData() == null || metrica.getData().isAfter(LocalDate.now()) || metrica.getMedico() == null || metrica.getPaziente() == null){
+            return ResponseEntity.badRequest().build();
+        }
+        boolean salvataggio = metricheService.salvaNuovaMetrica(metrica);
+        if (salvataggio) return ResponseEntity.ok(salvataggio);
+        else return ResponseEntity.internalServerError().build();
     }
 }

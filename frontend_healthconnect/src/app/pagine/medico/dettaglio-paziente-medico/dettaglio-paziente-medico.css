@@ -68,6 +68,10 @@ app-informazioni-paziente-medico ::ng-deep .profile-header {
   width: auto !important;     /* Lascia che la larghezza segua la colonna della griglia */
 }
 
+.patient-graphics {
+  margin-top: 1rem;
+}
+
 /* Responsive per mobile */
 @media (max-width: 768px) {
   .content-grid {

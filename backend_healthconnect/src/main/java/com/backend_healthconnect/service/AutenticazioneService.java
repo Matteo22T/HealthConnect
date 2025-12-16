@@ -43,4 +43,12 @@ public class AutenticazioneService {
             this.medicoDAO.save(nuovoUtente.getId(), nuovoUtente.getSpecializzazione_id(), nuovoUtente.getNumero_albo(), nuovoUtente.getBiografia(), nuovoUtente.getIndirizzo_studio(), nuovoUtente.getStato_approvazione());
         }
     }
+
+    public utenteDTO modificaDatiPersonaliUtente(Long idUtente, String email, Long telefono){
+        return this.utenteDAO.modificaProfilo(idUtente, email, telefono);
+    }
+
+    public utenteDTO modificaDatiProfessionaliUtente(Long idUtente, String indirizzo, String biografia){
+        return this.utenteDAO.modificaProfiloProfessionale(idUtente, indirizzo, biografia);
+    }
 }

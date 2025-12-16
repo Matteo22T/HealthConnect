@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,8 @@ public class metricheSaluteDAOpostgres implements metricheSaluteDAO {
                 dto.setValore(rs.getDouble("valore"));
                 dto.setUnità_misura(rs.getString("unita_misura"));
 
-                Timestamp ts = rs.getTimestamp("data_misurazione");
-                if (ts != null) dto.setData(ts.toLocalDateTime());
+                Date date = rs.getDate("data_misurazione");
+                if (date != null) dto.setData(date.toLocalDate());
 
                 Long medicoId = rs.getLong("medico_id");
                 if (medicoId > 0) {
@@ -60,5 +61,23 @@ public class metricheSaluteDAOpostgres implements metricheSaluteDAO {
             throw new RuntimeException("Errore recupero metriche salute", e);
         }
         return metriche;
+    }
+
+    @Override
+    public Boolean salvaNuovaMetrica(metricheSaluteDTO metrica) {
+        String query = "INSERT INTO metriche_salute (paziente_id, medico_id , tipo, valore, unita_misura, data_misurazione) VALUES (?, ?, ?::tipo_metrica_enum, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setLong(1,metrica.getPaziente().getId());
+            statement.setLong(2,metrica.getMedico().getId());
+            statement.setString(3,metrica.getTipoMetrica().toString());
+            statement.setDouble(4,metrica.getValore());
+            statement.setString(5,metrica.getUnità_misura());
+            statement.setDate(6, Date.valueOf(metrica.getData()));
+            return statement.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la creazione della metrica", e);
+        }
     }
 }

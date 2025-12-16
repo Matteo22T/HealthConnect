@@ -1,0 +1,53 @@
+<div class="mini-form-container">
+  <h3>Aggiungi Metrica Vitale</h3>
+  <form class="form-row" (ngSubmit)="aggiungiMetrica()">
+    <div class="form-group">
+      <label for="metrica">Metrica</label>
+      <select id="metrica" [(ngModel)]="nuovaMetrica.tipo" name="metrica" required>
+        <option value="">Seleziona...</option>
+        <option *ngFor="let tipo of tipiMetrica">
+          {{tipo}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="unita">Unità</label>
+      <input
+        type="text"
+        id="unita"
+        [(ngModel)]="nuovaMetrica.unitaDiMisura"
+        name="unita"
+        required
+        placeholder="es. mmHg, mg/dL">
+    </div>
+
+    <div class="form-group">
+      <label for="valore">Valore</label>
+      <input
+        type="number"
+        id="valore"
+        [(ngModel)]="nuovaMetrica.valore"
+        name="valore"
+        step="0.1"
+        min="0"
+        required
+        placeholder="0.0">
+    </div>
+
+    <div class="form-group">
+      <label for="data">Data Misurazione</label>
+      <input
+        type="date"
+        id="data"
+        [(ngModel)]="nuovaMetrica.data"
+        name="data"
+        required
+        [max]="oggi">
+    </div>
+
+    <button type="submit" class="btn-add-metric" [disabled]="!formValido()">
+      Aggiungi
+    </button>
+  </form>
+</div>
