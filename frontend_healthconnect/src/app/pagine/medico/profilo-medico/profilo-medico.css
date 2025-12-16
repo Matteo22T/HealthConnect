@@ -1,3 +1,12 @@
+/* Forza il menu di Google Maps a stare sopra tutto */
+.pac-container {
+  z-index: 10000 !important;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin-top: 5px;
+  font-family: 'Segoe UI', sans-serif; /* Per abbinarlo al tuo font */
+}
 /* Wrapper principale */
 .profile-wrapper {
   max-width: 1100px;

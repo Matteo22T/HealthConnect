@@ -155,7 +155,13 @@
 
         <div class="form-group-edit">
           <label>Indirizzo Studio</label>
-          <input type="text" [(ngModel)]="medico.indirizzo_studio" class="form-input" placeholder="Via Roma 1, Milano">
+
+          <input
+            #addressInput
+            type="text"
+            [(ngModel)]="medico.indirizzo_studio"
+            class="form-input"
+            placeholder="Via Roma 1, Milano">
         </div>
 
         <div class="form-group-edit">
