@@ -47,6 +47,12 @@ export class VisitaService {
     });
   }
 
+  getNumeroPazientiMedico(id: number): Observable<number>{
+    return this.http.get<number>(`${this.API_URL}/num_pazienti/medici/${id}`, {
+      withCredentials: true
+    });
+  }
+
   getVisiteFuturePaziente(id: number): Observable<VisitaDTO[]>{
     return this.http.get<VisitaDTO[]>(`${this.API_URL}/future/pazienti/${id}`, {
       withCredentials: true
