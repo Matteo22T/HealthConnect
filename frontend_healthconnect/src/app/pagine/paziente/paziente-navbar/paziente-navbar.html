@@ -11,10 +11,11 @@
   <a class= "logo" routerLink="/paziente/dashboard"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
   <div class="header-right">
     <nav class="nav-links">
-      <a href="#"><span>🔍</span> Trova Medico</a>
-      <a href="#" routerLink="/paziente/cartella"><span>📋</span> Cartella Clinica</a>
-      <a href="#"><span>💬</span> Chat</a>
-      <a href="#" routerLink="/paziente/ai" ><span>🤖</span> Assistente AI</a>
+      <a routerLink="/paziente/calendario" routerLinkActive="active-link"><span>📅</span> Calendario</a>
+      <a><span>🔍</span> Trova Medico</a>
+      <a routerLink="/paziente/cartella" routerLinkActive="active-link"><span>📋</span> Cartella Clinica</a>
+      <a><span>💬</span> Chat</a>
+      <a routerLink="/paziente/ai" routerLinkActive="active-link"><span>🤖</span> Assistente AI</a>
     </nav>
     <div class="profile-container">
       <div class="user-profile" (click)="toggleProfileMenu()">
