@@ -52,7 +52,7 @@ export class Login {
       },
       error: (err) => {
         console.error('Errore server', err);
-        this.errorMessage = 'Si è verificato un errore di connessione.';
+        this.errorMessage = err.message;
         this.cdr.detectChanges();
       }
     });

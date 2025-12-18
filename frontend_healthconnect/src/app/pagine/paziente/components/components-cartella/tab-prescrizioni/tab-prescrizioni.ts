@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { AuthService } from '../../../../service/auth-service';
-import { PrescrizioniService } from '../../../../service/prescrizioni-service';
-import { prescrizioneDTO } from '../../../../model/prescrizioneDTO';
+import { AuthService } from '../../../../../service/auth-service';
+import { PrescrizioniService } from '../../../../../service/prescrizioni-service';
+import { prescrizioneDTO } from '../../../../../model/prescrizioneDTO';
 
 @Component({
   selector: 'app-tab-prescrizioni',

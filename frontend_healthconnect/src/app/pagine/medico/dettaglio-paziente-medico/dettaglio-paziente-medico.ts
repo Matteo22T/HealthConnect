@@ -10,7 +10,7 @@ import {AuthService} from '../../../service/auth-service';
 import {forkJoin} from 'rxjs';
 import {VisitaDettaglioDTO} from '../../../model/visitaDettaglioDTO';
 import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
-import {AndamentoMetricheVitali} from '../../paziente/components/andamento-metriche-vitali/andamento-metriche-vitali';
+import {AndamentoMetricheVitali} from '../../paziente/components/components-dashboard/andamento-metriche-vitali/andamento-metriche-vitali';
 import {NgIf} from '@angular/common';
 import {AggiungiMetricaForm} from '../aggiungi-metrica-form/aggiungi-metrica-form';
 import {MetricheSaluteDTO} from '../../../model/metricheSaluteDTO';

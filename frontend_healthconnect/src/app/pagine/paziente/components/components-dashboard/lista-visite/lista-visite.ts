@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
-import {VisitaDTO} from '../../../../model/visitaDTO';
-import {SpecializzazioneDTO} from '../../../../model/specializzazioneDTO';
-import {SpecializzazioniService} from '../../../../service/specializzazioni-service';
+import {VisitaDTO} from '../../../../../model/visitaDTO';
+import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
+import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
 import {REQUIRED} from '@angular/forms/signals';
-import {utenteDTO} from '../../../../model/utenteDTO';
+import {utenteDTO} from '../../../../../model/utenteDTO';
 import {RouterLink} from '@angular/router';
 
 @Component({

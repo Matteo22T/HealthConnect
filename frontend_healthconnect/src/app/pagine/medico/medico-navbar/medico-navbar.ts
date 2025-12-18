@@ -55,9 +55,16 @@ export class MedicoNavbar implements OnInit{
     }
   }
 
-  logout(){
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  logout() {
+    this.auth.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error("Errore logout", err);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   toggleProfileMenu() {

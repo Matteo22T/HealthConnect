@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { VisitaService } from '../../../../service/visita-service';
-import { AuthService } from '../../../../service/auth-service';
-import { VisitaDTO } from '../../../../model/visitaDTO';
+import { VisitaService } from '../../../../../service/visita-service';
+import { AuthService } from '../../../../../service/auth-service';
+import { VisitaDTO } from '../../../../../model/visitaDTO';
 
 @Component({
   selector: 'app-tab-storia-visite',

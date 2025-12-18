@@ -130,4 +130,27 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
             throw new RuntimeException("Errore durante l'accettazione della prenotazione", e);
         }
     }
+    @Override
+    public boolean salvaPrenotazione(prenotazioneDTO p) {
+        String query = "INSERT INTO prenotazioni (paziente_id, medico_id, data_visita, stato, motivo) VALUES (?, ?, ?, ?::stato_prenotazione_enum, ?)";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, p.getPaziente().getId());
+            stmt.setLong(2, p.getMedico().getId());
+            stmt.setTimestamp(3, Timestamp.valueOf(p.getDataVisita()));
+
+
+            stmt.setString(4, "RICHIESTA");
+
+            stmt.setString(5, p.getMotivo());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
