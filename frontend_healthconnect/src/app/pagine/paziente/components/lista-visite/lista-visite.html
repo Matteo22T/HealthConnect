@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
     <h2>{{ titolo }}</h2>
-    <a href="#" class="view-all">Vedi tutte →</a>
+    <a class="view-all" routerLink="/paziente/calendario">Vedi Calendario →</a>
   </div>
   <div class="scroll-container" (scroll)="onScroll($event)">
     <div class="appointment-item" *ngFor="let app of visiteMostrate">

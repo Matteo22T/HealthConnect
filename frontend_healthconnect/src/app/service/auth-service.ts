@@ -76,4 +76,22 @@ export class AuthService {
     );
   }
 
+  modificaEmailETelefono(utente : utenteDTO): Observable<utenteDTO> {
+    return this.http.put<utenteDTO>(`${this.API_URL}/modifica/emailtelefono`, utente, {withCredentials: true}).pipe(
+      tap(updatedUser => {
+        this.currentUserSubject.next(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      })
+    );
+  }
+
+  modificaIndirizzoEBiografia(utente: utenteDTO){
+    return this.http.put<utenteDTO>(`${this.API_URL}/modifica/indirizzobiografia`, utente, {withCredentials: true}).pipe(
+      tap(updatedUser => {
+        this.currentUserSubject.next(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      })
+    );
+  }
+
 }

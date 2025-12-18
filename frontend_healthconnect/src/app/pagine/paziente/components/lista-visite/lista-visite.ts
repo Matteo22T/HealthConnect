@@ -5,12 +5,14 @@ import {SpecializzazioneDTO} from '../../../../model/specializzazioneDTO';
 import {SpecializzazioniService} from '../../../../service/specializzazioni-service';
 import {REQUIRED} from '@angular/forms/signals';
 import {utenteDTO} from '../../../../model/utenteDTO';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-lista-visite',
   imports: [
     DatePipe,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './lista-visite.html',
   styleUrl: './lista-visite.css',

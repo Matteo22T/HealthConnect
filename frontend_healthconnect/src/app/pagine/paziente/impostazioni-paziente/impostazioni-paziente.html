@@ -1,0 +1,65 @@
+<div class="container fade-in">
+  <h1 class="page-title">⚙️ Impostazioni Account</h1>
+
+  <div class="settings-grid">
+
+    <div class="card">
+      <div class="card-header">
+        <h2>🔒 Sicurezza</h2>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="cambiaPassword()">
+          <div class="form-group">
+            <label>Password Attuale</label>
+            <input type="password" [(ngModel)]="pass.attuale" name="attuale" class="form-input" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Nuova Password</label>
+            <input type="password" [(ngModel)]="pass.nuova" name="nuova" class="form-input" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Conferma Password</label>
+            <input type="password" [(ngModel)]="pass.conferma" name="conferma" class="form-input" placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary">Aggiorna Password</button>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <h2>🔔 Notifiche</h2>
+      </div>
+      <div class="card-body">
+
+        <div class="toggle-item">
+          <div class="toggle-info">
+            <h4>Nuove Richieste</h4>
+            <p>Ricevi una email quando un paziente richiede un appuntamento.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="notifiche.visite">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="toggle-item">
+          <div class="toggle-info">
+            <h4>Messaggi Chat</h4>
+            <p>Avvisami via email se ho messaggi non letti.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="notifiche.messaggi">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <button class="btn btn-secondary mt-3" (click)="salvaNotifiche()">Aggiorna Notifiche</button>
+      </div>
+    </div>
+
+  </div>
+</div>

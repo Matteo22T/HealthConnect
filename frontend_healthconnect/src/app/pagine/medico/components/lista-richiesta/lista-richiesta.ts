@@ -8,7 +8,6 @@ import {RouterLink} from '@angular/router';
   imports: [
     NgIf,
     NgForOf,
-    RouterLink,
     DatePipe
   ],
   templateUrl: './lista-richiesta.html',

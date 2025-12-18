@@ -1,21 +1,111 @@
-<div class="chat-container symptoms-theme">
-  <div class="messages-area">
+<div class="container">
+  <!-- Disclaimer permanente -->
+  <div class="disclaimer">
+    ⚠️ <strong>Attenzione:</strong> Questa è solo un'analisi indicativa. Non sostituisce il parere medico professionale. In caso di sintomi gravi, contatta immediatamente un medico.
+  </div>
 
-    <div class="disclaimer-banner">
-      ⚠️ <strong>ATTENZIONE:</strong> Questo strumento è solo a scopo informativo e non sostituisce il parere di un medico. In caso di emergenza, chiama il 112.
+  <!-- Step: Start -->
+  <div *ngIf="step === 'start'" class="card">
+    <h2>Descrivi come ti senti</h2>
+    <textarea [(ngModel)]="userInput" rows="4" placeholder="Es. Ho mal di testa e nausea da stamattina..."></textarea>
+
+    <div class="controls">
+      <label>
+        Età:
+        <input type="number" [(ngModel)]="age">
+      </label>
+      <label>
+        Sesso:
+        <select [(ngModel)]="sex">
+          <option value="male">Uomo</option>
+          <option value="female">Donna</option>
+        </select>
+      </label>
     </div>
 
-    <div class="message-row bot-row">
-      <div class="bubble bot-bubble">
-        <p>Ciao. Sono qui per aiutarti ad analizzare i tuoi sintomi. Per iniziare, descrivi brevemente come ti senti.</p>
-        <span class="timestamp">Ora</span>
+    <button (click)="startDiagnosis()" [disabled]="isLoading" class="btn-primary" [class.loading]="isLoading">
+      {{ isLoading ? 'Analisi in corso...' : 'Inizia Diagnosi' }}
+    </button>
+  </div>
+
+  <!-- Step: Question -->
+  <div *ngIf="step === 'question' && currentQuestion" class="card">
+    <div class="question-header">
+      <h3>{{ currentQuestion.text }}</h3>
+    </div>
+
+    <!-- Group Multiple Choice -->
+    <div *ngIf="currentQuestion.type === 'group_multiple'" class="multiple-choice-container">
+      <p class="instruction">Seleziona tutti i sintomi che avverti:</p>
+
+      <div class="checkbox-list">
+        <div *ngFor="let item of currentQuestion.items"
+             class="checkbox-item"
+             (click)="!isLoading && toggleSelection(item.id)"
+             [class.selected]="selectedSymptomIds.has(item.id)"
+             [class.disabled]="isLoading">
+          <div class="custom-checkbox">
+            <span *ngIf="selectedSymptomIds.has(item.id)">✔</span>
+          </div>
+          <span class="label-text">{{ item.name }}</span>
+        </div>
+      </div>
+
+      <button class="btn-confirm" (click)="submitGroupMultiple()" [disabled]="isLoading" [class.loading]="isLoading">
+        Conferma e Continua
+      </button>
+    </div>
+
+    <!-- Group Single Choice -->
+    <div *ngIf="currentQuestion.type === 'group_single'" class="single-choice-container">
+      <div class="choices-vertical">
+        <button *ngFor="let item of currentQuestion.items"
+                (click)="submitAnswer(item.id, 'present')"
+                [disabled]="isLoading"
+                class="btn-option"
+                [class.loading]="isLoading">
+          {{ item.name }}
+        </button>
       </div>
     </div>
 
+    <!-- Other Question Types -->
+    <div *ngIf="currentQuestion.type !== 'group_single' && currentQuestion.type !== 'group_multiple'">
+      <div *ngFor="let item of currentQuestion.items" class="item-block">
+        <p><strong>{{ item.name }}</strong></p>
+
+        <div class="choices">
+          <button *ngFor="let choice of item.choices"
+                  (click)="submitAnswer(item.id, choice.id)"
+                  [disabled]="isLoading"
+                  class="btn-choice"
+                  [class.loading]="isLoading">
+            {{ choice.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loader">Caricamento prossima domanda...</div>
+
+    <button (click)="reset()" class="btn-secondary">Nuova Analisi</button>
   </div>
 
-  <div class="input-area">
-    <input type="text" placeholder="Es. Ho mal di testa e nausea..." disabled>
-    <button class="send-btn" disabled>➤</button>
+  <!-- Step: Result -->
+  <div *ngIf="step === 'result'" class="card result-card">
+    <h2>Possibili Cause</h2>
+    <p>Ecco cosa potrebbe essere in base ai tuoi sintomi:</p>
+
+    <div *ngFor="let cond of conditions" class="condition-row">
+      <div class="cond-info">
+        <span class="cond-name">{{ cond.common_name }}</span>
+        <span class="cond-prob">{{ (cond.probability * 100) | number:'1.0-1' }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="fill" [style.width.%]="cond.probability * 100"></div>
+      </div>
+    </div>
+
+    <button (click)="reset()" class="btn-secondary">Nuova Analisi</button>
   </div>
 </div>

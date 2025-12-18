@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../service/auth-service';
 
@@ -7,7 +7,8 @@ import {AuthService} from '../../../service/auth-service';
   selector: 'app-paziente-navbar',
   imports: [
     RouterLink,
-    NgIf
+    NgIf,
+    RouterLinkActive
   ],
   templateUrl: './paziente-navbar.html',
   styleUrl: './paziente-navbar.css',

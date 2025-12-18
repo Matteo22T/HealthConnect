@@ -14,10 +14,10 @@
   <div class="main-grid">
 
     <div class="left-column">
-      <app-lista-visita [prossimeVisite]="visite.slice(0,3)"></app-lista-visita>
+      <app-lista-visita [prossimeVisite]="visite"></app-lista-visita>
 
       <app-lista-richiesta
-        [prenotazioniInAttesa]="prenotazioni.slice(0,3)"
+        [prenotazioniInAttesa]="prenotazioni"
         (accettaPrenotazione)="gestisciAccettazionePrenotazione($event)"
         (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
       </app-lista-richiesta>

@@ -69,7 +69,8 @@ export class AndamentoMetricheVitali implements OnInit {
   };
 
   ngOnInit(): void {
-    this.caricaDati(this.user.id)
+    this.caricaDati(this.user.id);
+    this.metricheService.refreshNeeded$.subscribe(() => this.caricaDati(this.user.id));
   }
 
   caricaDati(id: number) {
