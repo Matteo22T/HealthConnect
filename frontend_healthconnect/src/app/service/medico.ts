@@ -13,10 +13,10 @@ export class MedicoService {
 
   constructor(private http: HttpClient) { }
 
-  getMedici(term: string): Observable<MedicoDTO[]> {
-    // IL TRUCCO È QUI:
-    // Non mettere nessun "if (!term) return []".
-    // Passiamo il termine direttamente. Se è vuoto, il backend ci darà tutti i medici.
-    return this.http.get<MedicoDTO[]>(`${this.apiUrl}/trova?search=${term}`);
+  getMedici(term: string, spec: string): Observable<MedicoDTO[]> {
+      // Costruiamo l'URL con entrambi i parametri
+      // Esempio risultato: .../trova?search=Gregory&spec=0
+      const safeSpec = spec ? spec : '';
+      return this.http.get<MedicoDTO[]>(`${this.apiUrl}/trova?search=${term}&spec=${safeSpec}`);
   }
 }

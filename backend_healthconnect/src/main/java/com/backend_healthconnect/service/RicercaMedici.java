@@ -13,8 +13,8 @@ public class RicercaMedici {
     @Autowired
     private RicercaMediciDAO ricercaMediciDAO; // Si collega al DAO
 
-    public List<MedicoCardDTO> eseguiRicerca(String query) {
-        // Passa la richiesta al DAO
-        return ricercaMediciDAO.executeRicerca(query);
+    public List<MedicoCardDTO> eseguiRicerca(String query, String specializzazione) {
+        // Passalo al DAO
+        return ricercaMediciDAO.executeRicerca(query, specializzazione);
     }
 }

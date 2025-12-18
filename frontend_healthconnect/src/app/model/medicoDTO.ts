@@ -4,4 +4,5 @@ export interface MedicoDTO {
   cognome: string;
   specializzazione: string;
   indirizzo: string;
+  indirizzo_studio?: string;
 }

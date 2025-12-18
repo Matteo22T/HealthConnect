@@ -16,12 +16,16 @@ public class MedicoController {
 
     @GetMapping("/trova")
     public List<MedicoCardDTO> trovaMedici(
-            @RequestParam(name = "search", required = false) String query
+            @RequestParam(name = "search", required = false) String query,
+            // 👇 Aggiungi questo parametro per catturare la scelta della dropdown
+            @RequestParam(name = "spec", required = false) String spec
     ) {
-        // Gestione sicura del parametro vuoto o null
-        if (query == null || query.trim().isEmpty() || query.equals("undefined")) {
-            return ricercaMedici.eseguiRicerca("");
-        }
-        return ricercaMedici.eseguiRicerca(query);
+        // Gestione sicura dei null
+        String safeQuery = (query == null || query.equals("undefined")) ? "" : query;
+
+        // Se spec è null o "Tutte", passiamo stringa vuota
+        String safeSpec = (spec == null || spec.equals("undefined") || spec.equals("Tutte")) ? "" : spec;
+
+        return ricercaMedici.eseguiRicerca(safeQuery, safeSpec);
     }
 }
