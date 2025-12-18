@@ -107,7 +107,7 @@ public class visitaDAOpostgres implements visitaDAO {
             throw new RuntimeException("Errore durante la richiesta lista pazienti al db", e);
         }
 
-        return 0;
+        return -1;
     }
 
     @Override

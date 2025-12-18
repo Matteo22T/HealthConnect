@@ -46,7 +46,8 @@ public class VisiteController {
     @GetMapping("/num_pazienti/medici/{id}")
     public ResponseEntity<Integer> getNumeroPazientiMedico(@PathVariable Long id){
         int numeroPazienti = visiteService.getNumeroPazientiMedico(id);
-        return ResponseEntity.ok(numeroPazienti);
+        if (numeroPazienti >= 0) return ResponseEntity.ok(numeroPazienti);
+        else return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/medici/paziente/{id}")
