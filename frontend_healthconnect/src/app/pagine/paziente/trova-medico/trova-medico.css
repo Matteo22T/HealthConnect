@@ -1,34 +1,32 @@
-/* Container stile Card */
+/* --- CONTENITORE PRINCIPALE --- */
 .card-container {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  font-family: 'Times New Roman', serif;
-  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 20px auto;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Header */
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .card-title {
-  color: #1a2b4b;
   font-size: 1.5rem;
-  font-weight: 700;
+  color: #2c3e50;
   margin: 0;
 }
 
 .see-all {
-  color: #0066cc;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: 0.9rem;
+  color: #007bff;
   font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
 .divider {
@@ -37,121 +35,242 @@
   margin-bottom: 20px;
 }
 
-/* Search Bar */
+/* --- BARRA DI RICERCA --- */
 .search-section {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .search-wrapper {
-  flex: 2;
   position: relative;
+  flex: 2;
 }
 
-.search-input, .filter-select {
+.search-input {
   width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-family: sans-serif;
-  box-sizing: border-box;
+  padding: 10px 15px 10px 40px; /* spazio a sinistra per icona */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 
 .search-icon {
   position: absolute;
-  right: 12px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.9rem;
-  opacity: 0.5;
+  color: #aaa;
 }
 
-.filter-select {
+.form-select {
   flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
 }
 
-/* Lista Items */
-.medici-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
+/* --- LISTA MEDICI --- */
 .medico-item {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  transition: background-color 0.2s;
+  padding: 20px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.medico-item:hover {
-  background-color: #f8fbff;
+.medico-item:last-child {
+  border-bottom: none;
 }
 
-/* Avatar */
 .avatar {
-  min-width: 45px; /* min-width evita che si schiacci */
-  height: 45px;
-  background-color: #e3f2fd;
-  color: #1565c0;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  background-color: #e3f2fd; /* Azzurro chiaro */
+  color: #007bff;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   font-weight: bold;
-  font-family: sans-serif;
+  font-size: 1.2rem;
+  margin-right: 15px;
 }
 
-/* Testi */
 .info {
-  flex: 1;
-  font-family: sans-serif;
+  flex-grow: 1;
 }
 
 .info h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #333;
 }
 
-.role {
-  margin: 2px 0;
+.role, .address {
+  margin: 2px 0 0;
   font-size: 0.85rem;
   color: #666;
 }
 
-.address {
-  margin: 0;
-  font-size: 0.8rem;
-  color: #999;
+/* --- BOTTONI --- */
+.actions-wrapper {
+  display: flex;
+  gap: 10px; /* Spazio tra i bottoni */
 }
 
-/* Bottone */
 .btn-prenota {
-  background-color: transparent;
-  color: #0066cc;
-  border: 1px solid #0066cc;
-  padding: 6px 14px;
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  background: white;
+  color: #007bff;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.85rem;
   transition: all 0.2s;
-  white-space: nowrap; /* Evita che il testo vada a capo */
 }
 
 .btn-prenota:hover {
-  background-color: #0066cc;
+  background: #f0f8ff;
+}
+
+/* Stile specifico per il bottone verde PRENOTA */
+.btn-green {
+  border-color: #28a745;
   color: white;
+  background-color: #28a745;
+}
+
+.btn-green:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
 }
 
 .empty-state {
   text-align: center;
   color: #999;
   padding: 20px;
-  font-family: sans-serif;
+}
+
+/* ========================================= */
+/* STILE MODALE                  */
+/* ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* Sfondo scuro */
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center;     /* Centra verticalmente */
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+.modal-header p {
+  margin: 5px 0 20px 0;
+  color: #666;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Importante per non sbordare */
+  font-family: inherit;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn-cancel {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-confirm {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-confirm:hover {
+  background: #0056b3;
+}
+
+/* Animazione semplice apertura */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.success-content {
+  text-align: center; /* Centra tutto il testo */
+  max-width: 350px;   /* Più piccolo del form */
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #28a745; /* Verde */
+  color: white;
+  border-radius: 50%; /* Cerchio perfetto */
+  font-size: 35px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto; /* Centra l'icona e da spazio sotto */
+}
+
+.success-content h3 {
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.success-content p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 25px;
 }

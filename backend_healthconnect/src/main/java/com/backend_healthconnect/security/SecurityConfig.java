@@ -30,6 +30,7 @@ public class SecurityConfig {
                         // 1. Endpoint Pubblici (Login, Register, CheckAuth)
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/check").permitAll()
                         .requestMatchers("/api/medici/**").permitAll()
+                        .requestMatchers("/api/prenotazioni/crea").permitAll()
                         // 2. Protezione per Ruolo
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/medico/**").hasRole("MEDICO")

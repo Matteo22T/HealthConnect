@@ -35,4 +35,9 @@ public class PrenotazioneService {
 
     public boolean rifiutaPrenotazione(Long id) { return prenotazioneDAO.rifiutaPrenotazione(id);
     }
+
+    public boolean creaPrenotazione(prenotazioneDTO prenotazione){
+
+        return prenotazioneDAO.salvaPrenotazione(prenotazione);
+    }
 }

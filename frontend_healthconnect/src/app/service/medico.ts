@@ -8,15 +8,16 @@ import { MedicoDTO } from '../model/medicoDTO';
 })
 export class MedicoService {
 
-  // Assicurati che questo URL sia giusto (es. 8080)
   private apiUrl = 'http://localhost:8080/api/medici';
+  private prenotazioniUrl = 'http://localhost:8080/api/prenotazioni';
 
   constructor(private http: HttpClient) { }
 
   getMedici(term: string, spec: string): Observable<MedicoDTO[]> {
-      // Costruiamo l'URL con entrambi i parametri
-      // Esempio risultato: .../trova?search=Gregory&spec=0
       const safeSpec = spec ? spec : '';
       return this.http.get<MedicoDTO[]>(`${this.apiUrl}/trova?search=${term}&spec=${safeSpec}`);
   }
+  prenotaVisita(datiPrenotazione: any): Observable<any> {
+      return this.http.post(`${this.prenotazioniUrl}/crea`, datiPrenotazione, { responseType: 'text' });
+    }
 }
