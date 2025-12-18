@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, catchError, Observable, of, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, map, Observable, of, tap, throwError} from 'rxjs';
 import {utenteDTO} from '../model/utenteDTO';
 
 @Injectable({
@@ -45,13 +45,22 @@ export class AuthService {
         this.currentUserSubject.next(user);
       }),
       catchError(error => {
-        if (error.status === 401) {
-          console.error('Credenziali errate');
-          // Restituisci null se il login fallisce, così il componente lo sa
-          return of(null);
+        let messaggioErrore = 'Errore di connessione o server non raggiungibile.';
+
+        if (error.status === 401 || error.status === 403) {
+
+          //error.error è il body della risposta quindi error.error.error è il campo "error" dentro il JSON.
+          if (error.error && error.error.error) {
+            messaggioErrore = error.error.error;
+          } else {
+            messaggioErrore = 'Email o Password errati.';
+          }
         }
-        // Per altri errori (es. server down 500), rilancia l'errore
-        return throwError(() => error);
+
+        console.error('Login fallito:', messaggioErrore);
+
+        // Rilanciamo l'errore al componente con il testo preciso
+        return throwError(() => new Error(messaggioErrore));
       })
     );
   }
@@ -60,20 +69,32 @@ export class AuthService {
     return this.http.post<utenteDTO>(`${this.API_URL}/register`, utente);
   }
 
-  checkAuth(): Observable<utenteDTO> {
-    return this.http.get<utenteDTO>(`${this.API_URL}/check`, {
-      withCredentials: true
-    });
+  checkAuth(): Observable<boolean> {
+    return this.http.get<utenteDTO>(`${this.API_URL}/check`, { withCredentials: true }).pipe(
+      tap(user => {
+        this.currentUserSubject.next(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      }),
+      map(() => true),
+      catchError(() => {
+        this.logoutLocal();
+        return of(false);
+      })
+    );
   }
 
   logout(): Observable<any> {
     return this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true }).pipe(
       tap(() => {
         // Rimuoviamo tutto al logout
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
+        this.logoutLocal();
       })
     );
+  }
+
+  private logoutLocal() {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
   modificaEmailETelefono(utente : utenteDTO): Observable<utenteDTO> {

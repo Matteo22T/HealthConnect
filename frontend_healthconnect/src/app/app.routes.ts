@@ -20,16 +20,25 @@ import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/vis
 import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impostazioni-paziente';
 import {CalendarioPaziente} from './pagine/paziente/calendario-paziente/calendario-paziente';
+import {guestGuard} from './guards/guest.guard';
+import {AuthGuard} from './guards/auth.guard';
 
 
 
 export const routes: Routes = [
-  { path: 'login', component: Login},
-  { path: 'register', component: Register},
+  {
+    path: '',
+    component: Home,
+    pathMatch: 'full',
+    canActivate: [guestGuard]
+  },
 
-  {path: 'admin/dashboard', component: DashboardAdmin},
+  { path: 'login', component: Login, canActivate: [guestGuard]},
+  { path: 'register', component: Register, canActivate: [guestGuard]},
 
-  {path: 'paziente', component: PazienteLayout, children: [
+  {path: 'admin/dashboard', component: DashboardAdmin, canActivate: [AuthGuard], data: {ruolo: "ADMIN"} },
+
+  {path: 'paziente', component: PazienteLayout, canActivate: [AuthGuard], data: {ruolo: "PAZIENTE"} ,children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
@@ -39,7 +48,7 @@ export const routes: Routes = [
       {path: 'calendario', component: CalendarioPaziente}
     ]},
 
-  {path: 'medico', component: MedicoLayout, children: [
+  {path: 'medico', component: MedicoLayout, canActivate: [AuthGuard], data: {ruolo: "MEDICO"}, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'profilo', component: ProfiloMedico},
       {path: 'impostazioni', component: ImpostazioniMedico},
@@ -51,5 +60,5 @@ export const routes: Routes = [
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
-  { path: '**', component: Home}
+  { path: '**', redirectTo:''}
 ];
