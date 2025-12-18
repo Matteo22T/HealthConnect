@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/visite/pazienti/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/paziente/{id}/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/medico/salva/**").hasRole("MEDICO")
+                        .requestMatchers("api/visite/num_pazienti/medici/**").hasRole("MEDICO")
 
                         .requestMatchers("/api/paziente/**").hasRole("PAZIENTE")
                         .requestMatchers( "/api/infermedica/**").hasRole("PAZIENTE")
