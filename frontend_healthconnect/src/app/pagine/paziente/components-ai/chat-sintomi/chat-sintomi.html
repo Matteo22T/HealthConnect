@@ -35,7 +35,7 @@
     </div>
 
     <!-- Group Multiple Choice -->
-    <div *ngIf="currentQuestion?.type === 'group_multiple'" class="multiple-choice-container">
+    <div *ngIf="currentQuestion.type === 'group_multiple'" class="multiple-choice-container">
       <p class="instruction">Seleziona tutti i sintomi che avverti:</p>
 
       <div class="checkbox-list">
@@ -57,9 +57,9 @@
     </div>
 
     <!-- Group Single Choice -->
-    <div *ngIf="currentQuestion?.type === 'group_single'" class="single-choice-container">
+    <div *ngIf="currentQuestion.type === 'group_single'" class="single-choice-container">
       <div class="choices-vertical">
-        <button *ngFor="let item of currentQuestion?.items"
+        <button *ngFor="let item of currentQuestion.items"
                 (click)="submitAnswer(item.id, 'present')"
                 [disabled]="isLoading"
                 class="btn-option"
@@ -70,8 +70,8 @@
     </div>
 
     <!-- Other Question Types -->
-    <div *ngIf="currentQuestion?.type !== 'group_single' && currentQuestion?.type !== 'group_multiple'">
-      <div *ngFor="let item of currentQuestion?.items" class="item-block">
+    <div *ngIf="currentQuestion.type !== 'group_single' && currentQuestion.type !== 'group_multiple'">
+      <div *ngFor="let item of currentQuestion.items" class="item-block">
         <p><strong>{{ item.name }}</strong></p>
 
         <div class="choices">
