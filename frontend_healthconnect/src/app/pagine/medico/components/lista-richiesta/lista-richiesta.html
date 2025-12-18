@@ -1,35 +1,37 @@
 <div class="card">
   <div class="card-header">
     <h2>Richieste di Appuntamento</h2>
-    <a routerLink="/medico/richieste" class="view-all">Vedi tutte →</a>
   </div>
 
-  <div *ngIf="prenotazioniInAttesa.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-    <p>Nessuna richiesta in attesa 🎉</p>
-  </div>
+  <div class="scroll-container">
 
-  <div class="request-item" *ngFor="let pren of prenotazioniInAttesa">
-    <div class="request-info">
-      <h4>{{ pren.paziente.nome + " " + pren.paziente.cognome}}</h4>
-
-      <p>📅 {{ pren.dataVisita | date: 'dd/MM/yyyy'}} - 🕐 {{ pren.dataVisita | date: 'HH:mm'}}</p>
-
-      <p>{{pren.motivo}}</p>
-
+    <div *ngIf="prenotazioniInAttesa.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+      <p>Nessuna richiesta in attesa 🎉</p>
     </div>
 
-    <div class="request-actions">
-      <button class="btn-icon btn-accept"
-              title="Accetta"
-              (click)="accettaPrenotazione.emit(pren.id)">
-        ✓
-      </button>
+    <div class="request-item" *ngFor="let pren of prenotazioniInAttesa">
+      <div class="request-info">
+        <h4>{{ pren.paziente.nome + " " + pren.paziente.cognome}}</h4>
 
-      <button class="btn-icon btn-reject"
-              title="Rifiuta"
-              (click)="rifiutaPrenotazione.emit(pren.id)">
-        ✗
-      </button>
+        <p>📅 {{ pren.dataVisita | date: 'dd/MM/yyyy'}} - 🕐 {{ pren.dataVisita | date: 'HH:mm'}}</p>
+
+        <p>{{pren.motivo}}</p>
+      </div>
+
+      <div class="request-actions">
+        <button class="btn-icon btn-accept"
+                title="Accetta"
+                (click)="accettaPrenotazione.emit(pren.id)">
+          ✓
+        </button>
+
+        <button class="btn-icon btn-reject"
+                title="Rifiuta"
+                (click)="rifiutaPrenotazione.emit(pren.id)">
+          ✗
+        </button>
+      </div>
     </div>
+
   </div>
 </div>

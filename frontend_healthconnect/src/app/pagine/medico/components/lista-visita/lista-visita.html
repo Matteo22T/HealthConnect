@@ -4,19 +4,23 @@
     <a routerLink="/medico/calendario" class="view-all">Calendario completo →</a>
   </div>
 
-  <div *ngIf="prossimeVisite.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-    <p>Nessuna visita programmata per oggi ☕️</p>
-  </div>
+  <div class="scroll-container">
 
-  <div class="appointment-item" *ngFor="let visit of prossimeVisite">
-
-    <div class="appointment-time-block">
-      <span class="time-display">{{ visit.dataVisita | date: 'HH:mm' }}</span>
+    <div *ngIf="prossimeVisite.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+      <p>Nessuna visita programmata per oggi ☕️</p>
     </div>
 
-    <div class="appointment-details">
-      <h4>{{ visit.paziente.nome +" "+ visit.paziente.cognome }}</h4>
-      <p> {{ visit.prenotazione.motivo }}</p>
+    <div class="appointment-item" *ngFor="let visit of prossimeVisite">
+
+      <div class="appointment-time-block">
+        <span class="time-display">{{ visit.dataVisita | date: 'HH:mm' }}</span>
+      </div>
+
+      <div class="appointment-details">
+        <h4>{{ visit.paziente.nome +" "+ visit.paziente.cognome }}</h4>
+        <p> {{ visit.prenotazione.motivo }}</p>
+      </div>
+
     </div>
 
   </div>

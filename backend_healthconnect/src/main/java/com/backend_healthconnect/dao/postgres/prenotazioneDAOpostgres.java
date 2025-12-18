@@ -2,12 +2,10 @@ package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.prenotazioneDAO;
 import com.backend_healthconnect.dao.utenteDAO;
-import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.StatoPrenotazione;
 import com.backend_healthconnect.model.prenotazioneDTO;
 import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

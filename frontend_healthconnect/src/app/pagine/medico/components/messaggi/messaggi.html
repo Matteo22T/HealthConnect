@@ -1,26 +1,28 @@
-<div class="card" style="margin-bottom: 2rem;">
+<div class="card">
   <div class="card-header">
     <h2>Messaggi Non Letti</h2>
     <a routerLink="/medico/chat" class="view-all">Vedi tutti →</a>
   </div>
 
-  <div *ngIf="ultimiMessaggi.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-    <p>Nessun nuovo messaggio 📭</p>
-  </div>
+  <div class="scroll-container">
 
-  <div class="message-item"
-       *ngFor="let msg of ultimiMessaggi"
-       [class.unread]="!msg.letto">
-       <!---(click)="apriChat.emit(msg.id)">--->
-
-    <div class="message-header">
-      <span class="message-sender">{{ msg.mittente.nome + " " + msg.mittente.cognome }}</span>
-      <span class="message-time">{{ msg.dataInvio | timeAgo }}</span>
+    <div *ngIf="ultimiMessaggi.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+      <p>Nessun nuovo messaggio 📭</p>
     </div>
 
-    <p class="message-preview">
-      {{ msg.testo | slice:0:50 }}{{ msg.testo.length > 50 ? '...' : '' }}
-    </p>
+    <div class="message-item"
+         *ngFor="let msg of ultimiMessaggi"
+         [class.unread]="!msg.letto">
+      <div class="message-header">
+        <span class="message-sender">{{ msg.mittente.nome + " " + msg.mittente.cognome }}</span>
+        <span class="message-time">{{ msg.dataInvio | timeAgo }}</span>
+      </div>
+
+      <p class="message-preview">
+        {{ msg.testo | slice:0:50 }}{{ msg.testo.length > 50 ? '...' : '' }}
+      </p>
+
+    </div>
 
   </div>
 </div>

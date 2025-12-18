@@ -28,18 +28,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Stato vuoto */
-.card > div[style*="text-align: center"] {
-  padding: 3rem 2rem !important;
-  text-align: center;
-  color: var(--text-light) !important;
-}
-
-.card > div[style*="text-align: center"] p {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
 .view-all {
   color: var(--primary-color);
   text-decoration: none;
@@ -58,46 +46,98 @@
   transform: translateX(3px);
 }
 
+/* --- MESSAGE ITEM (Stile Card Uniformato) --- */
 .message-item {
-  padding: 1rem;
-  border-bottom: 1px solid #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.2rem;       /* Uniformato a lista visite */
+  border-radius: 8px;    /* Uniformato a lista visite */
+  margin-bottom: 1rem;
+  background: #f8f9fa;   /* Sfondo neutro per i letti */
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  transition: background 0.3s;
 }
 
 .message-item:hover {
-  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+  border-color: rgba(0, 102, 204, 0.1);
 }
 
 .message-item:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* Stile specifico per Non Letti (Simile alle visite) */
+.unread {
+  background: #eef2ff; /* Azzurrino chiaro */
+  border-left: 4px solid #667eea; /* Accento laterale */
 }
 
 .message-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  align-items: center;
 }
 
 .message-sender {
-  font-weight: 600;
+  font-weight: 700;
   color: #333;
+  font-size: 1.05rem;
+}
+
+.unread .message-sender {
+  color: var(--primary-color);
 }
 
 .message-time {
-  font-size: 0.8rem;
-  color: #999;
+  font-size: 0.85rem;
+  color: #8898aa;
+  font-weight: 500;
 }
 
 .message-preview {
   color: #666;
   font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limita a 2 righe */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.unread {
-  background: #f0f7ff;
+/* --- SCROLL CONTAINER (Stessa altezza Lista Visite) --- */
+.scroll-container {
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
-.unread .message-sender {
-  color: #667eea;
+/* Scrollbar personalizzata */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
 }

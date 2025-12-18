@@ -4,7 +4,6 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 @Component({
   selector: 'app-medici-paziente',
   imports: [
-    DatePipe,
     NgForOf,
     NgIf
   ],

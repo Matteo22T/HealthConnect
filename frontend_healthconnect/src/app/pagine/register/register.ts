@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import {AuthService} from '../../service/auth-service';
@@ -7,7 +7,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {SpecializzazioneDTO} from '../../model/specializzazioneDTO';
 
 
-
+declare var google: any;
 @Component({
   selector: 'app-register',
   templateUrl: './register.html',
@@ -25,16 +25,19 @@ export class Register implements OnInit {
   errorMessage: string = '';
   specializzazioni: SpecializzazioneDTO[] = [{ id:0, nome: 'Cardiologia'}];
 
+  @ViewChild('addressInput') addressInput: ElementRef | undefined;
+
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
+      this.registerForm = this.fb.group({
       nome: ['', Validators.required],
       cognome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z]{2,63})+$")]],
@@ -59,16 +62,22 @@ export class Register implements OnInit {
 
     if (ruolo === 'MEDICO') {
       this.isMedico = true;
-      // Aggiungi validatori se è medico
+
       medicoControls.forEach(control => {
         const formControl = this.registerForm.get(control);
         formControl?.setValidators([Validators.required]);
         formControl?.updateValueAndValidity();
       });
 
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.initAutocomplete();
+      }, 100);
+
+      this.initAutocomplete();
+
     } else {
       this.isMedico = false;
-      // Rimuovi validatori e resetta i valori se non è medico
       medicoControls.forEach(control => {
         const formControl = this.registerForm.get(control);
         formControl?.clearValidators();
@@ -76,6 +85,24 @@ export class Register implements OnInit {
         formControl?.updateValueAndValidity();
       });
     }
+  }
+
+  initAutocomplete() {
+    if (!this.addressInput) return;
+
+    const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
+      types: ['address'],
+      componentRestrictions: { country: 'it' }
+    });
+
+    autocomplete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        const place = autocomplete.getPlace();
+        if (place.geometry) {
+          this.registerForm.get('indirizzo_studio')?.setValue(place.formatted_address);
+        }
+      });
+    });
   }
 
   onSubmit() {
