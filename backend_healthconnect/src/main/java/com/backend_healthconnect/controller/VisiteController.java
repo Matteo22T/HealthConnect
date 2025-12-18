@@ -38,7 +38,7 @@ public class VisiteController {
 
     @GetMapping("/pazienti/medici/{id}")
     public ResponseEntity<List<utenteDTO>> getListaPazientiMedico(@PathVariable Long id){
-        List<utenteDTO> lista = visiteService.getListaPazientiVisiteMedico(id);
+        int  = visiteService.getListaPazientiVisiteMedico(id);
         if (lista != null) return ResponseEntity.ok(lista);
         else return ResponseEntity.notFound().build();
     }

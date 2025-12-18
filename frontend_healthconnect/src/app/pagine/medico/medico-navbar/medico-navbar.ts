@@ -7,8 +7,6 @@ import {SpecializzazioneDTO} from '../../../model/specializzazioneDTO';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
 import {MessaggioService} from '../../../service/messaggio-service';
 import {forkJoin} from 'rxjs';
-import {prenotazioneDTO} from '../../../model/prenotazioneDTO';
-import {PrenotazioneService} from '../../../service/prenotazione-service';
 
 @Component({
   selector: 'app-medico-navbar',
@@ -26,15 +24,11 @@ export class MedicoNavbar implements OnInit{
   cognomeMedico: string = ""
   specializzazione: SpecializzazioneDTO | null = null;
   messaggi: MessaggioDTO[] = []
-  richiesteInAttesa: prenotazioneDTO[] = []
 
-  constructor(private auth: AuthService, private router: Router, private specService: SpecializzazioniService, private messService: MessaggioService, private prenService: PrenotazioneService, private changeDet: ChangeDetectorRef) {}
+  constructor(private auth: AuthService, private router: Router, private specService: SpecializzazioniService, private messService: MessaggioService, private changeDet: ChangeDetectorRef) {}
 
   ngOnInit(){
     const currentUser = this.auth.currentUserValue;
-    this.prenService.refreshNeeded$.subscribe(() => {
-      this.caricaVisiteOdierne();
-    });
 
     if (currentUser) {
       this.nomeMedico = currentUser.nome;
@@ -43,12 +37,10 @@ export class MedicoNavbar implements OnInit{
         forkJoin({
           mess: this.messService.getMessaggiNonLetti(currentUser.id),
           spec: this.specService.getSpecializzazione(currentUser.specializzazione_id),
-          pren: this.prenService.getPrenotazioniInAttesaMedico(currentUser.id)
         }).subscribe({
           next: result => {
             this.specializzazione = result.spec
             this.messaggi = result.mess
-            this.richiesteInAttesa = result.pren
             this.changeDet.detectChanges();
           },
           error: (err) => {
@@ -74,16 +66,5 @@ export class MedicoNavbar implements OnInit{
 
   closeProfileMenu() {
     this.isProfileMenuOpen = false;
-  }
-
-  caricaVisiteOdierne() {
-    this.prenService.getPrenotazioniInAttesaMedico(this.auth.currentUserValue!.id) .subscribe({
-      next:(res)=>{
-        this.richiesteInAttesa=res;
-        this.changeDet.detectChanges();
-      }, error:(err)=>{
-        console.error('Errore server', err);
-      }
-    });
   }
 }
