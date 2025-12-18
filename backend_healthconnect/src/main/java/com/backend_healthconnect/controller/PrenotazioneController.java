@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,46 @@ public class PrenotazioneController {
         else return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/crea")
+    public ResponseEntity<?> creaPrenotazione(@RequestBody PrenotazioneRequest request) {
+        try {
+            prenotazioneDTO nuova = new prenotazioneDTO();
+            utenteDTO paziente = new utenteDTO();
+            paziente.setId(request.paziente_id);
+            nuova.setPaziente(paziente);
+
+            utenteDTO medico = new utenteDTO();
+            medico.setId(request.medico_id);
+            nuova.setMedico(medico);
+
+
+            if (request.data_visita != null) {
+                nuova.setDataVisita(LocalDateTime.parse(request.data_visita));
+            }
+
+            nuova.setMotivo(request.motivo);
+
+            // Salviamo
+            boolean esito = prenotazioneService.creaPrenotazione(nuova);
+
+            if (esito) {
+                return ResponseEntity.ok("Prenotazione creata con successo");
+            } else {
+                return ResponseEntity.status(500).body("Errore nel salvataggio");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Errore nei dati inviati: " + e.getMessage());
+        }
+    }
+
+    static class PrenotazioneRequest {
+        public Long paziente_id;
+        public Long medico_id;
+        public String data_visita;
+        public String motivo;
+    }
 
 
 }

@@ -13,6 +13,7 @@ import {ChatMedico} from './pagine/medico/chat-medico/chat-medico';
 import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
+import { TrovaMedicoComponent } from './pagine/paziente/components/components-medici/trova-medico/trova-medico';
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
 import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
@@ -22,6 +23,8 @@ import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impo
 import {CalendarioPaziente} from './pagine/paziente/calendario-paziente/calendario-paziente';
 import {guestGuard} from './guards/guest.guard';
 import {AuthGuard} from './guards/auth.guard';
+import {MieiMedici} from './pagine/paziente/components/components-medici/miei-medici/miei-medici';
+import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 
 
 
@@ -43,6 +46,10 @@ export const routes: Routes = [
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
       {path: 'cartella', component: CartellaClinicaPaziente},
+      {path: "trova-medico" , component : TrovaMedicoComponent},
+      {path: 'medici', component: MediciTabs},
+      {path: 'miei-medici', component: MieiMedici},
+      {path: 'cartella', component: CartellaClinicaPaziente},
       {path: 'profilo', component: ProfiloPaziente},
       {path: 'impostazioni', component: ImpostazioniPaziente},
       {path: 'calendario', component: CalendarioPaziente}
@@ -56,7 +63,9 @@ export const routes: Routes = [
       {path: 'calendario', component: CalendarioMedico},
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
+      {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'chat', component: ChatMedico},
+      {path: 'richieste', component: AppuntamentiMedico},
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 

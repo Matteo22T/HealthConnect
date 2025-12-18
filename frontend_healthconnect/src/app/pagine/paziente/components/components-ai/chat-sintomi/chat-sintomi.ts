@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {Condition, DiagnosisResponse, Evidence, Question} from '../../../../model/tipi-sintomiDTO';
-import {AiService} from '../../../../service/ai-service';
+import {Condition, DiagnosisResponse, Evidence, Question} from '../../../../../model/tipi-sintomiDTO';
+import {AiService} from '../../../../../service/ai-service';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
