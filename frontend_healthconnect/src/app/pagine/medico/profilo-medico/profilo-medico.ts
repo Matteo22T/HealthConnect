@@ -18,22 +18,21 @@ declare var google: any;
 export class ProfiloMedico implements OnInit {
 
   medico: utenteDTO|null = null;
+  originalMedico: utenteDTO | null = null;
   nomeSpec: string | undefined;
-  // --- STATI PER LA MODIFICA ---
   isEditingPersonal: boolean = false;
   isEditingProfessional: boolean = false;
-  // Copia di backup per annullare le modifiche
-  originalMedico: utenteDTO | null = null;
+  map: any;
+  marker: any;
 
-  // Riferimento all'input nell'HTML
-  @ViewChild('addressInput') addressInput: ElementRef | undefined;
+  @ViewChild('indirizzoInputUtente') addressInput: ElementRef | undefined;
+  @ViewChild('MappaGoogle') MappaGoogle: ElementRef | undefined;
   constructor(private authService: AuthService, private specService: SpecializzazioniService, private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
 
   ngOnInit() {
     this.medico = this.authService.currentUserValue;
 
     if (this.medico){
-      //copio il medico per poter annullare le modifiche
       this.originalMedico = JSON.parse(JSON.stringify(this.medico));
 
       if (this.medico.specializzazione_id != null) {
@@ -72,45 +71,87 @@ export class ProfiloMedico implements OnInit {
     this.isEditingPersonal = false;
   }
 
-  // --- MODIFICA QUI ---
   modificaDatiProfessionali() {
     if (!this.isEditingProfessional) {
-      // Entro in modalità modifica
       this.originalMedico = JSON.parse(JSON.stringify(this.medico));
       this.isEditingProfessional = true;
-
-      // Importante: forziamo il rilevamento modifiche per far apparire l'input nel DOM
       this.cdr.detectChanges();
 
-      // Ora che l'input esiste, inizializziamo Google Maps
-      this.initAutocomplete();
+      //per maps
+      this.initMapAndAutocomplete();
 
     } else {
-      // Annullo le modifiche
       this.medico = JSON.parse(JSON.stringify(this.originalMedico));
       this.isEditingProfessional = false;
     }
   }
 
-  // Funzione per inizializzare Google Places Autocomplete
-  // Sostituisci la tua funzione initAutocomplete con questa versione moderna
-  async initAutocomplete() {
-    if (!this.addressInput) return;
+  initMapAndAutocomplete() {
+    // Controlli di sicurezza
+    if (!this.addressInput || !this.MappaGoogle || typeof google === 'undefined') {
+      return;
+    }
 
-    // Carica la libreria Places dinamicamente
-    const { Autocomplete } = await google.maps.importLibrary("places");
+    // 1. CREA LA MAPPA
+    const defaultLocation = { lat: 41.9028, lng: 12.4964 }; // Roma (default se vuoto)
 
-    const autocomplete = new Autocomplete(this.addressInput.nativeElement, {
+    this.map = new google.maps.Map(this.MappaGoogle.nativeElement, {
+      center: defaultLocation,
+      zoom: 13,
+      disableDefaultUI: false // Lascia i controlli zoom ecc.
+    });
+
+    // 2. CREA IL MARKER
+    this.marker = new google.maps.Marker({
+      position: defaultLocation,
+      map: this.map,
+      draggable: false // Mettilo a true se vuoi permettere di spostarlo a mano
+    });
+
+    // 3. SE C'È GIÀ UN INDIRIZZO, CERCA LE COORDINATE (Geocoding)
+    if (this.medico && this.medico.indirizzo_studio) {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ 'address': this.medico.indirizzo_studio }, (results: any, status: any) => {
+        if (status === 'OK' && results[0]) {
+          this.map.setCenter(results[0].geometry.location);
+          this.marker.setPosition(results[0].geometry.location);
+          this.map.setZoom(17); // Zoom ravvicinato
+        }
+      });
+    }
+
+    // 4. COLLEGA L'AUTOCOMPLETE
+    const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
       types: ['address'],
       componentRestrictions: { country: 'it' }
     });
 
+    // Collega l'autocomplete alla mappa (così se clicchi, la mappa si sposta)
+    autocomplete.bindTo('bounds', this.map);
+
     autocomplete.addListener('place_changed', () => {
       this.ngZone.run(() => {
         const place = autocomplete.getPlace();
-        if (place.geometry && this.medico) {
+
+        if (!place.geometry || !place.geometry.location) {
+          return;
+        }
+
+        // Aggiorna il modello Angular
+        if (this.medico) {
           this.medico.indirizzo_studio = place.formatted_address;
         }
+
+        // Aggiorna la mappa
+        if (place.geometry.viewport) {
+          this.map.fitBounds(place.geometry.viewport);
+        } else {
+          this.map.setCenter(place.geometry.location);
+          this.map.setZoom(17);
+        }
+
+        // Sposta il marker
+        this.marker.setPosition(place.geometry.location);
       });
     });
   }

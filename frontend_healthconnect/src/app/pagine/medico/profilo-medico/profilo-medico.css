@@ -1,3 +1,11 @@
+.map-container {
+  width: 100%;
+  height: 300px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+}
 /* Forza il menu di Google Maps a stare sopra tutto */
 .pac-container {
   z-index: 10000 !important;
