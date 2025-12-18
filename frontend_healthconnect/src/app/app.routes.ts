@@ -17,6 +17,7 @@ import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
 import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
 import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
+import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 
 
 
@@ -30,7 +31,9 @@ export const routes: Routes = [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
-      {path: 'cartella', component: CartellaClinicaPaziente}
+      {path: 'cartella', component: CartellaClinicaPaziente},
+      {path: 'profilo', component: ProfiloPaziente}
+
     ]},
 
   {path: 'medico', component: MedicoLayout, children: [

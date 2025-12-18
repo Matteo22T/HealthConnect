@@ -1,0 +1,111 @@
+<div class="container profile-wrapper" *ngIf="paziente; else loading">
+
+  <header class="profile-header shadow-sm">
+    <div class="header-content">
+      <div class="profile-avatar">
+        {{paziente.nome.charAt(0).toUpperCase() + paziente.cognome.charAt(0).toUpperCase()}}
+      </div>
+      <div class="profile-title">
+        <h1>{{ paziente.nome }} {{ paziente.cognome }}</h1>
+        <span class="badge-ruolo">Paziente</span>
+      </div>
+    </div>
+  </header>
+
+
+  <section class="detail-card shadow-sm">
+    <div class="card-title-row">
+      <h2><span class="icon">📋</span> Dati Personali</h2>
+      <button class="btn-edit-icon" (click)="ModificaDatiPersonali()" *ngIf="!isEditingPersonal" title="Modifica">
+        ✏️
+      </button>
+    </div>
+
+    <div *ngIf="!isEditingPersonal">
+      <div class="detail-item">
+        <span class="label">Email:</span>
+        <span class="value">{{ paziente.email }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Telefono:</span>
+        <span class="value">{{ paziente.telefono ? paziente.telefono : 'Non specificato' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Data di Nascita:</span>
+        <span class="value">{{ paziente.dataNascita | date: 'dd/MM/yyyy'}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Sesso:</span>
+        <span class="value" style="text-transform: capitalize;">{{ paziente.sesso }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="isEditingPersonal" class="edit-form">
+
+      <div class="form-group-edit">
+        <label>Email</label>
+        <input type="email"
+               [(ngModel)]="paziente.email"
+               name="email"
+               #emailVar="ngModel"
+               required
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+               class="form-input"
+               [class.input-error]="emailVar.invalid && (emailVar.dirty || emailVar.touched)">
+
+        <div *ngIf="emailVar.invalid && (emailVar.dirty || emailVar.touched)" class="error-message">
+          <small *ngIf="emailVar.errors?.['required']">L'email è obbligatoria.</small>
+          <small *ngIf="emailVar.errors?.['pattern']">Inserisci un indirizzo email valido.</small>
+        </div>
+      </div>
+
+      <div class="form-group-edit">
+        <label>Telefono</label>
+        <input type="tel"
+               [(ngModel)]="paziente.telefono"
+               name="telefono"
+               #telefonoVar="ngModel"
+               required
+               pattern="^[0-9]{9,15}$"
+               class="form-input"
+               [class.input-error]="telefonoVar.invalid && (telefonoVar.dirty || telefonoVar.touched)">
+
+        <div *ngIf="telefonoVar.invalid && (telefonoVar.dirty || telefonoVar.touched)" class="error-message">
+          <small *ngIf="telefonoVar.errors?.['required']">Il telefono è obbligatorio.</small>
+          <small *ngIf="telefonoVar.errors?.['pattern']">Inserisci un numero valido (9-15 cifre).</small>
+        </div>
+      </div>
+
+      <div class="form-group-edit">
+        <label>Data di Nascita</label>
+        <input type="date" [value]="paziente.dataNascita" disabled class="input-readonly">
+      </div>
+
+      <div class="form-group-edit">
+        <label>Sesso</label>
+        <select [value]="paziente.sesso" disabled class="input-readonly">
+          <option value="M">Maschio</option>
+          <option value="F">Femmina</option>
+          <option value="N">Altro</option>
+        </select>
+      </div>
+
+      <div class="edit-actions">
+        <button class="btn-cancel" (click)="ModificaDatiPersonali()">Annulla</button>
+        <button class="btn-save"
+                [disabled]="emailVar.invalid || telefonoVar.invalid"
+                (click)="salvaDatiPersonali()">
+          Salva
+        </button>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Caricamento profilo...</p>
+  </div>
+</ng-template>
