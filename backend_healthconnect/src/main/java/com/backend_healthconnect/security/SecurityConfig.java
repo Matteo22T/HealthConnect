@@ -28,7 +28,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // 1. Endpoint Pubblici (Login, Register, CheckAuth)
-                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/check", "/api/infermedica/**").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/check", "/api/infermedica/**", "/api/auth/cambiapassword").permitAll()
 
                         // 2. Protezione per Ruolo
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

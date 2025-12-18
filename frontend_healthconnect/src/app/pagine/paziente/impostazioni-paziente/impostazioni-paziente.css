@@ -153,3 +153,6 @@ input:checked + .slider:before { transform: translateX(24px); }
 /* Animazione */
 .fade-in { animation: fadeIn 0.5s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Error Messages */
+.field-error { font-size: 0.8rem; color: var(--error-color); margin-left: 0.2rem; font-weight: 500; }

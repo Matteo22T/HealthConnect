@@ -94,4 +94,9 @@ export class AuthService {
     );
   }
 
+  cambiaPassword(id: number,attuale: string, nuova: string){
+    const body = {id, attuale, nuova};
+    return this.http.put(`${this.API_URL}/cambiapassword`, body, {withCredentials: true, responseType: "text"}).pipe()
+  }
+
 }
