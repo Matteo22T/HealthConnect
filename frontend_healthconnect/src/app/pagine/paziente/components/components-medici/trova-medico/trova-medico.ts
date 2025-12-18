@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Fondamentale per i form
-import { MedicoDTO } from '../../../model/medicoDTO';
-import { MedicoService } from '../../../service/medico';
+import { MedicoDTO } from '../../../../../model/medicoDTO';
+import { MedicoService } from '../../../../../service/medico-service';
+import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 
 @Component({
   selector: 'app-trova-medico',
@@ -31,7 +32,7 @@ export class TrovaMedicoComponent implements OnInit {
     motivo: ''
   };
 
-  constructor(private medicoService: MedicoService, private cd: ChangeDetectorRef) {}
+  constructor(private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cercaMedici();
@@ -81,7 +82,7 @@ export class TrovaMedicoComponent implements OnInit {
 
       console.log("Invio prenotazione in corso..."); // LOG DI DEBUG
 
-      this.medicoService.prenotaVisita(this.nuovaPrenotazione).subscribe({
+      this.prenService.prenotaVisita(this.nuovaPrenotazione).subscribe({
 
         next: (response) => {
           console.log("Risposta NEXT ricevuta:", response);

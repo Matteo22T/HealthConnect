@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common'; // Aggiungi DatePipe
-import { AndamentoMetricheVitali } from '../../components/andamento-metriche-vitali/andamento-metriche-vitali';
-import { AuthService } from '../../../../service/auth-service';
-import { MetricheService } from '../../../../service/metriche-service';
-import { MetricheSaluteDTO } from '../../../../model/metricheSaluteDTO';
-import {utenteDTO} from '../../../../model/utenteDTO';
+import { AndamentoMetricheVitali } from '../../components-dashboard/andamento-metriche-vitali/andamento-metriche-vitali';
+import { AuthService } from '../../../../../service/auth-service';
+import { MetricheService } from '../../../../../service/metriche-service';
+import { MetricheSaluteDTO } from '../../../../../model/metricheSaluteDTO';
+import {utenteDTO} from '../../../../../model/utenteDTO';
 
 @Component({
   selector: 'app-tab-metriche',

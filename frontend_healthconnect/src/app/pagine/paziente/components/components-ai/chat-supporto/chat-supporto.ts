@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild, AfterViewChecked, ChangeDetectorRef} f
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AiService, AiMessage } from '../../../../service/ai-service';
+import { AiService, AiMessage } from '../../../../../service/ai-service';
 
 @Component({
   selector: 'app-chat-supporto',

@@ -1,7 +1,7 @@
 package com.backend_healthconnect.service;
 
-import com.backend_healthconnect.dao.postgres.RicercaMediciDAO;
-import com.backend_healthconnect.model.MedicoCardDTO;
+import com.backend_healthconnect.dao.medicoDAO;
+import com.backend_healthconnect.model.medicoCardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,9 @@ import java.util.List;
 public class RicercaMedici {
 
     @Autowired
-    private RicercaMediciDAO ricercaMediciDAO; // Si collega al DAO
+    private medicoDAO medicoDao;
 
-    public List<MedicoCardDTO> eseguiRicerca(String query, String specializzazione) {
-        // Passalo al DAO
-        return ricercaMediciDAO.executeRicerca(query, specializzazione);
+    public List<medicoCardDTO> eseguiRicerca(String query, String specializzazione) {
+        return medicoDao.getMediciPerCard(query, specializzazione);
     }
 }

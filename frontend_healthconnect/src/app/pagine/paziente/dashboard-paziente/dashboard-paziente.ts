@@ -1,19 +1,19 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {StatCardPaziente} from '../components/stat-card-paziente/stat-card-paziente';
+import {StatCardPaziente} from '../components/components-dashboard/stat-card-paziente/stat-card-paziente';
 import {AuthService} from '../../../service/auth-service';
 import {VisitaService} from '../../../service/visita-service';
 import {forkJoin} from 'rxjs';
 import {prescrizioneDTO} from '../../../model/prescrizioneDTO';
 import {VisitaDTO} from '../../../model/visitaDTO';
-import {ListaVisite} from '../components/lista-visite/lista-visite';
-import {ListaPrescrizioni} from '../components/lista-prescrizioni/lista-prescrizioni';
+import {ListaVisite} from '../components/components-dashboard/lista-visite/lista-visite';
+import {ListaPrescrizioni} from '../components/components-dashboard/lista-prescrizioni/lista-prescrizioni';
 import {PrescrizioniService} from '../../../service/prescrizioni-service';
 import {utenteDTO} from '../../../model/utenteDTO';
-import {AndamentoMetricheVitali} from '../components/andamento-metriche-vitali/andamento-metriche-vitali';
+import {AndamentoMetricheVitali} from '../components/components-dashboard/andamento-metriche-vitali/andamento-metriche-vitali';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
 import {MessaggioService} from '../../../service/messaggio-service';
-import {MessaggiPaziente} from '../components/messaggi-paziente/messaggi-paziente';
-import {MediciPaziente} from '../components/medici-paziente/medici-paziente';
+import {MessaggiPaziente} from '../components/components-dashboard/messaggi-paziente/messaggi-paziente';
+import {MediciPaziente} from '../components/components-dashboard/medici-paziente/medici-paziente';
 
 @Component({
   selector: 'app-dashboard-paziente',

@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
-import {prescrizioneDTO} from '../../../../model/prescrizioneDTO';
+import {prescrizioneDTO} from '../../../../../model/prescrizioneDTO';
 import {Router} from '@angular/router';
 
 @Component({

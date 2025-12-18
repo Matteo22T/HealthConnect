@@ -2,9 +2,9 @@ import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { AuthService } from '../../../../service/auth-service';
-import { MetricheService } from '../../../../service/metriche-service';
-import { MetricheSaluteDTO, TipoMetrica } from '../../../../model/metricheSaluteDTO';
+import { AuthService } from '../../../../../service/auth-service';
+import { MetricheService } from '../../../../../service/metriche-service';
+import { MetricheSaluteDTO, TipoMetrica } from '../../../../../model/metricheSaluteDTO';
 
 import {
   Chart,
@@ -18,7 +18,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
-import {utenteDTO} from '../../../../model/utenteDTO';
+import {utenteDTO} from '../../../../../model/utenteDTO';
 
 Chart.register(
   CategoryScale,

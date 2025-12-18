@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Medici in cura</h2>
+  </div>
+
+
+  <div  *ngIf="medici.length > 0">
+
+    <div class="med-item" *ngFor="let med of medici">
+
+      <div class="avatar-placeholder emoji-avatar">
+        👨‍⚕️
+      </div>
+
+      <div class="med-info">
+        <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
+      </div>
+
+      <button class="btn-contact">
+        💬
+      </button>
+      <button class="btn-prenota" (click)="apriPrenotazione(med)">
+        Prenota
+      </button>
+    </div>
+
+  </div>
+
+  <div class="empty-state" *ngIf="medici.length === 0">
+    <div class="empty-icon">🩺</div>
+    <p>Non hai ancora medici assegnati.</p>
+  </div>
+
+</div>
+
+
+
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Prenota visita</h3>
+      <p>Con Dr. {{ nomeMedicoSelezionato }}</p>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Seleziona Data e Ora:</label>
+        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Motivo della visita:</label>
+        <textarea
+          [(ngModel)]="nuovaPrenotazione.motivo"
+          rows="3"
+          class="form-control"
+          placeholder="Descrivi brevemente il problema..."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="chiudiModal()">Annulla</button>
+      <button class="btn-confirm" (click)="confermaPrenotazione()">Conferma Prenotazione</button>
+    </div>
+  </div> </div>
+
+<div class="modal-overlay" *ngIf="showSuccess">
+  <div class="modal-content success-content">
+    <div class="success-icon">✓</div>
+    <h3>Ottimo!</h3>
+    <p>Prenotazione effettuata con successo.</p>
+    <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>
+  </div>
+</div>

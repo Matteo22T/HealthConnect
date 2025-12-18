@@ -1,6 +1,6 @@
 package com.backend_healthconnect.controller;
 
-import com.backend_healthconnect.model.MedicoCardDTO;
+import com.backend_healthconnect.model.medicoCardDTO;
 import com.backend_healthconnect.service.RicercaMedici;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,8 @@ public class MedicoController {
     private RicercaMedici ricercaMedici;
 
     @GetMapping("/trova")
-    public List<MedicoCardDTO> trovaMedici(
+    public List<medicoCardDTO> trovaMedici(
             @RequestParam(name = "search", required = false) String query,
-            // 👇 Aggiungi questo parametro per catturare la scelta della dropdown
             @RequestParam(name = "spec", required = false) String spec
     ) {
         // Gestione sicura dei null
