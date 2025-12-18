@@ -9,4 +9,5 @@ public interface prenotazioneDAO {
     prenotazioneDTO getPrenotazioneById(Long id);
     prenotazioneDTO accettaPrenotazione(Long id);
     boolean rifiutaPrenotazione(Long id);
+    boolean salvaPrenotazione(prenotazioneDTO prenotazione);
 }
