@@ -16,6 +16,7 @@ public interface visitaDAO {
     List<visitaDTO> getVisiteFutureByPaziente(Long id);
 
     List<utenteDTO> getListaPazientiMedico(Long id);
+    int getNumeroPazientiMedico(Long id);
     boolean creaVisita(prenotazioneDTO prenotazione);
 
     List<utenteDTO> getListaMediciPaziente(Long id);

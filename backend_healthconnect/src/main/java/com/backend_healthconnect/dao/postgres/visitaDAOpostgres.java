@@ -91,6 +91,26 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     @Override
+    public int getNumeroPazientiMedico(Long id) {
+        String query = "SELECT COUNT(DISTINCT paziente_id) FROM visite WHERE medico_id = ?";
+
+        try (Connection conn = this.dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la richiesta lista pazienti al db", e);
+        }
+
+        return 0;
+    }
+
+    @Override
     public List<visitaDTO> getVisiteByMedico(Long id) {
         List<visitaDTO> visite = new ArrayList<>();
         String query = "SELECT * FROM visite WHERE medico_id = ?";

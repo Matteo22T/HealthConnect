@@ -6,7 +6,6 @@ import {PrenotazioneService} from '../../../service/prenotazione-service';
 import {VisitaDTO} from '../../../model/visitaDTO';
 import {VisitaService} from '../../../service/visita-service';
 import {forkJoin} from 'rxjs';
-import {utenteDTO} from '../../../model/utenteDTO';
 import {MessaggioService} from '../../../service/messaggio-service';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
 import {ListaRichiesta} from '../components/lista-richiesta/lista-richiesta';
@@ -32,11 +31,10 @@ export class DashboardMedico implements OnInit{
 
   visite: VisitaDTO[] = [];
 
-  //pazienti medico
-  pazienti : utenteDTO[] = []
-
   //messaggi non letti
   messaggi: MessaggioDTO[] = []
+
+  numeroPazienti : number = 0;
 
   get cognomeMedico(): string {
     return this.auth.currentUserValue?.cognome || "";
@@ -53,14 +51,14 @@ export class DashboardMedico implements OnInit{
       forkJoin({
         pren: this.prenotazioneService.getPrenotazioniInAttesaMedico(currentUser.id),
         visit: this.visitaService.getVisiteOdierneByMedico(currentUser.id),
-        paz: this.visitaService.getListaPazientiMedico(currentUser.id),
+        paz: this.visitaService.getNumeroPazientiMedico(currentUser.id),
         mex: this.messaggioService.getMessaggiNonLetti(currentUser.id)
 
       }).subscribe({
         next: result => {
           this.prenotazioni = result.pren;
           this.visite = result.visit;
-          this.pazienti = result.paz;
+          this.numeroPazienti = result.paz;
           this.messaggi = result.mex;
           this.changeDet.detectChanges();
         },

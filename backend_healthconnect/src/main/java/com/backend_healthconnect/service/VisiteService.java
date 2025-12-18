@@ -23,6 +23,8 @@ public class VisiteService {
 
     public List<utenteDTO> getListaPazientiVisiteMedico(Long id){ return visitaDAO.getListaPazientiMedico(id); }
 
+    public int getNumeroPazientiMedico(Long id){ return visitaDAO.getNumeroPazientiMedico(id); }
+
     public List<utenteDTO> getListaMediciPaziente(Long id){
         return visitaDAO.getListaMediciPaziente(id);
     }

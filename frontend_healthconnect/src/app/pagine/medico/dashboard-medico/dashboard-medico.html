@@ -7,7 +7,7 @@
   <div class="dashboard-grid">
     <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length"></app-stat-card>
     <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length"></app-stat-card>
-    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="pazienti.length"></app-stat-card>
+    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="numeroPazienti"></app-stat-card>
     <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="messaggi.length"></app-stat-card>
   </div>
 
