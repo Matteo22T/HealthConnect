@@ -18,12 +18,6 @@ export class ImpostazioniMedico {
     conferma: ''
   };
 
-  preferenze = {
-    durataVisita: 30, // Default 30 min
-    inizioLavoro: '09:00',
-    fineLavoro: '18:00'
-  };
-
   notifiche = {
     richieste: true,
     messaggi: false
@@ -42,12 +36,6 @@ export class ImpostazioniMedico {
 
     // Reset form
     this.pass = { attuale: '', nuova: '', conferma: '' };
-  }
-
-  salvaPreferenze() {
-    // Qui salverai le preferenze nel DB (es. tabella medico_settings)
-    console.log('Preferenze salvate:', this.preferenze);
-    alert('Preferenze orario salvate!');
   }
 
   salvaNotifiche() {

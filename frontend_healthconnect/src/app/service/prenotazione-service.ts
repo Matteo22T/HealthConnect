@@ -27,7 +27,6 @@ export class PrenotazioneService {
   constructor(private http: HttpClient) {}
 
   getPrenotazioniInAttesaMedico(id: number){
-    console.log(`${this.API_URL}/medico/${id}`);
     return this.http.get<prenotazioneDTO[]>(`${this.API_URL}/medico/${id}`, {
       withCredentials: true
     });

@@ -16,16 +16,14 @@ public class NotificaService {
     public void inviaEmail(String a, String oggetto, String testo) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            // Inserisci qui la tua mail come mittente (opzionale, Gmail lo sovrascrive spesso)
-            message.setFrom("HealthConnect <webproject.unical@gmail.com>");
+            message.setFrom("HealthConnect <noreply@healthconnect.com>");
             message.setTo(a);
             message.setSubject(oggetto);
             message.setText(testo);
 
             mailSender.send(message);
-            System.out.println("Email inviata con successo a: " + a);
         } catch (Exception e) {
-            System.err.println("Errore durante l'invio dell'email: " + e.getMessage());
+            System.err.println("Errore invio email: " + e.getMessage());
         }
     }
 }

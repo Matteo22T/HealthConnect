@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.rmi.server.RemoteRef;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +91,7 @@ public class visitaDAOpostgres implements visitaDAO {
 
     @Override
     public List<visitaDTO> getListaVisiteMedicoSenzaDiagnosi(Long id) {
-        String query = "SELECT * FROM visite WHERE medico_id = ? AND diagnosi IS NULL";
+        String query = "SELECT * FROM visite WHERE medico_id = ? AND diagnosi IS NULL" + " ORDER BY data_visita DESC";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setLong(1, id);

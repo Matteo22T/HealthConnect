@@ -5,6 +5,7 @@ import com.backend_healthconnect.dao.messaggioDAO;
 import com.backend_healthconnect.dao.prenotazioneDAO;
 import com.backend_healthconnect.dao.visitaDAO;
 import com.backend_healthconnect.model.prenotazioneDTO;
+import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,13 @@ public class PrenotazioneService {
     private NotificaService notificaService;
 
     @Autowired
-    public PrenotazioneService(prenotazioneDAO prenotazioneRepository, NotificaService notificaService) {
+    private UtenteService utenteService;
+
+    @Autowired
+    public PrenotazioneService(prenotazioneDAO prenotazioneRepository, NotificaService notificaService, UtenteService utenteService) {
         this.prenotazioneDAO = prenotazioneRepository;
         this.notificaService = notificaService;
+        this.utenteService = utenteService;
     }
 
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id){
@@ -45,8 +50,27 @@ public class PrenotazioneService {
     public boolean rifiutaPrenotazione(Long id) { return prenotazioneDAO.rifiutaPrenotazione(id);
     }
 
-    public boolean creaPrenotazione(prenotazioneDTO prenotazione){
+    public boolean creaPrenotazione(prenotazioneDTO prenotazione) {
+        boolean salvato = prenotazioneDAO.salvaPrenotazione(prenotazione);
+        if (salvato) {
+            try {
+                utenteDTO medico = utenteService.getUtenteById(prenotazione.getMedico().getId());
+                utenteDTO paziente = utenteService.getUtenteById(prenotazione.getPaziente().getId());
 
-        return prenotazioneDAO.salvaPrenotazione(prenotazione);
+                if (medico != null && paziente != null) {
+                    String oggetto = "Nuova Richiesta Appuntamento - HealthConnect";
+                    String testo = "Ciao Dott. " + medico.getCognome() + ",\n\n" +
+                            "Hai ricevuto una richiesta da: " +
+                            paziente.getNome() + " " + paziente.getCognome() + ".\n" +
+                            "Motivo: " + prenotazione.getMotivo() + "\n\n" +
+                            "Accedi alla piattaforma per gestire la richiesta.";
+
+                    notificaService.inviaEmail(medico.getEmail(), oggetto, testo);
+                }
+            } catch (Exception e) {
+                System.err.println("Errore nell'invio della notifica (ma la prenotazione è salvata): " + e.getMessage());
+            }
+        }
+        return salvato;
     }
 }
