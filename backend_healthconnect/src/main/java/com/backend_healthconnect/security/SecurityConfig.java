@@ -36,6 +36,7 @@ public class SecurityConfig {
                         // 2. Protezione per Ruolo
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
+                        //medico
                         .requestMatchers("/api/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/metriche-salute/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/prenotazioni/accetta/**").hasRole("MEDICO")
@@ -48,18 +49,17 @@ public class SecurityConfig {
                         .requestMatchers("/api/visite/medico/salva/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/num_pazienti/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/visite_no_diagnosi/medico/**").hasRole("MEDICO")
+                        .requestMatchers("/api/auth/modifica/indirizzobiografia").hasRole("MEDICO")
 
-
+                        //paziente
                         .requestMatchers("/api/paziente/**").hasRole("PAZIENTE")
                         .requestMatchers( "/api/infermedica/**").hasRole("PAZIENTE")
-                        .requestMatchers("/api/auth/modifica/indirizzobiografia").hasAnyRole("PAZIENTE", "MEDICO")
                         .requestMatchers("/api/ai/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/medici/paziente/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/future/pazienti/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/storico/pazienti/**").hasRole("PAZIENTE")
 
-
-
+                        .requestMatchers("api/auth/modifica/emailtelefono").hasAnyRole("PAZIENTE", "MEDICO")
                         // 3. Tutto il resto richiede autenticazione
                         .anyRequest().authenticated()
                 )
