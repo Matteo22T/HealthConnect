@@ -16,7 +16,7 @@ public class NotificaService {
     public void inviaEmail(String a, String oggetto, String testo) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("HealthConnect <noreply@healthconnect.com>");
+            message.setFrom("HealthConnect <webproject.unical@gmail.com>");
             message.setTo(a);
             message.setSubject(oggetto);
             message.setText(testo);
