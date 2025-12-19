@@ -30,14 +30,13 @@ export class GoogleMapsLoaderService {
       // 3. Crea il tag script dinamicamente
       const script = document.createElement('script');
       script.id = scriptId;
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places&loading=async`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places,marker&loading=async`;
       script.async = true;
       script.defer = true;
 
       // 4. Gestisci il completamento
       script.onload = () => {
         this.isLoaded = true;
-        console.log('Google Maps API caricata con successo');
         resolve();
       };
 

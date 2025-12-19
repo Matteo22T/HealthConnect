@@ -51,7 +51,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/paziente/**").hasRole("PAZIENTE")
                         .requestMatchers( "/api/infermedica/**").hasRole("PAZIENTE")
-                        .requestMatchers("/api/auth/modifica/indirizzobiografia").hasRole("PAZIENTE")
+                        .requestMatchers("/api/auth/modifica/indirizzobiografia").hasAnyRole("PAZIENTE", "MEDICO")
                         .requestMatchers("/api/ai/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/medici/paziente/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/future/pazienti/**").hasRole("PAZIENTE")

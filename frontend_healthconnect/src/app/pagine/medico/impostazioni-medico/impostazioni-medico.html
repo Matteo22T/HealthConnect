@@ -28,36 +28,6 @@
 
     <div class="card">
       <div class="card-header">
-        <h2>🏥 Preferenze Studio</h2>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <label>Durata Standard Visita (minuti)</label>
-          <select [(ngModel)]="preferenze.durataVisita" class="form-select">
-            <option [value]="15">15 minuti</option>
-            <option [value]="30">30 minuti</option>
-            <option [value]="45">45 minuti</option>
-            <option [value]="60">60 minuti</option>
-          </select>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Inizio Giornata</label>
-            <input type="time" [(ngModel)]="preferenze.inizioLavoro" class="form-input">
-          </div>
-          <div class="form-group">
-            <label>Fine Giornata</label>
-            <input type="time" [(ngModel)]="preferenze.fineLavoro" class="form-input">
-          </div>
-        </div>
-
-        <button class="btn btn-secondary" (click)="salvaPreferenze()">Salva Preferenze</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
         <h2>🔔 Notifiche</h2>
       </div>
       <div class="card-body">
