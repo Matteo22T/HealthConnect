@@ -35,7 +35,45 @@
     [refresh]="refresh"
     [dayStartHour]="8"
     [dayEndHour]="20"
-    (eventClicked)="alert('Visita: ' + $event.event.title)">
+    [tooltipTemplate]="tooltipDisabled"
+    (eventClicked)="openEventPopup($event.event)">
   </mwl-calendar-week-view>
+
+  <ng-template #tooltipDisabled></ng-template>
+
+  @if (selectedEvent) {
+    <div class="modal-overlay" (click)="closePopup()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closePopup()">✕</button>
+
+        <div class="modal-header">
+          <h2>Dettaglio Visita</h2>
+        </div>
+
+        <div class="modal-body">
+          <div class="info-row">
+            <span class="label">📅 Data:</span>
+            <span class="value">{{ selectedEvent.start | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">🕐 Orario:</span>
+            <span class="value">{{ selectedEvent.start | date:'HH:mm' }} - {{ selectedEvent.end | date:'HH:mm' }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">👤 Paziente:</span>
+            <span class="value">{{ selectedEvent.meta?.paziente?.nome }} {{ selectedEvent.meta?.paziente?.cognome }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">📋 Motivo:</span>
+            <span class="value">{{ selectedEvent.meta?.motivo }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  }
 
 </div>
