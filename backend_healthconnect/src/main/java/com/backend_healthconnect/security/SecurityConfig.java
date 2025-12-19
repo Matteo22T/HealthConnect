@@ -41,7 +41,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/prenotazioni/accetta/**").hasRole("MEDICO")
                         .requestMatchers("/api/prenotazioni/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/prenotazioni/rifiuta/**").hasRole("MEDICO")
-                        .requestMatchers("/api/specializzazioni/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/oggi/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/tutti/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/pazienti/medici/**").hasRole("MEDICO")
