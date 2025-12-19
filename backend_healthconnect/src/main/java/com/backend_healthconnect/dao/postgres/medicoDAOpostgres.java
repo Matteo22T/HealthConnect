@@ -50,7 +50,7 @@ public class medicoDAOpostgres implements medicoDAO {
         sql.append("FROM dettagli_medici d ");
         sql.append("JOIN utenti u ON d.utente_id = u.id ");
         sql.append("WHERE CAST(u.ruolo AS VARCHAR) = 'MEDICO' ");
-        //sql.append("AND CAST(d.stato_approvazione AS VARCHAR) = 'APPROVATO' ");
+        sql.append("AND CAST(d.stato_approvazione AS VARCHAR) = 'APPROVATO' ");
 
         // Filtro Ricerca (Nome/Cognome)
         if (ricerca != null && !ricerca.trim().isEmpty()) {

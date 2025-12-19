@@ -1,0 +1,158 @@
+<div class="lista-container">
+
+  <div *ngIf="loading" class="loading-spinner">
+    <p>⏳ Caricamento dati...</p>
+  </div>
+
+  <div *ngIf="!loading">
+
+    <!-- Sezione Visite Confermate -->
+    <div class="sezione-lista">
+      <div class="sezione-header confermata" (click)="toggleSezione('confermate')">
+        <h2>✅ Visite Confermate</h2>
+        <div class="header-right">
+          <span class="badge">{{ visite.length }}</span>
+          <span class="toggle-icon">{{ sezioniAperte.confermate ? '▼' : '▶' }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="sezioniAperte.confermate" class="sezione-content">
+        <div *ngIf="visite.length === 0" class="empty-state">
+          <p>📭 Nessuna visita confermata al momento</p>
+        </div>
+
+        <div class="lista-cards">
+          <div *ngFor="let visita of visite" class="card card-confermata">
+            <div class="card-header">
+              <div class="status-badge confermata">Confermata</div>
+              <span class="data">📅 {{ formatData(visita.dataVisita) }}</span>
+            </div>
+
+            <div class="card-body">
+              <div class="info-row">
+                <span class="icon">🕐</span>
+                <span class="label">Orario:</span>
+                <span class="value">{{ formatOrario(visita.dataVisita) }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="icon">👨‍⚕️</span>
+                <span class="label">Medico:</span>
+                <span class="value">Dr. {{ visita.medico?.nome }} {{ visita.medico?.cognome }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="icon">📋</span>
+                <span class="label">Motivo:</span>
+                <span class="value">{{ visita.prenotazione?.motivo }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sezione Prenotazioni in Attesa -->
+      <div class="sezione-lista">
+        <div class="sezione-header pending" (click)="toggleSezione('pending')">
+          <h2>⏳ Prenotazioni in Attesa</h2>
+          <div class="header-right">
+            <span class="badge">{{ prenotazioniPending.length }}</span>
+            <span class="toggle-icon">{{ sezioniAperte.pending ? '▼' : '▶' }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="sezioniAperte.pending" class="sezione-content">
+          <div *ngIf="prenotazioniPending.length === 0" class="empty-state">
+            <p>📭 Nessuna prenotazione in attesa</p>
+          </div>
+
+          <div class="lista-cards">
+            <div *ngFor="let pren of prenotazioniPending" class="card card-pending">
+              <div class="card-header">
+                <div class="status-badge pending">In Attesa</div>
+                <span class="data">📅 {{ formatData(pren.dataVisita) }}</span>
+              </div>
+
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="icon">🕐</span>
+                  <span class="label">Orario:</span>
+                  <span class="value">{{ formatOrario(pren.dataVisita) }}</span>
+                </div>
+
+                <div class="info-row">
+                  <span class="icon">👨‍⚕️</span>
+                  <span class="label">Medico:</span>
+                  <span class="value">Dr. {{ pren.medico?.nome }} {{ pren.medico?.cognome }}</span>
+                </div>
+
+                <div class="info-row">
+                  <span class="icon">📋</span>
+                  <span class="label">Motivo:</span>
+                  <span class="value">{{ pren.motivo }}</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <p class="info-text">ℹ️ In attesa di conferma dal medico</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sezione Prenotazioni Rifiutate -->
+        <div class="sezione-lista">
+          <div class="sezione-header rifiutata" (click)="toggleSezione('rifiutate')">
+            <h2>❌ Prenotazioni Rifiutate</h2>
+            <div class="header-right">
+              <span class="badge">{{ prenotazioniRifiutate.length }}</span>
+              <span class="toggle-icon">{{ sezioniAperte.rifiutate ? '▼' : '▶' }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="sezioniAperte.rifiutate" class="sezione-content">
+            <div *ngIf="prenotazioniRifiutate.length === 0" class="empty-state">
+              <p>📭 Nessuna prenotazione rifiutata</p>
+            </div>
+
+            <div class="lista-cards">
+              <div *ngFor="let pren of prenotazioniRifiutate" class="card card-rifiutata">
+                <div class="card-header">
+                  <div class="status-badge rifiutata">Rifiutata</div>
+                  <span class="data">📅 {{ formatData(pren.dataVisita) }}</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="info-row">
+                    <span class="icon">🕐</span>
+                    <span class="label">Orario:</span>
+                    <span class="value">{{ formatOrario(pren.dataVisita) }}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <span class="icon">👨‍⚕️</span>
+                    <span class="label">Medico:</span>
+                    <span class="value">Dr. {{ pren.medico?.nome }} {{ pren.medico?.cognome }}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <span class="icon">📋</span>
+                    <span class="label">Motivo:</span>
+                    <span class="value">{{ pren.motivo }}</span>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <p class="warning-text">⚠️ Questa prenotazione è stata rifiutata. Puoi richiedere una nuova prenotazione.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      </div>
+    </div>
+  </div>
+

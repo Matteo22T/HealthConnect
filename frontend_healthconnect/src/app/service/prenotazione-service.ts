@@ -33,6 +33,19 @@ export class PrenotazioneService {
     });
   }
 
+  getPrenotazioniInAttesaPaziente(id: number){
+    return this.http.get<prenotazioneDTO[]>(`${this.API_URL}/paziente/${id}`, {
+      withCredentials: true
+    });
+  }
+
+  getPrenotazioniRifiutatePaziente(id: number){
+    return this.http.get<prenotazioneDTO[]>(`${this.API_URL}/rifiutate/paziente/${id}`, {
+      withCredentials: true
+    });
+  }
+
+
   accettaPrenotazione(id: number){
     return this.http.patch<Boolean>(`${this.API_URL}/accetta/${id}`, {}, {withCredentials: true});
   }
