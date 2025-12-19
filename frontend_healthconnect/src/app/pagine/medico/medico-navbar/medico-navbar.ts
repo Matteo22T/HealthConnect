@@ -10,6 +10,7 @@ import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-medico-navbar',
+  standalone: true,
   imports: [
     NgIf,
     RouterLink,
