@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
 export type StatCardType = 'pending' | 'today' | 'patients' | 'messages';
 
@@ -25,4 +25,11 @@ export class StatCard {
   //tipo per colore, se non lo imposto di default è pending
   @Input()
   tipo: StatCardType = 'pending';
+
+
+  @Output() cardClick = new EventEmitter<string>();
+
+  onClick() {
+    this.cardClick.emit(this.tipo);
+  }
 }

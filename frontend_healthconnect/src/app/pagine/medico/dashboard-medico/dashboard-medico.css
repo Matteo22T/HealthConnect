@@ -1,3 +1,4 @@
+/* Main Content */
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -31,28 +32,106 @@
   grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
   margin-bottom: 2rem;
+  align-items: stretch; /* FONDAMENTALE: Assicura che le due colonne abbiano la stessa altezza */
 }
 
-@media (max-width: 1024px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-  }
+/* NUOVE REGOLE PER LE COLONNE */
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Mantiene lo spazio tra i componenti verticali */
+  height: 100%; /* Occupa tutta l'altezza della cella della griglia */
 }
 
-@media (max-width: 768px) {
-  header {
-    padding: 1rem 1.5rem;
-  }
-
-  .container {
-    padding: 1.5rem;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
+/* Questo dice: "I componenti in fondo devono espandersi
+   per riempire tutto lo spazio vuoto rimasto"
+*/
+app-lista-richiesta,
+app-pazienti-senza-diagnosi {
+  flex: 1;
+  display: flex;       /* Serve per passare l'altezza al contenuto interno */
+  flex-direction: column;
 }
+
+.charts-section {
+  width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+
+ .main-grid {
+    display: grid;
+    /* Colonna sinistra più larga (1.5) della destra (1) */
+    grid-template-columns: 1.5fr 1fr;
+    /* Riga 1: alta quanto basta. Riga 2: riempie il resto */
+    grid-template-rows: auto 1fr;
+    /* Mappa dei componenti */
+    grid-template-areas:
+    "visite messaggi"
+    "richieste pazienti";
+    gap: 2rem;
+    margin-bottom: 2rem;
+    /* Altezza minima per vedere l'effetto stretch anche con pochi dati */
+    min-height: 600px;
+  }
+
+  /* Assegnazione Aree e Comportamento Flex */
+  #today {
+    grid-area: visite;
+  }
+
+  #messages {
+    grid-area: messaggi;
+  }
+
+  #pending {
+    grid-area: richieste;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Cruciale per far funzionare lo scroll interno */
+  }
+
+  #patients {
+    grid-area: pazienti;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* Responsive: torna a una colonna singola */
+  @media (max-width: 1024px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+      "visite"
+      "richieste"
+      "messaggi"
+      "pazienti";
+    }
+  }
+
+  /* Effetto Glow */
+  .highlight-glow ::ng-deep > div:first-child {
+    animation: glow-animation 2s ease-in-out;
+    border-radius: 21px;
+  }
+
+  @keyframes glow-animation {
+    0% {
+      box-shadow: 0 0 0 rgba(63, 81, 181, 0); /* Trasparente */
+      transform: scale(1);
+    }
+    50% {
+      /* Colore blu/viola acceso - cambialo con il tuo colore primario */
+      box-shadow: 0 0 20px rgba(63, 81, 181, 0.6);
+      transform: scale(1.02); /* Leggero ingrandimento */
+      border: 1px solid #3f51b5;
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(63, 81, 181, 0);
+      transform: scale(1);
+    }
+  }

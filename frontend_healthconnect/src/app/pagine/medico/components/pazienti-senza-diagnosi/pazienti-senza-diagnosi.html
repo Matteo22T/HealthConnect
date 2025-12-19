@@ -1,5 +1,7 @@
 <div class="container-pazienti">
-  <h3>Pazienti in attesa di diagnosi</h3>
+  <div class="card-header">
+  <h2> Pazienti in attesa di diagnosi</h2>
+  </div>
 
   <div class="lista-card" *ngIf="visite.length > 0; else noPazienti">
     <div class="card-paziente" *ngFor="let vis of visite">

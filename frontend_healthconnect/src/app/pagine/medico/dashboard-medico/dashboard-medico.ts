@@ -13,6 +13,7 @@ import {ListaVisita} from '../components/lista-visita/lista-visita';
 import {Messaggi} from '../components/messaggi/messaggi';
 import {PazientiSenzaDiagnosi} from '../components/pazienti-senza-diagnosi/pazienti-senza-diagnosi';
 import {Router} from '@angular/router';
+import {StatCardPaziente} from '../../paziente/components/components-dashboard/stat-card-paziente/stat-card-paziente';
 
 
 @Component({
@@ -23,7 +24,8 @@ import {Router} from '@angular/router';
     ListaRichiesta,
     ListaVisita,
     Messaggi,
-    PazientiSenzaDiagnosi
+    PazientiSenzaDiagnosi,
+    StatCardPaziente
   ],
   templateUrl: './dashboard-medico.html',
   styleUrl: './dashboard-medico.css',
@@ -135,5 +137,19 @@ export class DashboardMedico implements OnInit{
 
   apriVisitaSpecifica(idVisita: number){
     this.route.navigate(['/medico/visite', idVisita]);
+  }
+
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      element.classList.add('highlight-glow');
+
+      setTimeout(() => {
+        element.classList.remove('highlight-glow');
+      }, 2000);
+    }
   }
 }

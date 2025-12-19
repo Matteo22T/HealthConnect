@@ -5,32 +5,36 @@
   </div>
 
   <div class="dashboard-grid">
-    <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length"></app-stat-card>
-    <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length"></app-stat-card>
-    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="numeroPazienti"></app-stat-card>
-    <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="messaggi.length"></app-stat-card>
+    <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length" (cardClick)="scrollToSection($event)"></app-stat-card>
+    <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length" (cardClick)="scrollToSection($event)"></app-stat-card>
+    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="numeroPazienti" (cardClick)="scrollToSection($event)"></app-stat-card>
+    <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="messaggi.length" (cardClick)="scrollToSection($event)"></app-stat-card>
   </div>
 
   <div class="main-grid">
 
-    <div class="left-column">
-      <app-lista-visita [prossimeVisite]="visite"></app-lista-visita>
+    <app-lista-visita
+      id="today"
+      [prossimeVisite]="visite">
+    </app-lista-visita>
 
-      <app-lista-richiesta
-        [prenotazioniInAttesa]="prenotazioni"
-        (accettaPrenotazione)="gestisciAccettazionePrenotazione($event)"
-        (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
-      </app-lista-richiesta>
-    </div>
+    <app-lista-richiesta
+      id="pending"
+      [prenotazioniInAttesa]="prenotazioni"
+      (accettaPrenotazione)="gestisciAccettazionePrenotazione($event)"
+      (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
+    </app-lista-richiesta>
 
-    <div class="right-column">
-      <app-messaggi [ultimiMessaggi]="messaggi"></app-messaggi>
-      <app-pazienti-senza-diagnosi
-        [visite]="VisiteSenzaDiagnosi"
-        (apriVisita)="apriVisitaSpecifica($event)">
+    <app-messaggi
+      id="messages"
+      [ultimiMessaggi]="messaggi">
+    </app-messaggi>
 
-      </app-pazienti-senza-diagnosi>
-    </div>
+    <app-pazienti-senza-diagnosi
+      id="patients"
+      [visite]="VisiteSenzaDiagnosi"
+      (apriVisita)="apriVisitaSpecifica($event)">
+    </app-pazienti-senza-diagnosi>
 
   </div>
 </main>

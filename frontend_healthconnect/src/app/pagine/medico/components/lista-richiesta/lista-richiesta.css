@@ -23,6 +23,9 @@
   box-shadow: var(--shadow-md);
   border: 1px solid rgba(0, 102, 204, 0.08);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -180,11 +183,10 @@
   transform: translateY(-2px);
 }
 
-/* --- SCROLL CONTAINER CORRETTO --- */
-/* Rimosso flex/gap per usare il rendering standard a blocchi come nel paziente */
 .scroll-container {
-  height: 300px;
+  flex: 1;
   overflow-y: auto;
+  min-height: 200px;
   padding-right: 5px;
 }
 

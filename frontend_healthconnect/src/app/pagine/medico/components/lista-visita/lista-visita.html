@@ -6,7 +6,7 @@
 
   <div class="scroll-container">
 
-    <div *ngIf="prossimeVisite.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+    <div class="empty-state" *ngIf="prossimeVisite.length === 0">
       <p>Nessuna visita programmata per oggi ☕️</p>
     </div>
 
