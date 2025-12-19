@@ -25,6 +25,11 @@
 
     <div class="right-column">
       <app-messaggi [ultimiMessaggi]="messaggi"></app-messaggi>
+      <app-pazienti-senza-diagnosi
+        [visite]="VisiteSenzaDiagnosi"
+        (apriVisita)="apriVisitaSpecifica($event)">
+
+      </app-pazienti-senza-diagnosi>
     </div>
 
   </div>

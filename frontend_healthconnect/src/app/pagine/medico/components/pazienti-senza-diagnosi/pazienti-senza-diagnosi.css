@@ -1,0 +1,165 @@
+/* ==================== CONTAINER PRINCIPALE (Stile Card Uniformato) ==================== */
+.container-pazienti {
+  background: var(--white, #ffffff);
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(0, 102, 204, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container-pazienti:hover {
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+/* ==================== TITOLO (Stile Card Header) ==================== */
+h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid rgba(0, 102, 204, 0.1);
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark, #1a2b4b);
+  letter-spacing: -0.5px;
+  margin-top: 0;
+}
+
+/* ==================== LISTA (Stile Scroll Container) ==================== */
+.lista-card {
+  display: flex;
+  flex-direction: column;
+  height: 300px; /* Uniformato agli altri componenti */
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Scrollbar personalizzata (Identica a Lista Visita) */
+.lista-card::-webkit-scrollbar {
+  width: 6px;
+}
+.lista-card::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.lista-card::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+.lista-card::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ==================== ITEM PAZIENTE (Stile Appointment Item) ==================== */
+.card-paziente {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  /* Stile visivo coerente con le visite (o leggermente diverso per distinguerlo) */
+  background: #fff3e0; /* Arancione chiarissimo per indicare "attesa" o diagnosi mancante */
+  border-left: 4px solid #ff9800; /* Arancione */
+
+  /* Oppure, se lo vuoi identico alle visite blu, usa: */
+  /* background: #e3f2fd; */
+  /* border-left: 4px solid #2196f3; */
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid transparent;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.card-paziente:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-color: rgba(0, 102, 204, 0.1);
+  /* Mantiene il bordo sinistro colorato */
+  border-left-color: #ff9800;
+}
+
+.card-paziente:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================== INFO PAZIENTE ==================== */
+.info-paziente {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nome {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+.info-paziente p {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ==================== BOTTONE APRI ==================== */
+.btn-apri {
+  background-color: transparent;
+  color: var(--primary-color, #0066cc);
+  border: 1px solid var(--primary-color, #0066cc);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-apri:hover {
+  background-color: var(--primary-color, #0066cc);
+  color: white;
+  transform: translateX(3px);
+  box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+  padding: 3rem 2rem !important;
+  text-align: center;
+  color: var(--text-light, #8898aa) !important;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: transparent;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .container-pazienti {
+    padding: 1.5rem;
+  }
+
+  .card-paziente {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .btn-apri {
+    width: 100%;
+    text-align: center;
+  }
+}

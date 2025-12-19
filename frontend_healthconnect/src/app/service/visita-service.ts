@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {prenotazioneDTO} from '../model/prenotazioneDTO';
 import {VisitaDTO} from '../model/visitaDTO';
 import {Observable, Subject} from 'rxjs';
 import {utenteDTO} from '../model/utenteDTO';
@@ -39,6 +38,10 @@ export class VisitaService {
     return this.http.get<VisitaDTO[]>(`${this.API_URL}/tutti/medici/${id}`,{
       withCredentials: true
     });
+  }
+
+  getVisiteSenzaDiagnosi(idMedico: number): Observable<VisitaDTO[]> {
+    return this.http.get<VisitaDTO[]>(`${this.API_URL}/visite_no_diagnosi/medico/${idMedico}`, {withCredentials: true});
   }
 
   getListaPazientiMedico(id: number): Observable<utenteDTO[]>{
