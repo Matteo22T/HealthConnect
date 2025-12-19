@@ -1,0 +1,443 @@
+/* Container principale */
+.calendar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header del calendario */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.calendar-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-transform: capitalize;
+}
+
+/* Gruppo pulsanti */
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #0066cc;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0052a3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-outline-secondary {
+  background-color: white;
+  color: #6c757d;
+  border: 2px solid #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Stili per la vista settimanale */
+:host ::ng-deep .cal-week-view {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .cal-week-view .cal-day-headers {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+:host ::ng-deep .cal-week-view .cal-header {
+  font-weight: 600;
+  color: #495057;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+:host ::ng-deep .cal-week-view .cal-header.cal-today {
+  background-color: #d1e8ff;
+  color: #0066cc;
+}
+
+/* Colonne giorni */
+:host ::ng-deep .cal-week-view .cal-day-column {
+  border-right: 1px solid #e9ecef;
+}
+
+:host ::ng-deep .cal-week-view .cal-day-column:last-child {
+  border-right: none;
+}
+
+/* Ore */
+:host ::ng-deep .cal-week-view .cal-time {
+  font-weight: 500;
+  color: #6c757d;
+  font-size: 12px;
+  padding: 8px;
+}
+
+:host ::ng-deep .cal-week-view .cal-hour-segment {
+  border-bottom: 1px solid #f1f3f5;
+}
+
+:host ::ng-deep .cal-week-view .cal-hour:nth-child(odd) {
+  background-color: #fafbfc;
+}
+
+/* Eventi del calendario */
+:host ::ng-deep .cal-week-view .cal-event {
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border-left: 4px solid #0021ff;
+}
+
+:host ::ng-deep .cal-week-view .cal-event:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+:host ::ng-deep .cal-week-view .cal-event-title {
+  font-weight: 500;
+}
+
+
+
+/* Stile per oggi */
+:host ::ng-deep .cal-week-view .cal-day-column.cal-today {
+  background-color: #f8fcff;
+}
+
+/* Tooltip personalizzato */
+:host ::ng-deep .cal-week-view .cal-event {
+  position: relative;
+}
+
+:host ::ng-deep .cal-week-view .cal-event::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background-color: #2c3e50;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-line;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+  min-width: 250px;
+  max-width: 350px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+:host ::ng-deep .cal-week-view .cal-event::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+  border: 6px solid transparent;
+  border-top-color: #2c3e50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+:host ::ng-deep .cal-week-view .cal-event:hover::before,
+:host ::ng-deep .cal-week-view .cal-event:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Nascondi il tooltip di default del browser */
+:host ::ng-deep .cal-week-view .cal-event * {
+  pointer-events: none;
+}
+
+/* Custom Event Template */
+.custom-event {
+  padding: 6px 8px;
+  height: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.custom-event:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.event-time {
+  font-weight: 700;
+  font-size: 13px;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.event-status {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.event-status {
+  background-color: rgba(230, 126, 34, 0.2);
+  color: #e67e22;
+}
+
+.event-status.confirmed {
+  background-color: rgba(0, 102, 204, 0.2);
+  color: #0066cc;
+}
+
+.event-doctor {
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 2px;
+}
+
+.event-reason {
+  font-size: 11px;
+  color: #6c757d;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Modal Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #6c757d;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: #f1f3f5;
+  color: #2c3e50;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+  color: white;
+  padding: 24px 24px 24px 24px;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header.pending {
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+}
+
+.modal-header.rejected {
+  background: linear-gradient(135deg, #ff0043 0%, #cc0036 100%);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.info-row {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 140px;
+  font-size: 14px;
+}
+
+.info-row .value {
+  color: #2c3e50;
+  font-size: 14px;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.alert-message {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 16px;
+  margin-top: 16px;
+  border-radius: 4px;
+  color: #856404;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 12px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .calendar-header h3 {
+    font-size: 20px;
+  }
+
+  .btn-group {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  :host ::ng-deep .cal-week-view .cal-event {
+    font-size: 11px;
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-header h3 {
+    font-size: 18px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}

@@ -41,6 +41,14 @@ public class PrenotazioneService {
         return prenotazioneDAO.getPrenotazioniInAttesaByMedico(id);
     }
 
+    public List<prenotazioneDTO> getPrenotazioniInAttesaByPaziente(Long id){
+        return prenotazioneDAO.getPrenotazioniInAttesaByPaziente(id);
+    }
+
+    public List<prenotazioneDTO> getPrenotazioniRifiutateByPaziente(Long id){
+        return prenotazioneDAO.getPrenotazioniRifiutateByPaziente(id);
+    }
+
     public boolean accettaPrenotazione(Long id){
         prenotazioneDTO pren = prenotazioneDAO.accettaPrenotazione(id);
         if (pren != null) return visitaDAO.creaVisita(pren) && messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");

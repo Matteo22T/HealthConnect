@@ -10,4 +10,6 @@ public interface prenotazioneDAO {
     prenotazioneDTO accettaPrenotazione(Long id);
     boolean rifiutaPrenotazione(Long id);
     boolean salvaPrenotazione(prenotazioneDTO prenotazione);
+    List<prenotazioneDTO> getPrenotazioniInAttesaByPaziente(Long id);
+    List<prenotazioneDTO> getPrenotazioniRifiutateByPaziente(Long id);
 }
