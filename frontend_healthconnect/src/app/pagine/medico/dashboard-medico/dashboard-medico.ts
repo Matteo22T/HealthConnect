@@ -51,6 +51,9 @@ export class DashboardMedico implements OnInit{
     this.visitaService.refreshNeeded$.subscribe(() => {
       this.caricaVisiteOdierne();
     });
+    this.visitaService.refreshNeeded$.subscribe(() => {
+      this.caricaPazienti();
+    });
 
     if (currentUser) {
       forkJoin({
@@ -112,6 +115,17 @@ export class DashboardMedico implements OnInit{
     this.visitaService.getVisiteOdierneByMedico(this.auth.currentUserValue!.id) .subscribe({
       next:(res)=>{
         this.visite=res;
+        this.changeDet.detectChanges();
+      }, error:(err)=>{
+        console.error('Errore server', err);
+      }
+    });
+  }
+
+  caricaPazienti(){
+    this.visitaService.getNumeroPazientiMedico(this.auth.currentUserValue!.id) .subscribe({
+      next:(res)=>{
+        this.numeroPazienti=res;
         this.changeDet.detectChanges();
       }, error:(err)=>{
         console.error('Errore server', err);
