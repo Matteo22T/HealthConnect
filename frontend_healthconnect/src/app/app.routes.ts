@@ -26,6 +26,9 @@ import {AuthGuard} from './guards/auth.guard';
 import {MieiMedici} from './pagine/paziente/components/components-medici/miei-medici/miei-medici';
 import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
+import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supporto/chat-supporto';
+import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
+import {Servizi} from './pagine/footer/servizi/servizi';
 
 
 
@@ -70,5 +73,7 @@ export const routes: Routes = [
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
+  {path: 'chi-siamo', component: ChiSiamo},
+  {path: 'servizi', component:Servizi},
   { path: '**', redirectTo:''}
 ];

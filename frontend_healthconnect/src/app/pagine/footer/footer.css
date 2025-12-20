@@ -1,7 +1,7 @@
 .footer {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   color: var(--text-dark);
-  padding: 4rem 2rem 1.5rem;
+  padding: 2rem 1.5rem;
   margin-top: auto;
   border-top: 3px solid var(--primary-color);
   box-shadow: 0 -8px 30px rgba(0,0,0,0.08);
@@ -273,7 +273,7 @@
 /* Footer Bottom */
 .footer-bottom {
   text-align: center;
-  margin-top: 3.5rem;
+  margin-top: 1rem;
   padding-top: 2rem;
   border-top: 2px solid rgba(0,0,0,0.06);
   color: var(--text-light);
