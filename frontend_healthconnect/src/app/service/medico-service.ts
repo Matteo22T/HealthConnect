@@ -16,4 +16,8 @@ export class MedicoService {
       const safeSpec = spec ? spec : '';
       return this.http.get<MedicoDTO[]>(`${this.apiUrl}/trova?search=${term}&spec=${safeSpec}`, {withCredentials: true});
   }
+
+  getMedicoById(id: number): Observable<MedicoDTO> {
+      return this.http.get<MedicoDTO>(`${this.apiUrl}/${id}`);
+    }
 }

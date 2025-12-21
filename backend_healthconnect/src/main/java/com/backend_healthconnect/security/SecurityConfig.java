@@ -61,6 +61,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/visite/future/pazienti/**").hasRole("PAZIENTE")
                         .requestMatchers("/api/visite/storico/pazienti/**").hasRole("PAZIENTE")
 
+                        .requestMatchers("/api/auth/modifica/password").hasAnyRole("PAZIENTE", "MEDICO")
+                        .requestMatchers("/api/auth/modifica/profilo").hasAnyRole("PAZIENTE", "MEDICO")
                         .requestMatchers("/api/auth/modifica/emailtelefono").hasAnyRole("PAZIENTE", "MEDICO")
                         // 3. Tutto il resto richiede autenticazione
                         .anyRequest().authenticated()

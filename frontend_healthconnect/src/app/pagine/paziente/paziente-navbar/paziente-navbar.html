@@ -14,7 +14,9 @@
       <a routerLink="/paziente/calendario" routerLinkActive="active-link"><span>📅</span> Calendario</a>
       <a routerLink="/paziente/medici" routerLinkActive="active-link"><span>👨‍⚕️</span> Medici</a>
       <a routerLink="/paziente/cartella" routerLinkActive="active-link"><span>📋</span> Cartella Clinica</a>
-      <a><span>💬</span> Chat</a>
+      <a [routerLink]="['/paziente/chat']" routerLinkActive="active-link">
+        Chat
+      </a>
       <a routerLink="/paziente/ai" routerLinkActive="active-link"><span>🤖</span> Assistente AI</a>
     </nav>
     <div class="profile-container">

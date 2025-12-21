@@ -6,6 +6,8 @@ import { MedicoService } from '../../../../../service/medico-service';
 import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 import {AuthService} from '../../../../../service/auth-service';
 import {utenteDTO} from '../../../../../model/utenteDTO';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-trova-medico',
@@ -25,15 +27,14 @@ export class TrovaMedicoComponent implements OnInit {
 
   showSuccess: boolean = false;
 
-  constructor(private auth: AuthService, private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef) {}
-
-
   nuovaPrenotazione = {
     medico_id: 0,
     paziente_id: 0,
     data_visita: '',
     motivo: ''
   };
+
+  constructor(private auth: AuthService, private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef, private router: Router) {}
 
   pazienteAttuale :utenteDTO | null = null;
 
@@ -65,6 +66,13 @@ export class TrovaMedicoComponent implements OnInit {
     });
   }
 
+  contattaMedico(medicoId: number) {
+      // Naviga verso la chat passando l'ID nell'URL
+      // Esempio risultato: /paziente/chat?medicoId=5
+      this.router.navigate(['/paziente/chat'], {
+        queryParams: { medicoId: medicoId }
+      });
+    }
   // --- FUNZIONI PRENOTAZIONE ---
 
   apriPrenotazione(medico: MedicoDTO) {

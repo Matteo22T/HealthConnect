@@ -1,0 +1,79 @@
+<div class="whatsapp-container">
+
+  <div class="sidebar" style="background-color: white; width: 350px; display: flex; flex-direction: column;">
+
+    <div class="sidebar-header" style="padding: 15px; border-bottom: 1px solid #ddd;">
+      <h3 style="color: black;">I tuoi Medici ({{ listaContatti.length }})</h3>
+    </div>
+
+    <div class="contacts-list" style="flex: 1; overflow-y: auto;">
+
+      <div *ngIf="listaContatti.length === 0" style="padding: 20px; color: red;">
+        Caricamento in corso o lista vuota...
+      </div>
+
+      <div *ngFor="let contatto of listaContatti"
+           class="contact-item"
+           (click)="selezionaContatto(contatto)"
+           style="padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+
+        <div style="width: 40px; height: 40px; background: #075e54; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+          {{ contatto.nome ? contatto.nome.charAt(0) : '?' }}
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <h4 style="margin: 0; color: black; font-weight: bold;">
+            Dr. {{ contatto.nome }} {{ contatto.cognome }}
+          </h4>
+          <span style="color: grey; font-size: 0.8rem;">Clicca per chattare</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="main-chat">
+
+    <div *ngIf="!contattoSelezionato" class="welcome-screen">
+      <div class="welcome-content">
+        <h2>HealthConnect Web</h2>
+        <p>Seleziona un medico dalla lista per iniziare a chattare.</p>
+      </div>
+    </div>
+
+    <div *ngIf="contattoSelezionato" class="chat-wrapper">
+
+      <div class="chat-header">
+        <div class="avatar-circle">
+          {{ contattoSelezionato.nome.charAt(0) }}{{ contattoSelezionato.cognome.charAt(0) }}
+        </div>
+        <h3>Dr. {{ contattoSelezionato.nome }} {{ contattoSelezionato.cognome }}</h3>
+      </div>
+
+      <div class="chat-body" #scrollContainer>
+        <div *ngFor="let msg of messaggi"
+             class="message-bubble"
+             [ngClass]="{'sent': msg.mittente_id === utenteCorrenteid, 'received': msg.mittente_id !== utenteCorrenteid}">
+
+          <div class="bubble-content">
+            {{ msg.testo }}
+            <span class="time">{{ msg.data_invio | date:'HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-footer">
+        <input type="text"
+               [(ngModel)]="nuovoMessaggio"
+               (keyup.enter)="invia()"
+               placeholder="Scrivi un messaggio..."
+               autofocus>
+        <button class="btn-send" (click)="invia()">➤</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

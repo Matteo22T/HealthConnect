@@ -1,6 +1,7 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.medicoDAO;
+import com.backend_healthconnect.model.MedicoDTO;
 import com.backend_healthconnect.model.medicoCardDTO;
 import com.backend_healthconnect.model.StatoApprovazione;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,5 +75,27 @@ public class medicoDAOpostgres implements medicoDAO {
                 rs.getString("spec_id"),
                 rs.getString("indirizzo_studio")
         ), params.toArray());
+    }
+
+    @Override
+    public MedicoDTO getMedicoById(Long id) {
+        String query = "SELECT u.id, u.nome, u.cognome, d.specializzazione_id FROM utenti u JOIN dettagli_medici d ON u.id = d.utente_id WHERE u.id = ?";
+
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            MedicoDTO medico = new MedicoDTO();
+            while (rs.next()) {
+                medico.setId(rs.getLong("id"));
+                medico.setNome(rs.getString("nome"));
+                medico.setCognome(rs.getString("cognome"));
+                medico.setSpecializzazione(rs.getString("specializzazione_id"));
+            }
+            return medico;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
