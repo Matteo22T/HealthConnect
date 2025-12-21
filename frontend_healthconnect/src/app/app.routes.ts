@@ -18,11 +18,11 @@ import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-pazien
 import { TrovaMedicoComponent } from './pagine/paziente/trova-medico/trova-medico';
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
-import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
-import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impostazioni-paziente';
 import {CalendarioPaziente} from './pagine/paziente/calendario-paziente/calendario-paziente';
+import { ChatComponent } from './pagine/paziente/chat/chat';
+
 
 
 
@@ -37,11 +37,12 @@ export const routes: Routes = [
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
       {path: 'cartella', component: CartellaClinicaPaziente},
-      {path: "trova-medico" , component : TrovaMedicoComponent}
+      {path: "trova-medico" , component : TrovaMedicoComponent},
       {path: 'cartella', component: CartellaClinicaPaziente},
       {path: 'profilo', component: ProfiloPaziente},
       {path: 'impostazioni', component: ImpostazioniPaziente},
-      {path: 'calendario', component: CalendarioPaziente}
+      {path: 'calendario', component: CalendarioPaziente},
+      { path: 'chat', component: ChatComponent },
     ]},
 
   {path: 'medico', component: MedicoLayout, children: [

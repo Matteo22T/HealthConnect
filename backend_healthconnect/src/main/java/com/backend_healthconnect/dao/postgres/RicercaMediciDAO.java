@@ -1,6 +1,7 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.model.MedicoCardDTO;
+import com.backend_healthconnect.model.MedicoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -57,8 +58,6 @@ public class RicercaMediciDAO {
             params.add(searchPattern);
         }
 
-        // 2. NUOVO FILTRO SPECIALIZZAZIONE (Se è stata selezionata dalla tendina)
-        // Filtriamo solo se la stringa non è null, non è vuota e non è "Tutte"
         if (specializzazione != null && !specializzazione.trim().isEmpty() && !specializzazione.equals("Tutte")) {
             // Confrontiamo l'ID convertito in testo
             sql.append("AND CAST(d.specializzazione_id AS VARCHAR) = ? ");
@@ -66,5 +65,21 @@ public class RicercaMediciDAO {
         }
 
         return jdbcTemplate.query(sql.toString(), new MedicoRowMapper(), params.toArray());
+    }
+    public MedicoDTO getMedicoById(Long id) {
+        String sql = "SELECT u.id, u.nome, u.cognome FROM utenti u WHERE u.id = ?";
+
+        // Usiamo jdbcTemplate che è già pronto
+        List<MedicoDTO> results = jdbcTemplate.query(sql, (rs, rowNum) -> {
+            MedicoDTO m = new MedicoDTO();
+            m.setId(rs.getLong("id"));
+            m.setNome(rs.getString("nome"));
+            m.setCognome(rs.getString("cognome"));
+            m.setSpecializzazione("Medico"); // Valore di default
+            return m;
+        }, id);
+
+        // Se la lista è vuota torna null, altrimenti il primo risultato
+        return results.isEmpty() ? null : results.get(0);
     }
 }

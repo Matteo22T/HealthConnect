@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Fondamentale per i form
 import { MedicoDTO } from '../../../model/medicoDTO';
 import { MedicoService } from '../../../service/medico';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trova-medico',
@@ -31,7 +32,9 @@ export class TrovaMedicoComponent implements OnInit {
     motivo: ''
   };
 
-  constructor(private medicoService: MedicoService, private cd: ChangeDetectorRef) {}
+  constructor(private medicoService: MedicoService,
+    private cd: ChangeDetectorRef,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.cercaMedici();
@@ -57,6 +60,13 @@ export class TrovaMedicoComponent implements OnInit {
     });
   }
 
+  contattaMedico(medicoId: number) {
+      // Naviga verso la chat passando l'ID nell'URL
+      // Esempio risultato: /paziente/chat?medicoId=5
+      this.router.navigate(['/paziente/chat'], {
+        queryParams: { medicoId: medicoId }
+      });
+    }
   // --- FUNZIONI PRENOTAZIONE ---
 
   apriPrenotazione(medico: MedicoDTO) {

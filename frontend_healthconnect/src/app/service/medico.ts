@@ -20,4 +20,7 @@ export class MedicoService {
   prenotaVisita(datiPrenotazione: any): Observable<any> {
       return this.http.post(`${this.prenotazioniUrl}/crea`, datiPrenotazione, { responseType: 'text' });
     }
+  getMedicoById(id: number): Observable<MedicoDTO> {
+      return this.http.get<MedicoDTO>(`${this.apiUrl}/${id}`);
+    }
 }
