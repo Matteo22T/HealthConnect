@@ -25,7 +25,6 @@ import {MieiMedici} from './pagine/paziente/components/components-medici/miei-me
 import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
-//import {Servizi} from './pagine/footer/servizi/servizi';
 import { ChatComponent } from './pagine/paziente/chat/chat';
 
 
@@ -73,6 +72,5 @@ export const routes: Routes = [
     ]},
 
   {path: 'chi-siamo', component: ChiSiamo},
-  //{path: 'servizi', component:Servizi},
   { path: '**', redirectTo:''}
 ];
