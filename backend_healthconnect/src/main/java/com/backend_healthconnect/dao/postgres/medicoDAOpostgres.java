@@ -1,19 +1,26 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.medicoDAO;
+import com.backend_healthconnect.model.medicoCardDTO;
 import com.backend_healthconnect.model.StatoApprovazione;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class medicoDAOpostgres implements medicoDAO {
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void save(Long idUtente, Long specializzazione, String  numeroAlbo, String biografia, String indirizzo_studio, StatoApprovazione stato_approvazione) {
@@ -30,5 +37,41 @@ public class medicoDAOpostgres implements medicoDAO {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public List<medicoCardDTO> getMediciPerCard(String ricerca, String specializzazione) {
+        StringBuilder sql = new StringBuilder();
+        List<Object> params = new ArrayList<>();
+
+        sql.append("SELECT u.id, u.nome, u.cognome, d.indirizzo_studio, ");
+        sql.append("CAST(d.specializzazione_id AS VARCHAR) as spec_id ");
+        sql.append("FROM dettagli_medici d ");
+        sql.append("JOIN utenti u ON d.utente_id = u.id ");
+        sql.append("WHERE CAST(u.ruolo AS VARCHAR) = 'MEDICO' ");
+        sql.append("AND CAST(d.stato_approvazione AS VARCHAR) = 'APPROVATO' ");
+
+        // Filtro Ricerca (Nome/Cognome)
+        if (ricerca != null && !ricerca.trim().isEmpty()) {
+            sql.append("AND (LOWER(u.nome) LIKE LOWER(?) OR LOWER(u.cognome) LIKE LOWER(?)) ");
+            String searchPattern = "%" + ricerca.trim() + "%";
+            params.add(searchPattern);
+            params.add(searchPattern);
+        }
+
+        // Filtro Specializzazione
+        if (specializzazione != null && !specializzazione.trim().isEmpty() && !specializzazione.equals("Tutte")) {
+            sql.append("AND CAST(d.specializzazione_id AS VARCHAR) = ? ");
+            params.add(specializzazione);
+        }
+
+        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new medicoCardDTO(
+                rs.getLong("id"),
+                rs.getString("nome"),
+                rs.getString("cognome"),
+                rs.getString("spec_id"),
+                rs.getString("indirizzo_studio")
+        ), params.toArray());
     }
 }

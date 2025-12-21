@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatSupporto } from '../components-ai/chat-supporto/chat-supporto';
-import { ChatSintomi } from '../components-ai/chat-sintomi/chat-sintomi';
+import { ChatSupporto } from '../components/components-ai/chat-supporto/chat-supporto';
+import { ChatSintomi } from '../components/components-ai/chat-sintomi/chat-sintomi';
 
 export type AiMode = 'SELEZIONE' | 'SUPPORTO' | 'SINTOMI';
 

@@ -7,7 +7,7 @@
   <div class="dashboard-grid">
     <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length"></app-stat-card>
     <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length"></app-stat-card>
-    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="pazienti.length"></app-stat-card>
+    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="numeroPazienti"></app-stat-card>
     <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="messaggi.length"></app-stat-card>
   </div>
 
@@ -24,7 +24,12 @@
     </div>
 
     <div class="right-column">
-      <app-messaggi [ultimiMessaggi]="messaggi.slice(0,5)"></app-messaggi>
+      <app-messaggi [ultimiMessaggi]="messaggi"></app-messaggi>
+      <app-pazienti-senza-diagnosi
+        [visite]="VisiteSenzaDiagnosi"
+        (apriVisita)="apriVisitaSpecifica($event)">
+
+      </app-pazienti-senza-diagnosi>
     </div>
 
   </div>

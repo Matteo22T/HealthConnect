@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Medici in cura</h2>
+    <a href="#" class="view-all" *ngIf="medici.length > 0" (click)="vaiAiMedici($event)">Vedi tutti →</a>
+  </div>
+
+
+    <div class="scroll-container" *ngIf="medici.length > 0">
+
+      <div class="med-item" *ngFor="let med of medici">
+
+        <div class="avatar-placeholder emoji-avatar">
+          👨‍⚕️
+        </div>
+
+        <div class="med-info">
+          <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
+        </div>
+
+        <button class="btn-contact">
+          💬
+        </button>
+        <button class="btn-prenota">
+        Prenota
+      </button>
+      </div>
+
+    </div>
+
+    <div class="empty-state" *ngIf="medici.length === 0">
+      <div class="empty-icon">🩺</div>
+      <p>Non hai ancora medici assegnati.</p>
+    </div>
+
+  </div>

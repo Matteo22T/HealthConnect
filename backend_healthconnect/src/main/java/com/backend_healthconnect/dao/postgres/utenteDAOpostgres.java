@@ -190,4 +190,21 @@ public class utenteDAOpostgres implements utenteDAO {
         System.out.println("ritorna null");
         return null;
     }
+
+    @Override
+    public void cambiaPassword(Long id, String nuovaPassword) {
+        String query = "UPDATE utenti SET password = ? WHERE id = ?";
+        try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, nuovaPassword);
+            statement.setLong(2, id);
+
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("Aggiornamento fallito, nessun utente trovato con ID: " + id);
+            }
+            } catch (SQLException e){
+            throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
+        }
+    }
 }

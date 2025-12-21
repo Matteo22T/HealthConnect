@@ -1,12 +1,16 @@
 package com.backend_healthconnect.controller;
 
 import com.backend_healthconnect.dao.utenteDAO;
+import com.backend_healthconnect.model.richiestaCambioPasswordDTO;
 import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.service.AutenticazioneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -52,5 +56,18 @@ public class AutenticazioneController {
         else return ResponseEntity.notFound().build();
     }
 
-
+    @PutMapping("cambiapassword")
+    public ResponseEntity<String> cambiaPassword(@RequestBody richiestaCambioPasswordDTO richiesta) {
+        try {
+            authService.cambiaPassword(
+                    richiesta.getId(),
+                    richiesta.getAttuale(),
+                    richiesta.getNuova()
+            );
+            return ResponseEntity.ok("Password cambiata");
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

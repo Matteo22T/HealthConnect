@@ -1,3 +1,9 @@
+/*per la mappa */
+::ng-deep .pac-container {
+  z-index: 10000 !important;
+}
+
+/*il resto */
 :root {
   --primary-color: #0066cc; /* Blu Medico */
   --secondary-color: #00c4cc; /* Verde Acqua/Teal */

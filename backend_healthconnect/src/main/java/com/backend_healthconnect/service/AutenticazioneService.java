@@ -44,6 +44,8 @@ public class AutenticazioneService {
         }
     }
 
+
+
     public utenteDTO modificaDatiPersonaliUtente(Long idUtente, String email, Long telefono){
         return this.utenteDAO.modificaProfilo(idUtente, email, telefono);
     }
@@ -51,4 +53,16 @@ public class AutenticazioneService {
     public utenteDTO modificaDatiProfessionaliUtente(Long idUtente, String indirizzo, String biografia){
         return this.utenteDAO.modificaProfiloProfessionale(idUtente, indirizzo, biografia);
     }
+
+    public void cambiaPassword(Long id,String passwordAttuale, String nuovaPassword){
+        utenteDTO utente = this.utenteDAO.getUtenteById(id);
+        if (!passwordEncoder.matches(passwordAttuale, utente.getPassword())) {
+            throw new RuntimeException("Password attuale errata");
+        }
+
+        String passwordHashed = passwordEncoder.encode(nuovaPassword);
+
+        utenteDAO.cambiaPassword(id, passwordHashed);
+    }
+
 }

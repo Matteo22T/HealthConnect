@@ -43,6 +43,21 @@ public class VisiteController {
         else return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/visite_no_diagnosi/medico/{id}")
+    public ResponseEntity<List<visitaDTO>> getListaPazientiVisiteSenzaDiagnosi(@PathVariable Long id){
+        List<visitaDTO> lista = visiteService.getListaVisiteMedicoSenzaDiagnosi(id);
+        if (lista != null) return ResponseEntity.ok(lista);
+        else return ResponseEntity.notFound().build();
+    }
+
+
+    @GetMapping("/num_pazienti/medici/{id}")
+    public ResponseEntity<Integer> getNumeroPazientiMedico(@PathVariable Long id){
+        int numeroPazienti = visiteService.getNumeroPazientiMedico(id);
+        if (numeroPazienti >= 0) return ResponseEntity.ok(numeroPazienti);
+        else return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/medici/paziente/{id}")
     public List<utenteDTO> getListaMediciPaziente(@PathVariable Long id){
         return visiteService.getListaMediciPaziente(id);

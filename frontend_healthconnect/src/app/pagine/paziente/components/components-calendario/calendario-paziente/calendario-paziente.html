@@ -1,0 +1,97 @@
+<div class="calendar-container">
+
+  <div class="calendar-header">
+    <div class="btn-group">
+      <button
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate">
+        Indietro
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        Oggi
+      </button>
+      <button
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate">
+        Avanti
+      </button>
+    </div>
+
+    <h3>{{ viewDate | date:'MMMM yyyy' }}</h3>
+  </div>
+
+  <br>
+
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [dayStartHour]="8"
+    [dayEndHour]="20"
+    [tooltipTemplate]="tooltipDisabled"
+    (eventClicked)="openEventPopup($event.event)">
+  </mwl-calendar-week-view>
+
+  <ng-template #tooltipDisabled></ng-template>
+
+
+  <!-- Popup Modal -->
+  @if (selectedEvent) {
+    <div class="modal-overlay" (click)="closePopup()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closePopup()">✕</button>
+
+        <div class="modal-header"
+             [class.pending]="selectedEvent.meta?.type === 'PENDING'"
+             [class.rejected]="selectedEvent.meta?.type === 'RIFIUTATO'">
+          <h2>
+            @if (selectedEvent.meta?.type === 'PENDING') {
+              Prenotazione in Attesa
+            } @else if (selectedEvent.meta?.type === 'RIFIUTATO') {
+              Prenotazione Rifiutata
+            } @else {
+              Visita Confermata
+            }
+          </h2>
+        </div>
+
+        <div class="modal-body">
+          <div class="info-row">
+            <span class="label">📅 Data:</span>
+            <span class="value">{{ selectedEvent.start | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">🕐 Orario:</span>
+            <span class="value">{{ selectedEvent.start | date:'HH:mm' }} - {{ selectedEvent.end | date:'HH:mm' }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">👨‍⚕️ Medico:</span>
+            <span class="value">Dr. {{ selectedEvent.meta?.medico?.nome }} {{ selectedEvent.meta?.medico?.cognome }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">📋 Motivo:</span>
+            <span class="value">{{ selectedEvent.meta?.motivo }}</span>
+          </div>
+
+          @if (selectedEvent.meta?.type === 'RIFIUTATO') {
+            <div class="alert-message">
+              ⚠️ Questa prenotazione è stata rifiutata dal medico. Puoi richiedere una nuova prenotazione.
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>

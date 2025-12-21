@@ -62,6 +62,86 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     }
 
     @Override
+    public List<prenotazioneDTO> getPrenotazioniInAttesaByPaziente(Long id) {
+        List<prenotazioneDTO> prenotazioni = new ArrayList<>();
+
+        String query = "SELECT * FROM prenotazioni WHERE paziente_id = ? AND stato = 'RICHIESTA' AND data_visita > CURRENT_TIMESTAMP";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                prenotazioneDTO prenotazione = new prenotazioneDTO();
+                prenotazione.setId(rs.getLong("id"));
+
+                utenteDTO paziente = utenteDAO.getUtenteById(id);
+                prenotazione.setPaziente(paziente);
+
+                Long idMedico = rs.getLong("medico_id");
+                utenteDTO utente = utenteDAO.getUtenteById(idMedico);
+                prenotazione.setMedico(utente);
+
+                Timestamp timestamp = rs.getTimestamp("data_visita");
+                prenotazione.setDataVisita(timestamp.toLocalDateTime());
+
+                StatoPrenotazione stato = StatoPrenotazione.valueOf(rs.getString("stato"));
+                prenotazione.setStato(stato);
+
+                prenotazione.setMotivo(rs.getString("motivo"));
+
+                prenotazioni.add(prenotazione);
+            }
+            return prenotazioni;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la lettura delle prenotazioni in attesa dal database", e);
+        }
+    }
+
+    @Override
+    public List<prenotazioneDTO> getPrenotazioniRifiutateByPaziente(Long id) {
+        List<prenotazioneDTO> prenotazioni = new ArrayList<>();
+        String query = "SELECT * FROM prenotazioni WHERE paziente_id = ? AND stato = 'RIFIUTATA' AND data_visita > CURRENT_TIMESTAMP";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                prenotazioneDTO prenotazione = new prenotazioneDTO();
+                prenotazione.setId(rs.getLong("id"));
+
+                utenteDTO paziente = utenteDAO.getUtenteById(id);
+                prenotazione.setPaziente(paziente);
+
+                Long idMedico = rs.getLong("medico_id");
+                utenteDTO utente = utenteDAO.getUtenteById(idMedico);
+                prenotazione.setMedico(utente);
+
+                Timestamp timestamp = rs.getTimestamp("data_visita");
+                prenotazione.setDataVisita(timestamp.toLocalDateTime());
+
+                StatoPrenotazione stato = StatoPrenotazione.valueOf(rs.getString("stato"));
+                prenotazione.setStato(stato);
+
+                prenotazione.setMotivo(rs.getString("motivo"));
+
+                prenotazioni.add(prenotazione);
+            }
+            return prenotazioni;
+
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("Errore durante la lettura delle prenotazioni rifiutate dal database", e);
+        }
+
+    }
+
+    @Override
     public prenotazioneDTO getPrenotazioneById(Long id) {
         String query = "SELECT * FROM prenotazioni WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
@@ -130,6 +210,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
             throw new RuntimeException("Errore durante l'accettazione della prenotazione", e);
         }
     }
+
     @Override
     public boolean salvaPrenotazione(prenotazioneDTO p) {
         String query = "INSERT INTO prenotazioni (paziente_id, medico_id, data_visita, stato, motivo) VALUES (?, ?, ?, ?::stato_prenotazione_enum, ?)";

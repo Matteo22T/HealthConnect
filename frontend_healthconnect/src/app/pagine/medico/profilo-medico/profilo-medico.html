@@ -1,5 +1,4 @@
 <div class="container profile-wrapper" *ngIf="medico; else loading">
-
   <header class="profile-header shadow-sm">
     <div class="header-content">
       <div class="profile-avatar">
@@ -128,8 +127,9 @@
         <div class="detail-block">
           <span class="label display-block mb-2">📍 Indirizzo Studio:</span>
           <p class="value address-box">
-            {{ medico.indirizzo_studio ? medico.indirizzo_studio : 'Non inserito.' }}
+            {{ medico.indirizzo_studio}}
           </p>
+          <div #visualizzaMappa class="map-container" *ngIf="medico.indirizzo_studio"></div>
         </div>
         <div class="detail-block mt-4">
           <span class="label display-block mb-2">📝 Biografia:</span>
@@ -157,11 +157,13 @@
           <label>Indirizzo Studio</label>
 
           <input
-            #addressInput
+            #indirizzoInputUtente
             type="text"
             [(ngModel)]="medico.indirizzo_studio"
             class="form-input"
             placeholder="Via Roma 1, Milano">
+
+            <div #MappaGoogle class="map-container"></div>
         </div>
 
         <div class="form-group-edit">

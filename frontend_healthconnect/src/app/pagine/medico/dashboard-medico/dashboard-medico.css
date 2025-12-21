@@ -33,55 +33,6 @@
   margin-bottom: 2rem;
 }
 
-/*.patient-badge {*/
-/*  display: inline-block;*/
-/*  background: #e8f5e9;*/
-/*  color: #2e7d32;*/
-/*  padding: 3px 10px;*/
-/*  border-radius: 12px;*/
-/*  font-size: 0.8rem;*/
-/*  font-weight: 500;*/
-/*}*/
-
-/*.quick-actions {*/
-/*  display: grid;*/
-/*  grid-template-columns: 1fr 1fr;*/
-/*  gap: 1rem;*/
-/*}*/
-
-/*.action-btn {*/
-/*  padding: 1.2rem;*/
-/*  border: 2px solid #e0e0e0;*/
-/*  border-radius: 10px;*/
-/*  background: white;*/
-/*  cursor: pointer;*/
-/*  transition: all 0.3s;*/
-/*  text-align: center;*/
-/*  text-decoration: none;*/
-/*  color: #333;*/
-/*}*/
-
-/*.action-btn:hover {*/
-/*  border-color: #667eea;*/
-/*  background: #f8f9ff;*/
-/*  transform: translateY(-2px);*/
-/*}*/
-
-/*.action-btn .icon {*/
-/*  font-size: 2rem;*/
-/*  display: block;*/
-/*  margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.action-btn span {*/
-/*  font-weight: 600;*/
-/*  font-size: 0.95rem;*/
-/*}*/
-
-/*.full-width-card {*/
-/*  grid-column: 1 / -1;*/
-/*}*/
-
 @media (max-width: 1024px) {
   .main-grid {
     grid-template-columns: 1fr;

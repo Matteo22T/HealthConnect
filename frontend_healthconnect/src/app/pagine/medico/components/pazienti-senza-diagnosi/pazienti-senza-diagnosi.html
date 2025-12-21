@@ -1,0 +1,19 @@
+<div class="container-pazienti">
+  <h3>Pazienti in attesa di diagnosi</h3>
+
+  <div class="lista-card" *ngIf="visite.length > 0; else noPazienti">
+    <div class="card-paziente" *ngFor="let vis of visite">
+      <div class="info-paziente">
+        <span class="nome">{{ vis.paziente.nome }} {{ vis.paziente.cognome }}</span>
+        <p>📅 {{ vis.dataVisita | date: 'dd/MM/yyyy'}} - 🕐 {{ vis.dataVisita | date: 'HH:mm'}}</p>
+      </div>
+      <button class="btn-apri" (click)="apriVisita.emit(vis.id)">
+        Apri Cartella
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noPazienti>
+    <p class="empty-state">Nessun paziente in attesa di diagnosi.</p>
+  </ng-template>
+</div>

@@ -74,8 +74,6 @@ export class Register implements OnInit {
         this.initAutocomplete();
       }, 100);
 
-      this.initAutocomplete();
-
     } else {
       this.isMedico = false;
       medicoControls.forEach(control => {
@@ -88,21 +86,30 @@ export class Register implements OnInit {
   }
 
   initAutocomplete() {
-    if (!this.addressInput) return;
+    // Controlli di sicurezza
+    if (!this.addressInput || !this.addressInput.nativeElement || typeof google === 'undefined') {
+      return;
+    }
 
-    const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
-      types: ['address'],
-      componentRestrictions: { country: 'it' }
-    });
-
-    autocomplete.addListener('place_changed', () => {
-      this.ngZone.run(() => {
-        const place = autocomplete.getPlace();
-        if (place.geometry) {
-          this.registerForm.get('indirizzo_studio')?.setValue(place.formatted_address);
-        }
+    try {
+      const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
+        types: ['address'],
+        componentRestrictions: { country: 'it' }
       });
-    });
+
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place = autocomplete.getPlace();
+
+          // Se abbiamo un indirizzo valido, lo scriviamo nel form
+          if (place.geometry && place.formatted_address) {
+            this.registerForm.get('indirizzo_studio')?.setValue(place.formatted_address);
+          }
+        });
+      });
+    } catch (e) {
+      console.error("Errore Google Maps:", e);
+    }
   }
 
   onSubmit() {

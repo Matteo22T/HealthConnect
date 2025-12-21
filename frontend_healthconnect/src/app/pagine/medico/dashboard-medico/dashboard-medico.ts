@@ -6,37 +6,41 @@ import {PrenotazioneService} from '../../../service/prenotazione-service';
 import {VisitaDTO} from '../../../model/visitaDTO';
 import {VisitaService} from '../../../service/visita-service';
 import {forkJoin} from 'rxjs';
-import {utenteDTO} from '../../../model/utenteDTO';
 import {MessaggioService} from '../../../service/messaggio-service';
 import {MessaggioDTO} from '../../../model/messaggioDTO';
 import {ListaRichiesta} from '../components/lista-richiesta/lista-richiesta';
 import {ListaVisita} from '../components/lista-visita/lista-visita';
 import {Messaggi} from '../components/messaggi/messaggi';
+import {PazientiSenzaDiagnosi} from '../components/pazienti-senza-diagnosi/pazienti-senza-diagnosi';
+import {Router} from '@angular/router';
 
 
 @Component({
   selector: 'app-dashboard-medico',
+  standalone: true,
   imports: [
     StatCard,
     ListaRichiesta,
     ListaVisita,
-    Messaggi
+    Messaggi,
+    PazientiSenzaDiagnosi
   ],
   templateUrl: './dashboard-medico.html',
   styleUrl: './dashboard-medico.css',
 })
 export class DashboardMedico implements OnInit{
-  constructor(private auth: AuthService, private prenotazioneService:PrenotazioneService, private visitaService: VisitaService,private messaggioService : MessaggioService ,private changeDet: ChangeDetectorRef) {}
+  constructor(private auth: AuthService, private route: Router, private prenotazioneService:PrenotazioneService, private visitaService: VisitaService,private messaggioService : MessaggioService ,private changeDet: ChangeDetectorRef) {}
   //per le prenotazioni
   prenotazioni: prenotazioneDTO[] = [];
 
   visite: VisitaDTO[] = [];
 
-  //pazienti medico
-  pazienti : utenteDTO[] = []
-
   //messaggi non letti
   messaggi: MessaggioDTO[] = []
+
+  numeroPazienti : number = 0;
+
+  VisiteSenzaDiagnosi: VisitaDTO[] = [];
 
   get cognomeMedico(): string {
     return this.auth.currentUserValue?.cognome || "";
@@ -48,20 +52,21 @@ export class DashboardMedico implements OnInit{
       this.caricaVisiteOdierne();
     });
 
-
     if (currentUser) {
       forkJoin({
         pren: this.prenotazioneService.getPrenotazioniInAttesaMedico(currentUser.id),
         visit: this.visitaService.getVisiteOdierneByMedico(currentUser.id),
-        paz: this.visitaService.getListaPazientiMedico(currentUser.id),
-        mex: this.messaggioService.getMessaggiNonLetti(currentUser.id)
+        paz: this.visitaService.getNumeroPazientiMedico(currentUser.id),
+        mex: this.messaggioService.getMessaggiNonLetti(currentUser.id),
+        visNoDiagnosi: this.visitaService.getVisiteSenzaDiagnosi(currentUser.id)
 
       }).subscribe({
         next: result => {
           this.prenotazioni = result.pren;
           this.visite = result.visit;
-          this.pazienti = result.paz;
+          this.numeroPazienti = result.paz;
           this.messaggi = result.mex;
+          this.VisiteSenzaDiagnosi = result.visNoDiagnosi;
           this.changeDet.detectChanges();
         },
         error: err => {
@@ -112,5 +117,9 @@ export class DashboardMedico implements OnInit{
         console.error('Errore server', err);
       }
     });
+  }
+
+  apriVisitaSpecifica(idVisita: number){
+    this.route.navigate(['/medico/visite', idVisita]);
   }
 }

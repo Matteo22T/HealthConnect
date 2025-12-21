@@ -11,41 +11,53 @@ import {CalendarioMedico} from './pagine/medico/calendario-medico/calendario-med
 import {PazientiMedico} from './pagine/medico/pazienti-medico/pazienti-medico';
 import {ChatMedico} from './pagine/medico/chat-medico/chat-medico';
 import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
-import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
-import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
-import { TrovaMedicoComponent } from './pagine/paziente/trova-medico/trova-medico';
+import { TrovaMedicoComponent } from './pagine/paziente/components/components-medici/trova-medico/trova-medico';
 import {ProfiloMedico} from './pagine/medico/profilo-medico/profilo-medico';
 import {ImpostazioniMedico} from './pagine/medico/impostazioni-medico/impostazioni-medico';
+import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico/dettaglio-paziente-medico';
+import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impostazioni-paziente';
-import {CalendarioPaziente} from './pagine/paziente/calendario-paziente/calendario-paziente';
+import {CalendarioPaziente} from './pagine/paziente/components/components-calendario/calendario-paziente/calendario-paziente';
+import {guestGuard} from './guards/guest.guard';
+import {AuthGuard} from './guards/auth.guard';
+import {MieiMedici} from './pagine/paziente/components/components-medici/miei-medici/miei-medici';
+import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
+import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
 import { ChatComponent } from './pagine/paziente/chat/chat';
 
 
-
-
 export const routes: Routes = [
-  { path: 'login', component: Login},
-  { path: 'register', component: Register},
+  {
+    path: '',
+    component: Home,
+    pathMatch: 'full',
+    canActivate: [guestGuard]
+  },
 
-  {path: 'admin/dashboard', component: DashboardAdmin},
+  { path: 'login', component: Login, canActivate: [guestGuard]},
+  { path: 'register', component: Register, canActivate: [guestGuard]},
 
-  {path: 'paziente', component: PazienteLayout, children: [
+  {path: 'admin/dashboard', component: DashboardAdmin, canActivate: [AuthGuard], data: {ruolo: "ADMIN"} },
+
+  {path: 'paziente', component: PazienteLayout, canActivate: [AuthGuard], data: {ruolo: "PAZIENTE"} ,children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardPaziente},
       {path: 'ai', component: AssistenteAi},
       {path: 'cartella', component: CartellaClinicaPaziente},
       {path: "trova-medico" , component : TrovaMedicoComponent},
+      {path: 'medici', component: MediciTabs},
+      {path: 'miei-medici', component: MieiMedici},
       {path: 'cartella', component: CartellaClinicaPaziente},
       {path: 'profilo', component: ProfiloPaziente},
       {path: 'impostazioni', component: ImpostazioniPaziente},
-      {path: 'calendario', component: CalendarioPaziente},
+      {path: 'calendario', component: CalendarioTabs},
       { path: 'chat', component: ChatComponent },
     ]},
 
-  {path: 'medico', component: MedicoLayout, children: [
+  {path: 'medico', component: MedicoLayout, canActivate: [AuthGuard], data: {ruolo: "MEDICO"}, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'profilo', component: ProfiloMedico},
       {path: 'impostazioni', component: ImpostazioniMedico},
@@ -59,6 +71,5 @@ export const routes: Routes = [
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
-
-  { path: '**', component: Home}
+  { path: '**', redirectTo:''}
 ];

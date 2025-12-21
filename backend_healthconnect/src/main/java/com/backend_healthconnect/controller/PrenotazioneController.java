@@ -27,6 +27,26 @@ public class PrenotazioneController {
         return ResponseEntity.ok(prenotazioniInAttesa);
     }
 
+    @GetMapping("/paziente/{id}")
+    public ResponseEntity<?> getPrenotazioniInAttesaPaziente(@PathVariable Long id) {
+        List<prenotazioneDTO> prenotazioniInAttesa = prenotazioneService.getPrenotazioniInAttesaByPaziente(id);
+        if (prenotazioniInAttesa == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(prenotazioniInAttesa);
+    }
+
+    @GetMapping("/rifiutate/paziente/{id}")
+    public ResponseEntity<?> getPrenotazioniRifiutatePaziente(@PathVariable Long id) {
+        List<prenotazioneDTO> prenotazioniInAttesa = prenotazioneService.getPrenotazioniRifiutateByPaziente(id);
+        if (prenotazioniInAttesa == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(prenotazioniInAttesa);
+    }
+
+
+
     @PatchMapping("/accetta/{id}")
     public ResponseEntity<Boolean> accettaPrenotazione(@PathVariable Long id){
         boolean risultato = prenotazioneService.accettaPrenotazione(id);

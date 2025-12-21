@@ -38,9 +38,16 @@ export class PazienteNavbar implements OnInit{
     this.isProfileMenuOpen = false;
   }
 
-  logout(){
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  logout() {
+    this.auth.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error("Errore logout", err);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
 }

@@ -91,6 +91,61 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     @Override
+    public List<visitaDTO> getListaVisiteMedicoSenzaDiagnosi(Long id) {
+        String query = "SELECT * FROM visite WHERE medico_id = ? AND diagnosi IS NULL";
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            List<visitaDTO> visite = new ArrayList<>();
+            while (rs.next()){
+                visitaDTO visita = new visitaDTO();
+                visita.setId(rs.getLong("id"));
+
+                utenteDTO medico = utenteDAO.getUtenteById(rs.getLong("medico_id"));
+                visita.setMedico(medico);
+
+                utenteDTO paziente = utenteDAO.getUtenteById(rs.getLong("paziente_id"));
+                visita.setPaziente(paziente);
+
+                prenotazioneDTO prenotazione = prenotazioneDAO.getPrenotazioneById(rs.getLong("prenotazione_id"));
+                visita.setPrenotazione(prenotazione);
+
+                visita.setDiagnosi(rs.getString("diagnosi"));
+                visita.setNoteMedico(rs.getString("note_medico"));
+                Timestamp data = rs.getTimestamp("data_visita");
+                visita.setDataVisita(data.toLocalDateTime());
+                visite.add(visita);
+            }
+            return visite;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int getNumeroPazientiMedico(Long id) {
+        String query = "SELECT COUNT(DISTINCT paziente_id) FROM visite WHERE medico_id = ?";
+
+        try (Connection conn = this.dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la richiesta lista pazienti al db", e);
+        }
+
+        return -1;
+    }
+
+    @Override
     public List<visitaDTO> getVisiteByMedico(Long id) {
         List<visitaDTO> visite = new ArrayList<>();
         String query = "SELECT * FROM visite WHERE medico_id = ?";

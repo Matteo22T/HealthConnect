@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SpecializzazioneDTO} from '../model/specializzazioneDTO';
 import {prenotazioneDTO} from '../model/prenotazioneDTO';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +33,19 @@ export class PrenotazioneService {
     });
   }
 
+  getPrenotazioniInAttesaPaziente(id: number){
+    return this.http.get<prenotazioneDTO[]>(`${this.API_URL}/paziente/${id}`, {
+      withCredentials: true
+    });
+  }
+
+  getPrenotazioniRifiutatePaziente(id: number){
+    return this.http.get<prenotazioneDTO[]>(`${this.API_URL}/rifiutate/paziente/${id}`, {
+      withCredentials: true
+    });
+  }
+
+
   accettaPrenotazione(id: number){
     return this.http.patch<Boolean>(`${this.API_URL}/accetta/${id}`, {}, {withCredentials: true});
   }
@@ -41,4 +54,7 @@ export class PrenotazioneService {
     return this.http.patch<Boolean>(`${this.API_URL}/rifiuta/${id}`, {}, {withCredentials: true});
   }
 
+  prenotaVisita(datiPrenotazione: any): Observable<any> {
+    return this.http.post(`${this.API_URL}/crea`, datiPrenotazione, {withCredentials: true, responseType: 'text' });
+  }
 }
