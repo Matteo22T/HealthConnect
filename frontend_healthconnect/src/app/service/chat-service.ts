@@ -8,6 +8,7 @@ export interface ChatMessaggioDTO {
   destinatario_id: number;
   testo: string;
   data_invio?: string;
+  letto?: boolean;
 }
 
 @Injectable({

@@ -53,6 +53,7 @@ public class ChatDAOpostgres implements ChatDAO {
                         msg.setMittente_id(rs.getLong("mittente_id"));
                         msg.setDestinatario_id(rs.getLong("destinatario_id"));
                         msg.setTesto(rs.getString("testo"));
+                        msg.setLetto(rs.getBoolean("letto"));
 
                         Timestamp ts = rs.getTimestamp("data_invio");
                         if(ts != null) {
