@@ -23,7 +23,8 @@ export class Register implements OnInit {
   registerForm!: FormGroup;
   isMedico: boolean = false;
   errorMessage: string = '';
-  specializzazioni: SpecializzazioneDTO[] = [{ id:0, nome: 'Cardiologia'}];
+  specializzazioni: SpecializzazioneDTO[] = [{id: 0, nome: 'Cardiologia'}];
+  isLoading = false;
 
   @ViewChild('addressInput') addressInput: ElementRef | undefined;
 
@@ -34,10 +35,11 @@ export class Register implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-      this.registerForm = this.fb.group({
+    this.registerForm = this.fb.group({
       nome: ['', Validators.required],
       cognome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z]{2,63})+$")]],
@@ -94,7 +96,7 @@ export class Register implements OnInit {
     try {
       const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
         types: ['address'],
-        componentRestrictions: { country: 'it' }
+        componentRestrictions: {country: 'it'}
       });
 
       autocomplete.addListener('place_changed', () => {
@@ -114,7 +116,8 @@ export class Register implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const payload = { ...this.registerForm.value };
+      this.isLoading = true;
+      const payload = {...this.registerForm.value};
 
       // Rimuovi i campi medico se è paziente
       if (!this.isMedico) {
@@ -129,23 +132,46 @@ export class Register implements OnInit {
       }
 
       this.authService.register(payload).subscribe({
-        next: (res) => {
-          console.log('Registrazione OK', res);
+        next: () => {
+          this.isLoading = false;
+          this.cdr.detectChanges()
+          // Registrazione avvenuta con successo
           this.router.navigate(['/login']);
         },
         error: (err) => {
-          console.error(err);
-          this.errorMessage = err.error?.message || 'Errore durante la registrazione';
-          this.cdr.detectChanges();
+          this.isLoading = false;
+          this.cdr.detectChanges()
+          console.error('Errore registrazione:', err);
+
+          // Gestione dinamica dell'errore dal Backend
+          const backendError = err.error;
+
+          // 1. Se il backend restituisce una stringa semplice (es. "Email già esistente")
+          if (typeof backendError === 'string') {
+            this.errorMessage = backendError;
+          }
+            // 2. Se il backend restituisce un oggetto JSON (es. Spring Boot standard)
+          // Cerca proprietà comuni come 'message' o 'error'
+          else if (backendError && typeof backendError === 'object') {
+            this.errorMessage = backendError.message || backendError.error || 'Errore durante la registrazione';
+          }
+          // 3. Fallback sul messaggio di stato HTTP se non c'è body
+          else {
+            this.errorMessage = `Errore del server (${err.status}): Riprova più tardi.`;
+          }
+
+          // Segna il form come "toccato" per evidenziare eventuali campi non validi se necessario
+          this.registerForm.markAllAsTouched();
         }
       });
+
     } else {
       this.registerForm.markAllAsTouched();
       this.errorMessage = 'Completa tutti i campi obbligatori';
-      this.cdr.detectChanges();
     }
   }
 }
+
 
 // Funzione validatrice personalizzata
 export function ageValidator(minAge: number): ValidatorFn {

@@ -253,8 +253,20 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="registerForm.invalid">
-          Registrati
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="btn-login" [disabled]="registerForm.invalid || isLoading">
+
+          <ng-container *ngIf="isLoading; else defaultText">
+            <span class="spinner"></span> Attendere...
+          </ng-container>
+
+          <ng-template #defaultText>
+            Registrati
+          </ng-template>
+
         </button>
       </form>
 

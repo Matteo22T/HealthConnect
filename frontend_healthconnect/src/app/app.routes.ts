@@ -20,15 +20,12 @@ import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico
 import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impostazioni-paziente';
-import {CalendarioPaziente} from './pagine/paziente/components/components-calendario/calendario-paziente/calendario-paziente';
 import {guestGuard} from './guards/guest.guard';
 import {AuthGuard} from './guards/auth.guard';
 import {MieiMedici} from './pagine/paziente/components/components-medici/miei-medici/miei-medici';
 import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
-import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supporto/chat-supporto';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
-import {Servizi} from './pagine/footer/servizi/servizi';
 
 
 
@@ -74,6 +71,5 @@ export const routes: Routes = [
     ]},
 
   {path: 'chi-siamo', component: ChiSiamo},
-  {path: 'servizi', component:Servizi},
   { path: '**', redirectTo:''}
 ];

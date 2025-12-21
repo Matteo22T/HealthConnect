@@ -1,1 +1,253 @@
-<p>dashboard-admin works!</p>
+<div class="admin-dashboard">
+
+  <header class="dashboard-header">
+    <div class="header-text">
+      <h1>Dashboard <span class="highlight">Amministratore</span></h1>
+      <p>Benvenuto, Super Admin. Ecco la situazione attuale della piattaforma.</p>
+    </div>
+    <div class="header-actions">
+      <button class="action-btn primary">
+        <span class="icon">➕</span> Aggiungi Medico
+      </button>
+      <button class="action-btn secondary">
+        <span class="icon">⚙️</span> Impostazioni
+      </button>
+    </div>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="icon-box blue">👥</div>
+      <div class="stat-info">
+        <h3>Pazienti Totali</h3>
+        <p class="number">1,240</p>
+        <span class="trend positive">↑ 12% questo mese</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon-box green">👨‍⚕️</div>
+      <div class="stat-info">
+        <h3>Medici Attivi</h3>
+        <p class="number">48</p>
+        <span class="trend positive">↑ 2 nuovi questa sett.</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon-box purple">📅</div>
+      <div class="stat-info">
+        <h3>Visite Oggi</h3>
+        <p class="number">86</p>
+        <span class="trend neutral">Stabile</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon-box red">⚠️</div>
+      <div class="stat-info">
+        <h3>Segnalazioni</h3>
+        <p class="number">3</p>
+        <span class="trend negative">Da risolvere</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sezione Medici in Attesa di Approvazione -->
+  <div class="content-panel approval-panel">
+    <div class="panel-header">
+      <h2>🩺 Medici in Attesa di Approvazione</h2>
+      <span class="badge-count">3 richieste</span>
+    </div>
+    <div class="approval-list">
+      <div class="approval-card">
+        <div class="approval-info">
+          <div class="user-cell">
+            <div class="avatar doc">DV</div>
+            <div class="user-details">
+              <span class="user-name">Dr.sa Laura Verdi</span>
+              <span class="user-specialty">Cardiologo</span>
+            </div>
+          </div>
+          <div class="registration-meta">
+            <span class="meta-item">📧 l.verdi@email.com</span>
+            <span class="meta-item">📱 +39 345 678 9012</span>
+            <span class="meta-item">📅 Iscritto il 19 Dic 2025</span>
+          </div>
+        </div>
+        <div class="approval-actions">
+          <button class="approve-btn" onclick="approveDoctor('Dr.sa Laura Verdi')">
+            ✓ Approva
+          </button>
+          <button class="reject-btn" onclick="rejectDoctor('Dr.sa Laura Verdi')">
+            ✗ Rifiuta
+          </button>
+        </div>
+      </div>
+
+      <div class="approval-card">
+        <div class="approval-info">
+          <div class="user-cell">
+            <div class="avatar doc">MB</div>
+            <div class="user-details">
+              <span class="user-name">Dr. Marco Bianchi</span>
+              <span class="user-specialty">Dermatologo</span>
+            </div>
+          </div>
+          <div class="registration-meta">
+            <span class="meta-item">📧 m.bianchi@email.com</span>
+            <span class="meta-item">📱 +39 333 456 7890</span>
+            <span class="meta-item">📅 Iscritto il 18 Dic 2025</span>
+          </div>
+        </div>
+        <div class="approval-actions">
+          <button class="approve-btn" onclick="approveDoctor('Dr. Marco Bianchi')">
+            ✓ Approva
+          </button>
+          <button class="reject-btn" onclick="rejectDoctor('Dr. Marco Bianchi')">
+            ✗ Rifiuta
+          </button>
+        </div>
+      </div>
+
+      <div class="approval-card">
+        <div class="approval-info">
+          <div class="user-cell">
+            <div class="avatar doc">GF</div>
+            <div class="user-details">
+              <span class="user-name">Dr.sa Giulia Ferrari</span>
+              <span class="user-specialty">Pediatra</span>
+            </div>
+          </div>
+          <div class="registration-meta">
+            <span class="meta-item">📧 g.ferrari@email.com</span>
+            <span class="meta-item">📱 +39 320 123 4567</span>
+            <span class="meta-item">📅 Iscritto il 17 Dic 2025</span>
+          </div>
+        </div>
+        <div class="approval-actions">
+          <button class="approve-btn" onclick="approveDoctor('Dr.sa Giulia Ferrari')">
+            ✓ Approva
+          </button>
+          <button class="reject-btn" onclick="rejectDoctor('Dr.sa Giulia Ferrari')">
+            ✗ Rifiuta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content-grid">
+
+    <div class="content-panel users-panel">
+      <div class="panel-header">
+        <h2>Ultimi Utenti Iscritti</h2>
+        <a href="#" class="view-all">Vedi tutti</a>
+      </div>
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+          <tr>
+            <th>Utente</th>
+            <th>Ruolo</th>
+            <th>Data Iscrizione</th>
+            <th>Stato</th>
+            <th>Azioni</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="avatar">M</div>
+                <span>Mario Rossi</span>
+              </div>
+            </td>
+            <td><span class="badge patient">Paziente</span></td>
+            <td>20 Dic 2025</td>
+            <td><span class="status active">Attivo</span></td>
+            <td><button class="icon-btn">⋮</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="avatar doc">A</div>
+                <span>Dr. Andrea Neri</span>
+              </div>
+            </td>
+            <td><span class="badge doctor">Medico</span></td>
+            <td>15 Dic 2025</td>
+            <td><span class="status active">Attivo</span></td>
+            <td><button class="icon-btn">⋮</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="avatar">L</div>
+                <span>Luca Bianchi</span>
+              </div>
+            </td>
+            <td><span class="badge patient">Paziente</span></td>
+            <td>18 Dic 2025</td>
+            <td><span class="status active">Attivo</span></td>
+            <td><button class="icon-btn">⋮</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-panel activity-panel">
+      <div class="panel-header">
+        <h2>Log Sistema</h2>
+      </div>
+      <ul class="activity-list">
+        <li class="activity-item">
+          <span class="dot blue"></span>
+          <div class="activity-text">
+            <strong>Nuovo Medico registrato</strong>
+            <span class="time">10 minuti fa</span>
+          </div>
+        </li>
+        <li class="activity-item">
+          <span class="dot green"></span>
+          <div class="activity-text">
+            <strong>Backup Database completato</strong>
+            <span class="time">2 ore fa</span>
+          </div>
+        </li>
+        <li class="activity-item">
+          <span class="dot red"></span>
+          <div class="activity-text">
+            <strong>Errore API Pagamenti</strong>
+            <span class="time">5 ore fa</span>
+          </div>
+        </li>
+        <li class="activity-item">
+          <span class="dot purple"></span>
+          <div class="activity-text">
+            <strong>150 Email inviate</strong>
+            <span class="time">Ieri, 18:30</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    function approveDoctor(name) {
+      if(confirm(`Vuoi approvare ${name}?`)) {
+        alert(`✓ ${name} è stato approvato con successo!`);
+        // Qui andrà la chiamata API per approvare il medico
+      }
+    }
+
+    function rejectDoctor(name) {
+      if(confirm(`Sei sicuro di voler rifiutare ${name}?`)) {
+        alert(`✗ ${name} è stato rifiutato.`);
+        // Qui andrà la chiamata API per rifiutare il medico
+      }
+    }
+  </script>
+</div>
