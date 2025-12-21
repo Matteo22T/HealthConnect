@@ -1,8 +1,10 @@
 package com.backend_healthconnect.controller;
 
 import com.backend_healthconnect.model.medicoCardDTO;
+import com.backend_healthconnect.model.MedicoDTO;
 import com.backend_healthconnect.service.RicercaMedici;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +28,15 @@ public class MedicoController {
         String safeSpec = (spec == null || spec.equals("undefined") || spec.equals("Tutte")) ? "" : spec;
 
         return ricercaMedici.eseguiRicerca(safeQuery, safeSpec);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicoDTO> getMedicoById(@PathVariable Long id) {
+        MedicoDTO medico = ricercaMedici.trovaPerId(id);
+
+        if (medico != null) {
+            return ResponseEntity.ok(medico);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

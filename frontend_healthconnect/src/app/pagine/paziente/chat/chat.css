@@ -1,0 +1,103 @@
+/* --- CONTENITORE PRINCIPALE --- */
+.whatsapp-container {
+  /* Assumiamo che la tua Navbar in alto sia alta circa 70-80px */
+  margin-top: 80px;
+
+  /* CALCOLO MAGICO: Altezza schermo (100vh) MENO la navbar (80px) */
+  height: calc(100vh - 85px);
+
+  width: 100%;
+  display: flex;
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', sans-serif;
+
+  /* IMPEDISCE ALLA PAGINA INTERA DI SCROLLARE */
+  overflow: hidden;
+}
+
+/* --- SIDEBAR (Sinistra) --- */
+.sidebar {
+  width: 350px;
+  background-color: white;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 15px;
+  background-color: #f0f2f5;
+  border-bottom: 1px solid #ddd;
+  height: 60px; /* Altezza fissa header */
+  display: flex; align-items: center;
+}
+
+.contacts-list {
+  flex: 1; /* Occupa tutto lo spazio rimanente */
+  overflow-y: auto; /* SCROLLA SOLO LA LISTA, NON LA PAGINA */
+}
+
+/* --- CHAT AREA (Destra) --- */
+.main-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #efeae2;
+  position: relative;
+}
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Importante per riempire il genitore */
+}
+
+.chat-header {
+  height: 60px; /* Stessa altezza header sidebar */
+  background-color: #f0f2f5;
+  padding: 0 15px;
+  display: flex; align-items: center;
+  border-bottom: 1px solid #d1d7db;
+}
+
+/* QUESTO È IL PUNTO CRITICO PER I MESSAGGI */
+.chat-body {
+  flex: 1; /* Prende tutto lo spazio tra header e footer */
+  padding: 20px 5%;
+  overflow-y: auto; /* SCROLLA SOLO I MESSAGGI */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-footer {
+  height: 70px; /* Altezza fissa footer */
+  background-color: #f0f2f5;
+  padding: 10px 15px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* --- STILI GENERICI --- */
+.contact-item {
+  padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; display: flex; align-items: center;
+}
+.contact-item:hover { background-color: #f5f6f6; }
+.contact-item.active { background-color: #e9edef; }
+
+.avatar-circle {
+  width: 45px; height: 45px; background: #dfe5e7; color: #54656f;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: bold; margin-right: 15px;
+}
+
+.message-bubble {
+  max-width: 65%; padding: 8px 12px; border-radius: 8px; font-size: 0.95rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative;
+}
+.sent { align-self: flex-end; background-color: #d9fdd3; }
+.received { align-self: flex-start; background-color: white; }
+
+.chat-footer input {
+  flex: 1; padding: 10px 15px; border-radius: 8px; border: none; outline: none;
+}
+.btn-send { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #54656f; }

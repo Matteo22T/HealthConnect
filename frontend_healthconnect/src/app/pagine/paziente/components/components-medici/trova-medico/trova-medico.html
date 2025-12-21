@@ -38,7 +38,7 @@
         <p class="address">{{ medico.indirizzo_studio || medico.indirizzo }}</p>
       </div>
       <div class="actions-wrapper">
-        <button class="btn-prenota">Invia messaggio</button>
+        <button class="btn-prenota" (click)="contattaMedico(medico.id)">Invia messaggio</button>
         <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico)">Prenota visita</button>
       </div>
     </div>
