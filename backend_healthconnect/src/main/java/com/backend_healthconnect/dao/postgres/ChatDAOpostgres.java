@@ -29,7 +29,6 @@ public class ChatDAOpostgres implements ChatDAO {
                 "OR (mittente_id = ? AND destinatario_id = ?) ORDER BY data_invio ASC";
 
         try (Connection conn = dataSource.getConnection()) {
-            // È buona norma usare una transazione per assicurarsi che entrambe le operazioni avvengano correttamente
             conn.setAutoCommit(false);
 
             try {
@@ -54,8 +53,6 @@ public class ChatDAOpostgres implements ChatDAO {
                         msg.setMittente_id(rs.getLong("mittente_id"));
                         msg.setDestinatario_id(rs.getLong("destinatario_id"));
                         msg.setTesto(rs.getString("testo"));
-                        // Ricordati di aggiungere il campo letto al DTO se vuoi mostrarlo nel frontend
-                        // msg.setLetto(rs.getBoolean("letto"));
 
                         Timestamp ts = rs.getTimestamp("data_invio");
                         if(ts != null) {
@@ -65,9 +62,9 @@ public class ChatDAOpostgres implements ChatDAO {
                     }
                 }
 
-                conn.commit(); // Confermo le operazioni
+                conn.commit();
             } catch (SQLException e) {
-                conn.rollback(); // In caso di errore annullo tutto
+                conn.rollback();
                 throw e;
             }
         } catch (SQLException e) {

@@ -9,7 +9,6 @@ import {MedicoLayout} from './pagine/medico/medico-layout/medico-layout';
 import {PazienteLayout} from './pagine/paziente/paziente-layout/paziente-layout';
 import {CalendarioMedico} from './pagine/medico/calendario-medico/calendario-medico';
 import {PazientiMedico} from './pagine/medico/pazienti-medico/pazienti-medico';
-import {ChatMedico} from './pagine/medico/chat-medico/chat-medico';
 import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
