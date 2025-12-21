@@ -18,18 +18,15 @@ export class ChatService {
 
   constructor(private http: HttpClient) { }
 
-  // 1. Scarica la chat singola tra due persone
   getStoria(idMio: number, idAltro: number): Observable<ChatMessaggioDTO[]> {
-    return this.http.get<ChatMessaggioDTO[]>(`${this.apiUrl}/storia/${idMio}/${idAltro}`);
+    return this.http.get<ChatMessaggioDTO[]>(`${this.apiUrl}/storia/${idMio}/${idAltro}`, { withCredentials: true });
   }
 
-  // 2. Invia messaggio
   inviaMessaggio(msg: ChatMessaggioDTO): Observable<any> {
-    return this.http.post(`${this.apiUrl}/invia`, msg, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/invia`, msg, { responseType: 'text' , withCredentials: true });
   }
 
-  // 👇 3. NUOVO METODO CHE MANCAVA (Risolve errore TS2339)
   getContatti(idMio: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/contatti/${idMio}`);
+    return this.http.get<any[]>(`${this.apiUrl}/contatti/${idMio}`, { withCredentials: true });
   }
 }

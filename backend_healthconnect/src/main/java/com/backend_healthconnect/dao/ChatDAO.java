@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ChatDAO {
     List<ChatMessaggioDTO> getStoricoChat(Long utente1, Long utente2);
-    List<MedicoDTO> getMediciConChat(Long mioId);
+    List<MedicoDTO> getContatti(Long mioId);
     boolean salvaMessaggio(ChatMessaggioDTO messaggio);
 }

@@ -3,27 +3,27 @@
   <div class="sidebar" style="background-color: white; width: 350px; display: flex; flex-direction: column;">
 
     <div class="sidebar-header" style="padding: 15px; border-bottom: 1px solid #ddd;">
-      <h3 style="color: black;">I tuoi Medici ({{ listaMedici.length }})</h3>
+      <h3 style="color: black;">I tuoi Medici ({{ listaContatti.length }})</h3>
     </div>
 
     <div class="contacts-list" style="flex: 1; overflow-y: auto;">
 
-      <div *ngIf="listaMedici.length === 0" style="padding: 20px; color: red;">
+      <div *ngIf="listaContatti.length === 0" style="padding: 20px; color: red;">
         Caricamento in corso o lista vuota...
       </div>
 
-      <div *ngFor="let medico of listaMedici"
+      <div *ngFor="let contatto of listaContatti"
            class="contact-item"
-           (click)="selezionaMedico(medico)"
+           (click)="selezionaContatto(contatto)"
            style="padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px;">
 
         <div style="width: 40px; height: 40px; background: #075e54; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold;">
-          {{ medico.nome ? medico.nome.charAt(0) : '?' }}
+          {{ contatto.nome ? contatto.nome.charAt(0) : '?' }}
         </div>
 
         <div style="display: flex; flex-direction: column;">
           <h4 style="margin: 0; color: black; font-weight: bold;">
-            Dr. {{ medico.nome }} {{ medico.cognome }}
+            Dr. {{ contatto.nome }} {{ contatto.cognome }}
           </h4>
           <span style="color: grey; font-size: 0.8rem;">Clicca per chattare</span>
         </div>
@@ -36,26 +36,26 @@
 
   <div class="main-chat">
 
-    <div *ngIf="!medicoSelezionato" class="welcome-screen">
+    <div *ngIf="!contattoSelezionato" class="welcome-screen">
       <div class="welcome-content">
         <h2>HealthConnect Web</h2>
         <p>Seleziona un medico dalla lista per iniziare a chattare.</p>
       </div>
     </div>
 
-    <div *ngIf="medicoSelezionato" class="chat-wrapper">
+    <div *ngIf="contattoSelezionato" class="chat-wrapper">
 
       <div class="chat-header">
         <div class="avatar-circle">
-          {{ medicoSelezionato.nome.charAt(0) }}{{ medicoSelezionato.cognome.charAt(0) }}
+          {{ contattoSelezionato.nome.charAt(0) }}{{ contattoSelezionato.cognome.charAt(0) }}
         </div>
-        <h3>Dr. {{ medicoSelezionato.nome }} {{ medicoSelezionato.cognome }}</h3>
+        <h3>Dr. {{ contattoSelezionato.nome }} {{ contattoSelezionato.cognome }}</h3>
       </div>
 
       <div class="chat-body" #scrollContainer>
         <div *ngFor="let msg of messaggi"
              class="message-bubble"
-             [ngClass]="{'sent': msg.mittente_id === pazienteId, 'received': msg.mittente_id !== pazienteId}">
+             [ngClass]="{'sent': msg.mittente_id === utenteCorrenteid, 'received': msg.mittente_id !== utenteCorrenteid}">
 
           <div class="bubble-content">
             {{ msg.testo }}

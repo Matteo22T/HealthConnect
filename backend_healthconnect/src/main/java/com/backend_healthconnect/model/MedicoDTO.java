@@ -11,5 +11,5 @@ public class MedicoDTO {
     private Long id;
     private String nome;
     private String cognome;
-    private String specializzazione; // Al frontend mandiamo il testo (es. "Cardiologia")
+    private String specializzazione;
 }

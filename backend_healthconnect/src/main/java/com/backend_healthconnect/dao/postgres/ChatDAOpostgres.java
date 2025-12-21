@@ -18,31 +18,57 @@ public class ChatDAOpostgres implements ChatDAO {
     private DataSource dataSource;
 
     @Override
-    public List<ChatMessaggioDTO> getStoricoChat(Long id1, Long id2) {
+    public List<ChatMessaggioDTO> getStoricoChat(Long idUtenteCorrente, Long idInterlocutore) {
         List<ChatMessaggioDTO> storico = new ArrayList<>();
-        String query = "SELECT * FROM messaggi WHERE (mittente_id = ? AND destinatario_id = ?) OR (mittente_id = ? AND destinatario_id = ?) ORDER BY data_invio ASC";
 
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        // Query 1: Aggiorna lo stato dei messaggi ricevuti (da idInterlocutore a idUtenteCorrente)
+        String updateQuery = "UPDATE messaggi SET letto = true WHERE mittente_id = ? AND destinatario_id = ? AND letto = false";
 
-            stmt.setLong(1, id1);
-            stmt.setLong(2, id2);
-            stmt.setLong(3, id2);
-            stmt.setLong(4, id1);
+        // Query 2: Recupera lo storico (invariata)
+        String selectQuery = "SELECT * FROM messaggi WHERE (mittente_id = ? AND destinatario_id = ?) " +
+                "OR (mittente_id = ? AND destinatario_id = ?) ORDER BY data_invio ASC";
 
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                ChatMessaggioDTO msg = new ChatMessaggioDTO();
-                msg.setId(rs.getLong("id"));
-                msg.setMittente_id(rs.getLong("mittente_id"));
-                msg.setDestinatario_id(rs.getLong("destinatario_id"));
-                msg.setTesto(rs.getString("testo"));
+        try (Connection conn = dataSource.getConnection()) {
+            // È buona norma usare una transazione per assicurarsi che entrambe le operazioni avvengano correttamente
+            conn.setAutoCommit(false);
 
-                Timestamp ts = rs.getTimestamp("data_invio");
-                if(ts != null) {
-                    msg.setData_invio(ts.toLocalDateTime());
+            try {
+                // 1. Eseguo l'UPDATE
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+                    updateStmt.setLong(1, idInterlocutore);    // Chi ha inviato il messaggio
+                    updateStmt.setLong(2, idUtenteCorrente);   // Chi sta leggendo ora
+                    updateStmt.executeUpdate();
                 }
-                storico.add(msg);
+
+                // 2. Eseguo la SELECT
+                try (PreparedStatement selectStmt = conn.prepareStatement(selectQuery)) {
+                    selectStmt.setLong(1, idUtenteCorrente);
+                    selectStmt.setLong(2, idInterlocutore);
+                    selectStmt.setLong(3, idInterlocutore);
+                    selectStmt.setLong(4, idUtenteCorrente);
+
+                    ResultSet rs = selectStmt.executeQuery();
+                    while (rs.next()) {
+                        ChatMessaggioDTO msg = new ChatMessaggioDTO();
+                        msg.setId(rs.getLong("id"));
+                        msg.setMittente_id(rs.getLong("mittente_id"));
+                        msg.setDestinatario_id(rs.getLong("destinatario_id"));
+                        msg.setTesto(rs.getString("testo"));
+                        // Ricordati di aggiungere il campo letto al DTO se vuoi mostrarlo nel frontend
+                        // msg.setLetto(rs.getBoolean("letto"));
+
+                        Timestamp ts = rs.getTimestamp("data_invio");
+                        if(ts != null) {
+                            msg.setData_invio(ts.toLocalDateTime());
+                        }
+                        storico.add(msg);
+                    }
+                }
+
+                conn.commit(); // Confermo le operazioni
+            } catch (SQLException e) {
+                conn.rollback(); // In caso di errore annullo tutto
+                throw e;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +92,7 @@ public class ChatDAOpostgres implements ChatDAO {
     }
 
     @Override
-    public List<MedicoDTO> getMediciConChat(Long mioId) {
+    public List<MedicoDTO> getContatti(Long mioId) {
         List<MedicoDTO> contatti = new ArrayList<>();
 
         // Query sulla tabella UTENTI (quella che esiste davvero)

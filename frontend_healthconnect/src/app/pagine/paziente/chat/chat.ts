@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router'; // 👈 IMPORTANTE
-import { ChatService, ChatMessaggioDTO } from '../../../service/chat.service';
-import { MedicoService } from '../../../service/medico'; // 👈 IMPORTANTE
+import { ActivatedRoute } from '@angular/router';
+import { ChatService, ChatMessaggioDTO } from '../../../service/chat-service';
+import { MedicoService } from '../../../service/medico-service';
 
 @Component({
   selector: 'app-chat',
@@ -14,9 +14,9 @@ import { MedicoService } from '../../../service/medico'; // 👈 IMPORTANTE
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
 
-  pazienteId!: number;
-  listaMedici: any[] = [];
-  medicoSelezionato: any = null;
+  utenteCorrenteid!: number;
+  listaContatti: any[] = [];
+  contattoSelezionato: any = null;
   messaggi: ChatMessaggioDTO[] = [];
   nuovoMessaggio: string = '';
 
@@ -24,9 +24,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private chatService: ChatService,
-    private medicoService: MedicoService, // 👈 Serve per scaricare info medico nuovo
+    private medicoService: MedicoService,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute // 👈 Serve per leggere l'URL
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +34,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
      if (userString) {
        const user = JSON.parse(userString);
-       this.pazienteId = user.id;
-       console.log("✅ Login confermato. ID Utente:", this.pazienteId);
+       this.utenteCorrenteid = user.id;
+       console.log("✅ Login confermato. ID Utente:", this.utenteCorrenteid);
        this.caricaContatti();
      } else {
        console.error("❌ Errore: Nessun utente loggato.");
@@ -47,11 +47,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   caricaContatti() {
-    this.chatService.getContatti(this.pazienteId).subscribe({
+    this.chatService.getContatti(this.utenteCorrenteid).subscribe({
       next: (data: any) => {
-        this.listaMedici = data;
+        this.listaContatti = data;
 
-        // 👇 LOGICA NUOVA: Controllo se arrivo da "Trova Medico"
         this.controllaParametriUrl();
 
         this.cd.detectChanges();
@@ -70,11 +69,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.log("🔗 Richiesta chat con medico ID:", id);
 
         // 1. Cerco se il medico è già nella lista contatti
-        const medicoGiaInLista = this.listaMedici.find(m => m.id === id);
+        const medicoGiaInLista = this.listaContatti.find(m => m.id === id);
 
         if (medicoGiaInLista) {
           // CASO A: Ci ho già parlato, lo seleziono subito
-          this.selezionaMedico(medicoGiaInLista);
+          this.selezionaContatto(medicoGiaInLista);
         } else {
           // CASO B: Chat NUOVA. Devo scaricare i suoi dati dal MedicoService
           console.log("🆕 Nuova chat! Scarico dati medico...");
@@ -89,8 +88,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
               };
 
               // Lo aggiungo in cima alla lista provvisoriamente
-              this.listaMedici.unshift(nuovoContatto);
-              this.selezionaMedico(nuovoContatto);
+              this.listaContatti.unshift(nuovoContatto);
+              this.selezionaContatto(nuovoContatto);
             },
             error: (err) => console.error("Impossibile trovare il medico:", err)
           });
@@ -99,19 +98,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  selezionaMedico(medico: any) {
-    if (this.medicoSelezionato && this.medicoSelezionato.id === medico.id) return;
-    console.log(`Cambio chat: apro Dr. ${medico.cognome}`);
+  selezionaContatto(contatto: any) {
+    if (this.contattoSelezionato && this.contattoSelezionato.id === contatto.id) return;
+    console.log(`Cambio chat: apro Dr. ${contatto.cognome}`);
 
-    this.medicoSelezionato = medico;
+    this.contattoSelezionato = contatto;
     this.messaggi = [];
     this.cd.detectChanges();
     this.caricaMessaggi();
   }
 
   caricaMessaggi() {
-    if (!this.medicoSelezionato) return;
-    this.chatService.getStoria(this.pazienteId, this.medicoSelezionato.id).subscribe(data => {
+    if (!this.contattoSelezionato) return;
+    this.chatService.getStoria(this.utenteCorrenteid, this.contattoSelezionato.id).subscribe(data => {
       this.messaggi = data;
       this.cd.detectChanges();
       setTimeout(() => this.scrollToBottom(), 100);
@@ -119,11 +118,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   invia() {
-      if (!this.nuovoMessaggio.trim() || !this.medicoSelezionato) return;
+      if (!this.nuovoMessaggio.trim() || !this.contattoSelezionato) return;
 
       const msg: ChatMessaggioDTO = {
-        mittente_id: this.pazienteId,
-        destinatario_id: this.medicoSelezionato.id,
+        mittente_id: this.utenteCorrenteid,
+        destinatario_id: this.contattoSelezionato.id,
         testo: this.nuovoMessaggio
       };
 
@@ -133,9 +132,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.chatService.inviaMessaggio(msg).subscribe({
           next: (res) => {
               console.log("Messaggio inviato correttamente");
-
-              // 👇 QUESTA È LA RIGA MAGICA CHE MANCAVA!
-              // Dopo aver inviato, ricarichiamo la lista a sinistra così il medico appare.
               this.caricaContatti();
           },
           error: (err) => console.error("Errore invio:", err)
