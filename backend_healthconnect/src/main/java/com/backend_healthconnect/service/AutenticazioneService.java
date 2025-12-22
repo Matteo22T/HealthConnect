@@ -37,10 +37,10 @@ public class AutenticazioneService {
             throw new IllegalArgumentException("Email già registrata!");
         }
 
-        boolean isReale = seriviceEmail.emailReale(utente.getEmail());
-        if (!isReale) {
-            throw new IllegalArgumentException("L'indirizzo email inserito non è valido o è inesistente.");
-        }
+//        boolean isReale = seriviceEmail.emailReale(utente.getEmail());
+//        if (!isReale) {
+//            throw new IllegalArgumentException("L'indirizzo email inserito non è valido o è inesistente.");
+//        }
 
         String cryptedPassword = passwordEncoder.encode(utente.getPassword());
         utente.setPassword(cryptedPassword);
