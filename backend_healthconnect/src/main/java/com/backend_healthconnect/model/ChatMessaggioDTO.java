@@ -15,4 +15,5 @@ public class ChatMessaggioDTO {
     private Long destinatario_id;
     private String testo;
     private LocalDateTime data_invio;
+    private boolean letto;
 }
