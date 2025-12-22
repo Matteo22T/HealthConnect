@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  booleanAttribute
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -123,7 +131,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       const msg: ChatMessaggioDTO = {
         mittente_id: this.utenteCorrenteid,
         destinatario_id: this.contattoSelezionato.id,
-        testo: this.nuovoMessaggio
+        testo: this.nuovoMessaggio,
+        letto: false
       };
 
       // Aggiungo il messaggio subito alla vista (per vederlo istantaneamente)
