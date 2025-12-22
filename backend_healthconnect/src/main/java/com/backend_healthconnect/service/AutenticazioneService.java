@@ -21,6 +21,9 @@ public class AutenticazioneService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ValidazioneEmailService seriviceEmail;
+
 
     public utenteDTO getUtenteByEmail(String email){
         utenteDTO utente = this.utenteDAO.getUtenteByEmail(email);
@@ -33,6 +36,11 @@ public class AutenticazioneService {
         if (this.utenteDAO.getUtenteByEmail(utente.getEmail()) != null){
             throw new IllegalArgumentException("Email già registrata!");
         }
+
+//        boolean isReale = seriviceEmail.emailReale(utente.getEmail());
+//        if (!isReale) {
+//            throw new IllegalArgumentException("L'indirizzo email inserito non è valido o è inesistente.");
+//        }
 
         String cryptedPassword = passwordEncoder.encode(utente.getPassword());
         utente.setPassword(cryptedPassword);
