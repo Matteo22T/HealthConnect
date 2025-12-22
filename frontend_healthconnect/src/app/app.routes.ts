@@ -57,7 +57,6 @@ export const routes: Routes = [
       {path: 'profilo', component: ProfiloPaziente},
       {path: 'impostazioni', component: ImpostazioniPaziente},
       {path: 'calendario', component: CalendarioTabs},
-      { path: 'chat', component: ChatComponent },
     ]},
 
   {path: 'medico', component: MedicoLayout, canActivate: [AuthGuard], data: {ruolo: "MEDICO"}, children: [
@@ -74,6 +73,7 @@ export const routes: Routes = [
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},
 
+  { path: 'chat', component: ChatComponent },
   {path: 'chi-siamo', component: ChiSiamo},
   { path: '**', redirectTo:''}
 ];

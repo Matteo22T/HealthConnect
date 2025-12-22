@@ -18,7 +18,7 @@ public class ValidazioneEmailService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public ValidazioneEmail reputazione(String email) {
-        String url = UriComponentsBuildero
+        String url = UriComponentsBuilder
                 .fromUriString(apiUrl)
                 .queryParam("api_key", apiKey)
                 .queryParam("email", email)
