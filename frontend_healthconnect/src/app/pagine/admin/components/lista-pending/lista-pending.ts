@@ -5,8 +5,6 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 @Component({
   selector: 'app-lista-pending',
   imports: [
-    StatCardAdmin,
-    DatePipe,
     NgIf,
     NgForOf
   ],

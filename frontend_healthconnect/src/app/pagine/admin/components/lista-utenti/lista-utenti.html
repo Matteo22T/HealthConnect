@@ -1,32 +1,54 @@
 <div class="card">
   <div class="card-header">
-    <h2>Ultimi Utenti iscritti</h2>
+    <h2>Ultimi Utenti Iscritti</h2>
     <a href="#" class="view-all" *ngIf="utenti.length > 0" (click)="vaiAgliUtenti($event)">Vedi tutti →</a>
   </div>
 
-
-  <div class="scroll-container" *ngIf="utenti.length > 0">
-
-    <div class="med-item" *ngFor="let ut of utenti">
-
-      <div class="avatar-placeholder emoji-avatar">
-        👨‍⚕️
-      </div>
-
-      <div class="med-info">
-        <h4>{{ ut.cognome }} {{ ut.nome }}</h4>
-      </div>
-
-      <div>
-        {{ ut.ruolo }}
-      </div>
+  <div class="content-panel" *ngIf="utenti.length > 0">
+    <div class="table-responsive">
+      <table class="admin-table">
+        <thead>
+        <tr>
+          <th>Utente</th>
+          <th>Ruolo</th>
+          <th>Data Iscrizione</th>
+          <th>Stato</th>
+          <th class="text-right">Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ut of utenti" class="med-item">
+          <td>
+            <div class="user-cell">
+              <div class="avatar">{{ ut.nome.charAt(0).toUpperCase() }}</div>
+              <div class="user-info">
+                <span class="name">{{ ut.nome + " " + ut.cognome }}</span>
+                <span class="email-sub">{{ ut.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+              <span class="badge" [ngClass]="{'medico': ut.ruolo === 'MEDICO', 'paziente': ut.ruolo === 'PAZIENTE'}">
+                {{ ut.ruolo }}
+              </span>
+          </td>
+          <td>{{ ut.dataCreazione | date:'dd/MM/yyyy' }}</td>
+          <td>
+              <span class="status" [ngClass]="{'active': ut.stato_approvazione === 'APPROVATO', 'pending': ut.stato_approvazione === 'PENDING'}">
+                {{ ut.stato_approvazione }}
+              </span>
+          </td>
+          <td class="text-right">
+            <button class="icon-btn">⋮</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-
   </div>
 
   <div class="empty-state" *ngIf="utenti.length === 0">
-    <div class="empty-icon">🩺</div>
+    <div class="empty-icon">👥</div>
     <p>Non esistono utenti registrati.</p>
   </div>
-
 </div>

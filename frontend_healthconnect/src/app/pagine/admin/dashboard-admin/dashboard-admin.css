@@ -1,25 +1,3 @@
-/* Main Content */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem 3rem;
-}
-
-.welcome-section {
-  margin-bottom: 2.5rem;
-}
-
-.welcome-section h1 {
-  font-size: 2.2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.welcome-section p {
-  color: #666;
-  font-size: 1.1rem;
-}
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -51,19 +29,17 @@
   }
 }
 
-/* Effetto Glow */
 .highlight-glow ::ng-deep > div:first-child {
   animation: glow-animation 2s ease-in-out;
-  border-radius: 8px; /* Adatta al bordo dei tuoi componenti */
+  border-radius: 8px;
 }
 
 @keyframes glow-animation {
   0% {
-    box-shadow: 0 0 0 rgba(63, 81, 181, 0); /* Trasparente */
+    box-shadow: 0 0 0 rgba(63, 81, 181, 0);
     transform: scale(1);
   }
   50% {
-    /* Colore blu/viola acceso - cambialo con il tuo colore primario */
     box-shadow: 0 0 20px rgba(63, 81, 181, 0.6);
     transform: scale(1.02); /* Leggero ingrandimento */
     border: 1px solid #3f51b5;

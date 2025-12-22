@@ -25,7 +25,6 @@ import {StatCardPaziente} from '../../paziente/components/components-dashboard/s
     ListaVisita,
     Messaggi,
     PazientiSenzaDiagnosi,
-    StatCardPaziente
   ],
   templateUrl: './dashboard-medico.html',
   styleUrl: './dashboard-medico.css',

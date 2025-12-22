@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Specializzazioni</h2>
+    <button class="btn-add" (click)="mostraModale()" title="Aggiungi Specializzazione">
+      +
+    </button>
+    <a href="#" class="view-all" *ngIf="specializzazioni.length > 0"></a>
+  </div>
+
+  <div class="content-panel" *ngIf="specializzazioni.length > 0">
+    <div class="table-responsive">
+      <table class="admin-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome Specializzazione</th>
+          <th class="text-right">Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let spec of specializzazioni">
+          <td>
+            <span class="id-badge">#{{spec.id}}</span>
+          </td>
+          <td>
+            <div class="spec-cell">
+              <span class="spec-name">{{spec.nome}}</span>
+            </div>
+          </td>
+          <td class="text-right">
+            <button class="icon-btn">⋮</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="specializzazioni.length === 0">
+    <div class="empty-icon">🩺</div>
+    <p>Non esistono specializzazioni registrate.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-box">
+    <h3>Nuova Specializzazione</h3>
+    <p>Inserisci il nome della nuova specializzazione da aggiungere.</p>
+
+    <div class="form-group">
+      <input
+        type="text"
+        [(ngModel)]="nuovaSpecializzazioneNome"
+        placeholder="Es. Cardiologia"
+        (keyup.enter)="salvaSpecializzazione()"
+      >
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="chiudiModale()">Annulla</button>
+      <button class="btn-save" (click)="salvaSpecializzazione()">Salva</button>
+    </div>
+  </div>
+</div>

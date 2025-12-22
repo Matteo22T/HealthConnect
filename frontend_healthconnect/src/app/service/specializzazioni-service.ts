@@ -17,4 +17,15 @@ export class SpecializzazioniService {
       withCredentials: true
     });
   }
+
+  getAllSpecializzazioni(): Observable<SpecializzazioneDTO[]> {
+    return this.http.get<SpecializzazioneDTO[]>(`${this.API_URL}/admin/all-spec`, {
+      withCredentials: true
+    });
+  }
+
+
+  aggiungiSpecializzazione(nomeSpec: string) {
+    return this.http.post<boolean>(`${this.API_URL}/admin/aggiungi/${nomeSpec}`, {}, {withCredentials: true});
+  }
 }

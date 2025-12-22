@@ -6,13 +6,17 @@ import {VisitaService} from '../../../service/visita-service';
 import {forkJoin} from 'rxjs';
 import {ListaPending} from '../components/lista-pending/lista-pending';
 import {ListaUtenti} from '../components/lista-utenti/lista-utenti';
+import {ListaSpecializzazioni} from '../components/lista-specializzazioni/lista-specializzazioni';
+import {SpecializzazioniService} from '../../../service/specializzazioni-service';
+import {SpecializzazioneDTO} from '../../../model/specializzazioneDTO';
 
 @Component({
   selector: 'app-dashboard-admin',
   imports: [
     StatCardAdmin,
     ListaPending,
-    ListaUtenti
+    ListaUtenti,
+    ListaSpecializzazioni
   ],
   templateUrl: './dashboard-admin.html',
   styleUrl: './dashboard-admin.css',
@@ -23,17 +27,20 @@ export class DashboardAdmin implements OnInit{
   mediciDaApprovare: utenteDTO[] = []
   pazienti: number = 0
   visite: number = 0;
+  specializzazioni: SpecializzazioneDTO[] = []
 
-  constructor(private visiteService: VisitaService ,private utenteService: UtenteService, private cd: ChangeDetectorRef) {}
+  constructor(private specService : SpecializzazioniService, private visiteService: VisitaService ,private utenteService: UtenteService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     forkJoin({
       vis: this.visiteService.getNumeroVisiteOdierne(),
-      ut: this.utenteService.getUtenteAll()
+      ut: this.utenteService.getUtenteAll(),
+      sp: this.specService.getAllSpecializzazioni()
     }).subscribe({
       next: result => {
         this.visite = result.vis;
         this.utenti = result.ut;
+        this.specializzazioni = result.sp;
         this.dividiUtenti();
         this.cd.detectChanges();
       },
@@ -83,10 +90,13 @@ export class DashboardAdmin implements OnInit{
     })
   }
 
-
-
-
-
-
-
+  caricaSpecializzazioni(){
+    this.specService.getAllSpecializzazioni().subscribe({
+      next:(res)=>{
+        this.specializzazioni=res;
+        this.cd.detectChanges();
+      }, error:(err)=>{
+      }
+    })
+  }
 }

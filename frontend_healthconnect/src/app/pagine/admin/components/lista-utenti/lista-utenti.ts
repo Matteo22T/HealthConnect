@@ -1,14 +1,16 @@
 import {Component, Input} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {utenteDTO} from '../../../../model/utenteDTO';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-lista-utenti',
-    imports: [
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    NgForOf,
+    NgIf,
+    DatePipe,
+    NgClass
+  ],
   templateUrl: './lista-utenti.html',
   styleUrl: './lista-utenti.css',
 })
