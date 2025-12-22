@@ -26,5 +26,5 @@ public interface visitaDAO {
 
     Boolean salvaVisita(Long id, visitaDettaglioDTO visita);
     List<visitaDTO> getStoricoVisitePaziente(Long id);
-
+    int getNumeroVisiteOdierne();
 }

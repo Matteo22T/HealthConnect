@@ -48,4 +48,8 @@ public class VisiteService {
     }
 
     public List<visitaDTO> getVisiteByMedico(Long id){ return visitaDAO.getVisiteByMedico(id); }
+
+    public int getNumeroVisiteOdierne(){
+        return visitaDAO.getNumeroVisiteOdierne();
+    }
 }

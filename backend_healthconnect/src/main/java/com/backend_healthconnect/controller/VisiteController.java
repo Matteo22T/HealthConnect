@@ -97,4 +97,10 @@ public class VisiteController {
         List<visitaDTO> storico = visiteService.getStoricoVisite(id);
         return ResponseEntity.ok(storico);
     }
+
+    @GetMapping("/admin/numero_visite_oggi")
+    public ResponseEntity<Integer> getNumeroVisiteOdierne(){
+        int numeroVisite = visiteService.getNumeroVisiteOdierne();
+        return ResponseEntity.ok(numeroVisite);
+    }
 }

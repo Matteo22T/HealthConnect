@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Component</title>
+</head>
+<body>
+
+<header>
+  <a class= "logo" routerLink="/paziente/dashboard"> <img src="/logo_prova.png"> Health<span>Connect</span> </a>
+  <div class="header-right">
+    <nav class="nav-links">
+      <a routerLink="/admin/utenti" routerLinkActive="active-link"><span>👥</span> Utenti</a>
+    </nav>
+    <div class="profile-container">
+      <button (click)="logout()" class="dropdown-item text-danger">
+        🚪 Esci
+      </button>
+    </div>
+  </div>
+</header>
+
+</body>
+</html>

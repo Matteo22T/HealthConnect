@@ -368,4 +368,19 @@ public class visitaDAOpostgres implements visitaDAO {
             throw new RuntimeException("Errore storico visite", e);
         }
     }
+
+    @Override
+    public int getNumeroVisiteOdierne() {
+        String query = "SELECT COUNT(*) FROM visite WHERE data_visita >= CURRENT_DATE AND data_visita < CURRENT_DATE + INTERVAL '1 day'";
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query)){
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta della visita", e);
+        }
+        return 0;
+    }
 }

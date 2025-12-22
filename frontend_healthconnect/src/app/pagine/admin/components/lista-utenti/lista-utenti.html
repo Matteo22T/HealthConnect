@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Ultimi Utenti iscritti</h2>
+    <a href="#" class="view-all" *ngIf="utenti.length > 0" (click)="vaiAgliUtenti($event)">Vedi tutti →</a>
+  </div>
+
+
+  <div class="scroll-container" *ngIf="utenti.length > 0">
+
+    <div class="med-item" *ngFor="let ut of utenti">
+
+      <div class="avatar-placeholder emoji-avatar">
+        👨‍⚕️
+      </div>
+
+      <div class="med-info">
+        <h4>{{ ut.cognome }} {{ ut.nome }}</h4>
+      </div>
+
+      <div>
+        {{ ut.ruolo }}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="empty-state" *ngIf="utenti.length === 0">
+    <div class="empty-icon">🩺</div>
+    <p>Non esistono utenti registrati.</p>
+  </div>
+
+</div>

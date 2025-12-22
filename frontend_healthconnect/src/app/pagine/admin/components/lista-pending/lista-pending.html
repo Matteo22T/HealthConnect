@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Richieste di Approvazione Medico</h2>
+  </div>
+
+  <div class="scroll-container">
+
+    <div *ngIf="mediciDaApprovare.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+      <p>Nessuna richiesta di approvazione in attesa 🎉</p>
+    </div>
+
+    <div class="request-item" *ngFor="let med of mediciDaApprovare">
+      <div class="request-info">
+        <h4>{{ med.nome + " " + " " + med.cognome}}</h4>
+
+        <p>{{med.numero_albo}}</p>
+      </div>
+
+      <div class="request-actions">
+        <button class="btn-icon btn-accept"
+                title="Accetta"
+                (click)="accettaMedico.emit(med.id)">
+          ✓
+        </button>
+
+        <button class="btn-icon btn-reject"
+                title="Rifiuta"
+                (click)="rifiutaMedico.emit(med.id)">
+          ✗
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

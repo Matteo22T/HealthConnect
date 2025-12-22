@@ -207,4 +207,70 @@ public class utenteDAOpostgres implements utenteDAO {
             throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
         }
     }
+
+    @Override
+    public List<utenteDTO> getUtentiAll() {
+        List<utenteDTO> utenti = new ArrayList<>();
+        String query = "SELECT * FROM utenti WHERE ruolo = 'PAZIENTE' OR ruolo = 'MEDICO' ORDER BY created_at DESC";
+        String queryMedico = "SELECT * FROM dettagli_medici WHERE utente_id = ?";
+
+        try (Connection conn = this.dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                utenteDTO utente = new utenteDTO();
+                utente.setId(rs.getLong("id"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPassword(rs.getString("password"));
+                utente.setTelefono(rs.getLong("telefono"));
+                utente.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
+                utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                utente.setDataCreazione(rs.getDate("created_at").toLocalDate());
+                utente.setSesso(rs.getString("sesso"));
+                if (utente.getRuolo() == Ruolo.MEDICO){
+                    try(PreparedStatement stmt2 = conn.prepareStatement(queryMedico)){
+                        stmt2.setLong(1,utente.getId());
+                        ResultSet rs2 = stmt2.executeQuery();
+                        if (rs2.next()){
+                            utente.setSpecializzazione_id(rs2.getLong("specializzazione_id"));
+                            utente.setNumero_albo(rs2.getString("numero_albo"));
+                            utente.setBiografia(rs2.getString("biografia"));
+                            utente.setIndirizzo_studio(rs2.getString("indirizzo_studio"));
+                            utente.setStato_approvazione(StatoApprovazione.valueOf(rs2.getString("stato_approvazione")));
+                        }
+                    }
+                    catch (SQLException e){
+                        throw new RuntimeException(e);
+                    }
+                }
+                utenti.add(utente);
+            }
+            return utenti;
+        } catch (SQLException e){
+            throw  new RuntimeException("Errore durante richiesta lista utenti",e);
+        }
+    }
+
+    @Override
+    public boolean approvaMedico(Long id){
+        String query = "UPDATE dettagli_medici SET stato_approvazione = 'APPROVATO' WHERE utente_id = ?";
+        try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setLong(1, id);
+            return statement.executeUpdate()>0;
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
+        }
+    }
+
+    @Override
+    public boolean rifiutaMedico(Long id) {
+        String query = "UPDATE dettagli_medici SET stato_approvazione = 'RIFIUTATO' WHERE utente_id = ?";
+        try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la modifica del profilo dell'utente", e);
+        }
+    }
 }

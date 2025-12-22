@@ -26,6 +26,7 @@ import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
 import { ChatComponent } from './pagine/paziente/chat/chat';
+import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
 
 
 
@@ -40,7 +41,11 @@ export const routes: Routes = [
   { path: 'login', component: Login, canActivate: [guestGuard]},
   { path: 'register', component: Register, canActivate: [guestGuard]},
 
-  {path: 'admin/dashboard', component: DashboardAdmin, canActivate: [AuthGuard], data: {ruolo: "ADMIN"} },
+  {path: 'admin', component: AdminLayout, canActivate: [AuthGuard], data: {ruolo: "ADMIN"}, children: [
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'dashboard', component: DashboardAdmin}
+    ]
+  },
 
   {path: 'paziente', component: PazienteLayout, canActivate: [AuthGuard], data: {ruolo: "PAZIENTE"} ,children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},

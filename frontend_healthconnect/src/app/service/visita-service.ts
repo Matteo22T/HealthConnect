@@ -89,4 +89,7 @@ export class VisitaService {
     });
   }
 
+  getNumeroVisiteOdierne(){
+    return this.http.get<number>(`${this.API_URL}/admin/numero_visite_oggi`, {withCredentials: true}); }
+
 }

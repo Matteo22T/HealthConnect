@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {Router} from '@angular/router';
+import {utenteDTO} from '../../../../../model/utenteDTO';
 
 @Component({
   selector: 'app-medici-paziente',
@@ -16,7 +17,7 @@ export class MediciPaziente {
   constructor(private router: Router) {}
 
 
-  @Input ({required: true}) medici: any[] = [];
+  @Input ({required: true}) medici: utenteDTO[] = [];
 
   vaiAiMedici(event: Event) {
     event.preventDefault();

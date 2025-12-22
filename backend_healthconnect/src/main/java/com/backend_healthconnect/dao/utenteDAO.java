@@ -12,4 +12,7 @@ public interface utenteDAO {
     utenteDTO modificaProfilo(Long id, String email, Long telefono);
     utenteDTO modificaProfiloProfessionale(Long id, String indirizzo, String biografia);
     void cambiaPassword(Long id, String nuovaPassword);
+    List<utenteDTO> getUtentiAll();
+    boolean approvaMedico(Long id);
+    boolean rifiutaMedico(Long id);
 }

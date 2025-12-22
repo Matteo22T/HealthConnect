@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {utenteDTO} from '../model/utenteDTO';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +16,17 @@ export class UtenteService {
     return this.http.get<utenteDTO>(`${this.API_URL}/${id}`, {
       withCredentials: true
     });
+  }
+
+  getUtenteAll() {
+    return this.http.get<utenteDTO[]>(`${this.API_URL}/admin/all`, {withCredentials: true});
+  }
+
+  approvaMedico(idMedico: number) {
+    return this.http.put<boolean>(`${this.API_URL}/admin/approva-medico/${idMedico}`, {} ,{withCredentials: true});
+  }
+
+  rifiutaMedico(idMedico: number) {
+    return this.http.put<boolean>(`${this.API_URL}/admin/rifiuta-medico/${idMedico}`, {}, {withCredentials: true});
   }
 }

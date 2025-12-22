@@ -35,6 +35,7 @@ public class SecurityConfig {
 
                         // 2. Protezione per Ruolo
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/utenti/admin/**").hasRole("ADMIN")
 
                         //medico
                         .requestMatchers("/api/medico/**").hasRole("MEDICO")
