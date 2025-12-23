@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {utenteDTO} from '../../../../model/utenteDTO';
 import {DatePipe, NgIf, SlicePipe, UpperCasePipe} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-informazioni-paziente-medico',
@@ -14,6 +15,9 @@ import {DatePipe, NgIf, SlicePipe, UpperCasePipe} from '@angular/common';
   styleUrl: './informazioni-paziente-medico.css',
 })
 export class InformazioniPazienteMedico {
+
+  constructor(private router: Router) {
+  }
 
   @Input({ required: true}) utente: utenteDTO | undefined = undefined;
 
@@ -33,5 +37,9 @@ export class InformazioniPazienteMedico {
     }
 
     return eta;
+  }
+  apriChatPaziente(idPaziente: number){
+    this.router.navigate(['/medico/chat'], { queryParams: { medicoId: idPaziente } });
+
   }
 }

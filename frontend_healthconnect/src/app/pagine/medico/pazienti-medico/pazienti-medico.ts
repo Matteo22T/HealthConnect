@@ -10,7 +10,6 @@ import {VisitaService} from '../../../service/visita-service';
   selector: 'app-pazienti-medico',
   imports: [
     FormsModule,
-    RouterLink,
     DatePipe,
     NgIf,
     NgForOf
@@ -60,6 +59,10 @@ export class PazientiMedico implements OnInit{
       const nomeCompleto = (paziente.nome?.toLowerCase() || '') + ' ' + (paziente.cognome?.toLowerCase() || '');
       return nomeCompleto.includes(testo);
     })
+  }
+
+  apriChatPaziente(idPaziente: number){
+    this.router.navigate(['/medico/chat'], { queryParams: { medicoId: idPaziente } });
   }
 
 

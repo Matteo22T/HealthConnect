@@ -47,8 +47,7 @@
         <div class="row-right">
           <a
             class="btn-message link-style"
-            [routerLink]="['/chat', paz.id]"
-            (click)="$event.stopPropagation()"
+            (click)="$event.stopPropagation(); apriChatPaziente(paz.id)"
           >
             💬 Invia Messaggio
           </a>
