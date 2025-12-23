@@ -1,0 +1,95 @@
+<div class="admin-dashboard">
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-header">
+        <h2>Pazienti</h2>
+      </div>
+
+      <div class="content-panel" *ngIf="pazienti.length > 0">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+            <tr>
+              <th>Utente</th>
+              <th>Data Iscrizione</th>
+              <th class="text-right">Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ut of pazienti" class="med-item">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar">{{ ut.nome.charAt(0).toUpperCase() }}</div>
+                  <div class="user-info">
+                    <span class="name">{{ ut.nome + " " + ut.cognome }} </span>
+                    <span class="email-sub">{{ ut.email }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{ ut.dataCreazione | date:'dd/MM/yyyy' }}</td>
+              <td class="text-right">
+                <button class="icon-btn">⋮</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="pazienti.length === 0">
+        <div class="empty-icon">👥</div>
+        <p>Non esistono pazienti registrati.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Medici</h2>
+      </div>
+
+      <div class="content-panel" *ngIf="medici.length > 0">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+            <tr>
+              <th>Utente</th>
+              <th>Data Iscrizione</th>
+              <th>Stato</th>
+              <th class="text-right">Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ut of medici" class="med-item">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar">{{ ut.nome.charAt(0).toUpperCase() }}</div>
+                  <div class="user-info">
+                    <span class="name">{{ ut.nome + " " + ut.cognome }} </span>
+                    <span class="email-sub">{{ ut.email }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{ ut.dataCreazione | date:'dd/MM/yyyy' }}</td>
+              <td>
+              <span class="status" [ngClass]="{'active': ut.stato_approvazione === 'APPROVATO', 'pending': ut.stato_approvazione === 'PENDING'}">
+                {{ ut.stato_approvazione }}
+              </span>
+              </td>
+              <td class="text-right">
+                <button class="icon-btn">⋮</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="medici.length === 0">
+        <div class="empty-icon">👥</div>
+        <p>Non esistono medici registrati.</p>
+      </div>
+    </div>
+
+
+  </div>
+</div>

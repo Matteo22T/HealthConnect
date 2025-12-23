@@ -29,6 +29,7 @@ import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supp
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
 import { ChatComponent } from './pagine/paziente/chat/chat';
 import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
+import {Utenti} from './pagine/admin/utenti/utenti';
 
 
 
@@ -45,7 +46,8 @@ export const routes: Routes = [
 
   {path: 'admin', component: AdminLayout, canActivate: [AuthGuard], data: {ruolo: "ADMIN"}, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-      {path: 'dashboard', component: DashboardAdmin}
+      {path: 'dashboard', component: DashboardAdmin},
+      {path: 'utenti', component: Utenti}
     ]
   },
 

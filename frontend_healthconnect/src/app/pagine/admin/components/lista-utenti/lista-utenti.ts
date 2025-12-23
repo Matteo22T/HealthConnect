@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {utenteDTO} from '../../../../model/utenteDTO';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-lista-utenti',
@@ -9,20 +9,17 @@ import {ActivatedRoute, Router} from '@angular/router';
     NgForOf,
     NgIf,
     DatePipe,
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './lista-utenti.html',
   styleUrl: './lista-utenti.css',
 })
 export class ListaUtenti {
 
-  constructor(private router: Router) {
+  constructor() {
   }
 
   @Input ({required: true}) utenti: utenteDTO[] = [];
 
-  vaiAgliUtenti(event: Event) {
-    event.preventDefault();
-    this.router.navigate(['/paziente/medici'], { queryParams: { tab: 'miei' } });
-  }
 }

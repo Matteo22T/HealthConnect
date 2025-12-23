@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
     <h2>Ultimi Utenti Iscritti</h2>
-    <a href="#" class="view-all" *ngIf="utenti.length > 0" (click)="vaiAgliUtenti($event)">Vedi tutti →</a>
+    <a href="#" class="view-all" *ngIf="utenti.length > 0" routerLink="/admin/utenti">Vedi tutti →</a>
   </div>
 
   <div class="content-panel" *ngIf="utenti.length > 0">
