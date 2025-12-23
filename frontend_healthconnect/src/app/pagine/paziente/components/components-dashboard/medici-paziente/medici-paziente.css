@@ -209,3 +209,125 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+
+/* ========================================= */
+/* STILE MODALE                  */
+/* ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* Sfondo scuro */
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center;     /* Centra verticalmente */
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+.modal-header p {
+  margin: 5px 0 20px 0;
+  color: #666;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Importante per non sbordare */
+  font-family: inherit;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn-cancel {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-confirm {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-confirm:hover {
+  background: #0056b3;
+}
+
+/* Animazione semplice apertura */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.success-content {
+  text-align: center; /* Centra tutto il testo */
+  max-width: 350px;   /* Più piccolo del form */
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #28a745; /* Verde */
+  color: white;
+  border-radius: 50%; /* Cerchio perfetto */
+  font-size: 35px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto; /* Centra l'icona e da spazio sotto */
+}
+
+.success-content h3 {
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.success-content p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 25px;
+}

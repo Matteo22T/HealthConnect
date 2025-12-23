@@ -6,6 +6,7 @@ import {NgForOf, NgIf} from '@angular/common';
 import {MedicoDTO} from '../../../../../model/medicoDTO';
 import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-miei-medici',
@@ -30,12 +31,12 @@ export class MieiMedici implements OnInit{
 
   nuovaPrenotazione = {
     medico_id: 0,
-    paziente_id: 1,
+    paziente_id: 0,
     data_visita: '',
     motivo: ''
   };
 
-  constructor(private prenService: PrenotazioneService,private auth: AuthService, private visitService:VisitaService, private cd: ChangeDetectorRef) {
+  constructor(private prenService: PrenotazioneService,private auth: AuthService, private visitService:VisitaService, private cd: ChangeDetectorRef, private router: Router) {
   }
 
   ngOnInit() {
@@ -44,6 +45,8 @@ export class MieiMedici implements OnInit{
 
     if (currentUser) {
       this.user=currentUser;
+
+      this.nuovaPrenotazione.paziente_id=currentUser.id;
 
       this.visitService.getListaMediciPaziente(currentUser.id).subscribe({
       next: result => {
@@ -109,6 +112,11 @@ export class MieiMedici implements OnInit{
 
   chiudiSuccess() {
     this.showSuccess = false;
+    this.cd.detectChanges()
+  }
+
+  apriChatMedico(idMedico: number){
+    this.router.navigate(['/paziente/chat'], { queryParams: { medicoId: idMedico } });
   }
 
 

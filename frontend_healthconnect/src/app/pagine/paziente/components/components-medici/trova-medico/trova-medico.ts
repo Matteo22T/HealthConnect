@@ -67,8 +67,6 @@ export class TrovaMedicoComponent implements OnInit {
   }
 
   contattaMedico(medicoId: number) {
-      // Naviga verso la chat passando l'ID nell'URL
-      // Esempio risultato: /paziente/chat?medicoId=5
       this.router.navigate(['/paziente/chat'], {
         queryParams: { medicoId: medicoId }
       });
@@ -120,12 +118,13 @@ export class TrovaMedicoComponent implements OnInit {
 
 
     gestisciSuccesso() {
-      this.chiudiModal();       // 1. Chiude il form
-      this.showSuccess = true;  // 2. Attiva il popup verde
-      this.cd.detectChanges();  // 3. FORZA l'aggiornamento della grafica (Fondamentale!)
+      this.chiudiModal();
+      this.showSuccess = true;
+      this.cd.detectChanges();
     }
 
     chiudiSuccess() {
       this.showSuccess = false;
+      this.cd.detectChanges();
     }
 }

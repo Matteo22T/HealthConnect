@@ -16,7 +16,7 @@
         <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
       </div>
 
-      <button class="btn-contact">
+      <button class="btn-contact" (click)="apriChatMedico(med.id)">
         💬
       </button>
       <button class="btn-prenota" (click)="apriPrenotazione(med)">
