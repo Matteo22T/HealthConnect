@@ -63,7 +63,6 @@ export class Register implements OnInit {
     this.specializzazioniService.getAllSpecializzazioni().subscribe({
       next: (res) => {
         this.specializzazioni = res;
-        console.log("Specializzazioni caricate:", this.specializzazioni);
         this.cdr.detectChanges();
       },
       error: (err) => {
