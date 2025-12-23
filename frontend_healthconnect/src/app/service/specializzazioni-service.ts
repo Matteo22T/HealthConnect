@@ -19,7 +19,7 @@ export class SpecializzazioniService {
   }
 
   getAllSpecializzazioni(): Observable<SpecializzazioneDTO[]> {
-    return this.http.get<SpecializzazioneDTO[]>(`${this.API_URL}/admin/all-spec`, {
+    return this.http.get<SpecializzazioneDTO[]>(`${this.API_URL}/all`, {
       withCredentials: true
     });
   }

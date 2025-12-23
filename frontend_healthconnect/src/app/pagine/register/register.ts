@@ -5,6 +5,7 @@ import {AuthService} from '../../service/auth-service';
 import {CommonModule} from '@angular/common';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {SpecializzazioneDTO} from '../../model/specializzazioneDTO';
+import {SpecializzazioniService} from '../../service/specializzazioni-service';
 
 
 declare var google: any;
@@ -23,7 +24,7 @@ export class Register implements OnInit {
   registerForm!: FormGroup;
   isMedico: boolean = false;
   errorMessage: string = '';
-  specializzazioni: SpecializzazioneDTO[] = [{id: 0, nome: 'Cardiologia'}];
+  specializzazioni: SpecializzazioneDTO[] = [];
   isLoading = false;
 
   @ViewChild('addressInput') addressInput: ElementRef | undefined;
@@ -34,7 +35,8 @@ export class Register implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private specializzazioniService: SpecializzazioniService
   ) {
   }
 
@@ -57,6 +59,17 @@ export class Register implements OnInit {
     this.registerForm.get('ruolo')?.valueChanges.subscribe(val => {
       this.onRuoloChange(val);
     });
+
+    this.specializzazioniService.getAllSpecializzazioni().subscribe({
+      next: (res) => {
+        this.specializzazioni = res;
+        console.log("Specializzazioni caricate:", this.specializzazioni);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error("Errore caricamento specializzazioni", err)
+      }
+    })
   }
 
   onRuoloChange(ruolo: string) {

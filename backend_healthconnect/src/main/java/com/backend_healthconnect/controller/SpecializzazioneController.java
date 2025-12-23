@@ -22,7 +22,7 @@ public class SpecializzazioneController {
         else return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/admin/all-spec")
+    @GetMapping("/all")
     public ResponseEntity<List<specializzazioneDTO>> getAllSpecializzazioni(){
         return ResponseEntity.ok(specService.getAllSpecializzazioni());
     }
