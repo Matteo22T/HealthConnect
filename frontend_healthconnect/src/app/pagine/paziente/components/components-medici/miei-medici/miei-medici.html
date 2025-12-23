@@ -33,8 +33,6 @@
 
 </div>
 
-
-
 <div class="modal-overlay" *ngIf="showModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -50,11 +48,15 @@
 
       <div class="form-group">
         <label>Motivo della visita:</label>
-        <textarea
-          [(ngModel)]="nuovaPrenotazione.motivo"
-          rows="3"
-          class="form-control"
-          placeholder="Descrivi brevemente il problema..."></textarea>
+        <select [(ngModel)]="nuovaPrenotazione.motivo" class="form-control">
+          <option value="" disabled selected>-- Seleziona un motivo --</option>
+          <option value="Prima Visita">Prima Visita</option>
+          <option value="Visita di Controllo">Visita di Controllo</option>
+          <option value="Visione Esami">Visione Esami</option>
+          <option value="Rinnovo Prescrizione">Rinnovo Prescrizione</option>
+          <option value="Consulto">Consulto</option>
+          <option value="Altro">Altro</option>
+        </select>
       </div>
     </div>
 
@@ -62,7 +64,8 @@
       <button class="btn-cancel" (click)="chiudiModal()">Annulla</button>
       <button class="btn-confirm" (click)="confermaPrenotazione()">Conferma Prenotazione</button>
     </div>
-  </div> </div>
+  </div>
+</div>
 
 <div class="modal-overlay" *ngIf="showSuccess">
   <div class="modal-content success-content">
