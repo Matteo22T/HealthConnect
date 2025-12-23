@@ -21,15 +21,15 @@ public class AssistenteAiService {
         // PRENOTAZIONI
         paroleChiaveMap.put("PRENOTAZIONE", List.of("prenot", "appuntamento", "visita", "calendario", "orari", "disponib"));
         risposteMap.put("PRENOTAZIONE", new rispostaAiDTO(
-                "📅 **Gestione Appuntamenti**\nPuoi prenotare una nuova visita o controllare quelle già programmate nella sezione 'Calendario' della tua dashboard.",
+                "📅 **Gestione Appuntamenti**\nPuoi prenotare una nuova visita nella sezione 'Medici' e controllare quelle già programmate nella sezione 'Calendario' della tua dashboard.",
                 "/paziente/dashboard"
         ));
 
         // PRESCRIZIONI
         paroleChiaveMap.put("PRESCRIZIONE", List.of("prescrizion", "ricetta", "farmac", "medicina", "rossa", "bianca"));
         risposteMap.put("PRESCRIZIONE", new rispostaAiDTO(
-                "💊 **Le tue Ricette**\nTrovi lo storico completo delle tue prescrizioni e i dettagli dei farmaci nella sezione 'Prescrizioni'.",
-                "/paziente/dashboard"
+                "💊 **Le tue Ricette**\nTrovi lo storico completo delle tue prescrizioni e i dettagli dei farmaci nella tua sezione 'Cartella Clinica'.",
+                "/paziente/cartella"
         ));
 
         // PROFILO
@@ -42,8 +42,8 @@ public class AssistenteAiService {
         // MEDICI
         paroleChiaveMap.put("MEDICO", List.of("medico", "dottore", "specialista", "cardiologo"));
         risposteMap.put("MEDICO", new rispostaAiDTO(
-                "👨‍⚕️ **I tuoi Medici**\nPuoi cercare un nuovo specialista o vedere i tuoi medici curanti nella sezione dedicata.",
-                "/paziente/dashboard"
+                "👨‍⚕️ **I tuoi Medici**\nPuoi cercare un nuovo specialista o vedere i tuoi medici curanti nella sezione 'Medici'.",
+                "/paziente/medici"
         ));
     }
 
