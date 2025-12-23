@@ -3,13 +3,14 @@
   <div class="dashboard-grid">
     <app-stat-card-admin tipo="pazienti-tot"  icona="👥" etichetta="Pazienti Totali" [contatore]="pazienti"></app-stat-card-admin>
     <app-stat-card-admin tipo="medici-attivi"    icona="👨‍⚕️" etichetta="Medici Attivi" [contatore]="medici"></app-stat-card-admin>
-    <app-stat-card-admin tipo="visite" icona="️📅" etichetta="Visite questo mese" [contatore]="visite"></app-stat-card-admin>
+    <app-stat-card-admin tipo="visite" icona="️📅" etichetta="Visite Oggi" [contatore]="visite"></app-stat-card-admin>
   </div>
 
   <div class="main-grid">
 
     <app-lista-pending [mediciDaApprovare]="mediciDaApprovare" (accettaMedico)="accettaMedico($event)" (rifiutaMedico)="rifiutaMedico($event)"></app-lista-pending>
     <app-lista-specializzazioni [specializzazioni] = "specializzazioni" (onAggiornaLista)="caricaSpecializzazioni()">> </app-lista-specializzazioni>
-    <app-lista-utenti [utenti]="utenti"></app-lista-utenti>
   </div>
+  <app-lista-utenti [utenti]="utenti"></app-lista-utenti>
+
 </div>
