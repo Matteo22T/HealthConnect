@@ -153,5 +153,8 @@ export class MieiMedici implements OnInit{
     this.router.navigate(['/paziente/chat'], { queryParams: { medicoId: idMedico } });
   }
 
+  apriProfilo(med: utenteDTO) {
+    this.router.navigate(['/paziente/medico', med.id]);
+  }
 
 }

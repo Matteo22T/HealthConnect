@@ -21,7 +21,7 @@ import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 })
 export class TrovaMedicoComponent implements OnInit {
 
-  medici: utenteDTO[] = [];
+  medici: MedicoDTO[] = [];
   searchTerm: string = '';
   selectedSpec: string = '';
   isExpanded: boolean = false;
@@ -74,7 +74,7 @@ export class TrovaMedicoComponent implements OnInit {
     this.searchSubject.next(valore);
   }
 
-  get mediciVisibili(): utenteDTO[] {
+  get mediciVisibili(): MedicoDTO[] {
     if (this.isExpanded) return this.medici;
     return this.medici.slice(0, 5);
   }
@@ -102,7 +102,7 @@ export class TrovaMedicoComponent implements OnInit {
     }
   // --- FUNZIONI PRENOTAZIONE ---
 
-  apriPrenotazione(medico: utenteDTO) {
+  apriPrenotazione(medico: MedicoDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
@@ -156,4 +156,8 @@ export class TrovaMedicoComponent implements OnInit {
       this.showSuccess = false;
       this.cd.detectChanges();
     }
+
+  apriProfilo(med: MedicoDTO) {
+    this.router.navigate(['/paziente/medico', med.id]);
+  }
 }

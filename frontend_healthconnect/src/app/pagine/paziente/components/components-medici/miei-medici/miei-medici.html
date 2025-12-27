@@ -23,7 +23,7 @@
   </div>
 
   <div class="medici-container" *ngIf="mediciFiltrati.length > 0">
-    <div class="med-item" *ngFor="let med of mediciFiltrati">
+    <div class="med-item" *ngFor="let med of mediciFiltrati" (click)="apriProfilo(med)">
 
       <div class="avatar">
         {{ med.nome ? med.nome.charAt(0) : 'D' }}{{ med.cognome ? med.cognome.charAt(0) : 'r' }}

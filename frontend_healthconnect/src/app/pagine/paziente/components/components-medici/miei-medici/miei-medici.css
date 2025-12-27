@@ -171,6 +171,7 @@
   transform: translateY(-4px) translateX(4px);
   box-shadow: 0 12px 28px rgba(0, 102, 204, 0.15);
   border-color: rgba(0, 102, 204, 0.2);
+  cursor: pointer;
 }
 
 .med-item:hover::after {

@@ -26,7 +26,7 @@
   </div>
 
   <div class="medici-list">
-    <div class="medico-item" *ngFor="let medico of mediciVisibili">
+    <div class="medico-item" *ngFor="let medico of mediciVisibili" (click)="apriProfilo(medico)">
       <div class="medico-left">
         <div class="avatar">
           {{ medico.nome ? medico.nome.charAt(0) : 'D' }}{{ medico.cognome ? medico.cognome.charAt(0) : 'r' }}

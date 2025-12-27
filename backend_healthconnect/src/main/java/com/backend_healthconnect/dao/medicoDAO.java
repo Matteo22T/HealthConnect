@@ -10,7 +10,7 @@ import java.util.List;
 public interface medicoDAO {
     void save(Long idUtente, Long specializzazione, String numeroAlbo, String biografia, String indirizzo_studio, StatoApprovazione stato_approvazione);
 
-    List<utenteDTO> getMediciPerCard(String ricerca, String specializzazione);
+    List<medicoCardDTO> getMediciPerCard(String ricerca, String specializzazione);
 
-    utenteDTO getMedicoById(Long id);
+    MedicoDTO getMedicoById(Long id);
 }

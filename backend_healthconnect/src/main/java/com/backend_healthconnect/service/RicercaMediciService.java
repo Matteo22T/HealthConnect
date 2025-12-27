@@ -15,11 +15,11 @@ public class RicercaMediciService {
     @Autowired
     private medicoDAO medicoDao;
 
-    public List<utenteDTO> eseguiRicerca(String query, String specializzazione) {
+    public List<medicoCardDTO> eseguiRicerca(String query, String specializzazione) {
         return medicoDao.getMediciPerCard(query, specializzazione);
     }
 
-    public utenteDTO trovaPerId(Long id){
+    public MedicoDTO trovaPerId(Long id){
         return medicoDao.getMedicoById(id);
     }
 

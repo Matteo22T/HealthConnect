@@ -13,12 +13,12 @@ export class MedicoService {
 
   constructor(private http: HttpClient) { }
 
-  getMedici(term: string, spec: string): Observable<utenteDTO[]> {
+  getMedici(term: string, spec: string): Observable<MedicoDTO[]> {
       const safeSpec = spec ? spec : '';
-      return this.http.get<utenteDTO[]>(`${this.apiUrl}/trova?search=${term}&spec=${safeSpec}`, {withCredentials: true});
+      return this.http.get<MedicoDTO[]>(`${this.apiUrl}/trova?search=${term}&spec=${safeSpec}`, {withCredentials: true});
   }
 
-  getMedicoById(id: number): Observable<utenteDTO> {
-      return this.http.get<utenteDTO>(`${this.apiUrl}/${id}`);
+  getMedicoById(id: number): Observable<MedicoDTO> {
+      return this.http.get<MedicoDTO>(`${this.apiUrl}/${id}`);
     }
 }
