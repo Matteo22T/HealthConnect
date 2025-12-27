@@ -9,6 +9,7 @@ import {utenteDTO} from '../../../../../model/utenteDTO';
 import { Router } from '@angular/router';
 import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
 import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 
 
 @Component({
@@ -20,7 +21,7 @@ import {SpecializzazioniService} from '../../../../../service/specializzazioni-s
 })
 export class TrovaMedicoComponent implements OnInit {
 
-  medici: MedicoDTO[] = [];
+  medici: utenteDTO[] = [];
   searchTerm: string = '';
   selectedSpec: string = '';
   isExpanded: boolean = false;
@@ -41,6 +42,8 @@ export class TrovaMedicoComponent implements OnInit {
 
   pazienteAttuale :utenteDTO | null = null;
 
+  private searchSubject = new Subject<string>();
+
   ngOnInit(): void {
     this.specializzazioniService.getAllSpecializzazioni().subscribe({
       next: (res) => {
@@ -56,9 +59,22 @@ export class TrovaMedicoComponent implements OnInit {
     if (this.pazienteAttuale){
       this.nuovaPrenotazione.paziente_id = this.pazienteAttuale.id
     }
+
+    this.searchSubject.pipe(
+      debounceTime(300), // Aspetta 300ms dopo l'ultima digitazione
+      distinctUntilChanged() // Cerca solo se il testo è effettivamente cambiato
+    ).subscribe(searchValue => {
+      // Qui chiamiamo il servizio con il valore "pulito"
+      this.searchTerm = searchValue; // Assicuriamoci che sia sincronizzato
+      this.cercaMedici();
+    });
   }
 
-  get mediciVisibili(): MedicoDTO[] {
+  onSearchInput(valore: string): void {
+    this.searchSubject.next(valore);
+  }
+
+  get mediciVisibili(): utenteDTO[] {
     if (this.isExpanded) return this.medici;
     return this.medici.slice(0, 5);
   }
@@ -86,7 +102,7 @@ export class TrovaMedicoComponent implements OnInit {
     }
   // --- FUNZIONI PRENOTAZIONE ---
 
-  apriPrenotazione(medico: MedicoDTO) {
+  apriPrenotazione(medico: utenteDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;

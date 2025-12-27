@@ -2,6 +2,7 @@ package com.backend_healthconnect.controller;
 
 import com.backend_healthconnect.model.medicoCardDTO;
 import com.backend_healthconnect.model.MedicoDTO;
+import com.backend_healthconnect.model.utenteDTO;
 import com.backend_healthconnect.service.RicercaMediciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class MedicoController {
     private RicercaMediciService ricercaMediciService;
 
     @GetMapping("/trova")
-    public List<medicoCardDTO> trovaMedici(
+    public List<utenteDTO> trovaMedici(
             @RequestParam(name = "search", required = false) String query,
             @RequestParam(name = "spec", required = false) String spec
     ) {
@@ -30,8 +31,8 @@ public class MedicoController {
         return ricercaMediciService.eseguiRicerca(safeQuery, safeSpec);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<MedicoDTO> getMedicoById(@PathVariable Long id) {
-        MedicoDTO medico = ricercaMediciService.trovaPerId(id);
+    public ResponseEntity<utenteDTO> getMedicoById(@PathVariable Long id) {
+        utenteDTO medico = ricercaMediciService.trovaPerId(id);
 
         if (medico != null) {
             return ResponseEntity.ok(medico);

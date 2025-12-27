@@ -257,38 +257,57 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     @Override
-    public List<utenteDTO> getListaMediciPaziente(Long id){
+    public List<utenteDTO> getListaMediciPaziente(Long id) {
         List<utenteDTO> medici = new ArrayList<>();
 
-        String query=
-                "SELECT DISTINCT u.* \n" +
-                        "FROM utenti u\n" +
-                        "INNER JOIN visite v ON u.id = v.medico_id\n" +
+        String query =
+                "SELECT DISTINCT u.*, d.specializzazione_id, d.indirizzo_studio, d.biografia, d.numero_albo \n" +
+                        "FROM utenti u \n" +
+                        "INNER JOIN visite v ON u.id = v.medico_id \n" +
+                        "LEFT JOIN dettagli_medici d ON u.id = d.utente_id \n" +
                         "WHERE v.paziente_id = ? \n" +
-                        "AND u.ruolo = 'MEDICO'\n" +
-                        "ORDER BY u.nome, u.cognome;\n ";
-        try (Connection conn=dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)){
+                        "AND u.ruolo = 'MEDICO' \n" +
+                        "ORDER BY u.nome, u.cognome;";
 
-            stmt.setLong(1,id);
-            ResultSet rs= stmt.executeQuery();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            while (rs.next()){
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
                 utenteDTO medico = new utenteDTO();
                 medico.setId(rs.getLong("id"));
                 medico.setNome(rs.getString("nome"));
                 medico.setCognome(rs.getString("cognome"));
                 medico.setEmail(rs.getString("email"));
-                medico.setPassword(rs.getString("password"));
                 medico.setTelefono(rs.getLong("telefono"));
-                medico.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+
+                // Gestione data
+                java.sql.Date dataNascita = rs.getDate("data_nascita");
+                if (dataNascita != null) {
+                    medico.setDataNascita(dataNascita.toLocalDate());
+                }
+
                 medico.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
+                medico.setDataCreazione(rs.getDate("created_at").toLocalDate());
+
+                long specId = rs.getLong("specializzazione_id");
+                if (!rs.wasNull()) {
+                    medico.setSpecializzazione_id(specId);
+                }
+
+                medico.setIndirizzo_studio(rs.getString("indirizzo_studio"));
+                medico.setSesso(rs.getString("sesso"));
+
+                medico.setBiografia(rs.getString("biografia"));
+                medico.setNumero_albo(rs.getString("numero_albo"));
+
 
                 medici.add(medico);
             }
             return medici;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -92,7 +92,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
                 id: medicoNuovo.id,
                 nome: medicoNuovo.nome,
                 cognome: medicoNuovo.cognome,
-                specializzazione: medicoNuovo.specializzazione || 'Medico'
+                specializzazione: medicoNuovo.specializzazione_id || 'Medico'
               };
 
               // Lo aggiungo in cima alla lista provvisoriamente

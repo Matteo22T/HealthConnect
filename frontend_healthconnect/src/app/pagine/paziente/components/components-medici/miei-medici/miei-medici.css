@@ -107,6 +107,7 @@
 /* Singola card medico */
 .med-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 1.3rem;
   padding: 1.5rem 1.8rem;
@@ -223,6 +224,7 @@
   min-width: 0;
   position: relative;
   z-index: 1;
+  gap: 0.5rem;
 }
 
 .med-info h4 {
@@ -584,4 +586,104 @@
   .med-actions {
     width: 100%;
   }
+}
+
+
+/* --- BARRA DI RICERCA --- */
+.search-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  box-sizing: border-box;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.search-container:focus-within .search-icon {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-bar {
+  width: 100%;
+  padding: 1rem 1.2rem 1rem 3.5rem;
+  font-size: 1rem;
+  border: 2px solid rgba(0, 102, 204, 0.15);
+  border-radius: 14px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+  color: var(--text-dark, #1a1a1a);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.search-bar::placeholder {
+  color: var(--text-light, #9ca3af);
+}
+
+.search-bar:focus {
+  border-color: var(--primary-color, #0066cc);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-select {
+  flex: 0 0 auto;
+  min-width: 220px;
+  padding: 1rem 1.2rem;
+  border: 2px solid rgba(0, 102, 204, 0.15);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+  color: var(--text-dark, #1a1a1a);
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-select:focus {
+  border-color: var(--primary-color, #0066cc);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  transform: translateY(-2px);
+}
+
+
+.sub-details {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: var(--text-light, #6b7280);
+}
+
+.detail-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.3s ease;
+}
+
+.separator {
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.2);
 }

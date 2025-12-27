@@ -12,10 +12,9 @@
       <input
         type="text"
         class="search-bar"
-        placeholder="Cerca nome o cognome..."
+        placeholder="Cerca nome e cognome..."
         [(ngModel)]="searchTerm"
-        (input)="cercaMedici()"
-      >
+        (ngModelChange)="onSearchInput($event)"      >
     </div>
 
     <select class="form-select" [(ngModel)]="selectedSpec" (change)="cercaMedici()">
@@ -34,7 +33,7 @@
         </div>
         <div class="info">
           <h3>Dr. {{ medico.nome }} {{ medico.cognome }}</h3>
-          <p class="address">{{ medico.indirizzo_studio || medico.indirizzo }}</p>
+          <p class="address">{{ medico.indirizzo_studio || medico.indirizzo_studio }}</p>
         </div>
       </div>
       <div class="actions-wrapper">

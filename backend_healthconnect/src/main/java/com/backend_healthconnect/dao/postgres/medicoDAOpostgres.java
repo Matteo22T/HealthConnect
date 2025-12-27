@@ -1,9 +1,7 @@
 package com.backend_healthconnect.dao.postgres;
 
 import com.backend_healthconnect.dao.medicoDAO;
-import com.backend_healthconnect.model.MedicoDTO;
-import com.backend_healthconnect.model.medicoCardDTO;
-import com.backend_healthconnect.model.StatoApprovazione;
+import com.backend_healthconnect.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -43,11 +41,11 @@ public class medicoDAOpostgres implements medicoDAO {
 
 
     @Override
-    public List<medicoCardDTO> getMediciPerCard(String ricerca, String specializzazione) {
+    public List<utenteDTO> getMediciPerCard(String ricerca, String specializzazione) {
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
 
-        sql.append("SELECT u.id, u.nome, u.cognome, d.indirizzo_studio, ");
+        sql.append("SELECT u.*, d.*, ");
         sql.append("CAST(d.specializzazione_id AS VARCHAR) as spec_id ");
         sql.append("FROM dettagli_medici d ");
         sql.append("JOIN utenti u ON d.utente_id = u.id ");
@@ -56,8 +54,14 @@ public class medicoDAOpostgres implements medicoDAO {
 
         // Filtro Ricerca (Nome/Cognome)
         if (ricerca != null && !ricerca.trim().isEmpty()) {
-            sql.append("AND (LOWER(u.nome) LIKE LOWER(?) OR LOWER(u.cognome) LIKE LOWER(?)) ");
+            sql.append("AND (LOWER(u.nome) LIKE LOWER(?) OR LOWER(u.cognome) LIKE LOWER(?) ");
+            sql.append("OR LOWER(COALESCE(u.nome, '') || ' ' || COALESCE(u.cognome, '')) LIKE LOWER(?) ");
+            sql.append("OR LOWER(COALESCE(u.cognome, '') || ' ' || COALESCE(u.nome, '')) LIKE LOWER(?) ");
+
+            sql.append(") "); // Fine blocco AND
             String searchPattern = "%" + ricerca.trim() + "%";
+            params.add(searchPattern);
+            params.add(searchPattern);
             params.add(searchPattern);
             params.add(searchPattern);
         }
@@ -68,30 +72,51 @@ public class medicoDAOpostgres implements medicoDAO {
             params.add(specializzazione);
         }
 
-        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new medicoCardDTO(
+        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new utenteDTO(
                 rs.getLong("id"),
                 rs.getString("nome"),
                 rs.getString("cognome"),
-                rs.getString("spec_id"),
-                rs.getString("indirizzo_studio")
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getLong("telefono"),
+                rs.getDate("data_nascita").toLocalDate(),
+                Ruolo.valueOf(rs.getString("ruolo")),
+                rs.getDate("created_at").toLocalDate(),
+                rs.getString("sesso"),
+                rs.getLong("specializzazione_id"),
+                rs.getString("numero_albo"),
+                rs.getString("biografia"),
+                rs.getString("indirizzo_studio"),
+                StatoApprovazione.valueOf(rs.getString("stato_approvazione"))
         ), params.toArray());
     }
 
     @Override
-    public MedicoDTO getMedicoById(Long id) {
-        String query = "SELECT u.id, u.nome, u.cognome, d.specializzazione_id FROM utenti u JOIN dettagli_medici d ON u.id = d.utente_id WHERE u.id = ?";
+    public utenteDTO getMedicoById(Long id) {
+        String query = "SELECT u.*, d.* FROM utenti u JOIN dettagli_medici d ON u.id = d.utente_id WHERE u.id = ?";
 
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-            MedicoDTO medico = new MedicoDTO();
+            utenteDTO medico = new utenteDTO();
             while (rs.next()) {
                 medico.setId(rs.getLong("id"));
                 medico.setNome(rs.getString("nome"));
                 medico.setCognome(rs.getString("cognome"));
-                medico.setSpecializzazione(rs.getString("specializzazione_id"));
+                medico.setEmail(rs.getString("email"));
+                medico.setPassword(rs.getString("password"));
+                medico.setTelefono(rs.getLong("telefono"));
+                medico.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                medico.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
+                medico.setDataCreazione(rs.getDate("created_at").toLocalDate());
+                medico.setSesso(rs.getString("sesso"));
+                medico.setNumero_albo(rs.getString("numero_albo"));
+                medico.setIndirizzo_studio(rs.getString("indirizzo_studio"));
+                medico.setBiografia(rs.getString("biografia"));
+                medico.setStato_approvazione(StatoApprovazione.valueOf(rs.getString("stato_approvazione")));
+                medico.setSpecializzazione_id(rs.getLong("specializzazione_id"));
             }
             return medico;
         } catch (SQLException e) {

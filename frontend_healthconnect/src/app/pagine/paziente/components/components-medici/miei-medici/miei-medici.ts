@@ -2,18 +2,21 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {utenteDTO} from '../../../../../model/utenteDTO';
 import {AuthService} from '../../../../../service/auth-service';
 import {VisitaService} from '../../../../../service/visita-service';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {MedicoDTO} from '../../../../../model/medicoDTO';
 import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
+import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
+import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
 
 @Component({
   selector: 'app-miei-medici',
   imports: [
     NgForOf,
     NgIf,
-    FormsModule
+    FormsModule,
+    DatePipe
   ],
   templateUrl: './miei-medici.html',
   styleUrl: './miei-medici.css',
@@ -29,6 +32,12 @@ export class MieiMedici implements OnInit{
 
   showSuccess: boolean = false;
 
+  campoRicerca: string = '';
+  mediciFiltrati: utenteDTO[]=[];
+  specializzazioni: SpecializzazioneDTO[] = [];
+  selectedSpec: string = '';
+
+
   nuovaPrenotazione = {
     medico_id: 0,
     paziente_id: 0,
@@ -36,13 +45,11 @@ export class MieiMedici implements OnInit{
     motivo: ''
   };
 
-  constructor(private prenService: PrenotazioneService,private auth: AuthService, private visitService:VisitaService, private cd: ChangeDetectorRef, private router: Router) {
+  constructor(private specializzazioniService: SpecializzazioniService ,private prenService: PrenotazioneService,private auth: AuthService, private visitService:VisitaService, private cd: ChangeDetectorRef, private router: Router) {
   }
 
   ngOnInit() {
     const currentUser = this.auth.currentUserValue;
-
-
     if (currentUser) {
       this.user=currentUser;
 
@@ -51,6 +58,7 @@ export class MieiMedici implements OnInit{
       this.visitService.getListaMediciPaziente(currentUser.id).subscribe({
       next: result => {
         this.medici=result
+        this.mediciFiltrati=result
         this.cd.detectChanges()
       },
       error: err => {
@@ -58,6 +66,32 @@ export class MieiMedici implements OnInit{
       }});
     }
 
+    this.specializzazioniService.getAllSpecializzazioni().subscribe({
+      next: res => {
+        this.specializzazioni = res;
+        this.cd.detectChanges()
+
+      },
+      error: err => {
+        console.error('Errore server', err);
+      }
+    })
+  }
+
+  ricercaMedici() {
+    const testo = this.campoRicerca.toLowerCase().trim();
+    const specId = this.selectedSpec;
+
+
+    this.mediciFiltrati = this.medici.filter(medico => {
+      const nomeCompleto = (medico.nome?.toLowerCase() || '') + ' ' + (medico.cognome?.toLowerCase() || '');
+      const matchNome = !testo || nomeCompleto.includes(testo);
+      const medicoSpecId = String(medico.specializzazione_id);
+
+      const matchSpec = !specId || (medicoSpecId && medicoSpecId == specId);
+
+      return matchNome && matchSpec;
+    })
   }
 
   apriPrenotazione(medico: utenteDTO) {
