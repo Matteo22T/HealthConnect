@@ -1,29 +1,28 @@
 <div class="card">
   <div class="card-header">
-    <h2>Medici in cura</h2>
   </div>
 
-
-  <div  *ngIf="medici.length > 0">
-
+  <div class="medici-container" *ngIf="medici.length > 0">
     <div class="med-item" *ngFor="let med of medici">
 
-      <div class="avatar-placeholder emoji-avatar">
-        👨‍⚕️
+      <div class="avatar">
+        {{ med.nome ? med.nome.charAt(0) : 'D' }}{{ med.cognome ? med.cognome.charAt(0) : 'r' }}
       </div>
 
       <div class="med-info">
         <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
       </div>
 
-      <button class="btn-contact" (click)="apriChatMedico(med.id)">
-        💬
-      </button>
-      <button class="btn-prenota" (click)="apriPrenotazione(med)">
-        Prenota
-      </button>
-    </div>
+      <div class="med-actions">
+        <button class="btn-prenota" (click)="apriChatMedico(med.id)" title="Invia messaggio">
+          💬 Invia messaggio
+        </button>
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(med)">
+          📅 Prenota
+        </button>
+      </div>
 
+    </div>
   </div>
 
   <div class="empty-state" *ngIf="medici.length === 0">

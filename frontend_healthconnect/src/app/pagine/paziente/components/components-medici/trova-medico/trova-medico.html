@@ -1,6 +1,5 @@
 <div class="card-container">
   <div class="card-header">
-    <h2 class="card-title">Trova un medico</h2>
     <a style="cursor: pointer;" class="see-all" *ngIf="medici.length > 5 && !isExpanded" (click)="toggleVediTutti()">Vedi tutti &rarr;</a>
     <a style="cursor: pointer; color: #dc3545;" class="see-all" *ngIf="isExpanded" (click)="toggleVediTutti()">Vedi meno &uarr;</a>
   </div>
@@ -8,38 +7,39 @@
   <hr class="divider">
 
   <div class="search-section">
-    <div class="search-wrapper">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
       <input
         type="text"
-        class="search-input"
+        class="search-bar"
         placeholder="Cerca nome o cognome..."
         [(ngModel)]="searchTerm"
         (input)="cercaMedici()"
       >
-      <span class="search-icon">🔍</span>
     </div>
 
     <select class="form-select" [(ngModel)]="selectedSpec" (change)="cercaMedici()">
       <option value="">Tutte le specializzazioni</option>
-      <option value="0">Cardiologia</option>
-      <option value="1">Dermatologia</option>
-      <option value="2">Neurologia</option>
-      <option value="3">Ortopedia</option>
+      <option *ngFor="let spec of specializzazioni" [value]="spec.id">
+        {{spec.nome}}
+      </option>
     </select>
   </div>
 
   <div class="medici-list">
     <div class="medico-item" *ngFor="let medico of mediciVisibili">
-      <div class="avatar">
-        {{ medico.nome ? medico.nome.charAt(0) : 'D' }}{{ medico.cognome ? medico.cognome.charAt(0) : 'r' }}
-      </div>
-      <div class="info">
-        <h3>Dr. {{ medico.nome }} {{ medico.cognome }}</h3>
-        <p class="address">{{ medico.indirizzo_studio || medico.indirizzo }}</p>
+      <div class="medico-left">
+        <div class="avatar">
+          {{ medico.nome ? medico.nome.charAt(0) : 'D' }}{{ medico.cognome ? medico.cognome.charAt(0) : 'r' }}
+        </div>
+        <div class="info">
+          <h3>Dr. {{ medico.nome }} {{ medico.cognome }}</h3>
+          <p class="address">{{ medico.indirizzo_studio || medico.indirizzo }}</p>
+        </div>
       </div>
       <div class="actions-wrapper">
-        <button class="btn-prenota" (click)="contattaMedico(medico.id)">Invia messaggio</button>
-        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico)">Prenota visita</button>
+        <button class="btn-prenota" (click)="contattaMedico(medico.id)">💬 Invia messaggio</button>
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico)">📅 Prenota visita</button>
       </div>
     </div>
     <div *ngIf="medici.length === 0" class="empty-state">Nessun medico trovato con questo nome.</div>

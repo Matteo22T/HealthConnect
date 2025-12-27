@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Fondamentale per i form
+import { FormsModule } from '@angular/forms';
 import { MedicoDTO } from '../../../../../model/medicoDTO';
 import { MedicoService } from '../../../../../service/medico-service';
 import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 import {AuthService} from '../../../../../service/auth-service';
 import {utenteDTO} from '../../../../../model/utenteDTO';
 import { Router } from '@angular/router';
+import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
+import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class TrovaMedicoComponent implements OnInit {
   showModal: boolean = false;
   nomeMedicoSelezionato: string = '';
 
+  specializzazioni: SpecializzazioneDTO[] = []
   showSuccess: boolean = false;
 
   nuovaPrenotazione = {
@@ -34,11 +37,20 @@ export class TrovaMedicoComponent implements OnInit {
     motivo: ''
   };
 
-  constructor(private auth: AuthService, private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef, private router: Router) {}
+  constructor(private specializzazioniService: SpecializzazioniService, private cdr: ChangeDetectorRef,private auth: AuthService, private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef, private router: Router) {}
 
   pazienteAttuale :utenteDTO | null = null;
 
   ngOnInit(): void {
+    this.specializzazioniService.getAllSpecializzazioni().subscribe({
+      next: (res) => {
+        this.specializzazioni = res;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error("Errore caricamento specializzazioni", err)
+      }
+    })
     this.cercaMedici();
     this.pazienteAttuale = this.auth.currentUserValue
     if (this.pazienteAttuale){
@@ -64,6 +76,7 @@ export class TrovaMedicoComponent implements OnInit {
       },
       error: (err) => console.error("Errore:", err)
     });
+    this.cd.detectChanges()
   }
 
   contattaMedico(medicoId: number) {
