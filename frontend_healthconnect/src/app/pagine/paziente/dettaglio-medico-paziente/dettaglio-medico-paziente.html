@@ -1,0 +1,23 @@
+<main>
+  <a routerLink="/paziente/medici" class="back-link">← Torna ai Medici</a>
+
+  <div class="container">
+
+    <app-informazioni-medico-paziente [utente]="medico"></app-informazioni-medico-paziente>
+
+    <app-specifiche-medico-paziente [medico]="medico"
+    ></app-specifiche-medico-paziente>
+
+
+    <div class="content-grid">
+      <app-visite-medico-paziente [visite]="visite"></app-visite-medico-paziente>
+
+      <app-prescrizioni-paziente-medico [prescrizioni]="prescrizioniMedico"></app-prescrizioni-paziente-medico>
+
+    </div>
+
+
+
+
+  </div>
+</main>

@@ -1,0 +1,46 @@
+<div class="specifiche-container">
+
+  <!-- Mappa -->
+  <div class="map-section">
+    <div class="map-wrapper">
+      <div #visualizzaMappa class="google-map"></div>
+    </div>
+  </div>
+
+  <!-- Biografia e Specializzazione -->
+  <div class="se">
+
+    <!-- Card Biografia -->
+    <div class="info-card">
+      <h3 class="info-title">
+        <span class="info-icon">📝</span>
+        Dettagli Medico
+      </h3>
+      <div class="detail-item">
+        <span class="label">Numero Albo:</span>
+        <span class="value fw-bold">{{ medico?.numero_albo ? medico?.numero_albo : 'N/D' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Stato:</span>
+        <span class="badge status-badge" [ngClass]="{'status-ok': medico?.stato_approvazione === 'APPROVATO', 'status-pending': medico?.stato_approvazione === 'PENDING'}">
+            {{ medico?.stato_approvazione }}
+          </span>
+      </div>
+      <div class="detail-block">
+        <span class="label display-block mb-2">📍 Indirizzo Studio:</span>
+        <p class="value address-box">
+          {{ medico?.indirizzo_studio}}
+        </p>
+      </div>
+      <div class="detail-block mt-4">
+        <span class="label display-block mb-2">📝 Biografia:</span>
+        <p class="value bio-box">
+          {{ medico?.biografia ? medico?.biografia : 'Nessuna biografia.' }}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

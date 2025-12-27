@@ -1,0 +1,324 @@
+/* ========================================
+   SPECIFICHE-MEDICO-PAZIENTE.CSS
+   ======================================== */
+
+:host {
+  --primary-blue: #0066cc;
+  --secondary-blue: #00c4cc;
+  --text-dark: #1a1a1a;
+  --white: #ffffff;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 102, 204, 0.12);
+  --shadow-lg: 0 12px 32px rgba(0, 102, 204, 0.15);
+}
+
+/* --- Container Principale --- */
+.specifiche-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Sezione Mappa --- */
+.map-section {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideUp 0.6s ease-out backwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.map-section:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Striscia colorata in alto con gradiente animato */
+.map-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #0066cc, #00c4cc, #0066cc);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
+  z-index: 10;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.google-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Sezione Info (Card Dettagli) --- */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideUp 0.6s ease-out backwards;
+  animation-delay: 0.1s;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Striscia colorata in alto */
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #0066cc, #00c4cc, #0066cc);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Titolo Card */
+.info-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  position: relative;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  display: inline-block;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Contenuto Info */
+.info-content {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  background: #fafbfc;
+  border: 2px solid #e8ecef;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 1rem;
+}
+
+.info-content:hover {
+  border-color: #cbd5e0;
+  background: var(--white);
+}
+
+.info-content.empty {
+  color: #999;
+  font-style: italic;
+}
+
+/* Detail Items */
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+  background-color: #f8f9fa;
+  margin: 0 -10px;
+  padding: 14px 10px;
+  border-radius: 8px;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.value {
+  font-weight: 500;
+  color: #212529;
+  text-align: left;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.display-block {
+  display: block;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+/* Box Indirizzo e Biografia */
+.address-box, .bio-box {
+  background-color: #fafbfc;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #e8ecef;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.address-box:hover, .bio-box:hover {
+  border-color: #cbd5e0;
+  background: var(--white);
+  transform: translateY(-1px);
+}
+
+.detail-block {
+  margin-top: 1rem;
+}
+
+/* Badges di Stato */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.status-badge:hover {
+  transform: scale(1.05);
+}
+
+.status-ok {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+/* Separatore */
+hr {
+  border: none;
+  border-top: 1px solid #e8ecef;
+  margin: 1.5rem 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 968px) {
+  .specifiche-container {
+    grid-template-columns: 1fr;
+  }
+
+  .map-section {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .specifiche-container {
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-title {
+    font-size: 1.1rem;
+  }
+
+  .map-section {
+    height: 250px;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .value {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    padding: 1.25rem;
+  }
+
+  .info-title {
+    font-size: 1rem;
+  }
+
+  .info-content {
+    font-size: 0.9rem;
+  }
+}

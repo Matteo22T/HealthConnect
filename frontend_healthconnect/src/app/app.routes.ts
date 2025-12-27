@@ -30,6 +30,7 @@ import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
 import { ChatComponent } from './pagine/paziente/chat/chat';
 import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
 import {Utenti} from './pagine/admin/utenti/utenti';
+import {DettaglioMedicoPaziente} from './pagine/paziente/dettaglio-medico-paziente/dettaglio-medico-paziente';
 
 
 
@@ -60,6 +61,7 @@ export const routes: Routes = [
       {path: "trova-medico" , component : TrovaMedicoComponent},
       {path: 'medici', component: MediciTabs},
       {path: 'miei-medici', component: MieiMedici},
+      {path: 'medico/:id', component: DettaglioMedicoPaziente},
       {path: 'cartella', component: CartellaClinicaPaziente},
       {path: 'profilo', component: ProfiloPaziente},
       {path: 'impostazioni', component: ImpostazioniPaziente},
@@ -75,7 +77,6 @@ export const routes: Routes = [
       {path: 'chat', component: ChatComponent},
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
-      {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'richieste', component: AppuntamentiMedico},
       {path: 'visite/:id', component: VisitaDettaglioMedico}
     ]},

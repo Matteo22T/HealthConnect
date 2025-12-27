@@ -47,7 +47,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/visite/oggi/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/tutti/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/pazienti/medici/**").hasRole("MEDICO")
-                        .requestMatchers("/api/visite/paziente/{id}/medico/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/medico/salva/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/num_pazienti/medici/**").hasRole("MEDICO")
                         .requestMatchers("/api/visite/visite_no_diagnosi/medico/**").hasRole("MEDICO")
@@ -66,6 +65,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/modifica/password").hasAnyRole("PAZIENTE", "MEDICO")
                         .requestMatchers("/api/auth/modifica/profilo").hasAnyRole("PAZIENTE", "MEDICO")
                         .requestMatchers("/api/auth/modifica/emailtelefono").hasAnyRole("PAZIENTE", "MEDICO")
+                        .requestMatchers("/api/visite/paziente/**").hasAnyRole("PAZIENTE", "MEDICO")
+
                         // 3. Tutto il resto richiede autenticazione
                         .anyRequest().authenticated()
                 )

@@ -1,0 +1,99 @@
+<div class="profile-header" *ngIf="utente; else loadingTemplate">
+
+  <div class="avatar">
+    {{ utente.nome | slice:0:1 | uppercase }}{{ utente.cognome | slice:0:1 | uppercase }}
+  </div>
+
+  <div class="patient-info">
+    <h1 class="patient-name">{{ utente.nome }} {{ utente.cognome }}</h1>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Data di Nascita</span>
+        <span class="info-value">{{ utente.dataNascita | date:'d MMM y' }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Età</span>
+        <span class="info-value">{{ etaReale }} anni</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Sesso</span>
+        <span class="info-value">{{ utente.sesso }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Telefono</span>
+        <span class="info-value">{{ utente.telefono }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="info-label">Email</span>
+        <span class="info-value">{{ utente.email }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+  <button class="btn-message btn-green" (click)="apriPrenotazione(utente)">📅 Prenota Visita</button>
+  <button class="btn-message" (click)="apriChatPaziente(utente.id)">
+    💬 Invia Messaggio
+  </button>
+  </div>
+
+
+</div>
+
+
+
+<ng-template #loadingTemplate>
+  <div class="profile-header skeleton-loader">
+    <p>Caricamento profilo paziente...</p>
+  </div>
+</ng-template>
+
+
+
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Prenota visita</h3>
+      <p>Con Dr. {{ nomeMedicoSelezionato }}</p>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Seleziona Data e Ora:</label>
+        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Motivo della visita:</label>
+        <select [(ngModel)]="nuovaPrenotazione.motivo" class="form-control">
+          <option value="" disabled selected>-- Seleziona un motivo --</option>
+          <option value="Prima Visita">Prima Visita</option>
+          <option value="Visita di Controllo">Visita di Controllo</option>
+          <option value="Visione Esami">Visione Esami</option>
+          <option value="Rinnovo Prescrizione">Rinnovo Prescrizione</option>
+          <option value="Consulto">Consulto</option>
+          <option value="Altro">Altro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="chiudiModal()">Annulla</button>
+      <button class="btn-confirm" (click)="confermaPrenotazione()">Conferma Prenotazione</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showSuccess">
+  <div class="modal-content success-content">
+    <div class="success-icon">✓</div>
+    <h3>Ottimo!</h3>
+    <p>Prenotazione effettuata con successo.</p>
+    <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>
+  </div>
+</div>
