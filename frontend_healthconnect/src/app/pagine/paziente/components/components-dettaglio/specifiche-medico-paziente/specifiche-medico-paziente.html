@@ -21,9 +21,9 @@
         <span class="value fw-bold">{{ medico?.numero_albo ? medico?.numero_albo : 'N/D' }}</span>
       </div>
       <div class="detail-item">
-        <span class="label">Stato:</span>
-        <span class="badge status-badge" [ngClass]="{'status-ok': medico?.stato_approvazione === 'APPROVATO', 'status-pending': medico?.stato_approvazione === 'PENDING'}">
-            {{ medico?.stato_approvazione }}
+        <span class="label">Specializzazione:</span>
+        <span class="badge status-badge status-ok">
+            {{ nomeSpecializzazione }}
           </span>
       </div>
       <div class="detail-block">

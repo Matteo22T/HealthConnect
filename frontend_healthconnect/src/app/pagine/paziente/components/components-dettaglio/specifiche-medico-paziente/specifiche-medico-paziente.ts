@@ -1,31 +1,50 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  SimpleChanges, OnChanges
+} from '@angular/core';
 import {GoogleMapsLoaderService} from '../../../../../service/google-maps-loader-service';
 import {utenteDTO} from '../../../../../model/utenteDTO';
-import {NgClass} from '@angular/common';
+import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
+import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
 
 declare var google: any;
 
 @Component({
   selector: 'app-specifiche-medico-paziente',
   imports: [
-    NgClass
   ],
   templateUrl: './specifiche-medico-paziente.html',
   styleUrl: './specifiche-medico-paziente.css',
 })
-export class SpecificheMedicoPaziente implements OnInit, AfterViewInit {
+export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('visualizzaMappa') mapView: ElementRef | undefined;
 
   @Input({required: true}) medico: utenteDTO | undefined = undefined;
 
+  nomeSpecializzazione: string = 'Caricamento...';
 
-  constructor(private mapsLoader: GoogleMapsLoaderService) {}
+
+  constructor(private mapsLoader: GoogleMapsLoaderService,private specService: SpecializzazioniService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     // Carica Google Maps all'avvio
     this.mapsLoader.load().then(() => {
       console.log('Google Maps caricato con successo');
     }).catch(err => console.error("Maps non caricato", err));
+
+    this.trovaSpecializzazione();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['medico'] && !changes['medico'].firstChange) {
+      this.trovaSpecializzazione();
+      }
   }
 
   ngAfterViewInit() {
@@ -88,5 +107,43 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit {
     } catch (e) {
       console.error("Errore initViewMap", e);
     }
+  }
+
+
+  trovaSpecializzazione() {
+    const specId = this.medico?.specializzazione_id;
+
+    console.log('Inizializzazione trova:', specId);
+
+    // Se non c'è ID, esci subito
+    if (specId === null || specId === undefined) {
+      this.nomeSpecializzazione = 'Non specificata';
+      this.cd.detectChanges();
+      return;
+    }
+
+    this.specService.getAllSpecializzazioni().subscribe({
+      next: (lista: SpecializzazioneDTO[]) => {
+        console.log('Lista specializzazioni:', lista);
+
+        // Cerchiamo l'ID nella lista
+        const trovata = lista.find(s => s.id == specId);
+
+        console.log('Specializzazione trovata:', trovata);
+
+        if (trovata) {
+          this.nomeSpecializzazione = trovata.nome;
+          console.log('Nome specializzazione assegnato:', this.nomeSpecializzazione);
+        } else {
+          this.nomeSpecializzazione = 'Non trovata';
+        }
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error('Errore recupero specializzazioni', err);
+        this.nomeSpecializzazione = 'Errore caricamento';
+        this.cd.detectChanges();
+      }
+    });
   }
 }
