@@ -2,6 +2,7 @@
   <h1 class="page-title">⚙️ Impostazioni Account</h1>
 
   <div class="settings-grid">
+
     <div class="card">
       <div class="card-header">
         <h2>🔒 Sicurezza</h2>
@@ -10,58 +11,45 @@
         <form [formGroup]="cambiaPasswordForm" (ngSubmit)="cambiaPassword()">
 
           <div class="form-group">
-            <label for="attuale">Password Attuale</label>
-            <input
-              id="attuale"
-              type="password"
-              formControlName="attuale"
-              class="form-input"
-              placeholder="••••••••"
-              [class.is-invalid]="cambiaPasswordForm.get('attuale')?.touched && cambiaPasswordForm.get('attuale')?.invalid">
-
-            <span class="field-error text-danger" *ngIf="cambiaPasswordForm.get('attuale')?.invalid && cambiaPasswordForm.get('attuale')?.touched">
-              <small *ngIf="cambiaPasswordForm.get('attuale')?.errors?.['required']">La password attuale è obbligatoria</small>
-            </span>
+            <label>Password Attuale</label>
+            <input type="password"
+                   formControlName="attuale"
+                   class="form-input"
+                   placeholder="••••••••"
+                   [class.invalid]="cambiaPasswordForm.get('attuale')?.invalid && (cambiaPasswordForm.get('attuale')?.dirty || cambiaPasswordForm.get('attuale')?.touched)">
+            <div class="error-msg" *ngIf="cambiaPasswordForm.get('attuale')?.invalid && (cambiaPasswordForm.get('attuale')?.dirty || cambiaPasswordForm.get('attuale')?.touched)">
+              <small class="text-danger">Campo obbligatorio</small>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="nuova">Nuova Password</label>
-            <input
-              id="nuova"
-              type="password"
-              formControlName="nuova"
-              class="form-input"
-              placeholder="••••••••"
-              [class.is-invalid]="cambiaPasswordForm.get('nuova')?.touched && cambiaPasswordForm.get('nuova')?.invalid">
-
-            <span class="field-error text-danger" *ngIf="cambiaPasswordForm.get('nuova')?.invalid && cambiaPasswordForm.get('nuova')?.touched">
-              <small *ngIf="cambiaPasswordForm.get('nuova')?.errors?.['required']">Inserisci una nuova password</small>
-              <div *ngIf="cambiaPasswordForm.get('nuova')?.errors?.['pattern']" class="password-requirements">
-                <small>La password deve contenere almeno 8 caratteri, una maiuscola, un numero e un simbolo.</small>
-              </div>
-            </span>
+            <label>Nuova Password</label>
+            <input type="password"
+                   formControlName="nuova"
+                   class="form-input"
+                   placeholder="••••••••"
+                   [class.invalid]="cambiaPasswordForm.get('nuova')?.invalid && (cambiaPasswordForm.get('nuova')?.dirty || cambiaPasswordForm.get('nuova')?.touched)">
+            <div class="error-msg" *ngIf="cambiaPasswordForm.get('nuova')?.invalid && (cambiaPasswordForm.get('nuova')?.dirty || cambiaPasswordForm.get('nuova')?.touched)">
+              <small class="text-danger" *ngIf="cambiaPasswordForm.get('nuova')?.errors?.['required']">Campo obbligatorio</small>
+              <small class="text-danger" *ngIf="cambiaPasswordForm.get('nuova')?.errors?.['pattern']">La password deve contenere 8 caratteri, una maiuscola, un numero e un carattere speciale.</small>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="conferma">Conferma Password</label>
-            <input
-              id="conferma"
-              type="password"
-              formControlName="conferma"
-              class="form-input"
-              placeholder="••••••••"
-              [class.is-invalid]="cambiaPasswordForm.get('conferma')?.touched && (cambiaPasswordForm.get('conferma')?.invalid || cambiaPasswordForm.hasError('passwordMismatch'))">
-
-            <span class="field-error text-danger" *ngIf="cambiaPasswordForm.get('conferma')?.touched">
-              <small *ngIf="cambiaPasswordForm.get('conferma')?.errors?.['required']">Conferma la tua password</small>
-              <small *ngIf="cambiaPasswordForm.hasError('passwordMismatch') && !cambiaPasswordForm.get('conferma')?.errors?.['required']">
-                Le password non corrispondono.
-              </small>
-            </span>
+            <label>Conferma Password</label>
+            <input type="password"
+                   formControlName="conferma"
+                   class="form-input"
+                   placeholder="••••••••"
+                   [class.invalid]="cambiaPasswordForm.errors?.['passwordMismatch'] && (cambiaPasswordForm.get('conferma')?.dirty || cambiaPasswordForm.get('conferma')?.touched)">
+            <div class="error-msg" *ngIf="cambiaPasswordForm.hasError('passwordMismatch') && (cambiaPasswordForm.get('conferma')?.dirty || cambiaPasswordForm.get('conferma')?.touched)">
+              <small class="text-danger">Le password non corrispondono</small>
+            </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" [disabled]="loading">
-            {{ loading ? 'Caricamento...' : 'Aggiorna Password' }}
+          <button type="submit" class="btn btn-primary" [disabled]="loading || cambiaPasswordForm.invalid">
+            <span *ngIf="!loading">Aggiorna Password</span>
+            <span *ngIf="loading">Caricamento...</span>
           </button>
         </form>
       </div>
@@ -72,29 +60,22 @@
         <h2>🔔 Notifiche</h2>
       </div>
       <div class="card-body">
+
         <div class="toggle-item">
           <div class="toggle-info">
-            <h4>Nuove Richieste</h4>
-            <p>Ricevi una email quando un paziente richiede un appuntamento.</p>
+            <h4>Notifiche Email</h4>
+            <p>Ricevi aggiornamenti via email per i tuoi appuntamenti.</p>
           </div>
           <label class="switch">
-            <input type="checkbox" [(ngModel)]="notifiche.visite">
+            <input type="checkbox"
+                   [(ngModel)]="impostazioni.notificheEmail"
+                   (change)="salvaPreferenze()">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="divider"></div>
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <h4>Messaggi Chat</h4>
-            <p>Avvisami via email se ho messaggi non letti.</p>
-          </div>
-          <label class="switch">
-            <input type="checkbox" [(ngModel)]="notifiche.messaggi">
-            <span class="slider round"></span>
-          </label>
-        </div>
-        <button class="btn btn-secondary mt-3" (click)="salvaNotifiche()">Aggiorna Notifiche</button>
+
       </div>
     </div>
+
   </div>
 </div>

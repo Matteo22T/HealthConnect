@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {utenteDTO} from '../model/utenteDTO';
 import {Observable} from 'rxjs';
+import {ImpostazioniNotifiche} from '../model/ImpostazioniNotificheDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,13 @@ export class UtenteService {
 
   rifiutaMedico(idMedico: number) {
     return this.http.put<boolean>(`${this.API_URL}/admin/rifiuta-medico/${idMedico}`, {}, {withCredentials: true});
+  }
+
+  getImpostazioni(id: number) {
+    return this.http.get<ImpostazioniNotifiche>(`${this.API_URL}/impostazioni/notifiche/${id}`, {withCredentials: true});
+  }
+
+  aggiornaImpostazioni(idUtente: number) {
+    return this.http.put<boolean>(`${this.API_URL}/impostazioni/aggiorna/${idUtente}`, {}, {withCredentials: true});
   }
 }
