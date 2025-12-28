@@ -40,7 +40,7 @@ export class TrovaMedicoComponent implements OnInit {
 
   constructor(private specializzazioniService: SpecializzazioniService, private cdr: ChangeDetectorRef,private auth: AuthService, private medicoService: MedicoService,private prenService: PrenotazioneService, private cd: ChangeDetectorRef, private router: Router) {}
 
-  pazienteAttuale :utenteDTO | null = null;
+  pazienteAttuale :utenteDTO = {} as utenteDTO;
 
   private searchSubject = new Subject<string>();
 
@@ -55,9 +55,9 @@ export class TrovaMedicoComponent implements OnInit {
       }
     })
     this.cercaMedici();
-    this.pazienteAttuale = this.auth.currentUserValue
-    if (this.pazienteAttuale){
-      this.nuovaPrenotazione.paziente_id = this.pazienteAttuale.id
+    const currentUser = this.auth.currentUserValue;
+    if(currentUser){
+      this.pazienteAttuale = currentUser
     }
 
     this.searchSubject.pipe(
@@ -104,6 +104,7 @@ export class TrovaMedicoComponent implements OnInit {
 
   apriPrenotazione(medico: MedicoDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
+    this.nuovaPrenotazione.paziente_id = this.pazienteAttuale.id
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
   }

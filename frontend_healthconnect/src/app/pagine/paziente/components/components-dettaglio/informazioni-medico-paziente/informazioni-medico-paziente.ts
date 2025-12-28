@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import { DatePipe, NgIf, SlicePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { utenteDTO } from '../../../../../model/utenteDTO';
 import {PrenotazioneService} from '../../../../../service/prenotazione-service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthService} from '../../../../../service/auth-service';
 
 
 
@@ -21,7 +22,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   templateUrl: './informazioni-medico-paziente.html',
   styleUrl: './informazioni-medico-paziente.css',
 })
-export class InformazioniMedicoPaziente {
+export class InformazioniMedicoPaziente implements OnInit {
 
   @Input({ required: true }) utente: utenteDTO | undefined = undefined;
 
@@ -35,12 +36,21 @@ export class InformazioniMedicoPaziente {
   showModal: boolean = false;
   showSuccess: boolean = false;
   nomeMedicoSelezionato: string = '';
+  id: number = 0;
+
 
 
 
   constructor(
-    private router: Router, private cd: ChangeDetectorRef, private prenService: PrenotazioneService) {}
+    private router: Router, private cd: ChangeDetectorRef, private prenService: PrenotazioneService, private auth: AuthService) {}
 
+
+  ngOnInit() {
+    const currentUser= this.auth.currentUserValue
+    if(currentUser){
+      this.id=currentUser.id
+    }
+  }
 
   get etaReale(): string | number {
     if (!this.utente || !this.utente.dataNascita) return '--';
@@ -62,6 +72,7 @@ export class InformazioniMedicoPaziente {
 
   apriPrenotazione(medico: utenteDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
+    this.nuovaPrenotazione.paziente_id = this.id
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
   }

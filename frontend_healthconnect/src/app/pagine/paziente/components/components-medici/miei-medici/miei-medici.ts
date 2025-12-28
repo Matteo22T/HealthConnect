@@ -96,6 +96,7 @@ export class MieiMedici implements OnInit{
 
   apriPrenotazione(medico: utenteDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
+    this.nuovaPrenotazione.paziente_id = this.user.id
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
   }
