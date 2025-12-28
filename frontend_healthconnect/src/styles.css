@@ -1,27 +1,68 @@
-/*per la mappa */
-::ng-deep .pac-container {
+/* =========================================
+   1. FIX MAPPA GOOGLE
+   (Nel css globale non serve ng-deep)
+   ========================================= */
+.pac-container {
   z-index: 10000 !important;
 }
 
-/*il resto */
+/* =========================================
+   2. VARIABILI GLOBALI
+   ========================================= */
 :root {
-  --primary-color: #0066cc; /* Blu Medico */
-  --secondary-color: #00c4cc; /* Verde Acqua/Teal */
-  --accent-color: #f0f7ff; /* Azzurrino chiaro */
+  --primary-color: #0066cc;      /* Blu Medico */
+  --secondary-color: #00c4cc;    /* Verde Acqua */
+  --accent-color: #f0f7ff;       /* Azzurrino chiaro */
   --text-dark: #1a2b4b;
   --text-light: #5e6d82;
   --white: #ffffff;
+
+  /* Ombreggiature standard */
   --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 25px rgba(0, 50, 100, 0.08);
   --shadow-lg: 0 20px 40px rgba(0, 50, 100, 0.1);
 }
-:host {
-  display: block;
+
+/* =========================================
+   3. RESET E BASE
+   ========================================= */
+html, body {
+  height: 100%;       /* Fondamentale per il layout full-height */
+  margin: 0;          /* Via i margini di default */
   font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
-  background: #f8faff; /* Sfondo chiarissimo */
+  background: #f8faff;
   color: var(--text-dark);
   line-height: 1.6;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Evita scroll orizzontale indesiderato */
+}
+
+/* =========================================
+   4. SISTEMA DI LAYOUT (STICKY FOOTER)
+   Usa queste classi nei tuoi file xxx-layout.html
+   ========================================= */
+
+/* Contenitore padre (da mettere attorno a tutto: navbar, router, footer) */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Forza l'altezza minima a tutto lo schermo */
+}
+
+/* Contenitore centrale (da mettere attorno al <router-outlet>) */
+.main-content {
+  flex: 1;               /* La magia: riempie tutto lo spazio vuoto */
+  width: 100%;
+  box-sizing: border-box; /* Gestisce meglio i padding */
+
+  /* Spaziatura Standard */
+  padding-top: 1rem;     /* Un po' d'aria dalla navbar */
+  padding-bottom: 4rem;  /* Spazio GARANTITO sopra il footer */
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content > *:not(router-outlet) {
+  flex: 1;      /* Espanditi! */
+  width: 100%;  /* Occupa tutta la larghezza */
 }

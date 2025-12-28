@@ -9,7 +9,8 @@ import {FooterComponent} from '../../footer/footer';
   imports: [
     RouterOutlet,
     PazienteNavbar,
-    FooterComponent
+    FooterComponent,
+    MedicoNavbar
   ],
   templateUrl: './paziente-layout.html',
   styleUrl: './paziente-layout.css',

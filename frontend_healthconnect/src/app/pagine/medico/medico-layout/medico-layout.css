@@ -1,9 +1,8 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: block; /* Lascia che sia il div .app-wrapper a gestire il layout */
 }
 
-.container {
-  flex: 1;
+/* Opzionale: se vuoi nascondere il tag tecnico del router */
+router-outlet {
+  display: none;
 }
