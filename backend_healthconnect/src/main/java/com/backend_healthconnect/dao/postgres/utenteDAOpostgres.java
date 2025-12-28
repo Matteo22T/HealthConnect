@@ -227,8 +227,19 @@ public class utenteDAOpostgres implements utenteDAO {
     @Override
     public List<utenteDTO> getUtentiAll() {
         List<utenteDTO> utenti = new ArrayList<>();
-        String query = "SELECT * FROM utenti WHERE ruolo = 'PAZIENTE' OR ruolo = 'MEDICO' ORDER BY created_at DESC";
-        String queryMedico = "SELECT * FROM dettagli_medici WHERE utente_id = ?";
+
+        String query = """
+            SELECT u.*, 
+                   dm.specializzazione_id, 
+                   dm.numero_albo, 
+                   dm.biografia, 
+                   dm.indirizzo_studio, 
+                   dm.stato_approvazione
+            FROM utenti u
+            LEFT JOIN dettagli_medici dm ON u.id = dm.utente_id
+            WHERE u.ruolo IN ('PAZIENTE', 'MEDICO')
+            ORDER BY u.created_at DESC
+        """;
 
         try (Connection conn = this.dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)){
             ResultSet rs = stmt.executeQuery();
@@ -242,29 +253,34 @@ public class utenteDAOpostgres implements utenteDAO {
                 utente.setTelefono(rs.getLong("telefono"));
                 utente.setRuolo(Ruolo.valueOf(rs.getString("ruolo")));
                 utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
-                utente.setDataCreazione(rs.getDate("created_at").toLocalDate());
+
+                java.sql.Date dataCreazione = rs.getDate("created_at");
+                if (dataCreazione != null) {
+                    utente.setDataCreazione(dataCreazione.toLocalDate());
+                }
+
                 utente.setSesso(rs.getString("sesso"));
+
                 if (utente.getRuolo() == Ruolo.MEDICO){
-                    try(PreparedStatement stmt2 = conn.prepareStatement(queryMedico)){
-                        stmt2.setLong(1,utente.getId());
-                        ResultSet rs2 = stmt2.executeQuery();
-                        if (rs2.next()){
-                            utente.setSpecializzazione_id(rs2.getLong("specializzazione_id"));
-                            utente.setNumero_albo(rs2.getString("numero_albo"));
-                            utente.setBiografia(rs2.getString("biografia"));
-                            utente.setIndirizzo_studio(rs2.getString("indirizzo_studio"));
-                            utente.setStato_approvazione(StatoApprovazione.valueOf(rs2.getString("stato_approvazione")));
-                        }
+                    long specId = rs.getLong("specializzazione_id");
+                    if (!rs.wasNull()) {
+                        utente.setSpecializzazione_id(specId);
                     }
-                    catch (SQLException e){
-                        throw new RuntimeException(e);
+                    utente.setNumero_albo(rs.getString("numero_albo"));
+                    utente.setBiografia(rs.getString("biografia"));
+                    utente.setIndirizzo_studio(rs.getString("indirizzo_studio"));
+
+                    String stato = rs.getString("stato_approvazione");
+                    if (stato != null) {
+                        utente.setStato_approvazione(StatoApprovazione.valueOf(stato));
                     }
                 }
+
                 utenti.add(utente);
             }
             return utenti;
         } catch (SQLException e){
-            throw  new RuntimeException("Errore durante richiesta lista utenti",e);
+            throw new RuntimeException("Errore durante richiesta lista utenti", e);
         }
     }
 

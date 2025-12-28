@@ -416,5 +416,6 @@ public class visitaDAOpostgres implements visitaDAO {
         }catch (SQLException e){
             throw new RuntimeException("Errore durante la richiesta della visita", e);
         }
+        return false;
     }
 }
