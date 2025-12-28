@@ -150,7 +150,6 @@ body { font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
 .section-divider { display: flex; align-items: center; text-align: center; margin: 1rem 0; color: var(--text-light); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 .section-divider::before, .section-divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(0, 102, 204, 0.15); }
 .section-divider span { padding: 0 10px; }
-.info-box { background-color: var(--warning-bg); color: var(--warning-text); padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; text-align: center; border: 1px solid rgba(180, 83, 9, 0.2); }
 
 /* BOTTONI */
 .btn-login {
@@ -165,10 +164,50 @@ body { font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
 
 /* FOOTER & LINKS */
 .login-footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(0, 102, 204, 0.1); color: var(--text-light); font-size: 0.9rem; }
-.link-register { color: var(--primary-color); font-weight: 600; text-decoration: none; }
+.link-register {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.link-register::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.link-register:hover::after {
+  width: 100%;
+}
+
+.link-register:hover {
+  color: #0052a3;
+}
 .back-home { text-align: center; margin-top: 1.5rem; }
-.link-back { color: var(--text-light); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.2s; }
-.link-back:hover { background: rgba(0, 102, 204, 0.05); color: var(--primary-color); }
+.link-back {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+.link-back:hover {
+  color: var(--primary-color);
+  background: rgba(0, 102, 204, 0.05);
+  transform: translateX(-3px);
+}
+
 
 .spinner {
   display: inline-block;
@@ -186,9 +225,8 @@ body { font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
   to { transform: rotate(360deg); }
 }
 
-/* Opzionale: cambia leggermente lo stile del bottone quando è in loading per farlo sembrare "occupato" */
 .btn-login:disabled {
-  background: #9abbdb; /* Un blu sbiadito invece del grigio standard se preferisci mantenere il tono */
+  background: #9abbdb;
   cursor: wait;
 }
 
