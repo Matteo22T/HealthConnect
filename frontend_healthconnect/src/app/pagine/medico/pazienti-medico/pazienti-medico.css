@@ -6,10 +6,10 @@
   animation: fadeInUp 0.8s ease-out;
   width: 100%;
   box-sizing: border-box;
-  flex: 1;               /* Occupa tutto lo spazio verticale disponibile */
-  display: flex;         /* Diventa flex per gestire i figli */
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  min-height: 600px;
+  min-height: 100vh;
 }
 
 @keyframes fadeInUp {

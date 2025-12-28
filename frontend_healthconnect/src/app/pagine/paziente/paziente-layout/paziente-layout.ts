@@ -10,7 +10,6 @@ import {FooterComponent} from '../../footer/footer';
     RouterOutlet,
     PazienteNavbar,
     FooterComponent,
-    MedicoNavbar
   ],
   templateUrl: './paziente-layout.html',
   styleUrl: './paziente-layout.css',

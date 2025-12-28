@@ -1,0 +1,8 @@
+:host {
+  display: block; /* Lascia che sia il div .app-wrapper a gestire il layout */
+}
+
+/* Opzionale: se vuoi nascondere il tag tecnico del router */
+router-outlet {
+  display: none;
+}

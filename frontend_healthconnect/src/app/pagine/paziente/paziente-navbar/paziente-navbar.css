@@ -23,7 +23,7 @@ header {
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 10000;
+  z-index: 100;
   border-bottom: 1px solid rgba(0, 102, 204, 0.08);
 }
 
@@ -314,7 +314,7 @@ header {
   }
 
   .nav-links {
-    display: none; /* Nasconde nav su mobile */
+    display: none;
   }
 
   .header-right {
@@ -326,7 +326,7 @@ header {
   }
 
   .user-info {
-    display: none; /* Nasconde info utente su mobile piccolo */
+    display: none;
   }
 
   .user-avatar {
@@ -341,7 +341,7 @@ header {
 
 @media (max-width: 480px) {
   .logo span {
-    display: none; /* Nasconde "Connect" su mobile molto piccolo */
+    display: none;
   }
 
   .custom-dropdown {
