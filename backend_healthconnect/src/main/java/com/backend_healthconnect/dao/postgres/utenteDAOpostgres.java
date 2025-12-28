@@ -120,32 +120,48 @@ public class utenteDAOpostgres implements utenteDAO {
 
     @Override
     public utenteDTO save(utenteDTO utente) {
+        String queryInsertUtente = "INSERT INTO utenti ( email, password, nome, cognome, telefono, data_nascita,ruolo, sesso) VALUES (?, ?, ?, ?, ?, ?, ?::ruolo_enum,?)";
+        String queryInsertNotifiche = "INSERT INTO impostazioni_notifiche (utente_id, notifiche_email) VALUES (?, ?)";
 
-        String query = "INSERT INTO utenti ( email, password, nome, cognome, telefono, data_nascita,ruolo, sesso) VALUES (?, ?, ?, ?, ?, ?, ?::ruolo_enum,?)";
-        try (PreparedStatement preparedStatement = this.dataSource.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
-            preparedStatement.setString(1, utente.getEmail());
-            preparedStatement.setString(2, utente.getPassword());
-            preparedStatement.setString(3, utente.getNome());
-            preparedStatement.setString(4, utente.getCognome());
-            preparedStatement.setLong(5, utente.getTelefono());
-            preparedStatement.setDate(6, java.sql.Date.valueOf(utente.getDataNascita()));
-            preparedStatement.setString(7, utente.getRuolo().toString());
-            preparedStatement.setString(8, utente.getSesso());
-            preparedStatement.executeUpdate();
-
+        try (Connection connection = this.dataSource.getConnection()) {
+            connection.setAutoCommit(false);
             try {
-                ResultSet rs = preparedStatement.getGeneratedKeys();
-                if (rs.next()) {
-                    utente.setId(rs.getLong(1));
+                try (PreparedStatement preparedStatement = connection.prepareStatement(queryInsertUtente, Statement.RETURN_GENERATED_KEYS)) {
+                    preparedStatement.setString(1, utente.getEmail());
+                    preparedStatement.setString(2, utente.getPassword());
+                    preparedStatement.setString(3, utente.getNome());
+                    preparedStatement.setString(4, utente.getCognome());
+                    preparedStatement.setLong(5, utente.getTelefono());
+                    preparedStatement.setDate(6, java.sql.Date.valueOf(utente.getDataNascita()));
+                    preparedStatement.setString(7, utente.getRuolo().toString());
+                    preparedStatement.setString(8, utente.getSesso());
+                    preparedStatement.executeUpdate();
+
+                    try (ResultSet rs = preparedStatement.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            utente.setId(rs.getLong(1));
+                        } else {
+                            throw new SQLException("Creazione utente fallita, nessun ID ottenuto.");
+                        }
+                    }
                 }
+
+                try (PreparedStatement stmtNotifiche = connection.prepareStatement(queryInsertNotifiche)) {
+                    stmtNotifiche.setLong(1, utente.getId());
+                    stmtNotifiche.setBoolean(2, true);
+                    stmtNotifiche.executeUpdate();
+                }
+
+                connection.commit();
+                return utente;
+
             } catch (SQLException e) {
-                e.printStackTrace();
+                connection.rollback();
+                throw e;
             }
-            return utente;
 
-
-        } catch (SQLException e){
-            throw new RuntimeException("Errore durante il salvataggio dell'utente",e);
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante il salvataggio dell'utente e delle impostazioni", e);
         }
     }
 

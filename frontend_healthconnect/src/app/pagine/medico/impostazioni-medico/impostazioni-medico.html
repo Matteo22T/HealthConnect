@@ -79,3 +79,12 @@
 
   </div>
 </div>
+
+<div class="modal-overlay" *ngIf="showSuccess">
+  <div class="modal-content success-content">
+    <div class="success-icon">✓</div>
+    <h3>Ottimo!</h3>
+    <p>La tua password è stata aggiornata con successo.</p>
+    <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>
+  </div>
+</div>

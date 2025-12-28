@@ -21,6 +21,7 @@ export class ImpostazioniMedico implements OnInit {
   cambiaPasswordForm!: FormGroup;
   loading = false;
   errorMessage = '';
+  showSuccess: boolean = false;
 
   impostazioni: ImpostazioniNotifiche = {
     utenteId: 0,
@@ -71,6 +72,7 @@ export class ImpostazioniMedico implements OnInit {
         next: (res) => {
           this.loading = false;
           this.cambiaPasswordForm.reset();
+          this.showSuccess = true;
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -83,6 +85,11 @@ export class ImpostazioniMedico implements OnInit {
     } else {
       this.cambiaPasswordForm.markAllAsTouched();
     }
+  }
+
+  chiudiSuccess() {
+    this.showSuccess = false;
+    this.cdr.detectChanges();
   }
 
   caricaImpostazioniNotifiche(id: number) {

@@ -91,7 +91,7 @@ public class visitaDAOpostgres implements visitaDAO {
 
     @Override
     public List<visitaDTO> getListaVisiteMedicoSenzaDiagnosi(Long id) {
-        String query = "SELECT * FROM visite WHERE medico_id = ? AND diagnosi IS NULL" + " ORDER BY data_visita DESC";
+        String query = "SELECT * FROM visite WHERE medico_id = ? AND diagnosi IS NULL AND data_visita<=CURRENT_TIMESTAMP ORDER BY data_visita DESC";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setLong(1, id);
