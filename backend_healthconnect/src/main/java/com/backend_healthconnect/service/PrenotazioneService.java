@@ -56,11 +56,16 @@ public class PrenotazioneService {
             String testo = "Salve, la sua richiesta di appuntamento per il " + "Dott." + pren.getMedico().getCognome() + "\n\n" +
                     "in data" + pren.getDataVisita() + "è stata accettata."+
                     "\n\n" +
-                    "Accedi alla piattaforma per gestire la richiesta.";
+                    "Accedi alla piattaforma per maggiori informazioni.";
 
             notificaService.inviaEmail(pren.getPaziente().getEmail(), oggetto, testo);
         }
-        return visitaDAO.creaVisita(pren) && messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");
+        if (visitaDAO.creaVisita(pren)){
+            if (visitaDAO.primaVisita(pren.getMedico().getId(), pren.getPaziente().getId())){
+                messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");
+            }
+        }
+        return false;
     }
 
     public boolean rifiutaPrenotazione(Long id) { return prenotazioneDAO.rifiutaPrenotazione(id);

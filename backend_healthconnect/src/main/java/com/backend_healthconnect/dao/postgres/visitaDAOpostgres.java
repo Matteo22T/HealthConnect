@@ -402,4 +402,19 @@ public class visitaDAOpostgres implements visitaDAO {
         }
         return 0;
     }
+
+    public boolean primaVisita(Long idMedico, Long idPaziente){
+        String query = "SELECT COUNT(*) FROM visite WHERE id_medico = ? AND id_paziente = ?";
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query)){
+            stmt.setLong(1, idMedico);
+            stmt.setLong(2, idPaziente);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                return rs.getInt(1) == 0;
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("Errore durante la richiesta della visita", e);
+        }
+    }
 }
