@@ -3,12 +3,14 @@ import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../service/auth-service';
 import {utenteDTO} from '../../model/utenteDTO';
 import {Router, RouterLink} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   imports: [
     FormsModule,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -21,6 +23,11 @@ export class Login {
   email=""
   password=""
   errorMessage=""
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   login(){
     this.errorMessage="";

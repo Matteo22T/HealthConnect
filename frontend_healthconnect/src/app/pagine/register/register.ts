@@ -26,6 +26,12 @@ export class Register implements OnInit {
   errorMessage: string = '';
   specializzazioni: SpecializzazioneDTO[] = [];
   isLoading = false;
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
 
   @ViewChild('addressInput') addressInput: ElementRef | undefined;
 
