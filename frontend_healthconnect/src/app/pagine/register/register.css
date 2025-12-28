@@ -270,3 +270,18 @@ body { font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
   height: 20px;
   stroke-width: 2;
 }
+
+::ng-deep .pac-container {
+  z-index: 10000 !important;
+}
+
+/* Indirizzo Studio: usa lo stesso stile degli altri input */
+.address-wrapper {
+  width: 100%;
+}
+
+/* (Opzionale) se vuoi rendere la tendina più "coerente" col tema */
+::ng-deep .pac-item {
+  font-family: inherit;
+  font-size: 0.95rem;
+}

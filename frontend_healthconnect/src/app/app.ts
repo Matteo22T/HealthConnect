@@ -1,22 +1,12 @@
-import {Component, OnInit, signal} from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {GoogleMapsLoaderService} from './service/google-maps-loader-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
-
+  styleUrl: './app.css',
 })
-export class App implements OnInit{
+export class App {
   protected readonly title = signal('frontend_healthconnect');
-  constructor(private mapsLoader: GoogleMapsLoaderService) {}
-
-  ngOnInit() {
-
-    this.mapsLoader.load().then(() => {
-      console.log('maps funziona godo');
-    });
-  }
 }

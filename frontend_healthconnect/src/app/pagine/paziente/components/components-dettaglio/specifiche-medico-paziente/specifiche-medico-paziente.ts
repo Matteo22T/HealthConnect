@@ -1,121 +1,110 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnInit,
-  ViewChild,
-  AfterViewInit,
-  ChangeDetectorRef,
-  SimpleChanges, OnChanges
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
-import {GoogleMapsLoaderService} from '../../../../../service/google-maps-loader-service';
-import {utenteDTO} from '../../../../../model/utenteDTO';
-import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
-import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
 
-declare var google: any;
+import { utenteDTO } from '../../../../../model/utenteDTO';
+import { SpecializzazioniService } from '../../../../../service/specializzazioni-service';
+import { SpecializzazioneDTO } from '../../../../../model/specializzazioneDTO';
+import { GoogleMapsService } from '../../../../../service/google-maps-service';
 
 @Component({
   selector: 'app-specifiche-medico-paziente',
-  imports: [
-  ],
+  standalone: true,
+  imports: [],
   templateUrl: './specifiche-medico-paziente.html',
   styleUrl: './specifiche-medico-paziente.css',
 })
 export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChanges {
-  @ViewChild('visualizzaMappa') mapView: ElementRef | undefined;
+  @ViewChild('visualizzaMappa') mapView?: ElementRef<HTMLElement>;
 
-  @Input({required: true}) medico: utenteDTO | undefined = undefined;
+  @Input({ required: true }) medico?: utenteDTO;
 
   nomeSpecializzazione: string = 'Caricamento...';
 
+  // per evitare re-init inutili quando non cambia nulla
+  private lastRenderedAddress: string | undefined;
 
-  constructor(private mapsLoader: GoogleMapsLoaderService,private specService: SpecializzazioniService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private googleMaps: GoogleMapsService,
+    private specService: SpecializzazioniService,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  ngOnInit() {
-    // Carica Google Maps all'avvio
-    this.mapsLoader.load().then(() => {
-      console.log('Google Maps caricato con successo');
-    }).catch(err => console.error("Maps non caricato", err));
-
+  ngOnInit(): void {
     this.trovaSpecializzazione();
   }
 
+  ngAfterViewInit(): void {
+    // appena la view è pronta, prova a renderizzare la mappa
+    setTimeout(() => this.initViewMap(), 0);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['medico'] && !changes['medico'].firstChange) {
+    if (changes['medico']) {
       this.trovaSpecializzazione();
-      }
+
+      // se cambia medico/indirizzo, prova a rerenderizzare la mappa
+      setTimeout(() => this.initViewMap(), 0);
+    }
   }
 
-  ngAfterViewInit() {
-    // Aspetta che la view sia completamente renderizzata
-    setTimeout(() => {
-      this.initViewMap();
-    }, 500);
-  }
+  // --- MAPPA SOLO VISUALIZZAZIONE ---
+  async initViewMap(): Promise<void> {
+    const container = this.mapView?.nativeElement;
+    const address = this.medico?.indirizzo_studio;
 
-  // --- FUNZIONE: Mappa Solo Visualizzazione (View Mode) ---
-  async initViewMap() {
-    // Controlli di sicurezza
-    if (!this.mapView || !this.medico?.indirizzo_studio) {
-      console.log('Mappa non inizializzata:', {
-        mapView: !!this.mapView,
-        indirizzo: this.medico?.indirizzo_studio
-      });
-      return;
-    }
+    if (!container || !address) return;
 
-    // Verifica che Google Maps sia caricato
-    if (typeof google === 'undefined' || !google.maps) {
-      console.error('Google Maps non caricato');
-      return;
-    }
+    // evita di reinizializzare se l'indirizzo è lo stesso
+    if (this.lastRenderedAddress === address) return;
+    this.lastRenderedAddress = address;
 
     try {
-      // Importa le librerie necessarie (Maps + Marker + Geocoder)
-      const { Map } = await google.maps.importLibrary("maps");
-      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-      const { Geocoder } = await google.maps.importLibrary("geocoding");
+      // assicura configurazione + librerie (coerente col resto dell'app)
+      await this.googleMaps.loadMarker();
 
-      console.log('Inizializzazione mappa per indirizzo:', this.medico?.indirizzo_studio);
+      const { Map } = (await google.maps.importLibrary('maps')) as any;
+      const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as any;
+      const { Geocoder } = (await google.maps.importLibrary('geocoding')) as any;
 
-      const map = new Map(this.mapView.nativeElement, {
+      const map = new Map(container, {
         center: { lat: 41.9028, lng: 12.4964 },
         zoom: 15,
-        mapId: "DEMO_MAP_ID",
-
-        // Disattiva zoom e controlli di navigazione
-        keyboardShortcuts: false,    // Disabilita frecce tastiera
+        mapId: 'DEMO_MAP_ID',
+        keyboardShortcuts: false,
       });
 
       const geocoder = new Geocoder();
-      geocoder.geocode({ 'address': this.medico?.indirizzo_studio }, (results: any, status: any) => {
-        if (status === 'OK' && results[0]) {
-          console.log('Geocoding riuscito:', results[0].formatted_address);
+      geocoder.geocode({ address }, (results: any, status: any) => {
+        if (status === 'OK' && results?.[0]) {
           map.setCenter(results[0].geometry.location);
 
           new AdvancedMarkerElement({
-            map: map,
+            map,
             position: results[0].geometry.location,
-            title: "Sede studio",
-            gmpDraggable: false
+            title: 'Sede studio',
+            gmpDraggable: false,
           });
         } else {
           console.error('Geocoding fallito:', status);
         }
       });
     } catch (e) {
-      console.error("Errore initViewMap", e);
+      console.error('Errore initViewMap', e);
     }
   }
 
-
-  trovaSpecializzazione() {
+  trovaSpecializzazione(): void {
     const specId = this.medico?.specializzazione_id;
 
-    console.log('Inizializzazione trova:', specId);
-
-    // Se non c'è ID, esci subito
     if (specId === null || specId === undefined) {
       this.nomeSpecializzazione = 'Non specificata';
       this.cd.detectChanges();
@@ -124,16 +113,10 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
 
     this.specService.getAllSpecializzazioni().subscribe({
       next: (lista: SpecializzazioneDTO[]) => {
-        console.log('Lista specializzazioni:', lista);
-
-        // Cerchiamo l'ID nella lista
-        const trovata = lista.find(s => s.id == specId);
-
-        console.log('Specializzazione trovata:', trovata);
+        const trovata = lista.find((s) => s.id == specId);
 
         if (trovata) {
           this.nomeSpecializzazione = trovata.nome;
-          console.log('Nome specializzazione assegnato:', this.nomeSpecializzazione);
         } else {
           this.nomeSpecializzazione = 'Non trovata';
         }
@@ -143,7 +126,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
         console.error('Errore recupero specializzazioni', err);
         this.nomeSpecializzazione = 'Errore caricamento';
         this.cd.detectChanges();
-      }
+      },
     });
   }
 }
