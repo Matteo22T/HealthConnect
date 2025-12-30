@@ -20,13 +20,20 @@ import {forkJoin} from 'rxjs';
   styleUrl: './medico-navbar.css',
 })
 export class MedicoNavbar implements OnInit{
-  isProfileMenuOpen = false
-  nomeMedico: string = ""
-  cognomeMedico: string = ""
+  isProfileMenuOpen = false;
+  isMobileMenuOpen = false; // ⬅️ NUOVO: per il menu mobile
+  nomeMedico: string = "";
+  cognomeMedico: string = "";
   specializzazione: SpecializzazioneDTO | null = null;
-  messaggi: MessaggioDTO[] = []
+  messaggi: MessaggioDTO[] = [];
 
-  constructor(private auth: AuthService, private router: Router, private specService: SpecializzazioniService, private messService: MessaggioService, private changeDet: ChangeDetectorRef) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private specService: SpecializzazioniService,
+    private messService: MessaggioService,
+    private changeDet: ChangeDetectorRef
+  ) {}
 
   ngOnInit(){
     const currentUser = this.auth.currentUserValue;
@@ -40,8 +47,8 @@ export class MedicoNavbar implements OnInit{
           spec: this.specService.getSpecializzazione(currentUser.specializzazione_id),
         }).subscribe({
           next: result => {
-            this.specializzazione = result.spec
-            this.messaggi = result.mess
+            this.specializzazione = result.spec;
+            this.messaggi = result.mess;
             this.changeDet.detectChanges();
           },
           error: (err) => {
@@ -51,12 +58,13 @@ export class MedicoNavbar implements OnInit{
               console.error('Errore server', err);
             }
           }
-        })
+        });
       }
     }
   }
 
   logout() {
+    this.closeAllMenus(); // ⬅️ Chiudi i menu prima del logout
     this.auth.logout().subscribe({
       next: () => {
         this.router.navigate(['/login']);
@@ -68,11 +76,32 @@ export class MedicoNavbar implements OnInit{
     });
   }
 
+  // ⬇️ METODI PER IL MENU PROFILO (già esistenti, migliorati)
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
+    if (this.isProfileMenuOpen) {
+      this.isMobileMenuOpen = false; // Chiudi mobile menu se aperto
+    }
   }
 
   closeProfileMenu() {
+    this.isProfileMenuOpen = false;
+  }
+
+  // ⬇️ NUOVI METODI PER IL MENU MOBILE
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    if (this.isMobileMenuOpen) {
+      this.isProfileMenuOpen = false; // Chiudi profile menu se aperto
+    }
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
+
+  closeAllMenus() {
+    this.isMobileMenuOpen = false;
     this.isProfileMenuOpen = false;
   }
 }
