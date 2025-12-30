@@ -10,8 +10,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ChatService, ChatMessaggioDTO } from '../../../service/chat-service';
-import { MedicoService } from '../../../service/medico-service';
+import { ChatService, ChatMessaggioDTO } from '../../service/chat-service';
+import { MedicoService } from '../../service/medico-service';
 
 @Component({
   selector: 'app-chat',

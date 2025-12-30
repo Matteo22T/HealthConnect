@@ -27,7 +27,7 @@ import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
 import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supporto/chat-supporto';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
-import { ChatComponent } from './pagine/paziente/chat/chat';
+import { ChatComponent } from './pagine/chat/chat';
 import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
 import {Utenti} from './pagine/admin/utenti/utenti';
 import {DettaglioMedicoPaziente} from './pagine/paziente/dettaglio-medico-paziente/dettaglio-medico-paziente';
@@ -42,13 +42,15 @@ export const routes: Routes = [
     canActivate: [guestGuard]
   },
 
+  { path: 'chi-siamo', component: ChiSiamo },
+
   { path: 'login', component: Login, canActivate: [guestGuard]},
   { path: 'register', component: Register, canActivate: [guestGuard]},
 
   {path: 'admin', component: AdminLayout, canActivate: [AuthGuard], data: {ruolo: "ADMIN"}, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardAdmin},
-      {path: 'utenti', component: Utenti}
+      {path: 'utenti', component: Utenti},
     ]
   },
 
@@ -78,9 +80,7 @@ export const routes: Routes = [
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
       {path: 'richieste', component: AppuntamentiMedico},
-      {path: 'visite/:id', component: VisitaDettaglioMedico}
+      {path: 'visite/:id', component: VisitaDettaglioMedico},
     ]},
-
-  {path: 'chi-siamo', component: ChiSiamo},
   { path: '**', redirectTo:''}
 ];
