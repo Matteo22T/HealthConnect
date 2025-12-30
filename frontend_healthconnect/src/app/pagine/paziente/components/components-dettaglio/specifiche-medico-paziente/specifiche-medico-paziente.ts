@@ -85,17 +85,15 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
     const address = this.medico?.indirizzo_studio?.trim();
     if (!address) return;
 
-    // evita lavoro inutile
     if (this.lastAddress === address && this.map) return;
     this.lastAddress = address;
 
     try {
-      // ✅ tutte dal singleton
       const mapsLib = await this.googleMaps.loadMaps();
       const markerLib = await this.googleMaps.loadMarker();
       const geocodingLib = await this.googleMaps.loadGeocoding();
 
-      // 1) geocodifica PRIMA (così non mostri Roma)
+     //geocodifico prima di creare la mappa
       const geocoder = new geocodingLib.Geocoder();
 
       geocoder.geocode({ address }, (results: any, status: any) => {
@@ -106,7 +104,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
 
         const loc = results[0].geometry.location;
 
-        // 2) crea la mappa solo quando hai loc
+        //creo la mappa
         if (!this.map) {
           this.map = new mapsLib.Map(this.mapView!.nativeElement, {
             center: loc,
