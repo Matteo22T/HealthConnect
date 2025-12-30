@@ -68,7 +68,7 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Seleziona Data e Ora:</label>
-        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" class="form-control">
+        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" [min]="minDate" class="form-control">
       </div>
 
       <div class="form-group">
@@ -82,6 +82,10 @@
           <option value="Consulto">Consulto</option>
           <option value="Altro">Altro</option>
         </select>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert-box">
+        <span>⚠️</span> {{ errorMessage }}
       </div>
     </div>
 

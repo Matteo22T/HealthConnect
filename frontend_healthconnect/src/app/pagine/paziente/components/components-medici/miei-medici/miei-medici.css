@@ -672,6 +672,23 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   transform: translateY(-1px);
 }
 
+.alert-box {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+  border: none;
+  border-left: 5px solid #ffc107;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 10px;
+  color: #8b6914;
+  font-size: 14px;
+  line-height: 1.7;
+  box-shadow:
+    0 8px 24px rgba(255, 193, 7, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: slideInDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
 /* ========================================= */
 /* SUCCESS MODAL - Design Celebrativo       */
 /* ========================================= */

@@ -26,6 +26,8 @@ export class MediciPaziente {
   showModal: boolean = false;
 
   showSuccess: boolean = false;
+  errorMessage: string = '';
+
 
   nuovaPrenotazione = {
     medico_id: 0,
@@ -53,6 +55,7 @@ export class MediciPaziente {
     this.nuovaPrenotazione.paziente_id = this.user
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
+    this.errorMessage = '';
   }
 
   chiudiModal() {
@@ -62,9 +65,27 @@ export class MediciPaziente {
   }
 
   confermaPrenotazione() {
+    this.errorMessage = '';
 
     if (!this.nuovaPrenotazione.data_visita || !this.nuovaPrenotazione.motivo) {
-      alert("Per favore compila data e motivo.");
+      this.errorMessage = "Per favore compila data e motivo.";
+      return;
+    }
+
+    const dataSelezionata = new Date(this.nuovaPrenotazione.data_visita);
+    const dataOdierna = new Date();
+    const ora = dataSelezionata.getHours();
+
+    // 2. Controllo Data Passata (non puoi prenotare nel passato)
+    if (dataSelezionata <= dataOdierna) {
+      this.errorMessage = "La data della visita deve essere successiva ad adesso.";
+      return;
+    }
+
+    // 3. Controllo Orario (08:00 - 20:00)
+    // Se l'ora è minore di 8 OPPURE maggiore o uguale a 20 (es. 20:01)
+    if (ora < 8 || ora >= 20) {
+      this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
       return;
     }
 
@@ -85,11 +106,10 @@ export class MediciPaziente {
           this.gestisciSuccesso();
         } else {
           console.error("Errore vero:", err);
-          alert("Errore durante la prenotazione. Controlla la console.");
+          this.errorMessage = "Errore durante la prenotazione. Riprova più tardi.";
         }
       }
     });
-    this.cd.detectChanges();
   }
 
 
@@ -102,5 +122,11 @@ export class MediciPaziente {
   chiudiSuccess() {
     this.showSuccess = false;
     this.cd.detectChanges()
+  }
+
+  get minDate(): string {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
   }
 }
