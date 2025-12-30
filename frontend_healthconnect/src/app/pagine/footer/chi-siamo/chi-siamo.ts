@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ChiSiamo implements OnInit{
   ngOnInit() {
-    window.scrollTo({ top: 0, left: 0 });
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }

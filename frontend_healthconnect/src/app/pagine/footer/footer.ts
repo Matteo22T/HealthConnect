@@ -9,10 +9,6 @@ import {RouterLink} from '@angular/router';
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
-export class FooterComponent implements OnInit{
+export class FooterComponent {
   annocorrente = new Date().getFullYear();
-  ngOnInit() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }
 }
