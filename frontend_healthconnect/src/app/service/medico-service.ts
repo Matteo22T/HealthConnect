@@ -19,6 +19,6 @@ export class MedicoService {
   }
 
   getMedicoById(id: number): Observable<MedicoDTO> {
-      return this.http.get<MedicoDTO>(`${this.apiUrl}/${id}`);
+      return this.http.get<MedicoDTO>(`${this.apiUrl}/${id}`, {withCredentials: true});
     }
 }

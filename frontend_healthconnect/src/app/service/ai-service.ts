@@ -32,10 +32,10 @@ export class AiService {
 
   initDiagnosis(text: string, age: number, sex: string): Observable<DiagnosisResponse> {
     const body = { text, age, sex };
-    return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis`, body);
+    return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis`, body, {withCredentials: true});
   }
 
   updateDiagnosis(request: DiagnosisRequest): Observable<DiagnosisResponse> {
-    return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis/update`, request);
+    return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis/update`, request, {withCredentials: true});
   }
 }
