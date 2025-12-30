@@ -78,7 +78,16 @@ export class ListaCalendarioPaziente implements OnInit {
     return `${inizio} - ${fine}`;
   }
 
-  toggleSezione(sezione: 'confermate' | 'pending' | 'rifiutate') {
-    this.sezioniAperte[sezione] = !this.sezioniAperte[sezione];
+
+
+  activeTab: string = 'confermate';
+
+  formatDay(date: string): string {
+    return new Date(date).getDate().toString();
+  }
+
+  formatMonth(date: string): string {
+    const months = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+    return months[new Date(date).getMonth()];
   }
 }

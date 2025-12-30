@@ -1,158 +1,185 @@
 <div class="lista-container">
 
   <div *ngIf="loading" class="loading-spinner">
-    <p>⏳ Caricamento dati...</p>
+    <div class="spinner-icon">⏳</div>
+    <p>Caricamento dati...</p>
   </div>
 
-  <div *ngIf="!loading">
+  <div *ngIf="!loading" class="content-wrapper">
 
-    <!-- Sezione Visite Confermate -->
-    <div class="sezione-lista">
-      <div class="sezione-header confermata" (click)="toggleSezione('confermate')">
-        <h2>✅ Visite Confermate</h2>
-        <div class="header-right">
-          <span class="badge">{{ visite.length }}</span>
-          <span class="toggle-icon">{{ sezioniAperte.confermate ? '▼' : '▶' }}</span>
-        </div>
-      </div>
+    <!-- Header con Tabs -->
+    <div class="tabs-container">
+      <button class="tab-btn"
+              [class.active]="activeTab === 'confermate'"
+              (click)="activeTab = 'confermate'">
+        <span class="tab-icon">✅</span>
+        <span class="tab-label">Confermate</span>
+        <span class="tab-count">{{ visite.length }}</span>
+      </button>
 
-      <div *ngIf="sezioniAperte.confermate" class="sezione-content">
+      <button class="tab-btn"
+              [class.active]="activeTab === 'pending'"
+              (click)="activeTab = 'pending'">
+        <span class="tab-icon">⏳</span>
+        <span class="tab-label">In Attesa</span>
+        <span class="tab-count">{{ prenotazioniPending.length }}</span>
+      </button>
+
+      <button class="tab-btn"
+              [class.active]="activeTab === 'rifiutate'"
+              (click)="activeTab = 'rifiutate'">
+        <span class="tab-icon">❌</span>
+        <span class="tab-label">Rifiutate</span>
+        <span class="tab-count">{{ prenotazioniRifiutate.length }}</span>
+      </button>
+    </div>
+
+    <!-- Contenuto Tabs -->
+    <div class="tab-content">
+
+      <!-- Tab Confermate -->
+      <div *ngIf="activeTab === 'confermate'" class="tab-panel">
         <div *ngIf="visite.length === 0" class="empty-state">
-          <p>📭 Nessuna visita confermata al momento</p>
+          <div class="empty-icon">📭</div>
+          <h3>Nessuna visita confermata</h3>
+          <p>Le tue visite confermate appariranno qui</p>
         </div>
 
-        <div class="lista-cards">
+        <div class="cards-grid">
           <div *ngFor="let visita of visite" class="card card-confermata">
-            <div class="card-header">
-              <div class="status-badge confermata">Confermata</div>
-              <span class="data">📅 {{ formatData(visita.dataVisita) }}</span>
+            <div class="card-ribbon confermata">
+              <span>✓ Confermata</span>
             </div>
 
-            <div class="card-body">
-              <div class="info-row">
-                <span class="icon">🕐</span>
-                <span class="label">Orario:</span>
-                <span class="value">{{ formatOrario(visita.dataVisita) }}</span>
-              </div>
-
-              <div class="info-row">
-                <span class="icon">👨‍⚕️</span>
-                <span class="label">Medico:</span>
-                <span class="value">Dr. {{ visita.medico.nome }} {{ visita.medico.cognome }}</span>
-              </div>
-
-              <div class="info-row">
-                <span class="icon">📋</span>
-                <span class="label">Motivo:</span>
-                <span class="value">{{ visita.prenotazione.motivo }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sezione Prenotazioni in Attesa -->
-      <div class="sezione-lista">
-        <div class="sezione-header pending" (click)="toggleSezione('pending')">
-          <h2>⏳ Prenotazioni in Attesa</h2>
-          <div class="header-right">
-            <span class="badge">{{ prenotazioniPending.length }}</span>
-            <span class="toggle-icon">{{ sezioniAperte.pending ? '▼' : '▶' }}</span>
-          </div>
-        </div>
-
-        <div *ngIf="sezioniAperte.pending" class="sezione-content">
-          <div *ngIf="prenotazioniPending.length === 0" class="empty-state">
-            <p>📭 Nessuna prenotazione in attesa</p>
-          </div>
-
-          <div class="lista-cards">
-            <div *ngFor="let pren of prenotazioniPending" class="card card-pending">
+            <div class="card-content">
               <div class="card-header">
-                <div class="status-badge pending">In Attesa</div>
-                <span class="data">📅 {{ formatData(pren.dataVisita) }}</span>
+                <div class="date-badge">
+                  <span class="date-day">{{ formatDay(visita.dataVisita) }}</span>
+                  <span class="date-month">{{ formatMonth(visita.dataVisita) }}</span>
+                </div>
+                <div class="time-info">
+                  <span class="time">{{ formatOrario(visita.dataVisita) }}</span>
+                </div>
               </div>
 
               <div class="card-body">
-                <div class="info-row">
-                  <span class="icon">🕐</span>
-                  <span class="label">Orario:</span>
-                  <span class="value">{{ formatOrario(pren.dataVisita) }}</span>
+                <div class="doctor-info">
+                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-details">
+                    <span class="doctor-label">Medico</span>
+                    <span class="doctor-name">Dr. {{ visita.medico.nome }} {{ visita.medico.cognome }}</span>
+                  </div>
                 </div>
 
-                <div class="info-row">
-                  <span class="icon">👨‍⚕️</span>
-                  <span class="label">Medico:</span>
-                  <span class="value">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
+                <div class="reason-box">
+                  <span class="reason-label">📋 Motivo della visita</span>
+                  <p class="reason-text">{{ visita.prenotazione.motivo }}</p>
                 </div>
-
-                <div class="info-row">
-                  <span class="icon">📋</span>
-                  <span class="label">Motivo:</span>
-                  <span class="value">{{ pren.motivo }}</span>
-                </div>
-              </div>
-
-              <div class="card-footer">
-                <p class="info-text">ℹ️ In attesa di conferma dal medico</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Sezione Prenotazioni Rifiutate -->
-        <div class="sezione-lista">
-          <div class="sezione-header rifiutata" (click)="toggleSezione('rifiutate')">
-            <h2>❌ Prenotazioni Rifiutate</h2>
-            <div class="header-right">
-              <span class="badge">{{ prenotazioniRifiutate.length }}</span>
-              <span class="toggle-icon">{{ sezioniAperte.rifiutate ? '▼' : '▶' }}</span>
+      <!-- Tab In Attesa -->
+      <div *ngIf="activeTab === 'pending'" class="tab-panel">
+        <div *ngIf="prenotazioniPending.length === 0" class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Nessuna prenotazione in attesa</h3>
+          <p>Le prenotazioni in attesa di conferma appariranno qui</p>
+        </div>
+
+        <div class="cards-grid">
+          <div *ngFor="let pren of prenotazioniPending" class="card card-pending">
+            <div class="card-ribbon pending">
+              <span>⏳ In Attesa</span>
             </div>
-          </div>
 
-          <div *ngIf="sezioniAperte.rifiutate" class="sezione-content">
-            <div *ngIf="prenotazioniRifiutate.length === 0" class="empty-state">
-              <p>📭 Nessuna prenotazione rifiutata</p>
-            </div>
-
-            <div class="lista-cards">
-              <div *ngFor="let pren of prenotazioniRifiutate" class="card card-rifiutata">
-                <div class="card-header">
-                  <div class="status-badge rifiutata">Rifiutata</div>
-                  <span class="data">📅 {{ formatData(pren.dataVisita) }}</span>
+            <div class="card-content">
+              <div class="card-header">
+                <div class="date-badge">
+                  <span class="date-day">{{ formatDay(pren.dataVisita) }}</span>
+                  <span class="date-month">{{ formatMonth(pren.dataVisita) }}</span>
                 </div>
+                <div class="time-info">
+                  <span class="time">{{ formatOrario(pren.dataVisita) }}</span>
+                </div>
+              </div>
 
-                <div class="card-body">
-                  <div class="info-row">
-                    <span class="icon">🕐</span>
-                    <span class="label">Orario:</span>
-                    <span class="value">{{ formatOrario(pren.dataVisita) }}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <span class="icon">👨‍⚕️</span>
-                    <span class="label">Medico:</span>
-                    <span class="value">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <span class="icon">📋</span>
-                    <span class="label">Motivo:</span>
-                    <span class="value">{{ pren.motivo }}</span>
+              <div class="card-body">
+                <div class="doctor-info">
+                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-details">
+                    <span class="doctor-label">Medico</span>
+                    <span class="doctor-name">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
                   </div>
                 </div>
 
-                <div class="card-footer">
-                  <p class="warning-text">⚠️ Questa prenotazione è stata rifiutata. Puoi richiedere una nuova prenotazione.</p>
+                <div class="reason-box">
+                  <span class="reason-label">📋 Motivo della visita</span>
+                  <p class="reason-text">{{ pren.motivo }}</p>
+                </div>
+
+                <div class="status-message pending">
+                  <span class="status-icon">ℹ️</span>
+                  <span>In attesa di conferma dal medico</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
+      <!-- Tab Rifiutate -->
+      <div *ngIf="activeTab === 'rifiutate'" class="tab-panel">
+        <div *ngIf="prenotazioniRifiutate.length === 0" class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Nessuna prenotazione rifiutata</h3>
+          <p>Le prenotazioni rifiutate appariranno qui</p>
         </div>
 
+        <div class="cards-grid">
+          <div *ngFor="let pren of prenotazioniRifiutate" class="card card-rifiutata">
+            <div class="card-ribbon rifiutata">
+              <span>✕ Rifiutata</span>
+            </div>
+
+            <div class="card-content">
+              <div class="card-header">
+                <div class="date-badge">
+                  <span class="date-day">{{ formatDay(pren.dataVisita) }}</span>
+                  <span class="date-month">{{ formatMonth(pren.dataVisita) }}</span>
+                </div>
+                <div class="time-info">
+                  <span class="time">{{ formatOrario(pren.dataVisita) }}</span>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="doctor-info">
+                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-details">
+                    <span class="doctor-label">Medico</span>
+                    <span class="doctor-name">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
+                  </div>
+                </div>
+
+                <div class="reason-box">
+                  <span class="reason-label">📋 Motivo della visita</span>
+                  <p class="reason-text">{{ pren.motivo }}</p>
+                </div>
+
+                <div class="status-message rifiutata">
+                  <span class="status-icon">⚠️</span>
+                  <span>Prenotazione rifiutata. Puoi richiedere una nuova visita.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
+
     </div>
-  </div>
 
+  </div>
+</div>
