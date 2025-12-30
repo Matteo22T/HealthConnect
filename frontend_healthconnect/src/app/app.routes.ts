@@ -42,13 +42,15 @@ export const routes: Routes = [
     canActivate: [guestGuard]
   },
 
+  { path: 'chi-siamo', component: ChiSiamo },
+
   { path: 'login', component: Login, canActivate: [guestGuard]},
   { path: 'register', component: Register, canActivate: [guestGuard]},
 
   {path: 'admin', component: AdminLayout, canActivate: [AuthGuard], data: {ruolo: "ADMIN"}, children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardAdmin},
-      {path: 'utenti', component: Utenti}
+      {path: 'utenti', component: Utenti},
     ]
   },
 
@@ -78,9 +80,7 @@ export const routes: Routes = [
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
       {path: 'richieste', component: AppuntamentiMedico},
-      {path: 'visite/:id', component: VisitaDettaglioMedico}
+      {path: 'visite/:id', component: VisitaDettaglioMedico},
     ]},
-
-  {path: 'chi-siamo', component: ChiSiamo},
   { path: '**', redirectTo:''}
 ];

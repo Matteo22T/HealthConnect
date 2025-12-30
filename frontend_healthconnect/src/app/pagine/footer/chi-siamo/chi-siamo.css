@@ -2,7 +2,6 @@
 .about-us-container {
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--text-dark, #333); /* Fallback se la variabile non è definita */
-  overflow-x: hidden;
 }
 
 /* Hero Section */
