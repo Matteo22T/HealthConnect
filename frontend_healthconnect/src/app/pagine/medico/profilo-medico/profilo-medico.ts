@@ -79,10 +79,8 @@ export class ProfiloMedico implements OnInit {
 
   ModificaDatiPersonali(): void {
     if (!this.isEditingPersonal) {
-      // Entra in modifica: salva lo stato attuale per eventuale rollback
       this.originalMedico = JSON.parse(JSON.stringify(this.medico));
     } else {
-      // Annulla modifica: ripristina lo stato originale
       this.medico = JSON.parse(JSON.stringify(this.originalMedico));
     }
     this.isEditingPersonal = !this.isEditingPersonal;
@@ -144,30 +142,49 @@ export class ProfiloMedico implements OnInit {
    * Gestisce la selezione di un nuovo indirizzo dall'autocomplete.
    */
   async onAddressSelected(event: any) {
-    // Recupera il posto dall'evento (supporta sia evento diretto che custom event)
-    const place = event.detail?.place || event.place;
+    console.log('gmp-select event:', event);
 
-    if (!place) return;
+    // Nuova API: arriva una placePrediction (come nel tuo screenshot)
+    const prediction = event.placePrediction ?? event.detail?.placePrediction;
+    if (!prediction?.toPlace) return;
 
-    // Recupera i campi necessari: indirizzo formattato e coordinate (location)
-    await place.fetchFields({ fields: ['formattedAddress', 'displayName', 'location'] });
+    const place = prediction.toPlace();
 
-    const address = place.formattedAddress || place.displayName || '';
+    // Chiedi i campi che ti servono (inclusa location per la mappa)
+    await place.fetchFields({
+      fields: ['formattedAddress', 'displayName', 'location'],
+    });
 
-    // Eseguiamo l'aggiornamento dentro ngZone per assicurarci che Angular rilevi il cambiamento
+    const formatted = place.formattedAddress;
+
+    // displayName a volte è string, a volte { text, languageCode }
+    const display =
+      typeof place.displayName === 'string'
+        ? place.displayName
+        : place.displayName?.text;
+
+    const address = formatted || display || '';
+    if (!address) return;
+
     this.ngZone.run(() => {
-      if (this.medico && address) {
-        this.medico.indirizzo_studio = address;
+      if (!this.medico) return;
 
-        // Se abbiamo le coordinate, aggiorniamo subito mappa e marker
-        if (place.location && this.editMap && this.editMarker) {
-          this.editMap.setCenter(place.location);
-          this.editMap.setZoom(17);
-          this.editMarker.position = place.location;
-        } else {
-          // Fallback: se location è undefined (raro con fetchFields), usiamo il geocoder
-          this.geocodeAndCenter(address);
-        }
+      // aggiorna modello
+      this.medico.indirizzo_studio = address;
+
+      // (opzionale ma utile) aggiorna anche il valore visibile nel componente
+      try {
+        this.addressInput?.nativeElement && ((this.addressInput.nativeElement as any).value = address);
+      } catch {}
+
+      // aggiorna mappa+marker se abbiamo coordinate
+      if (place.location && this.editMap && this.editMarker) {
+        this.editMap.setCenter(place.location);
+        this.editMap.setZoom(17);
+        this.editMarker.position = place.location;
+      } else {
+        // fallback geocoder
+        this.geocodeAndCenter(address);
       }
     });
   }

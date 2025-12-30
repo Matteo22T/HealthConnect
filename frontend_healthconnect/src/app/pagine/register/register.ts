@@ -62,29 +62,48 @@ export class Register implements OnInit {
     });
 
     // Aggiungi o rimuovi validatori quando cambia il ruolo
-    this.registerForm.get('ruolo')?.valueChanges.subscribe(ruolo => {
+    this.registerForm.get('ruolo')?.valueChanges.subscribe(async ruolo => {
       this.updateValidators(ruolo);
+      if (ruolo === 'MEDICO') {
+        await this.googleMapsService.loadPlaces();
+      }
     });
   }
 
   async ngAfterViewInit() {
-    // Inizializza Google Maps
     await this.googleMapsService.loadPlaces();
   }
 
   async onAddressSelected(event: any) {
-    const place = event.place;
-    if (place) {
-      await place.fetchFields({fields: ['formattedAddress', 'displayName']});
-      const address = place.formattedAddress || place.displayName || '';
+    console.log('gmp-select event:', event);
 
-      if (address) {
-        // Aggiorna il form control
-        this.registerForm.patchValue({
-          indirizzo_studio: address
-        });
-      }
+    // Nel tuo screenshot è QUI:
+    const prediction = event.placePrediction ?? event.detail?.placePrediction;
+    if (!prediction) {
+      console.warn('placePrediction non trovata nell’evento');
+      return;
     }
+
+    const place = prediction.toPlace();
+
+    await place.fetchFields({
+      fields: ['formattedAddress', 'displayName'],
+    });
+
+    const formatted = place.formattedAddress;
+    const display =
+      typeof place.displayName === 'string'
+        ? place.displayName
+        : place.displayName?.text;
+
+    const address = formatted || display || '';
+    console.log('Address:', address);
+
+    const ctrl = this.registerForm.get('indirizzo_studio');
+    ctrl?.setValue(address);
+    ctrl?.markAsDirty();
+    ctrl?.markAsTouched();
+    ctrl?.updateValueAndValidity();
   }
 
   get isMedico(): boolean {
@@ -151,4 +170,6 @@ export class Register implements OnInit {
       });
     }
   }
+
+  protected readonly console = console;
 }

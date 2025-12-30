@@ -1,5 +1,14 @@
-
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { utenteDTO } from '../../../../../model/utenteDTO';
 import { SpecializzazioniService } from '../../../../../service/specializzazioni-service';
@@ -13,12 +22,17 @@ import { GoogleMapsService } from '../../../../../service/google-maps-service';
   templateUrl: './specifiche-medico-paziente.html',
   styleUrl: './specifiche-medico-paziente.css',
 })
-export class SpecificheMedicoPaziente implements OnInit {
+export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChanges {
   @Input() medico: utenteDTO | undefined;
 
   @ViewChild('visualizzaMappa') mapView?: ElementRef<HTMLElement>;
 
   nomeSpecializzazione: string = 'Caricamento...';
+
+  private map?: google.maps.Map;
+  private marker?: any; // AdvancedMarkerElement
+  private viewReady = false;
+  private lastAddress?: string;
 
   constructor(
     private specService: SpecializzazioniService,
@@ -28,8 +42,18 @@ export class SpecificheMedicoPaziente implements OnInit {
 
   ngOnInit(): void {
     this.trovaSpecializzazione();
-    // Inizializza la mappa dopo che la view è caricata
-    setTimeout(() => this.initViewMap(), 0);
+  }
+
+  ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.tryInitOrUpdateMap();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['medico']) {
+      this.trovaSpecializzazione();
+      this.tryInitOrUpdateMap();
+    }
   }
 
   trovaSpecializzazione(): void {
@@ -54,44 +78,63 @@ export class SpecificheMedicoPaziente implements OnInit {
     });
   }
 
-  async initViewMap(): Promise<void> {
+  private async tryInitOrUpdateMap(): Promise<void> {
+    if (!this.viewReady) return;
     if (!this.mapView?.nativeElement) return;
-    if (!this.medico?.indirizzo_studio) return;
+
+    const address = this.medico?.indirizzo_studio?.trim();
+    if (!address) return;
+
+    // evita re-render inutili se l’indirizzo non è cambiato
+    if (this.lastAddress === address && this.map) return;
+    this.lastAddress = address;
 
     try {
+      // carica librerie
       await this.googleMaps.loadMarker();
-
       const { Map } = (await google.maps.importLibrary('maps')) as any;
       const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as any;
       const { Geocoder } = (await google.maps.importLibrary('geocoding')) as any;
 
-      const map = new Map(this.mapView.nativeElement, {
-        center: { lat: 41.9028, lng: 12.4964 },
-        zoom: 15,
-        mapId: 'DEMO_MAP_ID',
-        disableDefaultUI: true,
-        gestureHandling: 'cooperative',
-        keyboardShortcuts: false,
-        zoomControl: true,
-      });
+      // se la mappa non esiste, creala
+      if (!this.map) {
+        this.map = new Map(this.mapView.nativeElement, {
+          center: { lat: 41.9028, lng: 12.4964 }, // fallback Roma
+          zoom: 15,
+          mapId: 'DEMO_MAP_ID', // metti il tuo mapId se lo hai
+          disableDefaultUI: true,
+          gestureHandling: 'cooperative',
+          keyboardShortcuts: false,
+          zoomControl: true,
+        });
+      }
 
       const geocoder = new Geocoder();
-      geocoder.geocode({ address: this.medico.indirizzo_studio }, (results: any, status: any) => {
+      geocoder.geocode({ address }, (results: any, status: any) => {
         if (status === 'OK' && results?.[0]) {
-          map.setCenter(results[0].geometry.location);
+          const loc = results[0].geometry.location;
 
-          new AdvancedMarkerElement({
-            map,
-            position: results[0].geometry.location,
-            title: 'Sede studio',
-            gmpDraggable: false,
-          });
+          this.map!.setCenter(loc);
+          this.map!.setZoom(17);
+
+          // crea o aggiorna marker
+          if (!this.marker) {
+            this.marker = new AdvancedMarkerElement({
+              map: this.map,
+              position: loc,
+              title: 'Sede studio',
+              gmpDraggable: false,
+            });
+          } else {
+            this.marker.position = loc;
+            this.marker.map = this.map;
+          }
         } else {
           console.error('Geocodifica fallita:', status);
         }
       });
     } catch (e) {
-      console.error('Errore initViewMap', e);
+      console.error('Errore init/update map', e);
     }
   }
 }

@@ -158,14 +158,12 @@
 
           <div class="input-like">
             <gmp-place-autocomplete
-              #indirizzoInputUtente
-              [attr.theme]="'light'"
-              [value]="medico.indirizzo_studio"
-              placeholder="Es. Via Roma 10, Milano"
-              (gmp-placeselect)="onAddressSelected($event)"> </gmp-place-autocomplete>
+            #indirizzoInputUtente
+            [attr.theme]="'light'"
+            placeholder="Es. Via Roma 10, Milano"
+            (gmp-select)="onAddressSelected($event)"> </gmp-place-autocomplete>
           </div>
 
-          <input type="hidden" [(ngModel)]="medico.indirizzo_studio">
           <div #MappaGoogle class="map-container"></div>
         </div>
 
