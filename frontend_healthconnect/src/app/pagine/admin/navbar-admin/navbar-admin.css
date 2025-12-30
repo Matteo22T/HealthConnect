@@ -313,25 +313,24 @@ header {
     height: 40px;
   }
 
-  .nav-links {
-    display: none; /* Nasconde nav su mobile */
+  /* RIMOSSO: .nav-links { display: none; } */
+  /* Ora i link rimangono visibili */
+
+  .nav-links a {
+    /* Opzionale: Riduciamo un po' il padding per risparmiare spazio su mobile */
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
   }
 
   .header-right {
-    gap: 1rem;
+    gap: 0.8rem; /* Riduciamo il gap tra i link e il tasto logout */
   }
 
-  .user-profile {
-    padding: 0.5rem 0.8rem;
-  }
-
+  /* Se necessario nascondere le info utente per fare spazio, ma nel tuo HTML admin
+     non sembra esserci il blocco user-info complesso come nel paziente/medico.
+     Se c'è, puoi lasciarlo nascosto o mostrarlo a seconda dello spazio. */
   .user-info {
-    display: none; /* Nasconde info utente su mobile piccolo */
-  }
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
 
   .custom-dropdown {
@@ -341,10 +340,13 @@ header {
 
 @media (max-width: 480px) {
   .logo span {
-    display: none; /* Nasconde "Connect" su mobile molto piccolo */
+    display: none; /* Nasconde "Connect" su mobile molto piccolo per dare priorità ai link */
   }
 
-  .custom-dropdown {
-    right: -10px;
+  /* Opzionale: su schermi piccolissimi mostra solo l'icona del link */
+  .nav-links a span:not(:first-child) {
+    /* Se vuoi nascondere il testo "Utenti" e lasciare solo l'icona 👥
+       decommenta la riga sotto: */
+    /* display: none; */
   }
 }
