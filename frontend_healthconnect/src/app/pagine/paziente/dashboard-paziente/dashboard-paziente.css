@@ -26,12 +26,11 @@
   font-weight: 800;
   color: var(--text-dark, #1a1a1a);
   letter-spacing: -1px;
-  background-clip: text;
+  margin: 0;
   background: linear-gradient(120deg, #0066cc, #00c4cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: fadeInDown 0.8s ease-out;
-  margin-bottom: 1rem;
+  background-clip: text;
 }
 
 
