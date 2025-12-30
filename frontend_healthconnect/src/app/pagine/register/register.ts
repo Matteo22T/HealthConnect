@@ -1,207 +1,154 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../service/auth-service';
-import { SpecializzazioneDTO } from '../../model/specializzazioneDTO';
+import { GoogleMapsService } from '../../service/google-maps-service';
 import { SpecializzazioniService } from '../../service/specializzazioni-service';
-import { GoogleMapsService, PlacesAutocompleteHandle } from '../../service/google-maps-service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
-  styleUrls: ['./register.css'],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class Register implements OnInit, OnDestroy {
-  @ViewChild('addressInput') set addressInput(content: ElementRef<HTMLInputElement> | undefined) {
-    if (content && this.isMedico) {
-      this.initPlacesAutocomplete(content.nativeElement);
-    }
-  }
-
+export class Register implements OnInit {
   registerForm!: FormGroup;
-  isMedico = false;
-  errorMessage = '';
-  specializzazioni: SpecializzazioneDTO[] = [];
-  isLoading = false;
   showPassword = false;
+  errorMessage = '';
+  isLoading = false;
+  specializzazioni: any[] = [];
 
-  private placesHandle?: PlacesAutocompleteHandle;
+  @ViewChild('addressInput') addressInput?: ElementRef<google.maps.places.PlaceAutocompleteElement>;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
-    private specializzazioniService: SpecializzazioniService,
-    private googleMaps: GoogleMapsService
-  ) {}
+    private googleMapsService: GoogleMapsService,
+    private specializzazioniService: SpecializzazioniService
+  ) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.registerForm = this.fb.group({
+      ruolo: ['PAZIENTE', Validators.required],
       nome: ['', Validators.required],
       cognome: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          Validators.pattern(
-            '^[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z]{2,63})+$'
-          ),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
-        ],
-      ],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]],
-      dataNascita: ['', [Validators.required, ageValidator(18)]],
-      ruolo: ['PAZIENTE', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      ]],
+      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      dataNascita: ['', [Validators.required, this.ageValidator]],
       sesso: ['', Validators.required],
-      specializzazione_id: [''],
+      specializzazione_id: [null],
       numero_albo: [''],
-      biografia: [''],
       indirizzo_studio: [''],
+      biografia: ['']
     });
 
-    this.registerForm.get('ruolo')?.valueChanges.subscribe((val) => this.onRuoloChange(val));
-
+    // Carica le specializzazioni
     this.specializzazioniService.getAllSpecializzazioni().subscribe({
-      next: (res) => {
-        this.specializzazioni = res;
-        this.cdr.detectChanges();
+      next: (data) => {
+        this.specializzazioni = data;
       },
-      error: (err) => console.error('Errore caricamento specializzazioni', err),
+      error: (error) => {
+        console.error('Errore nel caricamento delle specializzazioni:', error);
+      }
+    });
+
+    // Aggiungi o rimuovi validatori quando cambia il ruolo
+    this.registerForm.get('ruolo')?.valueChanges.subscribe(ruolo => {
+      this.updateValidators(ruolo);
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroyPlacesAutocomplete();
+  async ngAfterViewInit() {
+    // Inizializza Google Maps
+    await this.googleMapsService.loadPlaces();
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
+  async onAddressSelected(event: any) {
+    const place = event.place;
+    if (place) {
+      await place.fetchFields({fields: ['formattedAddress', 'displayName']});
+      const address = place.formattedAddress || place.displayName || '';
+
+      if (address) {
+        // Aggiorna il form control
+        this.registerForm.patchValue({
+          indirizzo_studio: address
+        });
+      }
+    }
   }
 
-  onRuoloChange(ruolo: string): void {
-    const medicoControls = ['specializzazione_id', 'numero_albo', 'biografia', 'indirizzo_studio'];
+  get isMedico(): boolean {
+    return this.registerForm.get('ruolo')?.value === 'MEDICO';
+  }
+
+  private updateValidators(ruolo: string) {
+    const specializzazioneControl = this.registerForm.get('specializzazione_id');
+    const numeroAlboControl = this.registerForm.get('numero_albo');
+    const indirizzoStudioControl = this.registerForm.get('indirizzo_studio');
 
     if (ruolo === 'MEDICO') {
-      this.isMedico = true;
-
-      medicoControls.forEach((control) => {
-        const fc = this.registerForm.get(control);
-        fc?.setValidators([Validators.required]);
-        fc?.updateValueAndValidity();
-      });
+      specializzazioneControl?.setValidators([Validators.required]);
+      numeroAlboControl?.setValidators([Validators.required]);
+      indirizzoStudioControl?.setValidators([Validators.required]);
     } else {
-      this.isMedico = false;
-
-      this.destroyPlacesAutocomplete();
-
-      medicoControls.forEach((control) => {
-        const fc = this.registerForm.get(control);
-        fc?.clearValidators();
-        fc?.setValue('');
-        fc?.updateValueAndValidity();
-      });
-
-      this.registerForm.get('indirizzo_studio')?.updateValueAndValidity();
+      specializzazioneControl?.clearValidators();
+      numeroAlboControl?.clearValidators();
+      indirizzoStudioControl?.clearValidators();
     }
+
+    specializzazioneControl?.updateValueAndValidity();
+    numeroAlboControl?.updateValueAndValidity();
+    indirizzoStudioControl?.updateValueAndValidity();
   }
 
-  private destroyPlacesAutocomplete(): void {
-    this.placesHandle?.destroy();
-    this.placesHandle = undefined;
-  }
-
-  private async initPlacesAutocomplete(inputElement: HTMLInputElement) {
-    try {
-      if (this.placesHandle) return;
-
-      this.placesHandle = await this.googleMaps.mountAutocompleteOnInput(
-        inputElement,
-        (address: string) => {
-          this.ngZone.run(() => {
-            this.registerForm.get('indirizzo_studio')?.setValue(address);
-            this.registerForm.get('indirizzo_studio')?.markAsTouched();
-          });
-        }
-      );
-    } catch (error) {
-      console.error('Errore inizializzazione Places Autocomplete:', error);
-    }
-  }
-
-  onSubmit(): void {
-    if (this.registerForm.valid) {
-      this.isLoading = true;
-      const payload: any = { ...this.registerForm.value };
-
-      if (!this.isMedico) {
-        delete payload.specializzazione_id;
-        delete payload.numero_albo;
-        delete payload.biografia;
-        delete payload.indirizzo_studio;
-      } else {
-        payload.stato_approvazione = 'PENDING';
-        payload.specializzazione_id = Number(payload.specializzazione_id);
-      }
-
-      this.authService.register(payload).subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.cdr.detectChanges();
-          console.error('Errore registrazione:', err);
-
-          const backendError = err.error;
-
-          if (typeof backendError === 'string') {
-            this.errorMessage = backendError;
-          } else if (backendError && typeof backendError === 'object') {
-            this.errorMessage = backendError.message || backendError.error || 'Errore durante la registrazione';
-          } else {
-            this.errorMessage = `Errore del server (${err.status}): Riprova più tardi.`;
-          }
-
-          this.registerForm.markAllAsTouched();
-        },
-      });
-    } else {
-      this.registerForm.markAllAsTouched();
-      this.errorMessage = 'Completa tutti i campi obbligatori';
-    }
-  }
-}
-
-// Funzione validatrice personalizzata
-export function ageValidator(minAge: number): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+  private ageValidator(control: any) {
     if (!control.value) return null;
 
     const birthDate = new Date(control.value);
     const today = new Date();
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-
+    const age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+      return age - 1 >= 18 ? null : {minAge: true};
     }
 
-    return age >= minAge ? null : {underage: true};
-  };
+    return age >= 18 ? null : {minAge: true};
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      this.isLoading = true;
+      this.errorMessage = '';
+
+      const formData = { ...this.registerForm.value };
+
+      this.authService.register(formData).subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error?.message || 'Errore durante la registrazione';
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
+    }
+  }
 }

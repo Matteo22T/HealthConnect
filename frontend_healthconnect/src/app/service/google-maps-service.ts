@@ -2,15 +2,12 @@ import { Injectable } from '@angular/core';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
 import { environment } from '../../environments/environment';
 
-export type PlacesAutocompleteHandle = {
-  destroy: () => void;
-};
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class GoogleMapsService {
   private configured = false;
+
+  private placesPromise?: Promise<google.maps.PlacesLibrary>;
+  private markerPromise?: Promise<google.maps.MarkerLibrary>;
 
   private ensureConfigured(): void {
     if (this.configured) return;
@@ -25,41 +22,13 @@ export class GoogleMapsService {
     this.configured = true;
   }
 
-  async loadPlaces(): Promise<google.maps.PlacesLibrary> {
+  loadPlaces(): Promise<google.maps.PlacesLibrary> {
     this.ensureConfigured();
-    return (await importLibrary('places')) as google.maps.PlacesLibrary;
+    return (this.placesPromise ??= importLibrary('places') as Promise<google.maps.PlacesLibrary>);
   }
 
-  async loadMarker(): Promise<google.maps.MarkerLibrary> {
+  loadMarker(): Promise<google.maps.MarkerLibrary> {
     this.ensureConfigured();
-    return (await importLibrary('marker')) as google.maps.MarkerLibrary;
-  }
-
-  /**
-   * Monta l'autocomplete classico di Google Places su un input HTML normale
-   * (così eredita gli stessi stili degli altri campi del form).
-   */
-  async mountAutocompleteOnInput(
-    input: HTMLInputElement,
-    onAddressSelected: (address: string) => void
-  ): Promise<PlacesAutocompleteHandle> {
-    this.ensureConfigured();
-    await this.loadPlaces();
-
-    const autocomplete = new google.maps.places.Autocomplete(input, {
-      fields: ['formatted_address', 'name'],
-      types: ['address'],
-    });
-
-    const listener = autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-      const address = place?.formatted_address || place?.name || '';
-      if (!address) return;
-      onAddressSelected(address);
-    });
-
-    return {
-      destroy: () => google.maps.event.removeListener(listener),
-    };
+    return (this.markerPromise ??= importLibrary('marker') as Promise<google.maps.MarkerLibrary>);
   }
 }
