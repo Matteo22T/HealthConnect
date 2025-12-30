@@ -73,7 +73,6 @@
   margin-bottom: 2rem;
   overflow-x: auto;
 }
-
 .tab-btn {
   flex: 1;
   display: flex;
@@ -83,44 +82,30 @@
   padding: 1rem 1.5rem;
   border: none;
   background: transparent;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   font-family: inherit;
   font-weight: 600;
-  color: var(--color-gray-600);
-  position: relative;
+  font-size: 0.95rem;
+  color: var(--color-gray-50);
+  white-space: nowrap;
   min-width: fit-content;
 }
 
 .tab-btn:hover {
-  background: var(--color-gray-50);
-  color: var(--color-gray-900);
+  background: #f8faff;
+  color: var(--color-primary);
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(120deg, #0066cc, #00c4cc);
   color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-}
-
-.tab-btn:first-child.active {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-.tab-btn:nth-child(2).active {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-}
-
-.tab-btn:last-child.active {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
 }
 
 .tab-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   transition: transform 0.3s ease;
 }
 
@@ -134,7 +119,7 @@
 
 .tab-count {
   background: rgba(0, 0, 0, 0.1);
-  padding: 0.25rem 0.65rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
@@ -224,13 +209,13 @@
 /* Card Design Completamente Nuovo */
 .card {
   background: white;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  border: 1px solid var(--color-gray-100);
-  height: fit-content; /* Importante per la griglia */
+  border: 1px solid #eee;
+  height: fit-content;
 }
 
 .card:hover {
@@ -288,33 +273,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  width: 75px;
+  height: 75px;
+  background: #f8faff;
   border-radius: 12px;
-  color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  border: 2px solid #e3f2fd;
 }
 
 .card-confermata .date-badge {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: #f0fdf4;
+  border-color: #d1fae5;
 }
 
 .card-pending .date-badge {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  background: #fffbeb;
+  border-color: #fef3c7;
 }
 
 .card-rifiutata .date-badge {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  background: #fef2f2;
+  border-color: #fee2e2;
 }
 
 .date-day {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 800;
   line-height: 1;
+  color: var(--color-primary);
+}
+
+.card-confermata .date-day {
+  color: #10b981;
+}
+
+.card-pending .date-day {
+  color: #f59e0b;
+}
+
+.card-rifiutata .date-day {
+  color: #ef4444;
 }
 
 .date-month {

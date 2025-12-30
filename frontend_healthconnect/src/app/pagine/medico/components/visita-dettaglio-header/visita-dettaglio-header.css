@@ -1,5 +1,3 @@
-/* --- VISITA HEADER COMPONENT CSS --- */
-
 .visita-header {
   background: var(--white, #ffffff);
   padding: 2.5rem 3rem;
@@ -29,7 +27,6 @@
   transform: translateY(-2px);
 }
 
-/* Barra colorata in alto con animazione */
 .visita-header::before {
   content: '';
   position: absolute;
@@ -61,7 +58,6 @@
   flex: 1;
 }
 
-/* Icona rotonda con gradiente e animazione */
 .header-icon {
   width: 64px;
   height: 64px;
@@ -115,10 +111,9 @@
   box-shadow: 0 6px 18px rgba(0, 102, 204, 0.35);
 }
 
-/* Info del titolo */
 .header-info {
   flex: 1;
-  min-width: 0; /* Per permettere l'ellipsis se necessario */
+  min-width: 0;
 }
 
 .header-info h1 {
@@ -146,7 +141,6 @@
   }
 }
 
-/* Data */
 .header-date {
   font-size: 1.05rem;
   color: #666666;
@@ -163,7 +157,6 @@
   font-size: 1.1rem;
 }
 
-/* Badge dello stato */
 .status-badge {
   background: rgba(0, 102, 204, 0.12);
   color: #0066cc;
@@ -201,7 +194,6 @@
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
 }
 
-/* --- RESPONSIVE (MOBILE) --- */
 @media (max-width: 768px) {
   .visita-header {
     padding: 1.8rem 1.5rem;

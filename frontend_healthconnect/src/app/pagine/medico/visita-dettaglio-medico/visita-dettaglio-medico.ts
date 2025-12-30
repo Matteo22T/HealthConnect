@@ -49,9 +49,9 @@ export class VisitaDettaglioMedico implements OnInit{
           this.messaggio_successo = 'Visita salvata con successo!'
           this.changeDet.detectChanges();
           window.scrollBy({
-            top: 150,        // Di quanti pixel scendere (es. 300px)
+            top: 150,
             left: 0,
-            behavior: 'smooth' // 'smooth' per farlo scorrere dolcemente, 'auto' per scatto immediato
+            behavior: 'smooth'
           });
         },
         error: err => {

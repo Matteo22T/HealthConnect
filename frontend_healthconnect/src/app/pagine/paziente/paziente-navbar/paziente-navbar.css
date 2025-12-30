@@ -655,6 +655,15 @@ header:hover::before {
   outline-offset: 2px;
 }
 
+/* Aggiungi questo al tuo file CSS, preferibilmente dopo la regola .nav-links a.active-link */
+
+.nav-links a.active-link span:first-child {
+  -webkit-text-fill-color: initial; /* Ripristina il colore originale dell'emoji */
+  background: none; /* Rimuove eventuali background ereditati */
+  filter: grayscale(0); /* Assicura che i colori siano vividi */
+  transform: scale(1.1); /* Mantiene l'effetto di ingrandimento che avevi già */
+}
+
 /* Riduzione movimento per accessibilità */
 @media (prefers-reduced-motion: reduce) {
   *,
