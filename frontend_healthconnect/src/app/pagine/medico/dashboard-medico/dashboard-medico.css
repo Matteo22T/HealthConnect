@@ -9,17 +9,32 @@
   margin-bottom: 2.5rem;
 }
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .title {
   font-size: 2.7rem;
   font-weight: 800;
+  color: var(--text-dark, #1a1a1a);
   letter-spacing: -1px;
-  background-clip: text;
+
+
+  display: inline-block;
+
   background: linear-gradient(120deg, #0066cc, #00c4cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: fadeInDown 0.8s ease-out;
-  margin-bottom: 1rem;
+  background-clip: text;
+  margin: 0;
+  animation: fadeInDown 0.8s ease-in-out;
 }
 
 .welcome-section p {
