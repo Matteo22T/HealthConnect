@@ -61,7 +61,6 @@ export class ProfiloMedico implements OnInit {
       }
     }
 
-    // Avvia la mappa view quando il DOM è pronto
     setTimeout(() => this.initViewMap(), 0);
   }
 

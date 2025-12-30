@@ -14,7 +14,6 @@
           <th>Ruolo</th>
           <th>Data Iscrizione</th>
           <th>Stato</th>
-          <th class="text-right">Azioni</th>
         </tr>
         </thead>
         <tbody>
@@ -44,9 +43,6 @@
               <span class="status" [ngClass]="{'active': ut.stato_approvazione === 'APPROVATO', 'pending': ut.stato_approvazione === 'PENDING'}">
                 {{ ut.stato_approvazione }}
               </span>
-          </td>
-          <td class="text-right">
-            <button class="icon-btn">⋮</button>
           </td>
         </tr>
         </tbody>
