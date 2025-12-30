@@ -1,9 +1,26 @@
+.timeline-scroll-wrapper {
+  max-height: 600px;       /* Altezza della "finestra" */
+  overflow-y: auto;        /* Scroll qui */
+  padding-right: 10px;     /* Spazio per la scrollbar */
+  padding-top: 10px;
+}
+
 /* TIMELINE STILE */
-.timeline-container { position: relative; padding-left: 20px; max-width: 800px; margin: 0 auto; }
+.timeline-container {
+  position: relative;
+  padding-left: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
 /* Linea verticale */
 .timeline-container::before {
-  content: ''; position: absolute; left: 85px; top: 0; bottom: 0;
-  width: 2px; background: #e0e0e0;
+  content: '';
+  position: absolute;
+  left: 85px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e0e0e0;
 }
 
 .timeline-item { display: flex; gap: 2rem; margin-bottom: 2rem; position: relative; }
