@@ -120,21 +120,18 @@
   margin: 0;
 }
 
-/* Contenitore Bottoni */
 .med-actions {
   display: flex;
-  gap: 10px;           /* Spazio tra i bottoni */
+  gap: 10px;
   width: 100%;
   margin-top: auto;
   padding-top: 10px;
-  justify-content: center; /* MODIFICA: Centra i bottoni nella card */
-  /* Se li vuoi agli estremi (uno a sx, uno a dx) usa: justify-content: space-between; */
+  justify-content: center;
 }
 
-/* Stile comune (Altezza fissa) */
 .btn-contact,
 .btn-prenota {
-  height: 38px;            /* Altezza fissa identica */
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,18 +140,17 @@
   padding-bottom: 0;
 }
 
-/* Bottone Contatta (Messaggio) */
 .btn-contact {
   margin-left: auto;
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 20px;     /* O 50% se lo vuoi rotondo perfetto */
-  width: 38px;             /* Larghezza fissa = Altezza (Quadrato/Rotondo) */
+  border-radius: 20px;
+  width: 38px;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s;
   color: #555;
-  padding: 0;              /* Reset padding perché ha width fissa */
+  padding: 0;
 }
 
 .btn-contact:hover {
@@ -164,12 +160,10 @@
   transform: translateY(-1px);
 }
 
-/* Bottone Prenota */
 .btn-prenota {
-  /* flex: 1;  <-- RIMOSSO: Non si allarga più */
-  width: auto;            /* Larghezza automatica ("il giusto") */
-  min-width: 100px;       /* Opzionale: larghezza minima per non farlo sembrare minuscolo */
-  padding-left: 20px;     /* Padding laterale generoso */
+  width: auto;
+  min-width: 100px;
+  padding-left: 20px;
   padding-right: 20px;
 
   background-color: #e3f2fd;
@@ -189,7 +183,6 @@
 }
 
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 2rem 0;
@@ -199,7 +192,7 @@
 
 .avatar-placeholder.emoji-avatar {
 
-  background-color: #f5f5f5; /* Grigio chiaro */
+  background-color: #f5f5f5;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -209,11 +202,6 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* ========================================= */
-/* MODERN BOOKING MODAL - Blue/Cyan Theme  */
-/* ========================================= */
-
-/* Modal Overlay con Backdrop Blur */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -242,7 +230,6 @@
   }
 }
 
-/* Modal Content - Design Moderno */
 .modal-content {
   background: white;
   width: 100%;
@@ -279,7 +266,6 @@
   }
 }
 
-/* Modal Header con Gradiente */
 .modal-header {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   padding: 32px 32px 28px;
@@ -327,13 +313,11 @@
   font-size: 20px;
 }
 
-/* Modal Body */
 .modal-body {
   padding: 32px;
   background: white;
 }
 
-/* Form Group */
 .form-group {
   margin-bottom: 24px;
   animation: formGroupFadeIn 0.5s ease-out backwards;
@@ -378,7 +362,6 @@
   border-radius: 2px;
 }
 
-/* Form Control - Input e Select Moderni */
 .form-control {
   width: 100%;
   padding: 14px 18px;
@@ -445,7 +428,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   width: auto;
 }
 
-/* Modal Actions */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -455,7 +437,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   border-top: 2px solid #f1f5f9;
 }
 
-/* Button Base Styles */
 .modal-actions button {
   padding: 14px 28px;
   border-radius: 14px;
@@ -486,7 +467,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   height: 300px;
 }
 
-/* Button Cancel */
 .btn-cancel {
   background: #f1f5f9;
   border: 2px solid #e2e8f0;
@@ -505,7 +485,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   transform: translateY(0);
 }
 
-/* Button Confirm - Gradiente Blu/Azzurro */
 .btn-confirm {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border: none;

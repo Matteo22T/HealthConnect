@@ -32,14 +32,11 @@ export class CalendarioPaziente implements OnInit{
   @Input() listaPending: prenotazioneDTO[] = [];
   @Input() listaRifiutate: prenotazioneDTO[] = [];
 
-  //vista settimanale di default
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
 
-  //lista eventi
   events: CalendarEvent[] = [];
 
-  //trigger refresh grafico
   refresh = new Subject<void>();
 
   selectedEvent: CalendarEvent | null = null;

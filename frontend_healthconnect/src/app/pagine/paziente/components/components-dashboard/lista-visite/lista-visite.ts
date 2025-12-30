@@ -48,7 +48,6 @@ export class ListaVisite implements OnChanges{
   }
 
   private caricaSpecializzazioni() {
-    // Estrai tutti gli ID specializzazione unici dalle visite
     const specializzazioniIds = [...new Set(this.visite
       .map(visita => {
         if (!visita.medico) return null;
@@ -56,9 +55,7 @@ export class ListaVisite implements OnChanges{
       })
       .filter(id => id !== null && id !== undefined))] as number[];
 
-    // Per ogni ID specializzazione, ottieni il nome dal backend
     specializzazioniIds.forEach(specializzazioneId => {
-      // Evita chiamate duplicate se già caricata
       if (!this.specializzazioni[specializzazioneId]) {
         this.specService.getSpecializzazione(specializzazioneId).subscribe({
           next: (spec: SpecializzazioneDTO) => {
@@ -90,7 +87,6 @@ export class ListaVisite implements OnChanges{
 
   onScroll(event: any) {
     const element = event.target;
-    // Verifica se siamo arrivati in fondo (con un margine di tolleranza di 1px)
     if (element.scrollHeight - element.scrollTop <= element.clientHeight + 1) {
       this.caricaAltriElementi();
     }

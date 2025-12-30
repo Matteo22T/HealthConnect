@@ -27,7 +27,6 @@ export class ChatSupporto implements AfterViewChecked {
 
   constructor(private aiService: AiService, private router: Router, private changeDet: ChangeDetectorRef) {}
 
-  // Scroll automatico verso il basso quando arriva un nuovo messaggio
   ngAfterViewChecked() {
     this.scrollToBottom();
   }

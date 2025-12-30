@@ -12,7 +12,6 @@
     <div class="message-item"
          *ngFor="let msg of ultimiMessaggi"
          [class.unread]="!msg.letto">
-      <!---(click)="apriChat.emit(msg.id)">--->
 
       <div class="message-header">
         <span class="message-sender">{{ msg.mittente.nome + " " + msg.mittente.cognome }}</span>

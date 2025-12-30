@@ -1,4 +1,3 @@
-import {VisitaDTO} from './visitaDTO';
 
 export interface prescrizioneDTO{
   id?: number;

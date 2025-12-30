@@ -15,7 +15,6 @@ import {utenteDTO} from '../../../../../model/utenteDTO';
 })
 export class TabMetriche implements OnInit {
 
-  // Variabile per la tabella
   elencoMetriche: MetricheSaluteDTO[] = [];
   loading: boolean = true;
 
@@ -33,7 +32,6 @@ export class TabMetriche implements OnInit {
       this.user = user;
       this.metricheService.getMetricheUltimi6Mesi(user.id).subscribe({
         next: (data) => {
-          // Ordina per data decrescente (dal più recente)
           this.elencoMetriche = data.sort((a, b) =>
             new Date(b.data).getTime() - new Date(a.data).getTime()
           );
@@ -48,7 +46,6 @@ export class TabMetriche implements OnInit {
     }
   }
 
-  // Helper per rendere belli i nomi (es. PRESSIONE_MAX -> Pressione Max)
   formattaLabel(tipo: string): string {
     return tipo.replace(/_/g, ' ').toLowerCase();
   }

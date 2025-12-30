@@ -78,7 +78,6 @@
 .card-dates span { font-size: 0.9rem; font-weight: 600; color: #333; }
 .infinity { color: #0066cc; }
 
-/* --- LISTA SCADUTE (Più compatta) --- */
 .list-view { display: flex; flex-direction: column; gap: 0.8rem;
   max-height: 350px;
   overflow-y: auto;
@@ -89,7 +88,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff; /* O #fafafa per renderle più grigie */
+  background: #fff;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   border: 1px solid #eee;

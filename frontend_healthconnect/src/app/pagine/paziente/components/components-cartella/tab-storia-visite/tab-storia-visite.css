@@ -37,7 +37,6 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative;
 }
 
-/* Pallino sulla linea */
 .content-column::before {
   content: ''; position: absolute; left: -36px; top: 20px;
   width: 14px; height: 14px; background: #0066cc; border-radius: 50%;

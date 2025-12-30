@@ -17,10 +17,3 @@ export enum TipoMetrica {
   GLICEMIA = 'GLICEMIA'
 }
 
-// Interface per raggruppare le metriche
-export interface MetricheRaggruppate {
-  [TipoMetrica.PESO]: MetricheSaluteDTO[];
-  [TipoMetrica.PRESSIONE_MAX]: MetricheSaluteDTO[];
-  [TipoMetrica.PRESSIONE_MIN]: MetricheSaluteDTO[];
-  [TipoMetrica.GLICEMIA]: MetricheSaluteDTO[];
-}

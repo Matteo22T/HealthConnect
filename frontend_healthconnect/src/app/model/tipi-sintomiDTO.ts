@@ -31,7 +31,6 @@ export interface DiagnosisResponse {
   has_emergency_evidence: boolean;
 }
 
-// Questo è l'oggetto che inviamo al backend per l'aggiornamento
 export interface Evidence {
   id: string;
   choice_id: string;
