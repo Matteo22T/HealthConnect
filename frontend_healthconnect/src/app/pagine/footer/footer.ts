@@ -10,4 +10,5 @@ import {RouterLink} from '@angular/router';
   styleUrl: './footer.css'
 })
 export class FooterComponent {
+  annocorrente = new Date().getFullYear();
 }
