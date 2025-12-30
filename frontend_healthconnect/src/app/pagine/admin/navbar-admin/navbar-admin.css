@@ -487,7 +487,6 @@ header:hover::before {
      Se c'è, puoi lasciarlo nascosto o mostrarlo a seconda dello spazio. */
   .user-info {
     display: none;
-    display: none;
   }
 
   .user-avatar {
