@@ -54,7 +54,7 @@
 /* Effetto Glow */
 .highlight-glow ::ng-deep > div:first-child {
   animation: glow-animation 2s ease-in-out;
-  border-radius: 8px;
+  border-radius: 21px;
 }
 
 @keyframes glow-animation {
