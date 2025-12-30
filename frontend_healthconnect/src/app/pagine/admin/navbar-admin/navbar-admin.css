@@ -16,7 +16,7 @@
   --shadow-glow: 0 0 30px rgba(0, 102, 204, 0.15);
 }
 
-/* Header con effetto glassmorphism avanzato */
+/* Header */
 header {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(30px) saturate(200%);
@@ -50,10 +50,9 @@ header:hover::before {
   opacity: 1;
 }
 
-/* Logo */
 .logo {
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--primary-color);
   display: flex;
   align-items: center;
@@ -470,19 +469,24 @@ header:hover::before {
     height: 42px;
   }
 
-  .nav-links {
-    display: none;
+  /* RIMOSSO: .nav-links { display: none; } */
+  /* Ora i link rimangono visibili */
+
+  .nav-links a {
+    /* Opzionale: Riduciamo un po' il padding per risparmiare spazio su mobile */
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
   }
 
   .header-right {
-    gap: 1rem;
+    gap: 0.8rem; /* Riduciamo il gap tra i link e il tasto logout */
   }
 
-  .user-profile {
-    padding: 0.4rem 0.7rem 0.4rem 0.4rem;
-  }
-
+  /* Se necessario nascondere le info utente per fare spazio, ma nel tuo HTML admin
+     non sembra esserci il blocco user-info complesso come nel paziente/medico.
+     Se c'è, puoi lasciarlo nascosto o mostrarlo a seconda dello spazio. */
   .user-info {
+    display: none;
     display: none;
   }
 
@@ -504,44 +508,51 @@ header:hover::before {
 
 @media (max-width: 480px) {
   .logo span {
-    display: none;
+    display: none; /* Nasconde "Connect" su mobile molto piccolo per dare priorità ai link */
   }
 
   .logo img {
     height: 38px;
   }
 
-  .custom-dropdown {
-    right: -20px;
-    min-width: 200px;
+  /* Opzionale: su schermi piccolissimi mostra solo l'icona del link */
+  .nav-links a span:not(:first-child) {
+    /* Se vuoi nascondere il testo "Utenti" e lasciare solo l'icona 👥
+       decommenta la riga sotto: */
+    /* display: none; */
+
+    .custom-dropdown {
+      right: -20px;
+      min-width: 200px;
+    }
+
+    .dropdown-item {
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+    }
   }
 
-  .dropdown-item {
-    padding: 0.85rem 1rem;
-    font-size: 0.9rem;
+  /* Accessibilità - Focus states */
+  .nav-links a:focus-visible,
+  .user-profile:focus-visible,
+  .dropdown-item:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
   }
 
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Accessibilità - Focus states */
-.nav-links a:focus-visible,
-.user-profile:focus-visible,
-.dropdown-item:focus-visible {
-  outline: 3px solid var(--primary-color);
-  outline-offset: 2px;
-}
-
-/* Riduzione movimento per accessibilità */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  /* Riduzione movimento per accessibilità */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

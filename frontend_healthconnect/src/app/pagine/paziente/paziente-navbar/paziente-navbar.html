@@ -22,6 +22,12 @@
       </a>
     </nav>
 
+    <div class="hamburger-menu" (click)="toggleMobileMenu()" [class.open]="isMobileMenuOpen">
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+    </div>
+
     <div class="profile-container">
       <div class="user-profile" (click)="toggleProfileMenu()">
         <div class="user-avatar">
@@ -48,5 +54,24 @@
     </div>
   </div>
 
-  <div class="dropdown-overlay" *ngIf="isProfileMenuOpen" (click)="closeProfileMenu()"></div>
+  <nav class="mobile-nav" [class.open]="isMobileMenuOpen">
+    <a routerLink="/paziente/calendario" routerLinkActive="active-link" (click)="closeMobileMenu()">
+      <span>📅</span> Calendario
+    </a>
+    <a routerLink="/paziente/medici" routerLinkActive="active-link" (click)="closeMobileMenu()">
+      <span>👨‍⚕️</span> Medici
+    </a>
+    <a routerLink="/paziente/cartella" routerLinkActive="active-link" (click)="closeMobileMenu()">
+      <span>📋</span> Cartella Clinica
+    </a>
+    <a routerLink="/paziente/chat" routerLinkActive="active-link" (click)="closeMobileMenu()">
+      <span>💬</span> Chat
+    </a>
+    <a routerLink="/paziente/ai" routerLinkActive="active-link" (click)="closeMobileMenu()">
+      <span>🤖</span> Assistente AI
+    </a>
+  </nav>
+
+  <div class="dropdown-overlay" *ngIf="isProfileMenuOpen || isMobileMenuOpen"
+       (click)="closeAllMenus()"></div>
 </header>
