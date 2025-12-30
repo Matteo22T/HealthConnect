@@ -30,7 +30,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
   nomeSpecializzazione: string = 'Caricamento...';
 
   private map?: google.maps.Map;
-  private marker?: any; // AdvancedMarkerElement
+  private marker?: google.maps.marker.AdvancedMarkerElement;
   private viewReady = false;
   private lastAddress?: string;
 
@@ -85,52 +85,55 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
     const address = this.medico?.indirizzo_studio?.trim();
     if (!address) return;
 
-    // evita re-render inutili se l’indirizzo non è cambiato
+    // evita lavoro inutile
     if (this.lastAddress === address && this.map) return;
     this.lastAddress = address;
 
     try {
-      // carica librerie
-      await this.googleMaps.loadMarker();
-      const { Map } = (await google.maps.importLibrary('maps')) as any;
-      const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as any;
-      const { Geocoder } = (await google.maps.importLibrary('geocoding')) as any;
+      // ✅ tutte dal singleton
+      const mapsLib = await this.googleMaps.loadMaps();
+      const markerLib = await this.googleMaps.loadMarker();
+      const geocodingLib = await this.googleMaps.loadGeocoding();
 
-      // se la mappa non esiste, creala
-      if (!this.map) {
-        this.map = new Map(this.mapView.nativeElement, {
-          center: { lat: 41.9028, lng: 12.4964 }, // fallback Roma
-          zoom: 15,
-          mapId: 'DEMO_MAP_ID', // metti il tuo mapId se lo hai
-          disableDefaultUI: true,
-          gestureHandling: 'cooperative',
-          keyboardShortcuts: false,
-          zoomControl: true,
-        });
-      }
+      // 1) geocodifica PRIMA (così non mostri Roma)
+      const geocoder = new geocodingLib.Geocoder();
 
-      const geocoder = new Geocoder();
       geocoder.geocode({ address }, (results: any, status: any) => {
-        if (status === 'OK' && results?.[0]) {
-          const loc = results[0].geometry.location;
-
-          this.map!.setCenter(loc);
-          this.map!.setZoom(17);
-
-          // crea o aggiorna marker
-          if (!this.marker) {
-            this.marker = new AdvancedMarkerElement({
-              map: this.map,
-              position: loc,
-              title: 'Sede studio',
-              gmpDraggable: false,
-            });
-          } else {
-            this.marker.position = loc;
-            this.marker.map = this.map;
-          }
-        } else {
+        if (status !== 'OK' || !results?.[0]) {
           console.error('Geocodifica fallita:', status);
+          return;
+        }
+
+        const loc = results[0].geometry.location;
+
+        // 2) crea la mappa solo quando hai loc
+        if (!this.map) {
+          this.map = new mapsLib.Map(this.mapView!.nativeElement, {
+            center: loc,
+            zoom: 17,
+            mapId: 'DEMO_MAP_ID',
+            disableDefaultUI: true,
+            gestureHandling: 'cooperative',
+            keyboardShortcuts: false,
+            zoomControl: true,
+          });
+        } else {
+          // se esiste già, aggiorna solo center/zoom
+          this.map.setCenter(loc);
+          this.map.setZoom(17);
+        }
+
+        // 3) marker: crea o aggiorna
+        if (!this.marker) {
+          this.marker = new markerLib.AdvancedMarkerElement({
+            map: this.map!,
+            position: loc,
+            title: 'Sede studio',
+            gmpDraggable: false,
+          });
+        } else {
+          this.marker.position = loc;
+          this.marker.map = this.map!;
         }
       });
     } catch (e) {

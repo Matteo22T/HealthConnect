@@ -2,19 +2,16 @@ import { Injectable } from '@angular/core';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
 import { environment } from '../../environments/environment';
 
-//classe singleton
 @Injectable({ providedIn: 'root' })
 export class GoogleMapsService {
-  //capisco se ho configurato o meno il loader
   private configured = false;
 
-  //memorizziamo le chiamate alla libreria (che sarà sempre la stessa)
   private placesPromise?: Promise<google.maps.PlacesLibrary>;
   private markerPromise?: Promise<google.maps.MarkerLibrary>;
+  private mapsPromise?: Promise<google.maps.MapsLibrary>;
+  private geocodingPromise?: Promise<google.maps.GeocodingLibrary>;
 
-
-  private configurazione(): void {
-    //controlliamo se ho già configurato o meno i dati con la key ecc
+  private ensureConfigured(): void {
     if (this.configured) return;
 
     setOptions({
@@ -27,14 +24,23 @@ export class GoogleMapsService {
     this.configured = true;
   }
 
-  //
   loadPlaces(): Promise<google.maps.PlacesLibrary> {
-    this.configurazione();
+    this.ensureConfigured();
     return (this.placesPromise ??= importLibrary('places') as Promise<google.maps.PlacesLibrary>);
   }
 
   loadMarker(): Promise<google.maps.MarkerLibrary> {
-    this.configurazione();
+    this.ensureConfigured();
     return (this.markerPromise ??= importLibrary('marker') as Promise<google.maps.MarkerLibrary>);
+  }
+
+  loadMaps(): Promise<google.maps.MapsLibrary> {
+    this.ensureConfigured();
+    return (this.mapsPromise ??= importLibrary('maps') as Promise<google.maps.MapsLibrary>);
+  }
+
+  loadGeocoding(): Promise<google.maps.GeocodingLibrary> {
+    this.ensureConfigured();
+    return (this.geocodingPromise ??= importLibrary('geocoding') as Promise<google.maps.GeocodingLibrary>);
   }
 }

@@ -194,39 +194,45 @@ export class ProfiloMedico implements OnInit {
   // ------------------------
   async initViewMap(): Promise<void> {
     if (!this.mapView?.nativeElement) return;
-    if (!this.medico?.indirizzo_studio) return;
+
+    const address = this.medico?.indirizzo_studio?.trim();
+    if (!address) return;
 
     try {
-      // Carica librerie necessarie
-      await this.googleMaps.loadMarker();
-      const { Map } = (await google.maps.importLibrary('maps')) as any;
-      const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as any;
-      const { Geocoder } = (await google.maps.importLibrary('geocoding')) as any;
+      // Carica librerie dal singleton
+      const mapsLib = await this.googleMaps.loadMaps();
+      const markerLib = await this.googleMaps.loadMarker();
+      const geocodingLib = await this.googleMaps.loadGeocoding();
 
-      // Inizializza mappa
-      const map = new Map(this.mapView.nativeElement, {
-        center: { lat: 41.9028, lng: 12.4964 }, // Default: Roma
-        zoom: 15,
-        mapId: 'VIEW_MAP_ID', // ID mappa (crealo in Google Cloud Console per marker avanzati)
-        disableDefaultUI: true,
-        gestureHandling: 'none',
-        keyboardShortcuts: false,
-        zoomControl: false,
-      });
+      // 1) Geocodifica PRIMA
+      const geocoder = new geocodingLib.Geocoder();
 
-      // Geocodifica l'indirizzo salvato per posizionare il marker
-      const geocoder = new Geocoder();
-      geocoder.geocode({ address: this.medico.indirizzo_studio }, (results: any, status: any) => {
-        if (status === 'OK' && results?.[0]) {
-          map.setCenter(results[0].geometry.location);
-
-          new AdvancedMarkerElement({
-            map,
-            position: results[0].geometry.location,
-            title: 'Sede studio',
-            gmpDraggable: false,
-          });
+      geocoder.geocode({ address }, (results: any, status: any) => {
+        if (status !== 'OK' || !results?.[0]) {
+          console.error('Geocodifica fallita:', status);
+          return;
         }
+
+        const loc = results[0].geometry.location;
+
+        // 2) Crea la mappa DOPO, già centrata correttamente
+        const map = new mapsLib.Map(this.mapView!.nativeElement, {
+          center: loc,
+          zoom: 17,
+          mapId: 'DEMO_MAP_ID',
+          disableDefaultUI: true,
+          gestureHandling: 'cooperative',
+          keyboardShortcuts: false,
+          zoomControl: true,
+        });
+
+        // 3) Marker
+        new markerLib.AdvancedMarkerElement({
+          map,
+          position: loc,
+          title: 'Sede studio',
+          gmpDraggable: false,
+        });
       });
     } catch (e) {
       console.error('Errore initViewMap', e);
