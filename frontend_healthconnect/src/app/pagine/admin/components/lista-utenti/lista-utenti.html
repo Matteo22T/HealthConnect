@@ -10,6 +10,7 @@
         <thead>
         <tr>
           <th>Utente</th>
+          <th>Email</th>
           <th>Ruolo</th>
           <th>Data Iscrizione</th>
           <th>Stato</th>
@@ -23,6 +24,12 @@
               <div class="avatar">{{ ut.nome.charAt(0).toUpperCase() }}</div>
               <div class="user-info">
                 <span class="name">{{ ut.nome + " " + ut.cognome }} </span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="user-cell">
+              <div class="user-info">
                 <span class="email-sub">{{ ut.email }}</span>
               </div>
             </div>
