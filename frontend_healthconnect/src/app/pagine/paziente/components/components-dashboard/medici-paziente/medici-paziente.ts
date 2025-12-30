@@ -89,6 +89,7 @@ export class MediciPaziente {
         }
       }
     });
+    this.cd.detectChanges();
   }
 
 

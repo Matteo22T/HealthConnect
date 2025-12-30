@@ -40,10 +40,10 @@
 
 
       <div class="med-actions">
-        <button class="btn-prenota" (click)="apriChatMedico(med.id)" title="Invia messaggio">
+        <button class="btn-prenota" (click)="apriChatMedico(med.id); $event.stopPropagation()" title="Invia messaggio">
           💬 Invia messaggio
         </button>
-        <button class="btn-prenota btn-green" (click)="apriPrenotazione(med)">
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(med); $event.stopPropagation()">
           📅 Prenota Visita
         </button>
       </div>

@@ -37,8 +37,8 @@
         </div>
       </div>
       <div class="actions-wrapper">
-        <button class="btn-prenota" (click)="contattaMedico(medico.id)">💬 Invia messaggio</button>
-        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico)">📅 Prenota visita</button>
+        <button class="btn-prenota" (click)="contattaMedico(medico.id);$event.stopPropagation()">💬 Invia messaggio</button>
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico); $event.stopPropagation()">📅 Prenota visita</button>
       </div>
     </div>
     <div *ngIf="medici.length === 0" class="empty-state">Nessun medico trovato con questo nome.</div>
