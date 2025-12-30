@@ -27,6 +27,7 @@ export class TrovaMedicoComponent implements OnInit {
   isExpanded: boolean = false;
   showModal: boolean = false;
   nomeMedicoSelezionato: string = '';
+  errorMessage: string = '';
 
   specializzazioni: SpecializzazioneDTO[] = []
   showSuccess: boolean = false;
@@ -107,6 +108,7 @@ export class TrovaMedicoComponent implements OnInit {
     this.nuovaPrenotazione.paziente_id = this.pazienteAttuale.id
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
+    this.errorMessage = '';
   }
 
   chiudiModal() {
@@ -117,11 +119,29 @@ export class TrovaMedicoComponent implements OnInit {
   }
 
   confermaPrenotazione() {
+    this.errorMessage = '';
 
       if (!this.nuovaPrenotazione.data_visita || !this.nuovaPrenotazione.motivo) {
-        alert("Per favore compila data e motivo.");
+        this.errorMessage = "Per favore compila data e motivo.";
         return;
       }
+
+    const dataSelezionata = new Date(this.nuovaPrenotazione.data_visita);
+    const dataOdierna = new Date();
+    const ora = dataSelezionata.getHours();
+
+    // 2. Controllo Data Passata (non puoi prenotare nel passato)
+    if (dataSelezionata <= dataOdierna) {
+      this.errorMessage = "La data della visita deve essere successiva ad adesso.";
+      return;
+    }
+
+    // 3. Controllo Orario (08:00 - 20:00)
+    // Se l'ora è minore di 8 OPPURE maggiore o uguale a 20 (es. 20:01)
+    if (ora < 8 || ora >= 20) {
+      this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
+      return;
+    }
 
       console.log("Invio prenotazione in corso..."); // LOG DI DEBUG
       this.prenService.prenotaVisita(this.nuovaPrenotazione).subscribe({
@@ -140,7 +160,7 @@ export class TrovaMedicoComponent implements OnInit {
             this.gestisciSuccesso();
           } else {
             console.error("Errore vero:", err);
-            alert("Errore durante la prenotazione. Controlla la console.");
+            this.errorMessage = "Errore durante la prenotazione. Riprova più tardi.";
           }
         }
       });
@@ -160,5 +180,11 @@ export class TrovaMedicoComponent implements OnInit {
 
   apriProfilo(med: MedicoDTO) {
     this.router.navigate(['/paziente/medico', med.id]);
+  }
+
+  get minDate(): string {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
   }
 }

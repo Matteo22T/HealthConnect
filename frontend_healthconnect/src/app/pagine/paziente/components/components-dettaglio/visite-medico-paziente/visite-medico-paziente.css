@@ -13,16 +13,9 @@
   flex-direction: column;
   gap: 1.5rem;
 
-  /* ... lascia le altre proprietà (background, border-radius, ecc) ... */
-
-  /* 1. Definisci l'altezza fissa che vuoi per i blocchi */
   height: 320px;
-
-  /* 2. Flexbox è fondamentale qui */
-
 }
 
-/* Barra colorata superiore */
 .section-card::before {
   content: '';
   position: absolute;
@@ -34,13 +27,11 @@
   opacity: 1;
 }
 
-/* Effetto hover sul contenitore */
 .section-card:hover {
   box-shadow: 0 12px 40px rgba(0, 102, 204, 0.15);
   transform: translateY(-4px);
 }
 
-/* Titolo della sezione: riprende .patient-name */
 .section-title {
   font-size: 1.8rem;
   font-weight: 800;
@@ -53,7 +44,6 @@
   position: relative;
 }
 
-/* Icona nel titolo: versione "mini" di .avatar */
 .section-icon {
   width: 48px;
   height: 48px;

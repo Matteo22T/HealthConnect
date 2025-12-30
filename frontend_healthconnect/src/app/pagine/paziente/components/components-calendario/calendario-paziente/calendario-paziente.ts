@@ -32,14 +32,11 @@ export class CalendarioPaziente implements OnInit{
   @Input() listaPending: prenotazioneDTO[] = [];
   @Input() listaRifiutate: prenotazioneDTO[] = [];
 
-  //vista settimanale di default
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
 
-  //lista eventi
   events: CalendarEvent[] = [];
 
-  //trigger refresh grafico
   refresh = new Subject<void>();
 
   selectedEvent: CalendarEvent | null = null;
@@ -119,7 +116,7 @@ export class CalendarioPaziente implements OnInit{
       return {
         start: start,
         end: end,
-        title: `[IN ATTESA] - ${orarioInizio} - ${orarioFine}\n Dr. ${p.medico.nome} ${p.medico.cognome} \n ${p.motivo}`,
+        title: `${orarioInizio} - ${orarioFine}\n Dr. ${p.medico.nome} ${p.medico.cognome} \n ${p.motivo}`,
         color: { primary: '#e67e22', secondary: '#fbeee6' },
         meta: {
           type: 'PENDING',
@@ -143,7 +140,7 @@ export class CalendarioPaziente implements OnInit{
       return {
         start: start,
         end: end,
-        title: `[RIFIUTATO] - ${orarioInizio} - ${orarioFine}\n Dr. ${p.medico.nome} ${p.medico.cognome} \n ${p.motivo}`,
+        title: `${orarioInizio} - ${orarioFine}\n Dr. ${p.medico.nome} ${p.medico.cognome} \n ${p.motivo}`,
         color: {primary: '#ff0043', secondary: '#fbeee6'},
         meta: {
           type: 'RIFIUTATO',

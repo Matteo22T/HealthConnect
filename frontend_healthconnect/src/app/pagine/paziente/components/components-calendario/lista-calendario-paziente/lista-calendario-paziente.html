@@ -7,7 +7,6 @@
 
   <div *ngIf="!loading" class="content-wrapper">
 
-    <!-- Header con Tabs -->
     <div class="tabs-container">
       <button class="tab-btn"
               [class.active]="activeTab === 'confermate'"
@@ -34,10 +33,8 @@
       </button>
     </div>
 
-    <!-- Contenuto Tabs -->
     <div class="tab-content">
 
-      <!-- Tab Confermate -->
       <div *ngIf="activeTab === 'confermate'" class="tab-panel">
         <div *ngIf="visite.length === 0" class="empty-state">
           <div class="empty-icon">📭</div>
@@ -78,7 +75,6 @@
         </div>
       </div>
 
-      <!-- Tab In Attesa -->
       <div *ngIf="activeTab === 'pending'" class="tab-panel">
         <div *ngIf="prenotazioniPending.length === 0" class="empty-state">
           <div class="empty-icon">📭</div>
@@ -125,7 +121,6 @@
         </div>
       </div>
 
-      <!-- Tab Rifiutate -->
       <div *ngIf="activeTab === 'rifiutate'" class="tab-panel">
         <div *ngIf="prenotazioniRifiutate.length === 0" class="empty-state">
           <div class="empty-icon">📭</div>

@@ -2,7 +2,6 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 2rem;
-  animation: fadeInUp 0.8s ease-out;
   width: 100%;
   box-sizing: border-box;
   flex: 1;
@@ -28,6 +27,7 @@
   align-items: baseline;
   gap: 1rem;
   animation: fadeInDown 0.8s ease-out;
+
 }
 
 @keyframes fadeInDown {
@@ -51,6 +51,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
 }
 
 .patient-number {
@@ -69,6 +70,7 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   box-sizing: border-box;
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .table-section:hover {
@@ -126,6 +128,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  min-height: 350px;
+  max-height: 350px;
+  overflow-y: auto;
 }
 
 .no-results {

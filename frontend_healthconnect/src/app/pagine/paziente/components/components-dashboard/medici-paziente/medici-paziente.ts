@@ -26,6 +26,8 @@ export class MediciPaziente {
   showModal: boolean = false;
 
   showSuccess: boolean = false;
+  errorMessage: string = '';
+
 
   nuovaPrenotazione = {
     medico_id: 0,
@@ -53,6 +55,7 @@ export class MediciPaziente {
     this.nuovaPrenotazione.paziente_id = this.user
     this.nomeMedicoSelezionato = medico.nome + ' ' + medico.cognome;
     this.showModal = true;
+    this.errorMessage = '';
   }
 
   chiudiModal() {
@@ -62,13 +65,28 @@ export class MediciPaziente {
   }
 
   confermaPrenotazione() {
+    this.errorMessage = '';
 
     if (!this.nuovaPrenotazione.data_visita || !this.nuovaPrenotazione.motivo) {
-      alert("Per favore compila data e motivo.");
+      this.errorMessage = "Per favore compila data e motivo.";
       return;
     }
 
-    console.log("Invio prenotazione in corso..."); // LOG DI DEBUG
+    const dataSelezionata = new Date(this.nuovaPrenotazione.data_visita);
+    const dataOdierna = new Date();
+    const ora = dataSelezionata.getHours();
+
+    if (dataSelezionata <= dataOdierna) {
+      this.errorMessage = "La data della visita deve essere successiva ad adesso.";
+      return;
+    }
+
+    if (ora < 8 || ora >= 20) {
+      this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
+      return;
+    }
+
+    console.log("Invio prenotazione in corso...");
     this.prenService.prenotaVisita(this.nuovaPrenotazione).subscribe({
 
       next: (response) => {
@@ -85,7 +103,7 @@ export class MediciPaziente {
           this.gestisciSuccesso();
         } else {
           console.error("Errore vero:", err);
-          alert("Errore durante la prenotazione. Controlla la console.");
+          this.errorMessage = "Errore durante la prenotazione. Riprova più tardi.";
         }
       }
     });
@@ -93,13 +111,19 @@ export class MediciPaziente {
 
 
   gestisciSuccesso() {
-    this.chiudiModal();       // 1. Chiude il form
-    this.showSuccess = true;  // 2. Attiva il popup verde
-    this.cd.detectChanges();  // 3. FORZA l'aggiornamento della grafica (Fondamentale!)
+    this.chiudiModal();
+    this.showSuccess = true;
+    this.cd.detectChanges();
   }
 
   chiudiSuccess() {
     this.showSuccess = false;
     this.cd.detectChanges()
+  }
+
+  get minDate(): string {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
   }
 }

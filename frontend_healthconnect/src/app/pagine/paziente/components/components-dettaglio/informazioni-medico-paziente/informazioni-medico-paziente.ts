@@ -68,7 +68,6 @@ export class InformazioniMedicoPaziente implements OnInit {
     this.router.navigate(['/paziente/chat'], { queryParams: { medicoId: idMedico } });
   }
 
-  // --- FUNZIONI PRENOTAZIONE ---
 
   apriPrenotazione(medico: utenteDTO) {
     this.nuovaPrenotazione.medico_id = medico.id;
@@ -79,7 +78,6 @@ export class InformazioniMedicoPaziente implements OnInit {
 
   chiudiModal() {
     this.showModal = false;
-    // Puliamo i campi per la prossima volta
     this.nuovaPrenotazione.data_visita = '';
     this.nuovaPrenotazione.motivo = '';
   }

@@ -40,10 +40,10 @@
 
 
       <div class="med-actions">
-        <button class="btn-prenota" (click)="apriChatMedico(med.id)" title="Invia messaggio">
+        <button class="btn-prenota" (click)="apriChatMedico(med.id); $event.stopPropagation()" title="Invia messaggio">
           💬 Invia messaggio
         </button>
-        <button class="btn-prenota btn-green" (click)="apriPrenotazione(med)">
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(med); $event.stopPropagation()">
           📅 Prenota Visita
         </button>
       </div>
@@ -68,7 +68,7 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Seleziona Data e Ora:</label>
-        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" class="form-control">
+        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" [min]="minDate" class="form-control">
       </div>
 
       <div class="form-group">
@@ -82,6 +82,10 @@
           <option value="Consulto">Consulto</option>
           <option value="Altro">Altro</option>
         </select>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert-box">
+        <span>⚠️</span> {{ errorMessage }}
       </div>
     </div>
 

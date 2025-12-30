@@ -27,7 +27,6 @@
   min-height: 500px;
 }
 
-/* Loading Spinner */
 .loading-spinner {
   display: flex;
   flex-direction: column;
@@ -62,7 +61,6 @@
   to { opacity: 1; }
 }
 
-/* Tabs Container - Stile Moderno */
 .tabs-container {
   display: flex;
   gap: 0.5rem;
@@ -131,7 +129,6 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* Tab Content */
 .tab-content {
   animation: fadeInUp 0.4s ease-out;
 }
@@ -162,7 +159,6 @@
   }
 }
 
-/* Empty State */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -194,7 +190,6 @@
   font-size: 1rem;
 }
 
-/* Cards Grid */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -202,11 +197,10 @@
   height: auto;
   max-height: 1000px;
   gap: 1.5rem;
-  padding: 0.5rem 1rem 1rem 0.5rem; /* Padding interno per non tagliare le ombre */
+  padding: 0.5rem 1rem 1rem 0.5rem;
 
 }
 
-/* Card Design Completamente Nuovo */
 .card {
   background: white;
   border-radius: 16px;
@@ -223,42 +217,11 @@
   box-shadow: var(--shadow-xl);
 }
 
-/* Card Ribbon - Nastro Angolato */
-.card-ribbon {
-  position: absolute;
-  top: 20px;
-  right: -35px;
-  width: 150px;
-  padding: 0.5rem;
-  text-align: center;
-  transform: rotate(45deg);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
 
-.card-ribbon.confermata {
-  background: linear-gradient(135deg, #10b981, #059669);
-}
-
-.card-ribbon.pending {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-}
-
-.card-ribbon.rifiutata {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
-/* Card Content */
 .card-content {
   padding: 1.5rem;
 }
 
-/* Card Header con Data Badge */
 .card-header {
   display: flex;
   align-items: center;
@@ -335,7 +298,6 @@
   font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
 }
 
-/* Doctor Info */
 .doctor-info {
   display: flex;
   align-items: center;
@@ -384,7 +346,6 @@
   text-overflow: ellipsis;
 }
 
-/* Reason Box */
 .reason-box {
   background: var(--color-gray-50);
   padding: 1.25rem;
@@ -420,7 +381,6 @@
   font-weight: 500;
 }
 
-/* Status Message */
 .status-message {
   display: flex;
   align-items: center;
@@ -450,7 +410,6 @@
   flex-shrink: 0;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .cards-grid {
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -531,7 +490,6 @@
   }
 }
 
-/* Accessibilità */
 .tab-btn:focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;

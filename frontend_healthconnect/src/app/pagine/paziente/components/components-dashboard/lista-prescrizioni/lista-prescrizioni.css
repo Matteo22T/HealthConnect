@@ -28,7 +28,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Stato vuoto */
 .card > div[style*="text-align: center"] {
   padding: 3rem 2rem !important;
   text-align: center;

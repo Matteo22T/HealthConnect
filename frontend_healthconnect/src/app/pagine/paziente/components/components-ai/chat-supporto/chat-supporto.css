@@ -1,7 +1,7 @@
 .chat-wrapper {
   display: flex;
   flex-direction: column;
-  height: 65vh; /* Altezza fissa per far funzionare lo scroll */
+  height: 65vh;
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
@@ -9,7 +9,6 @@
   border: 1px solid #f0f0f0;
 }
 
-/* --- AREA MESSAGGI --- */
 .messages-area {
   flex: 1;
   padding: 1.5rem;
@@ -22,7 +21,7 @@
 
 .message-row {
   display: flex;
-  align-items: flex-end; /* Allinea avatar in basso */
+  align-items: flex-end;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -38,7 +37,6 @@
   font-size: 1.2rem;
 }
 
-/* Bolle */
 .bubble {
   max-width: 75%;
   padding: 0.8rem 1.2rem;
@@ -57,7 +55,7 @@
 }
 
 .user-bubble {
-  background: #0066cc; /* Colore primario */
+  background: #0066cc;
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -70,7 +68,6 @@
   text-align: right;
 }
 
-/* Bottone azione */
 .action-btn {
   display: block;
   margin-top: 0.8rem;
@@ -86,7 +83,6 @@
 }
 .action-btn:hover { background: #e3f2fd; }
 
-/* --- AREA INPUT --- */
 .input-area {
   padding: 1rem;
   background: white;
@@ -125,7 +121,6 @@
 .send-btn:hover:not(:disabled) { transform: scale(1.1); }
 .send-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-/* Animazione Typing */
 .typing span {
   display: inline-block; width: 5px; height: 5px;
   background: #888; border-radius: 50%; margin: 0 2px;

@@ -49,14 +49,12 @@ export class AndamentoMetricheVitali implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  // --- DATI PER I 3 GRAFICI ---
   public pesoData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
   public pressioneData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
   public glicemiaData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
 
   @Input({required: true}) user: utenteDTO = {} as utenteDTO;
 
-  // --- OPZIONI CONDIVISE ---
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -64,7 +62,7 @@ export class AndamentoMetricheVitali implements OnInit {
       legend: { display: true, position: 'top' }
     },
     scales: {
-      y: { beginAtZero: false } // Non partire da 0 per vedere meglio le variazioni
+      y: { beginAtZero: false }
     }
   };
 
@@ -81,10 +79,8 @@ export class AndamentoMetricheVitali implements OnInit {
   }
 
   processaDati(dati: MetricheSaluteDTO[]) {
-    // 1. GRAFICO PESO
     this.pesoData = this.creaConfigurazioneGrafico(dati, [TipoMetrica.PESO], ['#10b981'], ['Peso (kg)']);
 
-    // 2. GRAFICO PRESSIONE (Max e Min insieme)
     this.pressioneData = this.creaConfigurazioneGrafico(
       dati,
       [TipoMetrica.PRESSIONE_MAX, TipoMetrica.PRESSIONE_MIN],
@@ -92,13 +88,11 @@ export class AndamentoMetricheVitali implements OnInit {
       ['Pressione Max', 'Pressione Min']
     );
 
-    // 3. GRAFICO GLICEMIA
     this.glicemiaData = this.creaConfigurazioneGrafico(dati, [TipoMetrica.GLICEMIA], ['#3b82f6'], ['Glicemia']);
 
     this.cd.detectChanges();
   }
 
-  // Metodo generico per creare la configurazione di un singolo grafico
   creaConfigurazioneGrafico(
     allData: MetricheSaluteDTO[],
     tipi: TipoMetrica[],
@@ -106,19 +100,16 @@ export class AndamentoMetricheVitali implements OnInit {
     labels: string[]
   ): ChartConfiguration<'line'>['data'] {
 
-    // Filtra solo i dati pertinenti per questo grafico
     const datiPertinenti = allData.filter(d => tipi.includes(d.tipoMetrica));
 
     if (datiPertinenti.length === 0) {
       return { labels: [], datasets: [] };
     }
 
-    // Crea etichette date uniche SOLO per questi dati
     const dateLabels = [...new Set(datiPertinenti.map(d =>
       this.datePipe.transform(d.data, 'dd/MM') || ''
-    ))].sort(); // Ordina le date se necessario, ma di solito arrivano già ordinate dal DB
+    ))].sort();
 
-    // Crea i dataset
     const datasets = tipi.map((tipo, index) => {
       return this.creaDataset(datiPertinenti, tipo, labels[index], colori[index], dateLabels);
     });

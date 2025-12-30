@@ -20,12 +20,7 @@ export class ListaCalendarioPaziente implements OnInit {
 
   loading = true;
 
-  // Stato delle sezioni (aperte/chiuse)
-  sezioniAperte = {
-    confermate: true,
-    pending: true,
-    rifiutate: true
-  };
+
 
   constructor(
     private visService: VisitaService,
@@ -63,13 +58,7 @@ export class ListaCalendarioPaziente implements OnInit {
     }
   }
 
-  formatData(data: string): string {
-    return new Date(data).toLocaleDateString('it-IT', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }
+
 
   formatOrario(data: string): string {
     const date = new Date(data);

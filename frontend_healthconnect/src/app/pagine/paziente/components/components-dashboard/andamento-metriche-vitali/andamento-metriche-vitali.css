@@ -1,6 +1,6 @@
 .metriche-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive: 1 o 2 colonne */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   width: 100%;
 }
@@ -28,12 +28,12 @@
 
 .chart-container {
   position: relative;
-  height: 250px; /* Un po' più bassi visto che sono separati */
+  height: 250px;
   width: 100%;
 }
 
 .empty-state-card {
-  grid-column: 1 / -1; /* Occupa tutta la larghezza */
+  grid-column: 1 / -1;
   background: white;
   border-radius: 12px;
   padding: 3rem;

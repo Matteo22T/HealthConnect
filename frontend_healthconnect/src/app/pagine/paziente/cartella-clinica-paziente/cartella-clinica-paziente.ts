@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Importa TUTTI i componenti Tab figli
 import { TabStoriaVisite } from '../components/components-cartella/tab-storia-visite/tab-storia-visite';
 import { TabPrescrizioni } from '../components/components-cartella/tab-prescrizioni/tab-prescrizioni';
 import { TabMetriche } from '../components/components-cartella/tab-metriche/tab-metriche';
 import {ActivatedRoute} from '@angular/router';
-// (Importa anche TabProfilo se/quando lo farai)
 
 @Component({
   selector: 'app-cartella-clinica',
@@ -21,7 +19,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrl: './cartella-clinica-paziente.css'
 })
 export class CartellaClinicaPaziente implements OnInit{
-  activeTab: string = 'visite'; // Tab iniziale
+  activeTab: string = 'visite';
 
   constructor(private route: ActivatedRoute) {}
 

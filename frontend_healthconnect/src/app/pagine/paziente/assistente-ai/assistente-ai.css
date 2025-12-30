@@ -5,7 +5,6 @@
   min-height: 80vh;
 }
 
-/* HEADER */
 .ai-header {
   display: flex;
   align-items: center;
@@ -18,7 +17,6 @@
 }
 .back-btn:hover { text-decoration: underline; }
 
-/* SELECTION MENU */
 .selection-menu { text-align: center; margin-top: 3rem; }
 .selection-menu h1 { color: #333; margin-bottom: 0.5rem; }
 .subtitle { color: #666; margin-bottom: 3rem; }

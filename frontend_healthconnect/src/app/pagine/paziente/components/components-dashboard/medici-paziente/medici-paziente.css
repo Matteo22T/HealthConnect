@@ -120,21 +120,18 @@
   margin: 0;
 }
 
-/* Contenitore Bottoni */
 .med-actions {
   display: flex;
-  gap: 10px;           /* Spazio tra i bottoni */
+  gap: 10px;
   width: 100%;
   margin-top: auto;
   padding-top: 10px;
-  justify-content: center; /* MODIFICA: Centra i bottoni nella card */
-  /* Se li vuoi agli estremi (uno a sx, uno a dx) usa: justify-content: space-between; */
+  justify-content: center;
 }
 
-/* Stile comune (Altezza fissa) */
 .btn-contact,
 .btn-prenota {
-  height: 38px;            /* Altezza fissa identica */
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,18 +140,17 @@
   padding-bottom: 0;
 }
 
-/* Bottone Contatta (Messaggio) */
 .btn-contact {
   margin-left: auto;
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 20px;     /* O 50% se lo vuoi rotondo perfetto */
-  width: 38px;             /* Larghezza fissa = Altezza (Quadrato/Rotondo) */
+  border-radius: 20px;
+  width: 38px;
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s;
   color: #555;
-  padding: 0;              /* Reset padding perché ha width fissa */
+  padding: 0;
 }
 
 .btn-contact:hover {
@@ -164,12 +160,10 @@
   transform: translateY(-1px);
 }
 
-/* Bottone Prenota */
 .btn-prenota {
-  /* flex: 1;  <-- RIMOSSO: Non si allarga più */
-  width: auto;            /* Larghezza automatica ("il giusto") */
-  min-width: 100px;       /* Opzionale: larghezza minima per non farlo sembrare minuscolo */
-  padding-left: 20px;     /* Padding laterale generoso */
+  width: auto;
+  min-width: 100px;
+  padding-left: 20px;
   padding-right: 20px;
 
   background-color: #e3f2fd;
@@ -189,7 +183,6 @@
 }
 
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 2rem 0;
@@ -199,7 +192,7 @@
 
 .avatar-placeholder.emoji-avatar {
 
-  background-color: #f5f5f5; /* Grigio chiaro */
+  background-color: #f5f5f5;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -209,125 +202,547 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-
-/* ========================================= */
-/* STILE MODALE                  */
-/* ========================================= */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5); /* Sfondo scuro */
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
-  justify-content: center; /* Centra orizzontalmente */
-  align-items: center;     /* Centra verticalmente */
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
+  animation: overlayFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+  }
 }
 
 .modal-content {
   background: white;
-  width: 90%;
-  max-width: 500px;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  animation: fadeIn 0.3s ease;
+  width: 100%;
+  max-width: 540px;
+  padding: 0;
+  border-radius: 24px;
+  box-shadow:
+    0 24px 64px rgba(0, 102, 204, 0.2),
+    0 12px 32px rgba(0, 0, 0, 0.15);
+  animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  border: 1px solid rgba(0, 102, 204, 0.1);
+  position: relative;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #0066cc 0%, #00c4cc 100%);
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
+  padding: 32px 32px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .modal-header h3 {
-  margin: 0;
-  color: #2c3e50;
+  margin: 0 0 8px 0;
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 .modal-header p {
-  margin: 5px 0 20px 0;
-  color: #666;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-header p::before {
+  content: '👨‍⚕️';
+  font-size: 20px;
+}
+
+.modal-body {
+  padding: 32px;
+  background: white;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 24px;
+  animation: formGroupFadeIn 0.5s ease-out backwards;
+}
+
+.form-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.form-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+@keyframes formGroupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .form-group label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #1a202c;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group label::before {
+  content: '';
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(180deg, #0066cc 0%, #00c4cc 100%);
+  border-radius: 2px;
 }
 
 .form-control {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  box-sizing: border-box; /* Importante per non sbordare */
+  padding: 14px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 15px;
   font-family: inherit;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8fafc;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.form-control:hover {
+  border-color: #cbd5e0;
+  background: white;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0066cc;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-control::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+/* Select Arrow Custom */
+.form-group select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 20px;
+  padding-right: 45px;
+  cursor: pointer;
+}
+
+.form-group select.form-control:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300c4cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Input DateTime Custom */
+input[type="datetime-local"].form-control {
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
 }
 
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 25px;
+  gap: 12px;
+  padding: 24px 32px 32px;
+  background: linear-gradient(180deg, white 0%, #f8fbff 100%);
+  border-top: 2px solid #f1f5f9;
+}
+
+.modal-actions button {
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-actions button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.modal-actions button:active::before {
+  width: 300px;
+  height: 300px;
 }
 
 .btn-cancel {
-  background: #f8f9fa;
-  border: 1px solid #ddd;
-  color: #333;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+  color: #475569;
+  position: relative;
+}
+
+.btn-cancel:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(71, 85, 105, 0.15);
+}
+
+.btn-cancel:active {
+  transform: translateY(0);
 }
 
 .btn-confirm {
-  background: #007bff;
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border: none;
   color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
+  box-shadow:
+    0 8px 24px rgba(0, 102, 204, 0.35),
+    0 4px 12px rgba(0, 196, 204, 0.2);
+  position: relative;
 }
 
 .btn-confirm:hover {
-  background: #0056b3;
+  background: linear-gradient(135deg, #0052a3 0%, #00a8b0 100%);
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 32px rgba(0, 102, 204, 0.45),
+    0 6px 16px rgba(0, 196, 204, 0.3);
 }
 
-/* Animazione semplice apertura */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+.btn-confirm:active {
+  transform: translateY(-1px);
 }
+
+.alert-box {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+  border: none;
+  border-left: 5px solid #ffc107;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 10px;
+  color: #8b6914;
+  font-size: 14px;
+  line-height: 1.7;
+  box-shadow:
+    0 8px 24px rgba(255, 193, 7, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: slideInDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+/* ========================================= */
+/* SUCCESS MODAL - Design Celebrativo       */
+/* ========================================= */
+
 .success-content {
-  text-align: center; /* Centra tutto il testo */
-  max-width: 350px;   /* Più piccolo del form */
+  text-align: center;
+  max-width: 420px;
+  padding: 48px 40px;
+  animation: successBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes successBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Success Icon - Cerchio con Checkmark Animato */
 .success-icon {
-  width: 60px;
-  height: 60px;
-  background-color: #28a745; /* Verde */
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
-  border-radius: 50%; /* Cerchio perfetto */
-  font-size: 35px;
+  border-radius: 50%;
+  font-size: 50px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 15px auto; /* Centra l'icona e da spazio sotto */
+  margin: 0 auto 24px auto;
+  box-shadow:
+    0 12px 32px rgba(16, 185, 129, 0.35),
+    0 6px 16px rgba(5, 150, 105, 0.2);
+  animation: iconPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+  position: relative;
 }
 
+.success-icon::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 3px solid rgba(16, 185, 129, 0.2);
+  animation: ripple 1.5s ease-out infinite;
+}
+
+@keyframes iconPop {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Success Title */
 .success-content h3 {
-  color: #28a745;
-  margin-bottom: 10px;
+  color: #10b981;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.8px;
+  animation: titleSlide 0.5s ease-out 0.3s backwards;
 }
 
-.success-content p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 25px;
+@keyframes titleSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+/* Success Message */
+.success-content p {
+  font-size: 17px;
+  color: #64748b;
+  margin-bottom: 32px;
+  line-height: 1.6;
+  font-weight: 500;
+  animation: messageSlide 0.5s ease-out 0.4s backwards;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success Button */
+.success-content .btn-confirm {
+  width: 100%;
+  padding: 16px 32px;
+  font-size: 16px;
+  animation: buttonSlide 0.5s ease-out 0.5s backwards;
+}
+
+@keyframes buttonSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================= */
+/* RESPONSIVE DESIGN                        */
+/* ========================================= */
+
+@media (max-width: 600px) {
+  .modal-overlay {
+    padding: 16px;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  .modal-header {
+    padding: 28px 24px 24px;
+  }
+
+  .modal-header h3 {
+    font-size: 24px;
+  }
+
+  .modal-header p {
+    font-size: 14px;
+  }
+
+  .modal-body {
+    padding: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    padding: 20px 24px 24px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+    padding: 14px 24px;
+  }
+
+  .success-content {
+    padding: 36px 28px;
+    max-width: 100%;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+  }
+
+  .success-content h3 {
+    font-size: 26px;
+  }
+
+  .success-content p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-header h3 {
+    font-size: 22px;
+  }
+
+  .form-control {
+    font-size: 14px;
+  }
+
+  .success-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 35px;
+  }
+}
+

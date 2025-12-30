@@ -34,12 +34,9 @@ export class TabPrescrizioni implements OnInit {
 
   private dividiPrescrizioni(tutte: prescrizioneDTO[]) {
     const oggi = new Date();
-    // Resetta l'orario per confrontare solo le date
     oggi.setHours(0, 0, 0, 0);
 
     tutte.forEach(p => {
-      // Se dataFine è null, assumiamo sia una terapia cronica (quindi attiva)
-      // Altrimenti controlliamo se la data di fine è nel futuro o oggi
       if (!p.dataFine || new Date(p.dataFine) >= oggi) {
         this.prescrizioniAttive.push(p);
       } else {
@@ -47,9 +44,7 @@ export class TabPrescrizioni implements OnInit {
       }
     });
 
-    // Ordiniamo: le attive per data emissione decrescente (più recenti in alto)
     this.prescrizioniAttive.sort((a, b) => new Date(b.dataEmissione!).getTime() - new Date(a.dataEmissione!).getTime());
-    // Le scadute idem
     this.prescrizioniScadute.sort((a, b) => new Date(b.dataEmissione!).getTime() - new Date(a.dataEmissione!).getTime());
   }
 }
