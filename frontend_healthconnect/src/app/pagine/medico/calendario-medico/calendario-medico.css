@@ -590,3 +590,8 @@
     padding: 6px 10px;
   }
 }
+
+/* Nasconde la linea dell'ora corrente */
+:host ::ng-deep .cal-current-time-marker {
+  display: none !important;
+}
