@@ -1,6 +1,6 @@
 <main class="container">
   <div class="welcome-section">
-    <h1>Bentornato, {{nomePaziente}} {{cognomePaziente}}️</h1>
+    <h1 class="title">Bentornato, {{nomePaziente}} {{cognomePaziente}}️</h1>
 
     <div class="dashboard-grid">
       <app-stat-card-paziente tipo="appointments"  icona="📅" etichetta="Prossime visite" [contatore]="visite.length" (cardClick)="scrollToSection($event)"></app-stat-card-paziente>
