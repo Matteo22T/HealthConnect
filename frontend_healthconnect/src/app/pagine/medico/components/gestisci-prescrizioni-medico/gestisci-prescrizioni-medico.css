@@ -1,7 +1,3 @@
-/* ========================================
-   GESTISCI-PRESCRIZIONI-MEDICO.CSS
-   ======================================== */
-
 :host {
   --primary-blue: #0066cc;
   --secondary-blue: #00c4cc;
@@ -12,7 +8,6 @@
   --danger: #e74c3c;
 }
 
-/* --- Card Contenitore Principale (come le altre) --- */
 .card {
   background: var(--white);
   padding: 2rem;
@@ -36,7 +31,6 @@
   transform: translateY(-2px);
 }
 
-/* Striscia colorata in alto */
 .card::before {
   content: '';
   position: absolute;
@@ -54,7 +48,6 @@
   50% { background-position: 100% 50%; }
 }
 
-/* Titolo della Card */
 .card-title {
   font-size: 1.3rem;
   font-weight: 700;
@@ -84,13 +77,11 @@
   margin-top: 1rem;
 }
 
-/* IMPORTANTE: Ogni colonna deve avere la stessa struttura */
 .farmaci-layout > div {
   display: flex;
   flex-direction: column;
 }
 
-/* Titoli H3 */
 h3 {
   font-size: 1.1rem;
   font-weight: 700;
@@ -100,7 +91,7 @@ h3 {
   align-items: center;
   gap: 0.5rem;
   animation: fadeIn 0.5s ease-out;
-  flex-shrink: 0; /* Non comprime il titolo */
+  flex-shrink: 0;
 }
 
 @keyframes fadeIn {
@@ -108,14 +99,13 @@ h3 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- COLONNA SINISTRA: FORM --- */
 .farmaci-form {
   background: var(--bg-light);
   padding: 1.8rem;
   border-radius: 16px;
   border: 2px dashed rgba(0, 102, 204, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 450px; /* ALTEZZA FISSA */
+  height: 450px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -148,7 +138,7 @@ h3 {
 
 .form-group {
   margin-bottom: 1.2rem;
-  flex-shrink: 0; /* Non comprime i form group */
+  flex-shrink: 0;
 }
 
 .form-label {
@@ -184,7 +174,6 @@ h3 {
   transform: translateY(-1px);
 }
 
-/* Messaggio Errore */
 .error-message {
   background: rgba(231, 76, 60, 0.1);
   color: var(--danger);
@@ -204,7 +193,6 @@ h3 {
   75% { transform: translateX(5px); }
 }
 
-/* Bottone Aggiungi */
 .btn {
   padding: 0.9rem 1.5rem;
   border: none;
@@ -219,7 +207,7 @@ h3 {
   gap: 0.6rem;
   position: relative;
   overflow: hidden;
-  margin-top: auto; /* Spinge il bottone in fondo */
+  margin-top: auto;
   flex-shrink: 0;
 }
 
@@ -261,14 +249,13 @@ h3 {
   z-index: 1;
 }
 
-/* --- COLONNA DESTRA: LISTA --- */
 .farmaci-list-wrapper {
   background: var(--bg-light);
   padding: 1.8rem;
   border-radius: 16px;
   border: 2px dashed rgba(0, 102, 204, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 450px; /* STESSA ALTEZZA DEL FORM */
+  height: 450px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -299,53 +286,39 @@ h3 {
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.08);
 }
 
-/* Lista scrollabile */
-/* Lista scrollabile */
-/* --- LISTA SCROLLABILE --- */
 .farmaci-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
-  /* Altezza fissa per attivare lo scroll (uguale al form a fianco) */
   height: 450px;
 
-  /* Attiva lo scroll verticale */
   overflow-y: auto;
 
-  /* Spazio a destra per la scrollbar */
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-/* --- STILE SCROLLBAR (Copiato da visite-paziente-medico) --- */
-/* Definendo questi, la barra diventa SEMPRE visibile */
-
-/* 1. Larghezza della barra */
 .farmaci-list::-webkit-scrollbar {
-  width: 6px; /* Sottile ed elegante */
+  width: 6px;
 }
 
-/* 2. Sfondo della "pista" (Track) */
 .farmaci-list::-webkit-scrollbar-track {
-  background: rgba(0, 102, 204, 0.05); /* Azzurrino quasi invisibile */
+  background: rgba(0, 102, 204, 0.05);
   border-radius: 4px;
 }
 
-/* 3. La "maniglia" (Thumb) */
 .farmaci-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 102, 204, 0.3); /* Blu semi-trasparente */
+  background: rgba(0, 102, 204, 0.3);
   border-radius: 4px;
   transition: background 0.3s;
 }
 
-/* 4. Hover sulla maniglia */
 .farmaci-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 102, 204, 0.6); /* Diventa più scura al passaggio */
+  background: rgba(0, 102, 204, 0.6);
 }
 
 
-/* Stato Vuoto */
 .empty-state {
   text-align: center;
   padding: 2rem;
@@ -358,7 +331,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1; /* Riempie tutto lo spazio disponibile */
+  flex: 1;
 }
 
 @keyframes pulse {
@@ -366,7 +339,6 @@ h3 {
   50% { opacity: 1; }
 }
 
-/* Singola Card Farmaco */
 .farmaco-item {
   background: var(--white);
   padding: 1.2rem;
@@ -397,7 +369,6 @@ h3 {
   border-color: rgba(0, 102, 204, 0.3);
 }
 
-/* Striscia colorata laterale */
 .farmaco-item::before {
   content: '';
   position: absolute;
@@ -415,7 +386,6 @@ h3 {
   width: 5px;
 }
 
-/* Header Farmaco */
 .farmaco-header {
   display: flex;
   justify-content: space-between;
@@ -451,7 +421,6 @@ h3 {
   transform: rotate(90deg) scale(1.1);
 }
 
-/* Info Farmaco */
 .farmaco-info {
   display: flex;
   flex-direction: column;
@@ -482,7 +451,6 @@ h3 {
   transform: translateX(2px);
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 900px) {
   .farmaci-layout {
     grid-template-columns: 1fr;
@@ -491,7 +459,7 @@ h3 {
 
   .farmaci-form,
   .farmaci-list-wrapper {
-    height: 400px; /* Altezza ridotta su mobile */
+    height: 400px;
   }
 }
 
