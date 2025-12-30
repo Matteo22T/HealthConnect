@@ -27,7 +27,7 @@ import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
 import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supporto/chat-supporto';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
-import { ChatComponent } from './pagine/paziente/chat/chat';
+import { ChatComponent } from './pagine/chat/chat';
 import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
 import {Utenti} from './pagine/admin/utenti/utenti';
 import {DettaglioMedicoPaziente} from './pagine/paziente/dettaglio-medico-paziente/dettaglio-medico-paziente';
