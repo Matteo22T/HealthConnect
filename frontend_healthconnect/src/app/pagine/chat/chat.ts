@@ -5,7 +5,7 @@ import {
   ElementRef,
   AfterViewChecked,
   ChangeDetectorRef,
-  booleanAttribute
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +28,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   messaggi: ChatMessaggioDTO[] = [];
   nuovoMessaggio: string = '';
 
+  // Variabili per responsive
+  sidebarVisible = false;
+  isMobile = false;
+  isLoading = false;
+
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   constructor(
@@ -35,39 +40,73 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private medicoService: MedicoService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.checkScreenSize();
+  }
 
   ngOnInit(): void {
-     const userString = localStorage.getItem('currentUser');
+    const userString = localStorage.getItem('currentUser');
 
-     if (userString) {
-       const user = JSON.parse(userString);
-       this.utenteCorrenteid = user.id;
-       console.log("✅ Login confermato. ID Utente:", this.utenteCorrenteid);
-       this.caricaContatti();
-     } else {
-       console.error("❌ Errore: Nessun utente loggato.");
-     }
-   }
+    if (userString) {
+      const user = JSON.parse(userString);
+      this.utenteCorrenteid = user.id;
+      console.log("✅ Login confermato. ID Utente:", this.utenteCorrenteid);
+      this.caricaContatti();
+    } else {
+      console.error("❌ Errore: Nessun utente loggato.");
+    }
+  }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
 
+  // === GESTIONE RESPONSIVE === //
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+
+    // Chiudi automaticamente la sidebar su desktop
+    if (!this.isMobile) {
+      this.sidebarVisible = false;
+    }
+  }
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  closeSidebar() {
+    this.sidebarVisible = false;
+  }
+
+  backToContacts() {
+    if (this.isMobile) {
+      this.contattoSelezionato = null;
+      this.messaggi = [];
+      this.sidebarVisible = true;
+    }
+  }
+
+  // === GESTIONE CONTATTI E MESSAGGI === //
+
   caricaContatti() {
     this.chatService.getContatti(this.utenteCorrenteid).subscribe({
       next: (data: any) => {
         this.listaContatti = data;
-
         this.controllaParametriUrl();
-
         this.cd.detectChanges();
       },
       error: (err: any) => console.error("Errore caricamento contatti:", err)
     });
   }
 
-  // Nuova funzione per gestire il redirect
+  // Gestione redirect da URL
   controllaParametriUrl() {
     this.route.queryParams.subscribe(params => {
       const idMedicoUrl = params['medicoId'];
@@ -114,10 +153,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.messaggi = [];
     this.cd.detectChanges();
     this.caricaMessaggi();
+
+    // Chiudi sidebar su mobile dopo la selezione
+    if (this.isMobile) {
+      this.closeSidebar();
+    }
   }
 
   caricaMessaggi() {
     if (!this.contattoSelezionato) return;
+
     this.chatService.getStoria(this.utenteCorrenteid, this.contattoSelezionato.id).subscribe(data => {
       this.messaggi = data;
       this.cd.detectChanges();
@@ -126,33 +171,42 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   invia() {
-      if (!this.nuovoMessaggio.trim() || !this.contattoSelezionato) return;
+    if (!this.nuovoMessaggio.trim() || !this.contattoSelezionato) return;
 
-      const msg: ChatMessaggioDTO = {
-        mittente_id: this.utenteCorrenteid,
-        destinatario_id: this.contattoSelezionato.id,
-        testo: this.nuovoMessaggio,
-        letto: false
-      };
+    this.isLoading = true;
 
-      // Aggiungo il messaggio subito alla vista (per vederlo istantaneamente)
-      this.messaggi.push({ ...msg, data_invio: new Date().toISOString() });
+    const msg: ChatMessaggioDTO = {
+      mittente_id: this.utenteCorrenteid,
+      destinatario_id: this.contattoSelezionato.id,
+      testo: this.nuovoMessaggio,
+      letto: false
+    };
 
-      this.chatService.inviaMessaggio(msg).subscribe({
-          next: (res) => {
-              console.log("Messaggio inviato correttamente");
-              this.caricaContatti();
-          },
-          error: (err) => console.error("Errore invio:", err)
-      });
+    // Aggiungo il messaggio subito alla vista (per vederlo istantaneamente)
+    this.messaggi.push({ ...msg, data_invio: new Date().toISOString() });
 
-      this.nuovoMessaggio = '';
-      setTimeout(() => this.scrollToBottom(), 100);
-    }
+    this.chatService.inviaMessaggio(msg).subscribe({
+      next: (res) => {
+        console.log("Messaggio inviato correttamente");
+        this.isLoading = false;
+        this.caricaContatti();
+      },
+      error: (err) => {
+        console.error("Errore invio:", err);
+        this.isLoading = false;
+      }
+    });
+
+    this.nuovoMessaggio = '';
+    setTimeout(() => this.scrollToBottom(), 100);
+  }
 
   private scrollToBottom(): void {
     try {
-      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      if (this.scrollContainer) {
+        this.scrollContainer.nativeElement.scrollTop =
+          this.scrollContainer.nativeElement.scrollHeight;
+      }
     } catch(err) { }
   }
 }

@@ -1,7 +1,5 @@
 /* --- CONTENITORE PRINCIPALE --- */
 .whatsapp-container {
-  height: auto;
-  width: auto;
   height: 600px;
   width: 100%;
   display: flex;
@@ -42,11 +40,12 @@
   box-shadow: 4px 0 30px rgba(0, 0, 0, 0.06);
   position: relative;
   z-index: 10;
+  transition: transform 0.3s ease;
 }
 
 .sidebar-header {
   padding: 24px 20px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border-bottom: none;
   height: 80px;
   display: flex;
@@ -165,6 +164,7 @@
   height: 100%;
   background: linear-gradient(135deg, rgba(0, 102, 204, 0.03) 0%, rgba(0, 196, 204, 0.03) 100%);
   position: relative;
+  padding: 20px;
 }
 
 .welcome-content {
@@ -190,7 +190,7 @@
 }
 
 .welcome-content h2 {
-  background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(120deg, #0066cc, #00c4cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -281,8 +281,7 @@
   flex-direction: column;
   gap: 16px;
   background: linear-gradient(to bottom, #f8faff 0%, #ffffff 100%);
-  background-image:
-    repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(0, 102, 204, 0.015) 15px, rgba(0, 102, 204, 0.015) 30px);
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(0, 102, 204, 0.015) 15px, rgba(0, 102, 204, 0.015) 30px);
   scroll-behavior: smooth;
 }
 
@@ -363,14 +362,14 @@
   transform: translateY(-50%);
   width: 4px;
   height: 60%;
-  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(180deg, #0066cc, #00c4cc);
   border-radius: 0 4px 4px 0;
 }
 
 .contact-item .avatar-circle {
   width: 55px;
   height: 55px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -409,7 +408,7 @@
 .chat-header .avatar-circle {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -448,7 +447,7 @@
 
 .sent {
   align-self: flex-end;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   color: white;
   border-bottom-right-radius: 6px;
   box-shadow: 0 4px 15px rgba(0, 102, 204, 0.25);
@@ -550,7 +549,7 @@
 }
 
 .chat-footer input:focus {
-  border-color: var(--primary-color);
+  border-color: #0066cc;
   background: white;
   box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
   transform: translateY(-1px);
@@ -564,7 +563,7 @@
 .btn-send {
   width: 54px;
   height: 54px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border: none;
   border-radius: 50%;
   font-size: 1.4rem;
@@ -601,7 +600,33 @@
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
 }
 
+/* Pulsante toggle per mobile */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.mobile-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.5);
+}
+
 /* --- RESPONSIVE --- */
+
+/* Tablet */
 @media (max-width: 1024px) {
   .sidebar {
     width: 350px;
@@ -610,41 +635,95 @@
   .message-bubble {
     max-width: 75%;
   }
+
+  .chat-body {
+    padding: 25px 3%;
+  }
 }
 
+/* Mobile Large (fino a 768px) */
 @media (max-width: 768px) {
   .whatsapp-container {
-    height: calc(100vh - 70px);
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height per mobile */
   }
 
+  /* Sidebar nascosta di default su mobile */
   .sidebar {
-    width: 100%;
-    max-width: 350px;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
+    width: 85%;
+    max-width: 350px;
     height: 100%;
-    z-index: 20;
+    z-index: 100;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.15);
   }
 
-  .sidebar.active {
+  .sidebar.show {
     transform: translateX(0);
+  }
+
+  /* Overlay per chiudere sidebar */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+
+  .sidebar-overlay.show {
+    display: block;
+  }
+
+  /* Main chat occupa tutto lo schermo */
+  .main-chat {
+    width: 100%;
+  }
+
+  /* Mostra pulsante toggle */
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chat-header {
+    height: 70px;
+    padding: 0 20px;
+  }
+
+  .chat-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .chat-header .avatar-circle {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+    margin-right: 12px;
+  }
+
+  .chat-body {
+    padding: 20px 4%;
+    gap: 12px;
   }
 
   .message-bubble {
     max-width: 85%;
     padding: 12px 16px;
-  }
-
-  .chat-body {
-    padding: 20px 3%;
+    font-size: 0.95rem;
   }
 
   .chat-footer {
     padding: 12px 15px;
     min-height: 70px;
+    gap: 12px;
   }
 
   .chat-footer input {
@@ -655,13 +734,66 @@
   .btn-send {
     width: 48px;
     height: 48px;
+    font-size: 1.3rem;
+  }
+
+  .welcome-content {
+    padding: 40px 30px;
+    margin: 0 20px;
+  }
+
+  .welcome-content h2 {
+    font-size: 1.9rem;
+  }
+
+  .welcome-content p {
+    font-size: 1.05rem;
+  }
+
+  /* Contatti più compatti */
+  .contact-item {
+    padding: 14px 16px;
+    margin: 0 10px 8px;
+  }
+
+  .contact-item .avatar-circle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.05rem;
+    margin-right: 12px;
+  }
+
+  .contact-item h4 {
+    font-size: 1rem;
+  }
+
+  .sidebar-header {
+    height: 70px;
+    padding: 20px 16px;
+  }
+
+  .sidebar-header h3 {
     font-size: 1.2rem;
   }
 }
 
+/* Mobile Small (fino a 480px) */
 @media (max-width: 480px) {
+  .whatsapp-container::before {
+    width: 400px;
+    height: 400px;
+  }
+
+  .sidebar {
+    width: 90%;
+  }
+
   .sidebar-header h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+  }
+
+  .sidebar-header h3::before {
+    font-size: 1.3rem;
   }
 
   .contacts-count {
@@ -670,29 +802,587 @@
   }
 
   .contact-item {
-    padding: 14px 15px;
-    margin: 0 10px 8px;
+    padding: 12px 14px;
+    margin: 0 8px 8px;
   }
 
   .contact-item .avatar-circle {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     font-size: 1rem;
+    margin-right: 10px;
   }
 
   .contact-item h4 {
     font-size: 0.98rem;
   }
 
+  .contact-item span {
+    font-size: 0.82rem;
+  }
+
+  .chat-header {
+    height: 65px;
+    padding: 0 16px;
+  }
+
+  .chat-header h3 {
+    font-size: 1.05rem;
+  }
+
+  .chat-header .avatar-circle {
+    width: 42px;
+    height: 42px;
+    font-size: 0.95rem;
+    margin-right: 10px;
+  }
+
+  .chat-body {
+    padding: 16px 3%;
+    gap: 10px;
+  }
+
+  .message-bubble {
+    max-width: 88%;
+    padding: 11px 15px;
+    font-size: 0.92rem;
+  }
+
+  .time {
+    font-size: 0.68rem;
+  }
+
+  .chat-footer {
+    padding: 10px 12px;
+    min-height: 65px;
+    gap: 10px;
+  }
+
+  .chat-footer input {
+    padding: 12px 18px;
+    font-size: 0.92rem;
+  }
+
+  .btn-send {
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+  }
+
+  .mobile-toggle {
+    width: 52px;
+    height: 52px;
+    bottom: 16px;
+    left: 16px;
+    font-size: 1.4rem;
+  }
+
   .welcome-content {
-    padding: 35px 25px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    margin: 0 16px;
   }
 
   .welcome-content h2 {
-    font-size: 1.8rem;
+    font-size: 1.65rem;
+    margin-bottom: 12px;
   }
 
   .welcome-content p {
+    font-size: 0.98rem;
+  }
+}
+
+/* Landscape mode per mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .whatsapp-container {
+    height: 100vh;
+  }
+
+  .sidebar-header,
+  .chat-header {
+    height: 60px;
+    padding: 15px 16px;
+  }
+
+  .chat-footer {
+    min-height: 60px;
+    padding: 10px 15px;
+  }
+
+  .message-bubble {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* === STILI AGGIUNTIVI PER RESPONSIVE === */
+
+/* Pulsante toggle mobile principale */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+  z-index: 100;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.5);
+}
+
+.mobile-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Overlay scuro per chiudere sidebar */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+}
+
+/* Pulsante chiudi nella sidebar (mobile) */
+.close-sidebar-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* Pulsante back nella chat header (mobile) */
+.back-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #2d3748;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  background: rgba(0, 102, 204, 0.1);
+}
+
+.back-btn:active {
+  transform: scale(0.9);
+}
+
+/* Info contatto con flex */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* Per gestire overflow */
+}
+
+/* Stato messaggi vuoti */
+.empty-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+  color: #718096;
+}
+
+.empty-messages-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.4;
+  animation: float-gentle 3s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.empty-messages p {
+  font-size: 1.1rem;
+  color: #a0aec0;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+/* Loading spinner per pulsante invio */
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Disabilita pulsante quando non c'è testo */
+.btn-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-send:disabled:hover {
+  transform: none !important;
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.35);
+}
+
+/* Input disabilitato */
+.chat-footer input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* === RESPONSIVE STYLES === */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 350px;
+  }
+
+  .message-bubble {
+    max-width: 75%;
+  }
+
+  .chat-body {
+    padding: 25px 3%;
+  }
+}
+
+/* Mobile Large (fino a 768px) */
+@media (max-width: 768px) {
+  /* Mostra pulsanti mobile */
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .close-sidebar-btn {
+    display: flex;
+  }
+
+  .back-btn {
+    display: flex;
+  }
+
+  /* Sidebar overlay su mobile */
+  .sidebar-overlay.show {
+    display: block;
+  }
+
+  .whatsapp-container {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* Sidebar nascosta di default */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 85%;
+    max-width: 350px;
+    height: 100%;
+    z-index: 100;
+    transform: translateX(-100%);
+    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  /* Main chat occupa tutto */
+  .main-chat {
+    width: 100%;
+  }
+
+  .chat-header {
+    height: 70px;
+    padding: 0 20px;
+  }
+
+  .chat-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .chat-header .avatar-circle {
+    width: 44px;
+    height: 44px;
     font-size: 1rem;
+    margin-right: 12px;
+  }
+
+  .chat-body {
+    padding: 20px 4%;
+    gap: 12px;
+  }
+
+  .message-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  .chat-footer {
+    padding: 12px 15px;
+    min-height: 70px;
+    gap: 12px;
+  }
+
+  .chat-footer input {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .btn-send {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+  }
+
+  .welcome-content {
+    padding: 40px 30px;
+    margin: 0 20px;
+  }
+
+  .welcome-content h2 {
+    font-size: 1.9rem;
+  }
+
+  .welcome-content p {
+    font-size: 1.05rem;
+  }
+
+  .contact-item {
+    padding: 14px 16px;
+    margin: 0 10px 8px;
+  }
+
+  .contact-item .avatar-circle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.05rem;
+    margin-right: 12px;
+  }
+
+  .contact-item h4 {
+    font-size: 1rem;
+  }
+
+  .sidebar-header {
+    height: 70px;
+    padding: 20px 16px;
+  }
+
+  .sidebar-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .empty-messages-icon {
+    font-size: 3.5rem;
+  }
+
+  .empty-messages p {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile Small (fino a 480px) */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 90%;
+  }
+
+  .sidebar-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-header h3::before {
+    font-size: 1.3rem;
+  }
+
+  .contact-item {
+    padding: 12px 14px;
+    margin: 0 8px 8px;
+  }
+
+  .contact-item .avatar-circle {
+    width: 46px;
+    height: 46px;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+
+  .contact-item h4 {
+    font-size: 0.98rem;
+  }
+
+  .contact-item span {
+    font-size: 0.82rem;
+  }
+
+  .chat-header {
+    height: 65px;
+    padding: 0 16px;
+  }
+
+  .chat-header h3 {
+    font-size: 1.05rem;
+  }
+
+  .chat-header .avatar-circle {
+    width: 42px;
+    height: 42px;
+    font-size: 0.95rem;
+    margin-right: 10px;
+  }
+
+  .back-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+    margin-right: 6px;
+  }
+
+  .chat-body {
+    padding: 16px 3%;
+    gap: 10px;
+  }
+
+  .message-bubble {
+    max-width: 88%;
+    padding: 11px 15px;
+    font-size: 0.92rem;
+  }
+
+  .time {
+    font-size: 0.68rem;
+  }
+
+  .chat-footer {
+    padding: 10px 12px;
+    min-height: 65px;
+    gap: 10px;
+  }
+
+  .chat-footer input {
+    padding: 12px 18px;
+    font-size: 0.92rem;
+  }
+
+  .btn-send {
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+  }
+
+  .mobile-toggle {
+    width: 52px;
+    height: 52px;
+    bottom: 16px;
+    left: 16px;
+    font-size: 1.4rem;
+  }
+
+  .welcome-content {
+    padding: 30px 20px;
+    border-radius: 20px;
+    margin: 0 16px;
+  }
+
+  .welcome-content h2 {
+    font-size: 1.65rem;
+    margin-bottom: 12px;
+  }
+
+  .welcome-content p {
+    font-size: 0.98rem;
+  }
+
+  .empty-messages-icon {
+    font-size: 3rem;
+  }
+
+  .empty-messages p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Landscape mode per mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .whatsapp-container {
+    height: 100vh;
+  }
+
+  .sidebar-header,
+  .chat-header {
+    height: 60px;
+    padding: 15px 16px;
+  }
+
+  .chat-footer {
+    min-height: 60px;
+    padding: 10px 15px;
+  }
+
+  .message-bubble {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  .mobile-toggle {
+    width: 48px;
+    height: 48px;
+    bottom: 12px;
+    left: 12px;
   }
 }

@@ -1,31 +1,52 @@
+<!-- Pulsante toggle per mobile -->
+<button class="mobile-toggle" (click)="toggleSidebar()" *ngIf="!contattoSelezionato || sidebarVisible">
+  <span *ngIf="!sidebarVisible">☰</span>
+  <span *ngIf="sidebarVisible">✕</span>
+</button>
+
+<!-- Overlay per chiudere sidebar su mobile -->
+<div class="sidebar-overlay"
+     [class.show]="sidebarVisible"
+     (click)="closeSidebar()"></div>
+
 <div class="whatsapp-container">
 
   <!-- SIDEBAR -->
-  <div class="sidebar">
+  <div class="sidebar" [class.show]="sidebarVisible">
 
     <div class="sidebar-header">
       <h3>Lista contatti ({{ listaContatti.length }})</h3>
+      <!-- Pulsante chiudi per mobile nella sidebar -->
+      <button class="close-sidebar-btn" (click)="closeSidebar()">✕</button>
     </div>
 
     <div class="contacts-list">
 
-      <div *ngIf="listaContatti.length === 0" style="padding: 20px; color: #e53e3e; text-align: center;">
-        📋 Caricamento in corso o lista vuota...
+      <!-- Empty state / Loading -->
+      <div *ngIf="listaContatti.length === 0" class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <div class="empty-state-text">Caricamento in corso o lista vuota...</div>
       </div>
 
+      <!-- Lista contatti -->
       <div *ngFor="let contatto of listaContatti"
            class="contact-item"
            [class.active]="contattoSelezionato?.id === contatto.id"
            (click)="selezionaContatto(contatto)">
 
         <div class="avatar-circle">
-          {{ contatto.nome ? contatto.nome.charAt(0) : '?' }}{{ contatto.cognome ? contatto.cognome.charAt(0) : '?' }}
+          {{ contatto.nome ? contatto.nome.charAt(0).toUpperCase() : '?' }}{{ contatto.cognome ? contatto.cognome.charAt(0).toUpperCase() : '?' }}
         </div>
 
-        <div style="display: flex; flex-direction: column; flex: 1;">
+        <div class="contact-info">
           <h4>{{ contatto.nome }} {{ contatto.cognome }}</h4>
           <span>Clicca per chattare</span>
         </div>
+
+        <!-- Badge messaggi non letti (opzionale) -->
+        <span class="unread-badge" *ngIf="contatto.unreadCount > 0">
+          {{ contatto.unreadCount }}
+        </span>
 
       </div>
 
@@ -49,14 +70,29 @@
 
       <!-- HEADER CHAT -->
       <div class="chat-header">
+        <!-- Pulsante back per mobile -->
+        <button class="back-btn" (click)="backToContacts()">←</button>
+
         <div class="avatar-circle">
-          {{ contattoSelezionato.nome.charAt(0) }}{{ contattoSelezionato.cognome.charAt(0) }}
+          {{ contattoSelezionato.nome.charAt(0).toUpperCase() }}{{ contattoSelezionato.cognome.charAt(0).toUpperCase() }}
         </div>
-        <h3> {{ contattoSelezionato.nome }} {{ contattoSelezionato.cognome }}</h3>
+
+        <div class="chat-header-info">
+          <h3>{{ contattoSelezionato.nome }} {{ contattoSelezionato.cognome }}</h3>
+          <div class="chat-header-status">Online</div>
+        </div>
       </div>
 
       <!-- BODY MESSAGGI -->
       <div class="chat-body" #scrollContainer>
+
+        <!-- Messaggi vuoti -->
+        <div *ngIf="messaggi.length === 0" class="empty-messages">
+          <div class="empty-messages-icon">💭</div>
+          <p>Nessun messaggio ancora. Inizia la conversazione!</p>
+        </div>
+
+        <!-- Lista messaggi -->
         <div *ngFor="let msg of messaggi"
              class="message-bubble"
              [ngClass]="{'sent': msg.mittente_id === utenteCorrenteid, 'received': msg.mittente_id !== utenteCorrenteid}">
@@ -80,15 +116,17 @@
                [(ngModel)]="nuovoMessaggio"
                (keyup.enter)="invia()"
                placeholder="Scrivi un messaggio..."
+               [disabled]="isLoading"
                autofocus>
-        <button class="btn-send" (click)="invia()">➤</button>
+        <button class="btn-send"
+                (click)="invia()"
+                [disabled]="!nuovoMessaggio.trim() || isLoading">
+          <span *ngIf="!isLoading">➤</span>
+          <span *ngIf="isLoading" class="loading-spinner">⟳</span>
+        </button>
       </div>
     </div>
 
   </div>
-
-</div>
-
-<div class="container">
 
 </div>
