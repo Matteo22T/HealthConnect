@@ -79,10 +79,6 @@
   gap: 10px;
 }
 
-.sidebar-header h3::before {
-  content: '👨‍⚕️';
-  font-size: 1.5rem;
-}
 
 /* Contatore contatti badge */
 .contacts-count {
@@ -248,25 +244,7 @@
   flex-direction: column;
 }
 
-.chat-header-status {
-  font-size: 0.8rem;
-  color: #10b981;
-  font-weight: 500;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 
-.chat-header-status::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: #10b981;
-  border-radius: 50%;
-  display: inline-block;
-  animation: blink 2s ease-in-out infinite;
-}
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
@@ -280,7 +258,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: linear-gradient(to bottom, #f8faff 0%, #ffffff 100%);
   background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(0, 102, 204, 0.015) 15px, rgba(0, 102, 204, 0.015) 30px);
   scroll-behavior: smooth;
 }
