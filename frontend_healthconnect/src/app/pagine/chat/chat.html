@@ -1,34 +1,28 @@
-<!-- Pulsante toggle per mobile -->
 <button class="mobile-toggle" (click)="toggleSidebar()" *ngIf="!contattoSelezionato || sidebarVisible">
   <span *ngIf="!sidebarVisible">☰</span>
   <span *ngIf="sidebarVisible">✕</span>
 </button>
 
-<!-- Overlay per chiudere sidebar su mobile -->
 <div class="sidebar-overlay"
      [class.show]="sidebarVisible"
      (click)="closeSidebar()"></div>
 
 <div class="whatsapp-container">
 
-  <!-- SIDEBAR -->
   <div class="sidebar" [class.show]="sidebarVisible">
 
     <div class="sidebar-header">
       <h3>Lista contatti ({{ listaContatti.length }})</h3>
-      <!-- Pulsante chiudi per mobile nella sidebar -->
       <button class="close-sidebar-btn" (click)="closeSidebar()">✕</button>
     </div>
 
     <div class="contacts-list">
 
-      <!-- Empty state / Loading -->
       <div *ngIf="listaContatti.length === 0" class="empty-state">
         <div class="empty-state-icon">📋</div>
         <div class="empty-state-text">Caricamento in corso o lista vuota...</div>
       </div>
 
-      <!-- Lista contatti -->
       <div *ngFor="let contatto of listaContatti"
            class="contact-item"
            [class.active]="contattoSelezionato?.id === contatto.id"
@@ -43,7 +37,6 @@
           <span>Clicca per chattare</span>
         </div>
 
-        <!-- Badge messaggi non letti (opzionale) -->
         <span class="unread-badge" *ngIf="contatto.unreadCount > 0">
           {{ contatto.unreadCount }}
         </span>
@@ -54,10 +47,8 @@
   </div>
 
 
-  <!-- MAIN CHAT -->
   <div class="main-chat">
 
-    <!-- WELCOME SCREEN -->
     <div *ngIf="!contattoSelezionato" class="welcome-screen">
       <div class="welcome-content">
         <h2>💬 HealthConnect Web</h2>
@@ -65,12 +56,9 @@
       </div>
     </div>
 
-    <!-- CHAT ATTIVA -->
     <div *ngIf="contattoSelezionato" class="chat-wrapper">
 
-      <!-- HEADER CHAT -->
       <div class="chat-header">
-        <!-- Pulsante back per mobile -->
         <button class="back-btn" (click)="backToContacts()">←</button>
 
         <div class="avatar-circle">
@@ -83,16 +71,13 @@
         </div>
       </div>
 
-      <!-- BODY MESSAGGI -->
       <div class="chat-body" #scrollContainer>
 
-        <!-- Messaggi vuoti -->
         <div *ngIf="messaggi.length === 0" class="empty-messages">
           <div class="empty-messages-icon">💭</div>
           <p>Nessun messaggio ancora. Inizia la conversazione!</p>
         </div>
 
-        <!-- Lista messaggi -->
         <div *ngFor="let msg of messaggi"
              class="message-bubble"
              [ngClass]="{'sent': msg.mittente_id === utenteCorrenteid, 'received': msg.mittente_id !== utenteCorrenteid}">
@@ -101,7 +86,6 @@
             <span>{{ msg.testo }}</span>
             <span class="time">
               {{ msg.data_invio | date:'HH:mm' }}
-              <!-- Indicatore di lettura solo per messaggi inviati -->
               <span *ngIf="msg.mittente_id === utenteCorrenteid" class="read-status">
                 <span class="checkmark" [ngClass]="msg.letto ? 'read' : 'sent'"></span>
               </span>
@@ -110,7 +94,6 @@
         </div>
       </div>
 
-      <!-- FOOTER INPUT -->
       <div class="chat-footer">
         <input type="text"
                [(ngModel)]="nuovoMessaggio"
