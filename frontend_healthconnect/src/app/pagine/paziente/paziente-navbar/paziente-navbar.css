@@ -53,7 +53,7 @@ header:hover::before {
 
 /* Logo */
 .logo {
-  font-size: 1.7rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--primary-color);
   display: flex;
@@ -89,7 +89,7 @@ header:hover::before {
 }
 
 .logo img {
-  height: 70px;
+  height: 60px;
   width: auto;
   object-fit: contain;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
