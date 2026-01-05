@@ -404,7 +404,7 @@ public class visitaDAOpostgres implements visitaDAO {
     }
 
     public boolean primaVisita(Long idMedico, Long idPaziente){
-        String query = "SELECT COUNT(*) FROM visite WHERE id_medico = ? AND id_paziente = ?";
+        String query = "SELECT COUNT(*) FROM visite WHERE medico_id = ? AND paziente_id = ?";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setLong(1, idMedico);

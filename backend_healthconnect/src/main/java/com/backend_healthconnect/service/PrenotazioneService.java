@@ -9,6 +9,7 @@ import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -30,8 +31,8 @@ public class PrenotazioneService {
     private UtenteService utenteService;
 
     @Autowired
-    public PrenotazioneService(prenotazioneDAO prenotazioneRepository, NotificaService notificaService, UtenteService utenteService) {
-        this.prenotazioneDAO = prenotazioneRepository;
+    public PrenotazioneService(prenotazioneDAO prenotazioneService, NotificaService notificaService, UtenteService utenteService) {
+        this.prenotazioneDAO = prenotazioneService;
         this.notificaService = notificaService;
         this.utenteService = utenteService;
     }
@@ -54,7 +55,7 @@ public class PrenotazioneService {
         if (notificaService.getImpostazioniNotifiche(pren.getPaziente().getId()).isNotificheEmail()){
             String oggetto = "Richiesta Prenotazione - HealthConnect";
             String testo = "Salve, la sua richiesta di appuntamento per il " + "Dott." + pren.getMedico().getCognome() + "\n\n" +
-                    "in data" + pren.getDataVisita() + "è stata accettata."+
+                    "in data " + pren.getDataVisita().format(DateTimeFormatter.ISO_LOCAL_DATE) + " è stata accettata."+
                     "\n\n" +
                     "Accedi alla piattaforma per maggiori informazioni.";
 
@@ -64,6 +65,7 @@ public class PrenotazioneService {
             if (visitaDAO.primaVisita(pren.getMedico().getId(), pren.getPaziente().getId())){
                 messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");
             }
+            return true;
         }
         return false;
     }
