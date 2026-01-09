@@ -34,10 +34,9 @@ export class Login {
     this.auth.login(this.email, this.password).subscribe({
       next: (utente) => {
         if (utente) {
-          // 1. SUCCESSO: L'utente è arrivato
           console.log('Benvenuto ' + utente.nome);
 
-          // Reindirizza in base al ruolo (opzionale)
+          // Reindirizza in base al ruolo
           if (utente.ruolo === 'ADMIN') {
             this.router.navigate(['/admin/dashboard']);
           }
@@ -52,7 +51,6 @@ export class Login {
           }
 
         } else {
-          // 2. FALLIMENTO GESTITO: Il service ha restituito null (401 intercettato)
           this.errorMessage = 'Email o Password errati.';
           this.cdr.detectChanges();
         }

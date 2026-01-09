@@ -1,18 +1,15 @@
-/* Impostazioni generali per la pagina principale */
 main {
-  /* Un colore di sfondo tenue per far risaltare le card bianche */
   background-color: #f0f4f8;
   min-height: 100vh;
   padding: 1.5rem;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Assicuriamo un font pulito */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Link "Torna indietro" */
 .back-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 1rem 0 2rem 2.5rem; /* Allineato visivamente con le card sottostanti */
+  margin: 1rem 0 2rem 2.5rem;
   color: #666;
   text-decoration: none;
   font-weight: 600;
@@ -25,54 +22,45 @@ main {
 .back-link:hover {
   color: #0066cc;
   background: rgba(0, 102, 204, 0.08);
-  transform: translateX(-5px); /* Effetto scivolamento a sinistra */
+  transform: translateX(-5px);
 }
 
-/* ... codice precedente (main, .back-link, etc.) ... */
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* 1. Riduciamo lo spazio sotto le informazioni del paziente */
 app-informazioni-paziente-medico {
   display: block;
-  /* Annulla il margine inferiore intrinseco del componente figlio */
   margin-bottom: 0;
 }
 
-/* Forza la .profile-header interna ad avere meno margine sotto */
 app-informazioni-paziente-medico ::ng-deep .profile-header {
-  margin-bottom: 1.5rem !important; /* Era 2.5rem */
-  margin-left: 0 !important;        /* Allinea a sinistra col resto */
-  margin-right: 0 !important;       /* Allinea a destra col resto */
+  margin-bottom: 1.5rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
-/* 2. Configura la griglia per gestire gli spazi laterali */
-/* Container della griglia */
 .content-grid {
   display: grid;
 
-  /* CORREZIONE: Imposta forzatamente DUE colonne uguali */
   grid-template-columns: 1fr 1fr;
 
-  gap: 1.5rem; /* Spazio tra le due colonne */
-  align-items: start; /* Evita che si stiracchino in altezza */
+  gap: 1.5rem;
+  align-items: start;
 }
 
-/* Stile forzato per le card figlie */
 .content-grid ::ng-deep .section-card {
-  margin: 0 !important;       /* Rimuove i margini esterni nativi */
-  height: 320px !important;   /* Blocca l'altezza fissa uguale per tutti */
-  width: auto !important;     /* Lascia che la larghezza segua la colonna della griglia */
+  margin: 0 !important;
+  height: 320px !important;
+  width: auto !important;
 }
 
 .patient-graphics {
   margin-top: 1rem;
 }
 
-/* Responsive per mobile */
 @media (max-width: 768px) {
   .content-grid {
     grid-template-columns: 1fr;
@@ -80,10 +68,9 @@ app-informazioni-paziente-medico ::ng-deep .profile-header {
   }
 }
 
-/* Responsive: Adattamenti per tablet/mobile */
 @media (max-width: 992px) {
   .content-grid {
-    grid-template-columns: 1fr; /* Torna a una colonna singola */
+    grid-template-columns: 1fr;
   }
 
   .back-link {
@@ -93,7 +80,7 @@ app-informazioni-paziente-medico ::ng-deep .profile-header {
 
 @media (max-width: 768px) {
   main {
-    padding: 1rem 0; /* Riduci padding laterale su mobile */
+    padding: 1rem 0;
   }
 
   .back-link {

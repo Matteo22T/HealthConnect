@@ -46,15 +46,14 @@
   transform: translateX(3px);
 }
 
-/* --- MESSAGE ITEM (Stile Card Uniformato) --- */
 .message-item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1.2rem;       /* Uniformato a lista visite */
-  border-radius: 8px;    /* Uniformato a lista visite */
+  padding: 1.2rem;
+  border-radius: 8px;
   margin-bottom: 1rem;
-  background: #f8f9fa;   /* Sfondo neutro per i letti */
+  background: #f8f9fa;
   border: 1px solid transparent;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -71,10 +70,10 @@
   margin-bottom: 0;
 }
 
-/* Stile specifico per Non Letti (Simile alle visite) */
+
 .unread {
-  background: #eef2ff; /* Azzurrino chiaro */
-  border-left: 4px solid #667eea; /* Accento laterale */
+  background: #eef2ff;
+  border-left: 4px solid #667eea;
 }
 
 .message-header {
@@ -105,12 +104,11 @@
   line-height: 1.5;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limita a 2 righe */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* --- SCROLL CONTAINER (Stessa altezza Lista Visite) --- */
 .scroll-container {
   height: 300px;
   overflow-y: auto;
@@ -119,7 +117,6 @@
   flex-direction: column;
 }
 
-/* Scrollbar personalizzata */
 .scroll-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -135,7 +132,6 @@
   background: #a8a8a8;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .card {
     padding: 1.5rem;

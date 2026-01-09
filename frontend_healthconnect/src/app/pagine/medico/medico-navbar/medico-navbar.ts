@@ -21,7 +21,7 @@ import {forkJoin} from 'rxjs';
 })
 export class MedicoNavbar implements OnInit{
   isProfileMenuOpen = false;
-  isMobileMenuOpen = false; // ⬅️ NUOVO: per il menu mobile
+  isMobileMenuOpen = false;
   nomeMedico: string = "";
   cognomeMedico: string = "";
   specializzazione: SpecializzazioneDTO | null = null;
@@ -64,7 +64,7 @@ export class MedicoNavbar implements OnInit{
   }
 
   logout() {
-    this.closeAllMenus(); // ⬅️ Chiudi i menu prima del logout
+    this.closeAllMenus();
     this.auth.logout().subscribe({
       next: () => {
         this.router.navigate(['/login']);
@@ -76,11 +76,10 @@ export class MedicoNavbar implements OnInit{
     });
   }
 
-  // ⬇️ METODI PER IL MENU PROFILO (già esistenti, migliorati)
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
     if (this.isProfileMenuOpen) {
-      this.isMobileMenuOpen = false; // Chiudi mobile menu se aperto
+      this.isMobileMenuOpen = false;
     }
   }
 
@@ -88,11 +87,10 @@ export class MedicoNavbar implements OnInit{
     this.isProfileMenuOpen = false;
   }
 
-  // ⬇️ NUOVI METODI PER IL MENU MOBILE
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     if (this.isMobileMenuOpen) {
-      this.isProfileMenuOpen = false; // Chiudi profile menu se aperto
+      this.isProfileMenuOpen = false;
     }
   }
 

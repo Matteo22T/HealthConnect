@@ -66,7 +66,6 @@
   transform: translateX(3px);
 }
 
-/* Stato vuoto */
 .card > div[style*="text-align: center"] {
   padding: 3rem 2rem !important;
   text-align: center;
@@ -78,20 +77,16 @@
   font-weight: 500;
 }
 
-/* --- REQUEST ITEM --- */
 .request-item {
   display: flex;
   justify-content: space-between;
-  /* flex-start evita che i bottoni si disallineino se il testo è lungo */
   align-items: flex-start;
 
-  /* Dimensioni e Spazi identici al Paziente */
   padding: 1.2rem;
   gap: 1.2rem;
   border-radius: 8px;
-  margin-bottom: 1rem; /* Spazio gestito qui, non nel container */
+  margin-bottom: 1rem;
 
-  /* Stile visivo */
   background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
   border-left: 4px solid var(--warning-color);
   box-shadow: var(--shadow-sm);
@@ -135,14 +130,13 @@
   margin-top: 0.5rem;
 }
 
-/* Request Actions */
 .request-actions {
   display: flex;
   gap: 0.8rem;
   position: relative;
   z-index: 1;
-  flex-shrink: 0; /* Impedisce ai bottoni di schiacciarsi */
-  margin-top: 0.2rem; /* Allinea visivamente i bottoni alla prima riga di testo */
+  flex-shrink: 0;
+  margin-top: 0.2rem;
 }
 
 .btn-icon {
@@ -205,7 +199,6 @@
   background: #a8a8a8;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .card {
     padding: 1.8rem;

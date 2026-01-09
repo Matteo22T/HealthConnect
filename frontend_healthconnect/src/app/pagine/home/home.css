@@ -52,7 +52,6 @@ body {
   50% { transform: translate(-20px, -20px) scale(1.05); }
 }
 
-/* Header */
 header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px) saturate(180%);
@@ -159,7 +158,6 @@ header {
   box-shadow: 0 10px 30px rgba(0, 102, 204, 0.45);
 }
 
-/* Hero Section */
 .hero-section {
   max-width: 1200px;
   margin: 0 auto;
@@ -248,7 +246,6 @@ header {
   animation: fadeInUp 1s ease-out 0.4s both;
 }
 
-/* Features Grid */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -345,7 +342,6 @@ header {
   z-index: 1;
 }
 
-/* CTA Section */
 .cta-section {
   margin-top: 8rem;
   background: linear-gradient(135deg, var(--primary-color) 0%, #0052a3 100%);
@@ -406,7 +402,6 @@ header {
   background: #f8faff;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .hero-section {
     padding: 4rem 2rem 4rem;

@@ -19,7 +19,6 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Elementi decorativi di sfondo (stile home) */
 .login-page::before {
   content: '';
   position: fixed;
@@ -91,14 +90,12 @@ body {
   width: auto;
   object-fit: contain;
 
-  /* Un'ombra colorata (ciano/blu) per fare effetto glow */
   filter: drop-shadow(0 0 15px rgba(0, 196, 204, 0.3));
 
   transition: all 0.3s ease;
 }
 
 .logo img:hover {
-  /* Aumenta il glow all'hover */
   filter: drop-shadow(0 0 25px rgba(0, 196, 204, 0.5));
   transform: scale(1.02);
 }
@@ -173,23 +170,21 @@ body {
 .input-icon {
   position: absolute;
   left: 1.1rem;
-  /* Rimuovi font-size, non serve più per gli SVG */
-  /* font-size: 1.2rem; <--- RIMUOVI QUESTO */
 
-  display: flex; /* Centra l'SVG perfettamente */
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 24px; /* Larghezza fissa contenitore */
+  width: 24px;
   height: 24px;
 
-  color: var(--text-light); /* Colore iniziale (grigio) */
+  color: var(--text-light);
   pointer-events: none;
   transition: all 0.3s ease;
-  z-index: 2; /* Assicura che stia sopra l'input */
+  z-index: 2;
 }
 
-/* Dimensione dell'SVG interno */
 .input-icon svg {
   width: 20px;
   height: 20px;
@@ -336,7 +331,6 @@ body {
   display: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .login-page {
     padding: 1.5rem 1rem;

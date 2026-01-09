@@ -8,7 +8,6 @@
   position: relative;
 }
 
-/* Elemento decorativo di sfondo */
 .footer::before {
   content: '';
   position: absolute;
@@ -50,7 +49,6 @@
     transform: translateY(0);
   }
 }
-/*logo vecchio*/
 .logo {
   font-size: 1.6rem;
   font-weight: 700;
@@ -76,7 +74,6 @@
   color: var(--secondary-color);
   font-weight: 600;
 }
-/* Sezione Brand */
 
 .description {
   color: var(--text-light);
@@ -85,7 +82,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Social Links */
 .social-links {
   display: flex;
   gap: 12px;
@@ -112,7 +108,6 @@
   box-shadow: 0 8px 20px rgba(41, 128, 185, 0.3);
 }
 
-/* Sezione Link */
 .footer-section h3 {
   color: var(--text-dark);
   font-size: 1.2rem;
@@ -172,7 +167,6 @@
   transform: translateX(0);
 }
 
-/* Sezione Newsletter */
 .newsletter-form {
   margin-top: 1rem;
 }
@@ -216,7 +210,6 @@
   transform: translateY(0);
 }
 
-/* Sezione Contatti */
 .contact ul {
   list-style: none;
   padding: 0;
@@ -269,7 +262,6 @@
   transform: scale(1.1);
 }
 
-/* Footer Bottom */
 .footer-bottom {
   text-align: center;
   margin-top: 1rem;
@@ -305,7 +297,6 @@
   50% { transform: scale(1); }
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .footer-content {
     grid-template-columns: repeat(2, 1fr);

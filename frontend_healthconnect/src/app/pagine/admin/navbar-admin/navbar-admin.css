@@ -16,7 +16,6 @@
   --shadow-glow: 0 0 30px rgba(0, 102, 204, 0.15);
 }
 
-/* Header */
 header {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(30px) saturate(200%);
@@ -98,14 +97,12 @@ header:hover::before {
   font-weight: 600;
 }
 
-/* Header Right */
 .header-right {
   display: flex;
   align-items: center;
   gap: 3rem;
 }
 
-/* Nav Links con effetti avanzati */
 .nav-links {
   display: flex;
   gap: 0.3rem;
@@ -194,7 +191,6 @@ header:hover::before {
   transform: scale(1.1);
 }
 
-/* Profile Container - FIX PRINCIPALE */
 .profile-container {
   position: relative;
   z-index: 101;
@@ -227,7 +223,6 @@ header:hover::before {
   box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15), var(--shadow-glow);
 }
 
-/* Avatar con effetto 3D */
 .user-avatar {
   width: 46px;
   height: 46px;
@@ -297,7 +292,6 @@ header:hover::before {
   color: var(--primary-color);
 }
 
-/* Dropdown Menu - FIX COMPLETO */
 .custom-dropdown {
   position: absolute;
   top: calc(100% + 0.8rem);
@@ -329,7 +323,6 @@ header:hover::before {
   }
 }
 
-/* Dropdown Items - FIX COMPLETO */
 .dropdown-item {
   padding: 1rem 1.2rem;
   color: var(--text-dark);
@@ -431,7 +424,6 @@ header:hover::before {
   }
 }
 
-/* Mobile Responsive ottimizzato */
 @media (max-width: 1024px) {
   header {
     padding: 1rem 3%;
@@ -469,22 +461,15 @@ header:hover::before {
     height: 42px;
   }
 
-  /* RIMOSSO: .nav-links { display: none; } */
-  /* Ora i link rimangono visibili */
-
   .nav-links a {
-    /* Opzionale: Riduciamo un po' il padding per risparmiare spazio su mobile */
     padding: 0.5rem 0.8rem;
     font-size: 0.85rem;
   }
 
   .header-right {
-    gap: 0.8rem; /* Riduciamo il gap tra i link e il tasto logout */
+    gap: 0.8rem;
   }
 
-  /* Se necessario nascondere le info utente per fare spazio, ma nel tuo HTML admin
-     non sembra esserci il blocco user-info complesso come nel paziente/medico.
-     Se c'è, puoi lasciarlo nascosto o mostrarlo a seconda dello spazio. */
   .user-info {
     display: none;
   }
@@ -507,18 +492,14 @@ header:hover::before {
 
 @media (max-width: 480px) {
   .logo span {
-    display: none; /* Nasconde "Connect" su mobile molto piccolo per dare priorità ai link */
+    display: none;
   }
 
   .logo img {
     height: 38px;
   }
 
-  /* Opzionale: su schermi piccolissimi mostra solo l'icona del link */
   .nav-links a span:not(:first-child) {
-    /* Se vuoi nascondere il testo "Utenti" e lasciare solo l'icona 👥
-       decommenta la riga sotto: */
-    /* display: none; */
 
     .custom-dropdown {
       right: -20px;
@@ -536,7 +517,6 @@ header:hover::before {
     }
   }
 
-  /* Accessibilità - Focus states */
   .nav-links a:focus-visible,
   .user-profile:focus-visible,
   .dropdown-item:focus-visible {
@@ -544,7 +524,6 @@ header:hover::before {
     outline-offset: 2px;
   }
 
-  /* Riduzione movimento per accessibilità */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

@@ -1,13 +1,9 @@
-/* --- STILI AGGIUNTI PER IL TITOLO E IL CONTAINER --- */
-
-/* Wrapper esterno che contiene titolo e calendario */
 .container {
-  max-width: 1100px; /* Era 1400px. Ora è uguale a calendario-tabs */
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;     /* Era 20px? Mettiamo 2rem per uniformare */
+  padding: 2rem;
 }
 
-/* Sezione del titolo con animazione */
 .title-section {
   margin-bottom: 0.5rem;
   display: flex;
@@ -16,7 +12,6 @@
   animation: fadeInDown 0.8s ease-out;
 }
 
-/* Animazione di entrata */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -28,7 +23,6 @@
   }
 }
 
-/* Stile del testo del titolo (gradiente e font) */
 .title {
   font-size: 2.7rem;
   font-weight: 800;
@@ -42,20 +36,16 @@
   background-clip: text;
 }
 
-/* Modifica questa regola esistente */
 .calendar-container {
-  /* max-width: 1400px;  <-- RIMUOVI o commenta questa riga (la gestisce il .container padre) */
-  /* margin: 0 auto;     <-- RIMUOVI o commenta questa riga */
 
-  width: 100%; /* Aggiungi questo per occupare tutto lo spazio del padre */
+  width: 100%;
   padding: 20px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem; /* Opzionale: un po' di spazio tra titolo e box bianco */
+  margin-top: 1rem;
 }
 
-/* Header del calendario */
 .calendar-header {
   display: flex;
   justify-content: space-between;
@@ -73,7 +63,6 @@
   text-transform: capitalize;
 }
 
-/* Gruppo pulsanti */
 .btn-group {
   display: flex;
   gap: 8px;
@@ -117,7 +106,6 @@
   transform: translateY(-1px);
 }
 
-/* Stili per la vista settimanale */
 :host ::ng-deep .cal-week-view {
   border: 1px solid #e9ecef;
   border-radius: 8px;
@@ -141,7 +129,6 @@
   color: #0066cc;
 }
 
-/* Colonne giorni */
 :host ::ng-deep .cal-week-view .cal-day-column {
   border-right: 1px solid #e9ecef;
 }
@@ -150,7 +137,6 @@
   border-right: none;
 }
 
-/* Ore */
 :host ::ng-deep .cal-week-view .cal-time {
   font-weight: 500;
   color: #6c757d;
@@ -166,7 +152,6 @@
   background-color: #fafbfc;
 }
 
-/* Eventi del calendario */
 :host ::ng-deep .cal-week-view .cal-event {
   border-radius: 4px;
   padding: 4px 8px;

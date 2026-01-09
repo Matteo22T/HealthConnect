@@ -69,7 +69,6 @@
   50% { transform: translateY(-3px); }
 }
 
-/* --- Layout Generale a Griglia --- */
 .farmaci-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;

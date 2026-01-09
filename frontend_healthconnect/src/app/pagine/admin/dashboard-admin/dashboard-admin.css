@@ -1,7 +1,7 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;  /* padding personalizzato */
+  padding: 1.5rem 2rem;
 }
 
 .dashboard-grid {
@@ -47,7 +47,7 @@
   }
   50% {
     box-shadow: 0 0 20px rgba(63, 81, 181, 0.6);
-    transform: scale(1.02); /* Leggero ingrandimento */
+    transform: scale(1.02);
     border: 1px solid #3f51b5;
   }
   100% {

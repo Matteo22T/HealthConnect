@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common'; // Aggiunto DatePipe
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   CalendarEvent,
   CalendarView,
@@ -29,7 +29,6 @@ import { VisitaDTO } from '../../../model/visitaDTO';
 })
 export class CalendarioMedico implements OnInit {
 
-  // Vista settimanale di default
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
 

@@ -73,9 +73,6 @@ export class ProfiloMedico implements OnInit {
     setTimeout(() => this.initViewMap(), 0);
   }
 
-  // --------------------------------------------------------------------------
-  // GESTIONE DATI PERSONALI
-  // --------------------------------------------------------------------------
 
   ModificaDatiPersonali(): void {
     if (!this.isEditingPersonal) {
@@ -98,13 +95,9 @@ export class ProfiloMedico implements OnInit {
     }
   }
 
-  // --------------------------------------------------------------------------
-  // GESTIONE DATI PROFESSIONALI (Con Mappa Interattiva)
-  // --------------------------------------------------------------------------
 
   modificaDatiProfessionali(): void {
     if (!this.isEditingProfessional) {
-      // ---> ENTRA IN MODIFICA
       this.originalMedico = JSON.parse(JSON.stringify(this.medico));
       this.isEditingProfessional = true;
 
@@ -112,12 +105,10 @@ export class ProfiloMedico implements OnInit {
       // Inizializza la mappa interattiva per la scelta dell'indirizzo
       setTimeout(() => this.initEditMap(), 0);
     } else {
-      // ---> ANNULLA MODIFICA
       this.medico = JSON.parse(JSON.stringify(this.originalMedico));
       this.isEditingProfessional = false;
 
       this.cdr.detectChanges();
-      // Ripristina la mappa statica
       setTimeout(() => this.initViewMap(), 0);
     }
   }
@@ -137,10 +128,7 @@ export class ProfiloMedico implements OnInit {
     }
   }
 
-  /**
-   * Metodo collegato all'evento (gmp-placeselect) nell'HTML.
-   * Gestisce la selezione di un nuovo indirizzo dall'autocomplete.
-   */
+
   async onAddressSelected(event: any) {
     console.log('gmp-select event:', event);
 
@@ -172,7 +160,7 @@ export class ProfiloMedico implements OnInit {
       // aggiorna modello
       this.medico.indirizzo_studio = address;
 
-      // (opzionale ma utile) aggiorna anche il valore visibile nel componente
+      // aggiorna anche il valore visibile nel componente
       try {
         this.addressInput?.nativeElement && ((this.addressInput.nativeElement as any).value = address);
       } catch {}
@@ -189,9 +177,6 @@ export class ProfiloMedico implements OnInit {
     });
   }
 
-  // ------------------------
-  // VIEW MAP (Mappa Statica - Solo Visualizzazione)
-  // ------------------------
   async initViewMap(): Promise<void> {
     if (!this.mapView?.nativeElement) return;
 
@@ -204,7 +189,7 @@ export class ProfiloMedico implements OnInit {
       const markerLib = await this.googleMaps.loadMarker();
       const geocodingLib = await this.googleMaps.loadGeocoding();
 
-      // 1) Geocodifica PRIMA
+      // Geocodifica PRIMA
       const geocoder = new geocodingLib.Geocoder();
 
       geocoder.geocode({ address }, (results: any, status: any) => {
@@ -215,7 +200,7 @@ export class ProfiloMedico implements OnInit {
 
         const loc = results[0].geometry.location;
 
-        // 2) Crea la mappa DOPO, già centrata correttamente
+        //  Crea la mappa DOPO, già centrata correttamente
         const map = new mapsLib.Map(this.mapView!.nativeElement, {
           center: loc,
           zoom: 17,
@@ -226,7 +211,7 @@ export class ProfiloMedico implements OnInit {
           zoomControl: true,
         });
 
-        // 3) Marker
+        //  Marker
         new markerLib.AdvancedMarkerElement({
           map,
           position: loc,
@@ -239,9 +224,6 @@ export class ProfiloMedico implements OnInit {
     }
   }
 
-  // ------------------------
-  // EDIT MAP (Mappa Interattiva + Autocomplete)
-  // ------------------------
   async initEditMap(): Promise<void> {
     if (!this.mapContainer?.nativeElement) return;
 
@@ -283,8 +265,6 @@ export class ProfiloMedico implements OnInit {
         });
       }
 
-      // NOTA: Non aggiungiamo più listener manuali qui.
-      // L'evento (gmp-placeselect) è gestito direttamente nell'HTML collegato a onAddressSelected().
 
     } catch (e) {
       console.error('Errore initEditMap', e);
