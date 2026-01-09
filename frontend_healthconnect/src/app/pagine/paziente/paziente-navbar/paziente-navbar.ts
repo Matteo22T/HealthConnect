@@ -15,7 +15,7 @@ import {AuthService} from '../../../service/auth-service';
 })
 export class PazienteNavbar implements OnInit{
   isProfileMenuOpen = false;
-  isMobileMenuOpen = false; // ⬅️ NUOVO: per il menu mobile
+  isMobileMenuOpen = false;
   nomePaziente: string = "";
   cognomePaziente: string = "";
 
@@ -34,7 +34,6 @@ export class PazienteNavbar implements OnInit{
     }
   }
 
-  // ⬇️ METODI PER IL MENU PROFILO (migliorati)
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
     if (this.isProfileMenuOpen) {
@@ -46,7 +45,6 @@ export class PazienteNavbar implements OnInit{
     this.isProfileMenuOpen = false;
   }
 
-  // ⬇️ NUOVI METODI PER IL MENU MOBILE
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     if (this.isMobileMenuOpen) {
@@ -64,7 +62,7 @@ export class PazienteNavbar implements OnInit{
   }
 
   logout() {
-    this.closeAllMenus(); // ⬅️ Chiudi i menu prima del logout
+    this.closeAllMenus(); // Chiudi i menu prima del logout
     this.auth.logout().subscribe({
       next: () => {
         this.router.navigate(['/login']);

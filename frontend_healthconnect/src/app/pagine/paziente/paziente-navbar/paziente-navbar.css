@@ -18,7 +18,6 @@
 
 
 
-/* Header con effetto glassmorphism avanzato */
 header {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(30px) saturate(200%);
@@ -51,7 +50,6 @@ header:hover::before {
   opacity: 1;
 }
 
-/* Logo */
 .logo {
   font-size: 1.2rem;
   font-weight: 800;
@@ -105,14 +103,12 @@ header:hover::before {
   font-weight: 600;
 }
 
-/* Header Right */
 .header-right {
   display: flex;
   align-items: center;
   gap: 3rem;
 }
 
-/* Nav Links con effetti avanzati */
 .nav-links {
   display: flex;
   gap: 0.3rem;
@@ -204,7 +200,6 @@ header:hover::before {
   transform: scale(1.1);
 }
 
-/* MENU HAMBURGER */
 .hamburger-menu {
   display: none;
   flex-direction: column;
@@ -243,7 +238,6 @@ header:hover::before {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Mobile Menu */
 .mobile-nav {
   display: none;
   position: fixed;
@@ -318,7 +312,6 @@ header:hover::before {
   border-radius: 0 3px 3px 0;
 }
 
-/* Profile Container */
 .profile-container {
   position: relative;
   z-index: 101;
@@ -347,7 +340,7 @@ header:hover::before {
   box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15), var(--shadow-glow);
 }
 
-/* Avatar con effetto 3D */
+
 .user-avatar {
   width: 46px;
   height: 46px;
@@ -413,7 +406,7 @@ header:hover::before {
   color: var(--primary-color);
 }
 
-/* Dropdown Menu */
+
 .custom-dropdown {
   position: absolute;
   top: calc(100% + 0.8rem);
@@ -443,7 +436,7 @@ header:hover::before {
   }
 }
 
-/* Dropdown Items */
+
 .dropdown-item {
   padding: 1rem 1.2rem;
   color: var(--text-dark);
@@ -545,7 +538,6 @@ header:hover::before {
   }
 }
 
-/* Mobile Responsive ottimizzato */
 @media (max-width: 1024px) {
   header {
     padding: 1rem 3%;
@@ -583,12 +575,10 @@ header:hover::before {
     height: 42px;
   }
 
-  /* Mostra hamburger menu */
   .hamburger-menu {
     display: flex;
   }
 
-  /* Nascondi nav desktop */
   .nav-links {
     display: none;
   }
@@ -646,7 +636,6 @@ header:hover::before {
   }
 }
 
-/* Accessibilità - Focus states */
 .nav-links a:focus-visible,
 .user-profile:focus-visible,
 .dropdown-item:focus-visible,
@@ -655,16 +644,14 @@ header:hover::before {
   outline-offset: 2px;
 }
 
-/* Aggiungi questo al tuo file CSS, preferibilmente dopo la regola .nav-links a.active-link */
 
 .nav-links a.active-link span:first-child {
-  -webkit-text-fill-color: initial; /* Ripristina il colore originale dell'emoji */
-  background: none; /* Rimuove eventuali background ereditati */
-  filter: grayscale(0); /* Assicura che i colori siano vividi */
-  transform: scale(1.1); /* Mantiene l'effetto di ingrandimento che avevi già */
+  -webkit-text-fill-color: initial;
+  background: none;
+  filter: grayscale(0);
+  transform: scale(1.1);
 }
 
-/* Riduzione movimento per accessibilità */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

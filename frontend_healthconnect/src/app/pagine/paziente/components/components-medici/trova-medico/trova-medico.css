@@ -1,4 +1,10 @@
-/* Container principale */
+:root {
+  --text-dark: #1a1a1a;
+  --text-light: #9ca3af;
+  --primary-color: #0066cc;
+  --secondary-color: #00c4cc;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -19,7 +25,6 @@
   }
 }
 
-/* Sezione titolo */
 .title-section {
   margin-bottom: 1.5rem;
   display: flex;
@@ -51,7 +56,6 @@
   background-clip: text;
 }
 
-/* --- CONTENITORE PRINCIPALE --- */
 .card-container {
   background: white;
   border-radius: 20px;
@@ -92,7 +96,6 @@
   margin-bottom: 20px;
 }
 
-/* --- BARRA DI RICERCA --- */
 .search-section {
   display: flex;
   gap: 15px;
@@ -169,13 +172,12 @@
   transform: translateY(-2px);
 }
 
-/* --- LISTA MEDICI --- */
 .medici-list {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  max-height: 600px;       /* Altezza massima fissa */
-  overflow-y: auto;        /* Scroll verticale se supera l'altezza */
+  max-height: 600px;
+  overflow-y: auto;
   padding-right: 5px;
 }
 
@@ -255,7 +257,6 @@
   transform: translateY(-2px) translateX(2px);
 }
 
-/* Parte sinistra medico */
 .medico-left {
   display: flex;
   align-items: center;
@@ -265,7 +266,6 @@
   z-index: 1;
 }
 
-/* Avatar circolare */
 .avatar {
   width: 52px;
   height: 52px;
@@ -303,7 +303,6 @@
   opacity: 0.3;
 }
 
-/* Info medico */
 .info {
   display: flex;
   flex-direction: column;
@@ -329,7 +328,6 @@
   margin: 0;
 }
 
-/* --- BOTTONI --- */
 .actions-wrapper {
   display: flex;
   gap: 10px;
@@ -384,7 +382,6 @@
   transform: translateY(0);
 }
 
-/* Stile specifico per il bottone verde PRENOTA */
 .btn-green {
   background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
   color: white;
@@ -417,11 +414,7 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
-/* ========================================= */
-/* MODERN BOOKING MODAL - Blue/Cyan Theme  */
-/* ========================================= */
 
-/* Modal Overlay con Backdrop Blur */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -450,7 +443,6 @@
   }
 }
 
-/* Modal Content - Design Moderno */
 .modal-content {
   background: white;
   width: 100%;
@@ -504,7 +496,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* Modal Header con Gradiente */
 .modal-header {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   padding: 32px 32px 28px;
@@ -552,13 +543,11 @@
   font-size: 20px;
 }
 
-/* Modal Body */
 .modal-body {
   padding: 32px;
   background: white;
 }
 
-/* Form Group */
 .form-group {
   margin-bottom: 24px;
   animation: formGroupFadeIn 0.5s ease-out backwards;
@@ -603,7 +592,6 @@
   border-radius: 2px;
 }
 
-/* Form Control - Input e Select Moderni */
 .form-control {
   width: 100%;
   padding: 14px 18px;
@@ -636,7 +624,6 @@
   font-weight: 400;
 }
 
-/* Select Arrow Custom */
 .form-group select.form-control {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
@@ -651,7 +638,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300c4cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
-/* Input DateTime Custom */
 input[type="datetime-local"].form-control {
   position: relative;
   cursor: pointer;
@@ -670,7 +656,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   width: auto;
 }
 
-/* Modal Actions */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -680,7 +665,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   border-top: 2px solid #f1f5f9;
 }
 
-/* Button Base Styles */
 .modal-actions button {
   padding: 14px 28px;
   border-radius: 14px;
@@ -711,7 +695,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   height: 300px;
 }
 
-/* Button Cancel */
 .btn-cancel {
   background: #f1f5f9;
   border: 2px solid #e2e8f0;
@@ -730,7 +713,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   transform: translateY(0);
 }
 
-/* Button Confirm - Gradiente Blu/Azzurro */
 .btn-confirm {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border: none;
@@ -753,10 +735,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   transform: translateY(-1px);
 }
 
-/* ========================================= */
-/* SUCCESS MODAL - Design Celebrativo       */
-/* ========================================= */
-
 .success-content {
   text-align: center;
   max-width: 420px;
@@ -778,7 +756,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Icon - Cerchio con Checkmark Animato */
 .success-icon {
   width: 100px;
   height: 100px;
@@ -829,7 +806,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Title */
 .success-content h3 {
   color: #10b981;
   font-size: 32px;
@@ -850,7 +826,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Message */
 .success-content p {
   font-size: 17px;
   color: #64748b;
@@ -871,7 +846,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Button */
 .success-content .btn-confirm {
   width: 100%;
   padding: 16px 32px;
@@ -889,10 +863,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
     transform: translateY(0);
   }
 }
-
-/* ========================================= */
-/* RESPONSIVE DESIGN                        */
-/* ========================================= */
 
 @media (max-width: 600px) {
   .modal-overlay {
@@ -975,7 +945,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .search-section {
     flex-direction: column;

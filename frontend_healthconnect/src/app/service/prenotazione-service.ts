@@ -8,15 +8,13 @@ import {Observable, Subject} from 'rxjs';
   providedIn: 'root',
 })
 export class PrenotazioneService {
-// 1. Crea il "campanello"
   private _refreshNeeded$ = new Subject<void>();
 
-  // 2. Esponilo come Observable (così i componenti possono ascoltare)
   get refreshNeeded$() {
     return this._refreshNeeded$.asObservable();
   }
 
-  // 3. Metodo per suonare il campanello
+  //Metodo per suonare il campanello
   triggerRefresh() {
     this._refreshNeeded$.next();
   }

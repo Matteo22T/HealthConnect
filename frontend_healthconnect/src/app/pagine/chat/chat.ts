@@ -115,18 +115,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         const id = Number(idMedicoUrl);
         console.log("🔗 Richiesta chat con medico ID:", id);
 
-        // 1. Cerco se il medico è già nella lista contatti
+        //Cerco se il medico è già nella lista contatti
         const medicoGiaInLista = this.listaContatti.find(m => m.id === id);
 
         if (medicoGiaInLista) {
-          // CASO A: Ci ho già parlato, lo seleziono subito
+          // Ci ho già parlato, lo seleziono subito
           this.selezionaContatto(medicoGiaInLista);
         } else {
-          // CASO B: Chat NUOVA. Devo scaricare i suoi dati dal MedicoService
+          //Chat NUOVA. Devo scaricare i suoi dati dal MedicoService
           console.log("🆕 Nuova chat! Scarico dati medico...");
           this.medicoService.getMedicoById(id).subscribe({
             next: (medicoNuovo) => {
-              // Creo un oggetto compatibile con la lista
               const nuovoContatto = {
                 id: medicoNuovo.id,
                 nome: medicoNuovo.nome,

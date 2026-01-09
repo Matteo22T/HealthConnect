@@ -603,7 +603,6 @@
 
 /* --- RESPONSIVE --- */
 
-/* Tablet */
 @media (max-width: 1024px) {
   .sidebar {
     width: 350px;

@@ -13,7 +13,6 @@
   --danger-color: #ef4444;
 }
 
-/* --- CONTAINER PRINCIPALE --- */
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -30,7 +29,6 @@
   gap: 10px;
 }
 
-/* --- GRIGLIA SETTINGS --- */
 .settings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -38,7 +36,6 @@
   align-items: start;
 }
 
-/* --- CARD STYLING --- */
 .card {
   background: var(--white);
   border-radius: 20px;
@@ -79,7 +76,6 @@
   animation: fadeInContent 0.4s ease-out 0.1s both;
 }
 
-/* --- FORM ELEMENTS --- */
 .form-group {
   margin-bottom: 1.3rem;
   position: relative;
@@ -122,7 +118,6 @@
   opacity: 1;
 }
 
-/* Effetto visivo quando si digita */
 .form-input:not(:placeholder-shown) {
   background-color: #fafbfc;
 }
@@ -132,7 +127,6 @@
   gap: 1rem;
 }
 
-/* --- BUTTONS --- */
 .btn {
   padding: 0.9rem 1.8rem;
   border-radius: 10px;
@@ -208,7 +202,6 @@
   box-shadow: none;
 }
 
-/* --- TOGGLE SWITCH --- */
 .toggle-item {
   display: flex;
   justify-content: space-between;
@@ -247,7 +240,6 @@
   line-height: 1.4;
 }
 
-/* Switch Toggle Moderno */
 .switch {
   position: relative;
   display: inline-block;
@@ -312,19 +304,16 @@ input:focus + .slider {
   border-radius: 50%;
 }
 
-/* --- DIVIDER --- */
 .divider {
   height: 1px;
   background: linear-gradient(to right, transparent, var(--border-color), transparent);
   margin: 1.5rem 0;
 }
 
-/* --- UTILITY CLASSES --- */
 .mt-3 {
   margin-top: 1.5rem;
 }
 
-/* --- ANIMAZIONI --- */
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
@@ -351,7 +340,6 @@ input:focus + .slider {
   }
 }
 
-/* Animazione per input focus */
 @keyframes inputGlow {
   0%, 100% {
     box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
@@ -365,7 +353,6 @@ input:focus + .slider {
   animation: inputGlow 2s ease-in-out infinite;
 }
 
-/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem 1rem;
@@ -420,7 +407,6 @@ input:focus + .slider {
   }
 }
 
-/* --- ACCESSIBILITY --- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -431,7 +417,6 @@ input:focus + .slider {
   }
 }
 
-/* Focus visibile per navigazione da tastiera */
 .btn:focus-visible,
 .form-input:focus-visible,
 .form-select:focus-visible {
@@ -444,7 +429,6 @@ input:focus + .slider {
   outline-offset: 2px;
 }
 
-/* --- STATI DI VALIDAZIONE (opzionale) --- */
 .form-input.valid {
   border-color: var(--success-color);
 }
@@ -461,7 +445,6 @@ input:focus + .slider {
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
-/* Feedback visivo per password strength (opzionale) */
 .password-strength {
   height: 4px;
   background: var(--border-color);

@@ -10,15 +10,12 @@ import {VisitaDettaglioDTO} from '../model/visitaDettaglioDTO';
 })
 export class VisitaService {
 
-  // 1. Crea il "campanello"
   private _refreshNeeded$ = new Subject<void>();
 
-  // 2. Esponilo come Observable (così i componenti possono ascoltare)
   get refreshNeeded$() {
     return this._refreshNeeded$.asObservable();
   }
 
-  // 3. Metodo per suonare il campanello
   triggerRefresh() {
     this._refreshNeeded$.next();
   }

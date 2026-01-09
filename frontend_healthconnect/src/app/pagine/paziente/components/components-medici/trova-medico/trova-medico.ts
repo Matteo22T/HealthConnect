@@ -62,11 +62,10 @@ export class TrovaMedicoComponent implements OnInit {
     }
 
     this.searchSubject.pipe(
-      debounceTime(300), // Aspetta 300ms dopo l'ultima digitazione
-      distinctUntilChanged() // Cerca solo se il testo è effettivamente cambiato
+      debounceTime(300),
+      distinctUntilChanged()
     ).subscribe(searchValue => {
-      // Qui chiamiamo il servizio con il valore "pulito"
-      this.searchTerm = searchValue; // Assicuriamoci che sia sincronizzato
+      this.searchTerm = searchValue;
       this.cercaMedici();
     });
   }
@@ -130,15 +129,12 @@ export class TrovaMedicoComponent implements OnInit {
     const dataOdierna = new Date();
     const ora = dataSelezionata.getHours();
 
-    // 2. Controllo Data Passata (non puoi prenotare nel passato)
     if (dataSelezionata <= dataOdierna) {
       this.errorMessage = "La data della visita deve essere successiva ad adesso.";
       return;
     }
 
-    // 3. Controllo Orario (08:00 - 20:00)
-    // Se l'ora è minore di 8 OPPURE maggiore o uguale a 20 (es. 20:01)
-    if (ora < 8 || ora >= 20) {
+     if (ora < 8 || ora >= 20) {
       this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
       return;
     }

@@ -1,7 +1,7 @@
 .timeline-scroll-wrapper {
-  max-height: 600px;       /* Altezza della "finestra" */
-  overflow-y: auto;        /* Scroll qui */
-  padding-right: 10px;     /* Spazio per la scrollbar */
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 10px;
   padding-top: 10px;
 }
 

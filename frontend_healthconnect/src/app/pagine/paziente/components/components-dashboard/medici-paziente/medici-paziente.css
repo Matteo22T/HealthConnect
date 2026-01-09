@@ -84,9 +84,8 @@
 }
 
 
-/* Stile della singola card medico */
 .med-item {
-  min-width: 140px; /* Larghezza fissa per ogni medico */
+  min-width: 140px;
   background: #f8f9fa;
   border-radius: 12px;
   padding: 1rem;
@@ -102,7 +101,6 @@
   border-color: #b3d7ff;
 }
 
-/* Testi */
 .med-info h4 {
   font-size: 0.95rem;
   margin: 0;
@@ -197,7 +195,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem; /* Emoji grande */
+  font-size: 1.8rem;
   border: 2px solid white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -394,7 +392,6 @@
   font-weight: 400;
 }
 
-/* Select Arrow Custom */
 .form-group select.form-control {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
@@ -409,7 +406,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300c4cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
-/* Input DateTime Custom */
 input[type="datetime-local"].form-control {
   position: relative;
   cursor: pointer;
@@ -524,9 +520,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   backdrop-filter: blur(10px);
 }
 
-/* ========================================= */
-/* SUCCESS MODAL - Design Celebrativo       */
-/* ========================================= */
 
 .success-content {
   text-align: center;
@@ -549,7 +542,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Icon - Cerchio con Checkmark Animato */
 .success-icon {
   width: 100px;
   height: 100px;
@@ -600,7 +592,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Title */
 .success-content h3 {
   color: #10b981;
   font-size: 32px;
@@ -621,7 +612,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Message */
 .success-content p {
   font-size: 17px;
   color: #64748b;
@@ -642,7 +632,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Button */
 .success-content .btn-confirm {
   width: 100%;
   padding: 16px 32px;
@@ -660,10 +649,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
     transform: translateY(0);
   }
 }
-
-/* ========================================= */
-/* RESPONSIVE DESIGN                        */
-/* ========================================= */
 
 @media (max-width: 600px) {
   .modal-overlay {

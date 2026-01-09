@@ -353,11 +353,7 @@
   margin: 0;
 }
 
-/* ========================================= */
-/* MODERN BOOKING MODAL - Blue/Cyan Theme  */
-/* ========================================= */
 
-/* Modal Overlay con Backdrop Blur */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -386,7 +382,6 @@
   }
 }
 
-/* Modal Content - Design Moderno */
 .modal-content {
   background: white;
   width: 100%;
@@ -423,7 +418,6 @@
   }
 }
 
-/* Modal Header con Gradiente */
 .modal-header {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   padding: 32px 32px 28px;
@@ -471,13 +465,11 @@
   font-size: 20px;
 }
 
-/* Modal Body */
 .modal-body {
   padding: 32px;
   background: white;
 }
 
-/* Form Group */
 .form-group {
   margin-bottom: 24px;
   animation: formGroupFadeIn 0.5s ease-out backwards;
@@ -522,7 +514,6 @@
   border-radius: 2px;
 }
 
-/* Form Control - Input e Select Moderni */
 .form-control {
   width: 100%;
   padding: 14px 18px;
@@ -555,7 +546,6 @@
   font-weight: 400;
 }
 
-/* Select Arrow Custom */
 .form-group select.form-control {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
@@ -649,7 +639,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   transform: translateY(0);
 }
 
-/* Button Confirm - Gradiente Blu/Azzurro */
 .btn-confirm {
   background: linear-gradient(135deg, #0066cc 0%, #00c4cc 100%);
   border: none;
@@ -689,9 +678,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   backdrop-filter: blur(10px);
 }
 
-/* ========================================= */
-/* SUCCESS MODAL - Design Celebrativo       */
-/* ========================================= */
 
 .success-content {
   text-align: center;
@@ -714,7 +700,6 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Success Icon - Cerchio con Checkmark Animato */
 .success-icon {
   width: 100px;
   height: 100px;
@@ -826,9 +811,7 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
   }
 }
 
-/* ========================================= */
-/* RESPONSIVE DESIGN                        */
-/* ========================================= */
+
 
 @media (max-width: 600px) {
   .modal-overlay {

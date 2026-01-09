@@ -4,7 +4,6 @@ import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModu
 import { AuthService } from '../../../service/auth-service';
 import { UtenteService } from '../../../service/utente-service';
 
-// Interfaccia per i dati delle notifiche
 export interface ImpostazioniNotifiche {
   utenteId: number;
   notificheEmail: boolean;

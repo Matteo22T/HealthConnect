@@ -122,20 +122,18 @@ export class MieiMedici implements OnInit{
     const dataOdierna = new Date();
     const ora = dataSelezionata.getHours();
 
-    // 2. Controllo Data Passata (non puoi prenotare nel passato)
     if (dataSelezionata <= dataOdierna) {
       this.errorMessage = "La data della visita deve essere successiva ad adesso.";
       return;
     }
 
-    // 3. Controllo Orario (08:00 - 20:00)
-    // Se l'ora è minore di 8 OPPURE maggiore o uguale a 20 (es. 20:01)
+
     if (ora < 8 || ora >= 20) {
       this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
       return;
     }
 
-    console.log("Invio prenotazione in corso..."); // LOG DI DEBUG
+    console.log("Invio prenotazione in corso...");
     this.prenService.prenotaVisita(this.nuovaPrenotazione).subscribe({
 
       next: (response) => {
@@ -160,9 +158,9 @@ export class MieiMedici implements OnInit{
 
 
   gestisciSuccesso() {
-    this.chiudiModal();       // 1. Chiude il form
-    this.showSuccess = true;  // 2. Attiva il popup verde
-    this.cd.detectChanges();  // 3. FORZA l'aggiornamento della grafica (Fondamentale!)
+    this.chiudiModal();
+    this.showSuccess = true;
+    this.cd.detectChanges();
   }
 
   chiudiSuccess() {

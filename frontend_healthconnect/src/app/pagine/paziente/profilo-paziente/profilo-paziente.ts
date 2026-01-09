@@ -18,7 +18,6 @@ export class ProfiloPaziente implements OnInit {
 
   paziente: utenteDTO | null = null;
   isEditingPersonal: boolean = false;
-  // Copia di backup per annullare le modifiche
   originalPaziente: utenteDTO | null = null;
 
 
