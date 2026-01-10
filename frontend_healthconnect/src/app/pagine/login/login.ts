@@ -10,7 +10,6 @@ import {NgIf} from '@angular/common';
   imports: [
     FormsModule,
     RouterLink,
-    NgIf
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',

@@ -1,54 +1,71 @@
-<header>
-
-  <a class= "logo" routerLink="/"> <img src="/logo.png"> Health<span>Connect</span> </a>
-  <div class="auth-buttons">
-    <button class="btn btn-login" routerLink="/login">Accedi</button>
-    <button class="btn btn-register" routerLink="/register">Registrati</button>
-  </div>
-</header>
-
-<main>
-  <section class="hero-section">
-    <span class="tagline">Piattaforma Medica Digitale</span>
-    <h1>La tua salute,<br> <span>semplificata.</span></h1>
-
-    <p class="subtitle">
-      Gestisci le tue prenotazioni, accedi alla tua cartella clinica digitale
-      e comunica con i tuoi specialisti. Tutto in un'unica piattaforma sicura e intuitiva.
-    </p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">📅</div>
-        <h3>Prenota Visite</h3>
-        <p>Accedi alle disponibilità dei medici in tempo reale e prenota il tuo appuntamento senza attese telefoniche.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">📁</div>
-        <h3>Cartella Clinica</h3>
-        <p>Il tuo storico medico, le diagnosi e le prescrizioni sempre a portata di mano, protetti dai massimi standard di sicurezza.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">🤖</div>
-        <h3>AI Assistant</h3>
-        <p>Un assistente intelligente per analizzare i tuoi sintomi e guidarti verso lo specialista più adatto alle tue esigenze.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon-wrapper">📊</div>
-        <h3>Monitoraggio</h3>
-        <p>Visualizza l'andamento delle tue metriche vitali tramite grafici chiari e aggiornati dal tuo medico curante.</p>
-      </div>
-    </div>
-
-    <div class="cta-section">
-      <p class="cta-text">Unisciti a oltre 10.000 pazienti che hanno scelto HealthConnect per la loro salute.</p>
+<div class="home-page">
+  <header class="home-navbar">
+    <a class="logo" routerLink="/">
+      <img src="/logo.png" alt="HealthConnect Logo">
+      Health<span>Connect</span>
+    </a>
+    <div class="auth-buttons">
+      <button class="btn btn-login" routerLink="/login">
+        <i class="bi bi-box-arrow-in-right"></i> Accedi
+      </button>
       <button class="btn btn-register" routerLink="/register">
-        Crea il tuo Account Gratuito
+        <i class="bi bi-person-plus"></i> Registrati
       </button>
     </div>
-  </section>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <span class="tagline">Piattaforma Medica Digitale</span>
+      <h1>La tua salute,<br> <span>semplificata.</span></h1>
+
+      <p class="subtitle">
+        Gestisci le tue prenotazioni, accedi alla tua cartella clinica digitale
+        e comunica con i tuoi specialisti. Tutto in un'unica piattaforma sicura e intuitiva.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+          <h3>Prenota Visite</h3>
+          <p>Accedi alle disponibilità dei medici in tempo reale e prenota il tuo appuntamento senza attese telefoniche.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-journal-medical"></i>
+          </div>
+          <h3>Cartella Clinica</h3>
+          <p>Il tuo storico medico, le diagnosi e le prescrizioni sempre a portata di mano, protetti dai massimi standard di sicurezza.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-robot"></i>
+          </div>
+          <h3>AI Assistant</h3>
+          <p>Un assistente intelligente per analizzare i tuoi sintomi e guidarti verso lo specialista più adatto alle tue esigenze.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="bi bi-activity"></i>
+          </div>
+          <h3>Monitoraggio</h3>
+          <p>Visualizza l'andamento delle tue metriche vitali tramite grafici chiari e aggiornati dal tuo medico curante.</p>
+        </div>
+      </div>
+
+      <div class="cta-section">
+        <p class="cta-text">Unisciti a oltre 10.000 pazienti che hanno scelto HealthConnect per la loro salute.</p>
+        <button class="btn btn-register-lg" routerLink="/register">
+          Crea il tuo Account Gratuito <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+  </main>
+
   <app-footer></app-footer>
-</main>
+</div>
