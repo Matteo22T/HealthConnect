@@ -4,7 +4,11 @@
 }
 
 .hero-section {
-  background: linear-gradient(135deg, rgba(var(--primary-color-rgb, 41, 128, 185), 0.1) 0%, #ffffff 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary-color-rgb, 41, 128, 185), 0.1) 0%,
+    #ffffff 100%
+  );
   padding: 5rem 1.5rem;
   text-align: center;
   position: relative;
@@ -13,7 +17,7 @@
 .hero-content h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
   color: var(--text-dark, #2c3e50);
   animation: fadeInUp 0.8s ease-out;
 }
@@ -27,7 +31,15 @@
   color: var(--text-light, #7f8c8d);
   max-width: 600px;
   margin: 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.hero-content .subtitle .bi {
+  font-size: 1.35rem;
+  color: var(--primary-color, #2980b9);
 }
 
 .content-wrapper {
@@ -45,7 +57,7 @@
 
 .about-text h2 {
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
   color: var(--primary-color, #2980b9);
   position: relative;
   display: inline-block;
@@ -66,7 +78,7 @@
   font-size: 1.05rem;
   line-height: 1.8;
   color: var(--text-light, #555);
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
 }
 
 .img-placeholder {
@@ -77,13 +89,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 5rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
 .img-placeholder:hover {
   transform: translateY(-5px);
+}
+
+.bi {
+  font-size: 5rem;
+  color: var(--primary-color, #2980b9);
 }
 
 .values-section {
@@ -94,7 +110,7 @@
 
 .values-section h2 {
   font-size: 2rem;
-  margin-bottom: 3rem;
+  margin: 0 0 3rem;
 }
 
 .values-grid {
@@ -109,27 +125,32 @@
   background: white;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .value-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .value-card .icon {
-  font-size: 3rem;
   margin-bottom: 1rem;
+}
+
+.value-card .icon .bi {
+  font-size: 3rem;
+  color: var(--primary-color, #2980b9);
 }
 
 .value-card h3 {
   font-size: 1.3rem;
-  margin-bottom: 0.8rem;
+  margin: 0 0 0.8rem;
   color: var(--text-dark, #333);
 }
 
 .value-card p {
+  margin: 0;
   color: var(--text-light, #666);
   line-height: 1.6;
 }
@@ -139,6 +160,16 @@
   text-align: center;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.team-section h2 {
+  margin: 0 0 0.5rem;
+}
+
+.team-subtitle {
+  margin: 0;
+  color: var(--text-light, #7f8c8d);
+  font-size: 1rem;
 }
 
 .team-grid {
@@ -162,9 +193,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
   border: 3px solid white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.team-member .avatar .bi {
+  font-size: 2.3rem;
+  color: var(--primary-color, #2980b9);
 }
 
 .team-member h4 {
