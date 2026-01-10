@@ -150,14 +150,6 @@ header:hover::before {
   height: 200px;
 }
 
-.nav-links a span:first-child {
-  font-size: 1.25rem;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  filter: grayscale(0.3);
-  position: relative;
-  z-index: 1;
-}
-
 .nav-links a:hover {
   color: var(--primary-color);
   background: var(--white);
@@ -165,20 +157,11 @@ header:hover::before {
   box-shadow: 0 8px 20px rgba(0, 102, 204, 0.15);
 }
 
-.nav-links a:hover span:first-child {
-  transform: scale(1.2) rotate(-5deg);
-  filter: grayscale(0) drop-shadow(0 2px 4px rgba(0, 102, 204, 0.3));
-}
-
 .nav-links a.active-link {
   color: var(--primary-color);
   background: var(--white);
   box-shadow: 0 6px 16px rgba(0, 102, 204, 0.2), 0 0 0 1px rgba(0, 102, 204, 0.1);
   position: relative;
-  background: linear-gradient(120deg, #0066cc, #00c4cc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .nav-links a.active-link::after {
@@ -193,8 +176,22 @@ header:hover::before {
   border-radius: 3px 3px 0 0;
 }
 
-.nav-links a.active-link span:first-child {
-  filter: grayscale(0);
+.nav-links a i.bi {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.nav-links a:hover i.bi {
+  color: var(--primary-color);
+  transform: scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 102, 204, 0.3));
+}
+
+.nav-links a.active-link i.bi {
+  color: var(--primary-color);
   transform: scale(1.1);
 }
 
@@ -297,10 +294,6 @@ header:hover::before {
   position: relative;
 }
 
-.mobile-nav a span:first-child {
-  font-size: 1.4rem;
-}
-
 .mobile-nav a:hover {
   background: var(--accent-color);
   color: var(--primary-color);
@@ -323,6 +316,16 @@ header:hover::before {
   height: 60%;
   background: var(--gradient-primary);
   border-radius: 0 3px 3px 0;
+}
+
+.mobile-nav a i.bi {
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav a:hover i.bi {
+  transform: translateX(4px) scale(1.1);
 }
 
 .profile-container {
@@ -364,7 +367,8 @@ header:hover::before {
   color: white;
   font-weight: 700;
   font-size: 1.1rem;
-  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.5),
+  inset 0 2px 4px rgba(255, 255, 255, 0.2);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   flex-shrink: 0;
@@ -372,7 +376,8 @@ header:hover::before {
 
 .user-profile:hover .user-avatar {
   transform: scale(1.12) rotate(-5deg);
-  box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.8), inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.8),
+  inset 0 2px 6px rgba(255, 255, 255, 0.3);
 }
 
 .user-info {
@@ -406,7 +411,7 @@ header:hover::before {
 }
 
 .dropdown-arrow {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: var(--text-light);
   margin-left: 0.3rem;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -429,7 +434,8 @@ header:hover::before {
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-radius: 20px;
   padding: 0.6rem;
-  box-shadow: 0 20px 60px rgba(0, 50, 100, 0.15), 0 0 0 1px rgba(0, 102, 204, 0.1), 0 0 30px rgba(0, 102, 204, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 50, 100, 0.15), 0 0 0 1px rgba(0, 102, 204, 0.1),
+  0 0 30px rgba(0, 102, 204, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
   z-index: 1000;
   animation: slideDownFade 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -451,7 +457,8 @@ header:hover::before {
   padding: 1rem 1.2rem;
   color: var(--text-dark);
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
@@ -466,6 +473,7 @@ header:hover::before {
   position: relative;
   white-space: nowrap;
   box-sizing: border-box;
+  gap: 10px;
 }
 
 .dropdown-item::before {
@@ -496,6 +504,16 @@ header:hover::before {
   transform: scale(0.98);
 }
 
+.dropdown-item i.bi {
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.dropdown-item:hover i.bi {
+  transform: scale(1.15);
+}
+
 .text-danger {
   color: var(--error-color) !important;
 }
@@ -507,6 +525,10 @@ header:hover::before {
 .text-danger:hover {
   background: #fee2e2 !important;
   color: var(--error-color) !important;
+}
+
+.text-danger i.bi {
+  color: var(--error-color);
 }
 
 .dropdown-divider {
@@ -652,14 +674,6 @@ header:hover::before {
 .hamburger-menu:focus-visible {
   outline: 3px solid var(--primary-color);
   outline-offset: 2px;
-}
-
-
-.nav-links a.active-link span:first-child {
-  -webkit-text-fill-color: initial;
-  background: none;
-  filter: grayscale(0);
-  transform: scale(1.1);
 }
 
 @media (prefers-reduced-motion: reduce) {

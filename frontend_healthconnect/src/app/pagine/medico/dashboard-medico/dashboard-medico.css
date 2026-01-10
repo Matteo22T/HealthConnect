@@ -24,10 +24,7 @@
   font-weight: 800;
   color: var(--text-dark, #1a1a1a);
   letter-spacing: -1px;
-
-
   display: inline-block;
-
   background: linear-gradient(120deg, #0066cc, #00c4cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -51,17 +48,35 @@
 .main-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "visite messaggi"
+    "richieste pazienti";
   gap: 2rem;
   margin-bottom: 2rem;
-  align-items: stretch;
+  min-height: 600px;
 }
 
-.left-column,
-.right-column {
+#today {
+  grid-area: visite;
+}
+
+#messages {
+  grid-area: messaggi;
+}
+
+#pending {
+  grid-area: richieste;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  height: 100%;
+  min-height: 0;
+}
+
+#patients {
+  grid-area: pazienti;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 app-lista-richiesta,
@@ -71,76 +86,35 @@ app-pazienti-senza-diagnosi {
   flex-direction: column;
 }
 
-.charts-section {
-  width: 100%;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
-}
-
-
- .main-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    grid-template-rows: auto 1fr;
+@media (max-width: 1024px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
     grid-template-areas:
-    "visite messaggi"
-    "richieste pazienti";
-    gap: 2rem;
-    margin-bottom: 2rem;
-    min-height: 600px;
-  }
-
-  #today {
-    grid-area: visite;
-  }
-
-  #messages {
-    grid-area: messaggi;
-  }
-
-  #pending {
-    grid-area: richieste;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-
-  #patients {
-    grid-area: pazienti;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-
-  @media (max-width: 1024px) {
-    .main-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-      grid-template-areas:
       "visite"
       "richieste"
       "messaggi"
       "pazienti";
-    }
   }
+}
 
-  .highlight-glow ::ng-deep > div:first-child {
-    animation: glow-animation 2s ease-in-out;
-    border-radius: 21px;
-  }
+.highlight-glow ::ng-deep > div:first-child {
+  animation: glow-animation 2s ease-in-out;
+  border-radius: 21px;
+}
 
-  @keyframes glow-animation {
-    0% {
-      box-shadow: 0 0 0 rgba(63, 81, 181, 0);
-      transform: scale(1);
-    }
-    50% {
-      box-shadow: 0 0 20px rgba(63, 81, 181, 0.6);
-      transform: scale(1.02);
-      border: 1px solid #3f51b5;
-    }
-    100% {
-      box-shadow: 0 0 0 rgba(63, 81, 181, 0);
-      transform: scale(1);
-    }
+@keyframes glow-animation {
+  0% {
+    box-shadow: 0 0 0 rgba(63, 81, 181, 0);
+    transform: scale(1);
   }
+  50% {
+    box-shadow: 0 0 20px rgba(63, 81, 181, 0.6);
+    transform: scale(1.02);
+    border: 1px solid #3f51b5;
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(63, 81, 181, 0);
+    transform: scale(1);
+  }
+}

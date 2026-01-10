@@ -5,18 +5,41 @@
   </div>
 
   <div class="dashboard-grid">
-    <app-stat-card tipo="pending"  icona="⏳" etichetta="In attesa" [contatore]="prenotazioni.length" (cardClick)="scrollToSection($event)"></app-stat-card>
-    <app-stat-card tipo="today"    icona="📋" etichetta="Visite oggi" [contatore]="visite.length" (cardClick)="scrollToSection($event)"></app-stat-card>
-    <app-stat-card tipo="patients" icona="👥" etichetta="Pazienti" [contatore]="numeroPazienti" (cardClick)="scrollToSection($event)"></app-stat-card>
-    <app-stat-card tipo="messages" icona="💬" etichetta="Messaggi" [contatore]="messaggi.length" (cardClick)="scrollToSection($event)"></app-stat-card>
+    <app-stat-card
+      tipo="pending"
+      icona="bi bi-hourglass-split"
+      etichetta="In attesa"
+      [contatore]="prenotazioni.length"
+      (cardClick)="scrollToSection($event)">
+    </app-stat-card>
+
+    <app-stat-card
+      tipo="today"
+      icona="bi bi-clipboard2-check"
+      etichetta="Visite oggi"
+      [contatore]="visite.length"
+      (cardClick)="scrollToSection($event)">
+    </app-stat-card>
+
+    <app-stat-card
+      tipo="patients"
+      icona="bi bi-people"
+      etichetta="Pazienti"
+      [contatore]="numeroPazienti"
+      (cardClick)="scrollToSection($event)">
+    </app-stat-card>
+
+    <app-stat-card
+      tipo="messages"
+      icona="bi bi-chat-dots"
+      etichetta="Messaggi"
+      [contatore]="messaggi.length"
+      (cardClick)="scrollToSection($event)">
+    </app-stat-card>
   </div>
 
   <div class="main-grid">
-
-    <app-lista-visita
-      id="today"
-      [prossimeVisite]="visite">
-    </app-lista-visita>
+    <app-lista-visita id="today" [prossimeVisite]="visite"></app-lista-visita>
 
     <app-lista-richiesta
       id="pending"
@@ -25,16 +48,12 @@
       (rifiutaPrenotazione)="gestisciRifiutoPrenotazione($event)">
     </app-lista-richiesta>
 
-    <app-messaggi
-      id="messages"
-      [ultimiMessaggi]="messaggi">
-    </app-messaggi>
+    <app-messaggi id="messages" [ultimiMessaggi]="messaggi"></app-messaggi>
 
     <app-pazienti-senza-diagnosi
       id="patients"
       [visite]="VisiteSenzaDiagnosi"
       (apriVisita)="apriVisitaSpecifica($event)">
     </app-pazienti-senza-diagnosi>
-
   </div>
 </main>

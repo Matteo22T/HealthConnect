@@ -1,23 +1,36 @@
 <header>
-  <a class= "logo" routerLink="/medico"> <img src="/logo.png"> <h3>HealthConnect</h3> </a>
+  <a class="logo" routerLink="/medico">
+    <img src="/logo.png">
+    <h3>HealthConnect</h3>
+  </a>
 
   <div class="header-right">
+
     <!-- Menu Desktop -->
     <nav class="nav-links">
       <a routerLink="/medico/calendario" routerLinkActive="active-link">
-        <span>📅</span> Calendario
+        <i class="bi bi-calendar-event"></i>
+        <span>Calendario</span>
       </a>
+
       <a routerLink="/medico/pazienti" routerLinkActive="active-link">
-        <span>👥</span> Pazienti
+        <i class="bi bi-people"></i>
+        <span>Pazienti</span>
       </a>
+
       <a routerLink="/medico/chat" routerLinkActive="active-link">
-        <span>💬</span> Chat
-        <span class="badge" *ngIf="messaggi.length > 0">{{messaggi.length}}</span>
+        <i class="bi bi-chat-dots"></i>
+        <span>Chat</span>
+        <span class="badge" *ngIf="messaggi.length > 0">
+          {{ messaggi.length }}
+        </span>
       </a>
     </nav>
 
     <!-- Hamburger Menu Button -->
-    <div class="hamburger-menu" (click)="toggleMobileMenu()" [class.open]="isMobileMenuOpen">
+    <div class="hamburger-menu"
+         (click)="toggleMobileMenu()"
+         [class.open]="isMobileMenuOpen">
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
@@ -27,26 +40,42 @@
     <div class="profile-container">
       <div class="user-profile" (click)="toggleProfileMenu()">
         <div class="user-avatar">
-          {{nomeMedico.trim().charAt(0).toUpperCase() + cognomeMedico.trim().charAt(0).toUpperCase()}}
+          {{ nomeMedico.trim().charAt(0).toUpperCase() + cognomeMedico.trim().charAt(0).toUpperCase() }}
         </div>
+
         <div class="user-info">
-          <span class="user-name">{{ nomeMedico + " " + cognomeMedico}}</span>
-          <span class="user-role">{{specializzazione?.nome}}</span>
+          <span class="user-name">
+            {{ nomeMedico + " " + cognomeMedico }}
+          </span>
+          <span class="user-role">
+            {{ specializzazione?.nome }}
+          </span>
         </div>
-        <span class="dropdown-arrow">▼</span>
+
+        <i class="bi bi-chevron-down dropdown-arrow"></i>
       </div>
 
       <!-- Profile Dropdown -->
       <div class="custom-dropdown shadow" *ngIf="isProfileMenuOpen">
-        <a routerLink="/medico/profilo" (click)="closeProfileMenu()" class="dropdown-item">
-          👤 Il mio Profilo
+        <a routerLink="/medico/profilo"
+           (click)="closeProfileMenu()"
+           class="dropdown-item">
+          <i class="bi bi-person"></i>
+          Il mio Profilo
         </a>
-        <a routerLink="/medico/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
-          ⚙️ Impostazioni
+
+        <a routerLink="/medico/impostazioni"
+           (click)="closeProfileMenu()"
+           class="dropdown-item">
+          <i class="bi bi-gear"></i>
+          Impostazioni
         </a>
+
         <div class="dropdown-divider"></div>
+
         <button (click)="logout()" class="dropdown-item text-danger">
-          🚪 Esci
+          <i class="bi bi-box-arrow-right"></i>
+          Esci
         </button>
       </div>
     </div>
@@ -54,19 +83,34 @@
 
   <!-- Menu Mobile -->
   <nav class="mobile-nav" [class.open]="isMobileMenuOpen">
-    <a routerLink="/medico/calendario" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>📅</span> Calendario
+    <a routerLink="/medico/calendario"
+       routerLinkActive="active-link"
+       (click)="closeMobileMenu()">
+      <i class="bi bi-calendar-event"></i>
+      <span>Calendario</span>
     </a>
-    <a routerLink="/medico/pazienti" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>👥</span> Pazienti
+
+    <a routerLink="/medico/pazienti"
+       routerLinkActive="active-link"
+       (click)="closeMobileMenu()">
+      <i class="bi bi-people"></i>
+      <span>Pazienti</span>
     </a>
-    <a routerLink="/medico/chat" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>💬</span> Chat
-      <span class="badge" *ngIf="messaggi.length > 0">{{messaggi.length}}</span>
+
+    <a routerLink="/medico/chat"
+       routerLinkActive="active-link"
+       (click)="closeMobileMenu()">
+      <i class="bi bi-chat-dots"></i>
+      <span>Chat</span>
+      <span class="badge" *ngIf="messaggi.length > 0">
+        {{ messaggi.length }}
+      </span>
     </a>
   </nav>
 
   <!-- Overlay -->
-  <div class="dropdown-overlay" *ngIf="isProfileMenuOpen || isMobileMenuOpen"
-       (click)="closeAllMenus()"></div>
+  <div class="dropdown-overlay"
+       *ngIf="isProfileMenuOpen || isMobileMenuOpen"
+       (click)="closeAllMenus()">
+  </div>
 </header>
