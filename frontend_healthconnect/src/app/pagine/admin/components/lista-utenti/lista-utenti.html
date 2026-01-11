@@ -1,7 +1,9 @@
 <div class="card">
   <div class="card-header">
     <h2>Ultimi Utenti Iscritti</h2>
-    <a href="#" class="view-all" *ngIf="utenti.length > 0" routerLink="/admin/utenti">Vedi tutti →</a>
+    <a href="#" class="view-all" *ngIf="utenti.length > 0" routerLink="/admin/utenti">
+      Vedi tutti <i class="bi bi-arrow-right"></i>
+    </a>
   </div>
 
   <div class="content-panel" *ngIf="utenti.length > 0">
@@ -51,7 +53,7 @@
   </div>
 
   <div class="empty-state" *ngIf="utenti.length === 0">
-    <div class="empty-icon">👥</div>
+    <div class="empty-icon"><i class="bi bi-people display-1"></i></div>
     <p>Non esistono utenti registrati.</p>
   </div>
 </div>

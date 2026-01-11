@@ -2,7 +2,7 @@
   <div class="card-header">
     <h2>Specializzazioni</h2>
     <button class="btn-add" (click)="mostraModale()" title="Aggiungi Specializzazione">
-      +
+      <i class="bi bi-plus-lg"></i>
     </button>
     <a href="#" class="view-all" *ngIf="specializzazioni.length > 0"></a>
   </div>
@@ -33,7 +33,7 @@
   </div>
 
   <div class="empty-state" *ngIf="specializzazioni.length === 0">
-    <div class="empty-icon">🩺</div>
+    <div class="empty-icon"><i class="bi bi-activity display-1"></i></div>
     <p>Non esistono specializzazioni registrate.</p>
   </div>
 </div>

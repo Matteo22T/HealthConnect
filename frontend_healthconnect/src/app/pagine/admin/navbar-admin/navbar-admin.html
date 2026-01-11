@@ -11,11 +11,13 @@
   <a class= "logo" routerLink="/paziente/dashboard"> <img src="/logo.png"> Health<span>Connect</span> </a>
   <div class="header-right">
     <nav class="nav-links">
-      <a routerLink="/admin/utenti" routerLinkActive="active-link"><span>👥</span> Utenti</a>
+      <a routerLink="/admin/utenti" routerLinkActive="active-link">
+        <i class="bi bi-people"></i> Utenti
+      </a>
     </nav>
     <div class="profile-container">
       <button (click)="logout()" class="dropdown-item text-danger">
-        🚪 Esci
+        <i class="bi bi-box-arrow-right"></i> Esci
       </button>
     </div>
   </div>

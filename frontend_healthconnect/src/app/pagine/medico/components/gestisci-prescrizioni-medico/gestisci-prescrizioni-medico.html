@@ -1,5 +1,5 @@
 <div class="card farmaci-section">
-  <h2 class="card-title"><span class="card-icon">💊</span> Prescrizione Farmaci</h2>
+  <h2 class="card-title"><span class="card-icon"><i class="bi bi-capsule"></i></span> Prescrizione Farmaci</h2>
 
   <div class="farmaci-layout">
     <div>
@@ -18,10 +18,10 @@
           <input type="date" [(ngModel)]="nuovoFarmaco.dataFine" class="form-input">
         </div>
         <div class="error-message" *ngIf="errore">
-          ⚠️ {{ errore }}
+          <i class="bi bi-exclamation-triangle-fill"></i> {{ errore }}
         </div>
         <button class="btn btn-primary" (click)="aggiungi()" style="width: 100%;">
-          <span>➕</span> Aggiungi
+          <span><i class="bi bi-plus-lg"></i></span> Aggiungi
         </button>
       </div>
     </div>
@@ -37,11 +37,13 @@
           <div class="farmaco-item" *ngFor="let prescr of prescrizioni; let i = index">
             <div class="farmaco-header">
               <span class="farmaco-nome">{{ prescr.nome_farmaco }}</span>
-              <button class="farmaco-delete" (click)="rimuovi(i)">✕</button>
+              <button class="farmaco-delete" (click)="rimuovi(i)">
+                <i class="bi bi-x-lg"></i>
+              </button>
             </div>
             <div class="farmaco-info">
               <span class="farmaco-dosaggio"><strong>Dosaggio:</strong> {{ prescr.dosaggio }}</span>
-              <span class="farmaco-scadenza">⏱ Fino al: {{ prescr.dataFine | date:'d MMM y' }}</span>
+              <span class="farmaco-scadenza"><i class="bi bi-hourglass-split"></i> Fino al: {{ prescr.dataFine | date:'d MMM y' }}</span>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@
   <div class="table-section">
 
     <div class="search-container">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><i class="bi bi-search"></i></span>
       <input
         type="text"
         placeholder="Cerca per nome o cognome..."
@@ -37,9 +37,13 @@
           <div class="patient-info">
             <div class="full-name">{{ paz.nome }} {{ paz.cognome }}</div>
             <div class="sub-details">
-              <span class="detail-item">📅 {{ paz.dataNascita | date:'dd/MM/yyyy' }}</span>
+              <span class="detail-item">
+                <i class="bi bi-calendar3"></i> {{ paz.dataNascita | date:'dd/MM/yyyy' }}
+              </span>
               <span class="detail-item separator">•</span>
-              <span class="detail-item">👤 Sesso: {{ paz.sesso }}</span>
+              <span class="detail-item">
+                <i class="bi bi-gender-ambiguous"></i> Sesso: {{ paz.sesso }}
+              </span>
             </div>
           </div>
         </div>
@@ -49,7 +53,7 @@
             class="btn-message link-style"
             (click)="$event.stopPropagation(); apriChatPaziente(paz.id)"
           >
-            💬 Invia Messaggio
+            <i class="bi bi-chat-dots-fill"></i> Invia Messaggio
           </a>
         </div>
       </div>

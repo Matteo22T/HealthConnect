@@ -152,10 +152,7 @@
   animation: fadeInUp 0.6s ease-out 0.3s backwards;
 }
 
-.header-date::before {
-  content: '📅';
-  font-size: 1.1rem;
-}
+
 
 .status-badge {
   background: rgba(0, 102, 204, 0.12);

@@ -16,9 +16,9 @@
 
     <section class="detail-card shadow-sm">
       <div class="card-title-row">
-        <h2><span class="icon">📋</span> Dati Personali</h2>
+        <h2><span class="icon"><i class="bi bi-person-vcard"></i></span> Dati Personali</h2>
         <button class="btn-edit-icon" (click)="ModificaDatiPersonali()" *ngIf="!isEditingPersonal" title="Modifica">
-          ✏️
+          <i class="bi bi-pencil-square"></i>
         </button>
       </div>
 
@@ -106,9 +106,9 @@
 
     <section class="detail-card shadow-sm">
       <div class="card-title-row">
-        <h2><span class="icon">🏥</span> Info Professionali</h2>
+        <h2><span class="icon"><i class="bi bi-hospital"></i></span> Info Professionali</h2>
         <button class="btn-edit-icon" (click)="modificaDatiProfessionali()" *ngIf="!isEditingProfessional" title="Modifica">
-          ✏️
+          <i class="bi bi-pencil-square"></i>
         </button>
       </div>
 
@@ -125,14 +125,14 @@
         </div>
         <hr>
         <div class="detail-block">
-          <span class="label display-block mb-2">📍 Indirizzo Studio:</span>
+          <span class="label display-block mb-2"><i class="bi bi-geo-alt-fill"></i> Indirizzo Studio:</span>
           <p class="value address-box">
             {{ medico.indirizzo_studio}}
           </p>
           <div #visualizzaMappa class="map-container" *ngIf="medico.indirizzo_studio"></div>
         </div>
         <div class="detail-block mt-4">
-          <span class="label display-block mb-2">📝 Biografia:</span>
+          <span class="label display-block mb-2"><i class="bi bi-file-text"></i> Biografia:</span>
           <p class="value bio-box">
             {{ medico.biografia ? medico.biografia : 'Nessuna biografia.' }}
           </p>
@@ -158,10 +158,10 @@
 
           <div class="input-like">
             <gmp-place-autocomplete
-            #indirizzoInputUtente
-            [attr.theme]="'light'"
-            placeholder="Es. Via Roma 10, Milano"
-            (gmp-select)="onAddressSelected($event)"> </gmp-place-autocomplete>
+              #indirizzoInputUtente
+              [attr.theme]="'light'"
+              placeholder="Es. Via Roma 10, Milano"
+              (gmp-select)="onAddressSelected($event)"> </gmp-place-autocomplete>
           </div>
 
           <div #MappaGoogle class="map-container"></div>

@@ -1,11 +1,11 @@
 <div class="container fade-in">
-  <h1 class="page-title">⚙️ Impostazioni Account</h1>
+  <h1 class="page-title"><i class="bi bi-gear"></i> Impostazioni Account</h1>
 
   <div class="settings-grid">
 
     <div class="card">
       <div class="card-header">
-        <h2>🔒 Sicurezza</h2>
+        <h2><i class="bi bi-shield-lock"></i> Sicurezza</h2>
       </div>
       <div class="card-body">
         <form [formGroup]="cambiaPasswordForm" (ngSubmit)="cambiaPassword()">
@@ -57,7 +57,7 @@
 
     <div class="card">
       <div class="card-header">
-        <h2>🔔 Notifiche</h2>
+        <h2><i class="bi bi-bell"></i> Notifiche</h2>
       </div>
       <div class="card-body">
 
@@ -82,7 +82,7 @@
 
 <div class="modal-overlay" *ngIf="showSuccess">
   <div class="modal-content success-content">
-    <div class="success-icon">✓</div>
+    <div class="success-icon"><i class="bi bi-check-lg"></i></div>
     <h3>Ottimo!</h3>
     <p>La tua password è stata aggiornata con successo.</p>
     <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>

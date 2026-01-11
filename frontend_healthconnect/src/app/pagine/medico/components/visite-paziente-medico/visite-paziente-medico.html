@@ -1,6 +1,6 @@
 <div class="section-card">
   <h2 class="section-title">
-    <span class="section-icon">📋</span>
+    <span class="section-icon"><i class="bi bi-journal-medical"></i></span>
     Ultime Visite
   </h2>
 
@@ -22,7 +22,7 @@
           <span class="list-item-date">{{visita.dataVisita | date:'d MMM y'}}</span>
           <button class="open-button" (click)=apriVisita.emit(visita.id)>
             Apri
-            <span class="arrow-icon">→</span>
+            <span class="arrow-icon"><i class="bi bi-arrow-right"></i></span>
           </button>
         </div>
       </div>

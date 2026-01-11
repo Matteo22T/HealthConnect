@@ -1,6 +1,6 @@
 <button class="mobile-toggle" (click)="toggleSidebar()" *ngIf="!contattoSelezionato || sidebarVisible">
-  <span *ngIf="!sidebarVisible">☰</span>
-  <span *ngIf="sidebarVisible">✕</span>
+  <span *ngIf="!sidebarVisible"><i class="bi bi-list"></i></span>
+  <span *ngIf="sidebarVisible"><i class="bi bi-x-lg"></i></span>
 </button>
 
 <div class="sidebar-overlay"
@@ -13,13 +13,15 @@
 
     <div class="sidebar-header">
       <h3>Lista contatti ({{ listaContatti.length }})</h3>
-      <button class="close-sidebar-btn" (click)="closeSidebar()">✕</button>
+      <button class="close-sidebar-btn" (click)="closeSidebar()">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
 
     <div class="contacts-list">
 
       <div *ngIf="listaContatti.length === 0" class="empty-state">
-        <div class="empty-state-icon">📋</div>
+        <div class="empty-state-icon"><i class="bi bi-clipboard"></i></div>
         <div class="empty-state-text">Caricamento in corso o lista vuota...</div>
       </div>
 
@@ -51,7 +53,7 @@
 
     <div *ngIf="!contattoSelezionato" class="welcome-screen">
       <div class="welcome-content">
-        <h2>💬 HealthConnect Web</h2>
+        <h2><i class="bi bi-chat-text"></i> HealthConnect Web</h2>
         <p>Seleziona un medico dalla lista per iniziare a chattare.</p>
       </div>
     </div>
@@ -59,7 +61,9 @@
     <div *ngIf="contattoSelezionato" class="chat-wrapper">
 
       <div class="chat-header">
-        <button class="back-btn" (click)="backToContacts()">←</button>
+        <button class="back-btn" (click)="backToContacts()">
+          <i class="bi bi-arrow-left"></i>
+        </button>
 
         <div class="avatar-circle">
           {{ contattoSelezionato.nome.charAt(0).toUpperCase() }}{{ contattoSelezionato.cognome.charAt(0).toUpperCase() }}
@@ -73,7 +77,7 @@
       <div class="chat-body" #scrollContainer>
 
         <div *ngIf="messaggi.length === 0" class="empty-messages">
-          <div class="empty-messages-icon">💭</div>
+          <div class="empty-messages-icon"><i class="bi bi-chat-dots"></i></div>
           <p>Nessun messaggio ancora. Inizia la conversazione!</p>
         </div>
 
@@ -103,8 +107,8 @@
         <button class="btn-send"
                 (click)="invia()"
                 [disabled]="!nuovoMessaggio.trim() || isLoading">
-          <span *ngIf="!isLoading">➤</span>
-          <span *ngIf="isLoading" class="loading-spinner">⟳</span>
+          <span *ngIf="!isLoading"><i class="bi bi-send"></i></span>
+          <span *ngIf="isLoading" class="loading-spinner"><i class="bi bi-arrow-clockwise"></i></span>
         </button>
       </div>
     </div>

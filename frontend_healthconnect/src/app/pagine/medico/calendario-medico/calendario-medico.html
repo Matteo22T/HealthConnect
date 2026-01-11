@@ -1,11 +1,11 @@
-<div class = container>
+<div class="container">
 
   <div class="title-section">
     <h1 class="title">Calendario</h1>
   </div>
 
   <div class="calendar-container">
-  
+
     <div class="calendar-header">
       <div class="btn-group">
         <button
@@ -50,7 +50,9 @@
     @if (selectedEvent) {
       <div class="modal-overlay" (click)="closePopup()">
         <div class="modal-content" (click)="$event.stopPropagation()">
-          <button class="close-btn" (click)="closePopup()">✕</button>
+          <button class="close-btn" (click)="closePopup()">
+            <i class="bi bi-x-lg"></i>
+          </button>
 
           <div class="modal-header">
             <h2>Dettaglio Visita</h2>
@@ -58,22 +60,22 @@
 
           <div class="modal-body">
             <div class="info-row">
-              <span class="label">📅 Data:</span>
+              <span class="label"><i class="bi bi-calendar-event"></i> Data:</span>
               <span class="value">{{ selectedEvent.start | date:'dd/MM/yyyy' }}</span>
             </div>
 
             <div class="info-row">
-              <span class="label">🕐 Orario:</span>
+              <span class="label"><i class="bi bi-clock"></i> Orario:</span>
               <span class="value">{{ selectedEvent.start | date:'HH:mm' }} - {{ selectedEvent.end | date:'HH:mm' }}</span>
             </div>
 
             <div class="info-row">
-              <span class="label">👤 Paziente:</span>
+              <span class="label"><i class="bi bi-person"></i> Paziente:</span>
               <span class="value">{{ selectedEvent.meta?.paziente?.nome }} {{ selectedEvent.meta?.paziente?.cognome }}</span>
             </div>
 
             <div class="info-row">
-              <span class="label">📋 Motivo:</span>
+              <span class="label"><i class="bi bi-file-text"></i> Motivo:</span>
               <span class="value">{{ selectedEvent.meta?.motivo }}</span>
             </div>
           </div>

@@ -1,7 +1,7 @@
 <div class="container">
 
   <button class="back-link" (click)="tornaIndietro()">
-    <span>←</span> Torna al Paziente
+    <span><i class="bi bi-arrow-left"></i></span> Torna al Paziente
   </button>
 
   <ng-container *ngIf="visita; else loading">
@@ -16,7 +16,7 @@
       <div class="diagnosis-notes-layout">
 
         <div class="card">
-          <h2 class="card-title"><span class="card-icon">🔍</span> Diagnosi</h2>
+          <h2 class="card-title"><span class="card-icon"><i class="bi bi-search"></i></span> Diagnosi</h2>
           <div class="form-group">
             <label class="form-label">Diagnosi principale</label>
             <textarea [(ngModel)]="visita.diagnosi" class="form-textarea" placeholder="Inserisci diagnosi..."></textarea>
@@ -24,7 +24,7 @@
         </div>
 
         <div class="card">
-          <h2 class="card-title"><span class="card-icon">📝</span> Note</h2>
+          <h2 class="card-title"><span class="card-icon"><i class="bi bi-file-text"></i></span> Note</h2>
           <div class="form-group">
             <label class="form-label">Note visita</label>
             <textarea [(ngModel)]="visita.noteMedico" class="form-textarea" placeholder="Inserisci note..."></textarea>
@@ -38,7 +38,9 @@
 
 
       <div class="actions">
-        <button class="btn btn-primary" (click)="salva()"><span>💾</span> Salva Visita</button>
+        <button class="btn btn-primary" (click)="salva()">
+          <span><i class="bi bi-floppy"></i></span> Salva Visita
+        </button>
         <p *ngIf=" messaggio_successo!=='' " class="status-alert">{{messaggio_successo}}</p>
       </div>
     </div>

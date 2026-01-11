@@ -6,7 +6,7 @@
   <div class="scroll-container">
 
     <div *ngIf="mediciDaApprovare.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-      <p>Nessuna richiesta di approvazione in attesa 🎉</p>
+      <p>Nessuna richiesta di approvazione in attesa <i class="bi bi-check-circle"></i></p>
     </div>
 
     <div class="request-item" *ngFor="let med of mediciDaApprovare">
@@ -20,13 +20,13 @@
         <button class="btn-icon btn-accept"
                 title="Accetta"
                 (click)="accettaMedico.emit(med.id)">
-          ✓
+          <i class="bi bi-check-lg"></i>
         </button>
 
         <button class="btn-icon btn-reject"
                 title="Rifiuta"
                 (click)="rifiutaMedico.emit(med.id)">
-          ✗
+          <i class="bi bi-x-lg"></i>
         </button>
       </div>
     </div>
