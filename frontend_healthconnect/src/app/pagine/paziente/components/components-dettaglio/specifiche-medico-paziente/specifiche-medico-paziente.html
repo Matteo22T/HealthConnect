@@ -1,19 +1,16 @@
 <div class="specifiche-container">
 
-  <!-- Mappa -->
   <div class="map-section">
     <div class="map-wrapper">
       <div #visualizzaMappa class="google-map"></div>
     </div>
   </div>
 
-  <!-- Biografia e Specializzazione -->
   <div class="se">
 
-    <!-- Card Biografia -->
     <div class="info-card">
       <h3 class="info-title">
-        <span class="info-icon">📝</span>
+        <span class="info-icon"><i class="bi bi-person-vcard"></i></span>
         Dettagli Medico
       </h3>
       <div class="detail-item">
@@ -27,13 +24,13 @@
           </span>
       </div>
       <div class="detail-block">
-        <span class="label display-block mb-2">📍 Indirizzo Studio:</span>
+        <span class="label display-block mb-2"><i class="bi bi-geo-alt-fill"></i> Indirizzo Studio:</span>
         <p class="value address-box">
           {{ medico?.indirizzo_studio}}
         </p>
       </div>
       <div class="detail-block mt-4">
-        <span class="label display-block mb-2">📝 Biografia:</span>
+        <span class="label display-block mb-2"><i class="bi bi-file-text"></i> Biografia:</span>
         <p class="value bio-box">
           {{ medico?.biografia ? medico?.biografia : 'Nessuna biografia.' }}
         </p>

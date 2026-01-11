@@ -6,19 +6,19 @@
   <div class="header-right">
     <nav class="nav-links">
       <a routerLink="/paziente/calendario" routerLinkActive="active-link">
-        <span>📅</span> Calendario
+        <i class="bi bi-calendar-event"></i> Calendario
       </a>
       <a routerLink="/paziente/medici" routerLinkActive="active-link">
-        <span>👨‍⚕️</span> Medici
+        <i class="bi bi-people"></i> Medici
       </a>
       <a routerLink="/paziente/cartella" routerLinkActive="active-link">
-        <span>📋</span> Cartella Clinica
+        <i class="bi bi-clipboard2-data"></i> Cartella Clinica
       </a>
       <a routerLink="/paziente/chat" routerLinkActive="active-link">
-        <span>💬</span> Chat
+        <i class="bi bi-chat-dots"></i> Chat
       </a>
       <a routerLink="/paziente/ai" routerLinkActive="active-link">
-        <span>🤖</span> Assistente AI
+        <i class="bi bi-robot"></i> Assistente AI
       </a>
     </nav>
 
@@ -36,19 +36,19 @@
         <div class="user-info">
           <span class="user-name">{{ nomePaziente + " " + cognomePaziente}}</span>
         </div>
-        <span class="dropdown-arrow">▼</span>
+        <i class="bi bi-chevron-down dropdown-arrow"></i>
       </div>
 
       <div class="custom-dropdown shadow" *ngIf="isProfileMenuOpen">
         <a routerLink="/paziente/profilo" (click)="closeProfileMenu()" class="dropdown-item">
-          👤 Il mio Profilo
+          <i class="bi bi-person"></i> Il mio Profilo
         </a>
         <a routerLink="/paziente/impostazioni" (click)="closeProfileMenu()" class="dropdown-item">
-          ⚙️ Impostazioni
+          <i class="bi bi-gear"></i> Impostazioni
         </a>
         <div class="dropdown-divider"></div>
         <button (click)="logout()" class="dropdown-item text-danger">
-          🚪 Esci
+          <i class="bi bi-box-arrow-right"></i> Esci
         </button>
       </div>
     </div>
@@ -56,19 +56,19 @@
 
   <nav class="mobile-nav" [class.open]="isMobileMenuOpen">
     <a routerLink="/paziente/calendario" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>📅</span> Calendario
+      <i class="bi bi-calendar-event"></i> Calendario
     </a>
     <a routerLink="/paziente/medici" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>👨‍⚕️</span> Medici
+      <i class="bi bi-people"></i> Medici
     </a>
     <a routerLink="/paziente/cartella" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>📋</span> Cartella Clinica
+      <i class="bi bi-clipboard2-data"></i> Cartella Clinica
     </a>
     <a routerLink="/paziente/chat" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>💬</span> Chat
+      <i class="bi bi-chat-dots"></i> Chat
     </a>
     <a routerLink="/paziente/ai" routerLinkActive="active-link" (click)="closeMobileMenu()">
-      <span>🤖</span> Assistente AI
+      <i class="bi bi-robot"></i> Assistente AI
     </a>
   </nav>
 

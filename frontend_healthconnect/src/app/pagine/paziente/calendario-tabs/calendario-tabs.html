@@ -4,8 +4,12 @@
   </div>
 
   <div class="tabs-nav">
-    <button [class.active]="activeTab === 'calendario'" (click)="setTab('calendario')">🔍 Calendario</button>
-    <button [class.active]="activeTab === 'lista'" (click)="setTab('lista')">⚕️️ Lista Prenotazioni e Visite</button>
+    <button [class.active]="activeTab === 'calendario'" (click)="setTab('calendario')">
+      <i class="bi bi-calendar-month"></i> Calendario
+    </button>
+    <button [class.active]="activeTab === 'lista'" (click)="setTab('lista')">
+      <i class="bi bi-list-check"></i> Lista Prenotazioni e Visite
+    </button>
   </div>
 
   <div class="tab-content">

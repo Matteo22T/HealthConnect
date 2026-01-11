@@ -36,24 +36,21 @@
   </div>
 
   <div class="actions">
-  <button class="btn-message btn-green" (click)="apriPrenotazione(utente)">📅 Prenota Visita</button>
-  <button class="btn-message" (click)="apriChatPaziente(utente.id)">
-    💬 Invia Messaggio
-  </button>
+    <button class="btn-message btn-green" (click)="apriPrenotazione(utente)">
+      <i class="bi bi-calendar-plus"></i> Prenota Visita
+    </button>
+    <button class="btn-message" (click)="apriChatPaziente(utente.id)">
+      <i class="bi bi-chat-text-fill"></i> Invia Messaggio
+    </button>
   </div>
 
-
 </div>
-
-
 
 <ng-template #loadingTemplate>
   <div class="profile-header skeleton-loader">
     <p>Caricamento profilo paziente...</p>
   </div>
 </ng-template>
-
-
 
 <div class="modal-overlay" *ngIf="showModal">
   <div class="modal-content">
@@ -91,7 +88,7 @@
 
 <div class="modal-overlay" *ngIf="showSuccess">
   <div class="modal-content success-content">
-    <div class="success-icon">✓</div>
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
     <h3>Ottimo!</h3>
     <p>Prenotazione effettuata con successo.</p>
     <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>

@@ -7,20 +7,20 @@
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate">
-        Indietro
+        <i class="bi bi-chevron-left"></i> Indietro
       </button>
       <button
         class="btn btn-outline-secondary"
         mwlCalendarToday
         [(viewDate)]="viewDate">
-        Oggi
+        <i class="bi bi-calendar-check"></i> Oggi
       </button>
       <button
         class="btn btn-primary"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate">
-        Avanti
+        Avanti <i class="bi bi-chevron-right"></i>
       </button>
     </div>
 
@@ -42,50 +42,49 @@
   <ng-template #tooltipDisabled></ng-template>
 
 
-  <!-- Popup Modal -->
   @if (selectedEvent) {
     <div class="modal-overlay" (click)="closePopup()">
       <div class="modal-content" (click)="$event.stopPropagation()">
-        <button class="close-btn" (click)="closePopup()">✕</button>
+        <button class="close-btn" (click)="closePopup()"><i class="bi bi-x-lg"></i></button>
 
         <div class="modal-header"
              [class.pending]="selectedEvent.meta?.type === 'PENDING'"
              [class.rejected]="selectedEvent.meta?.type === 'RIFIUTATO'">
           <h2>
             @if (selectedEvent.meta?.type === 'PENDING') {
-              Prenotazione in Attesa
+              <i class="bi bi-hourglass-split"></i> Prenotazione in Attesa
             } @else if (selectedEvent.meta?.type === 'RIFIUTATO') {
-              Prenotazione Rifiutata
+              <i class="bi bi-x-circle"></i> Prenotazione Rifiutata
             } @else {
-              Visita Confermata
+              <i class="bi bi-check-circle"></i> Visita Confermata
             }
           </h2>
         </div>
 
         <div class="modal-body">
           <div class="info-row">
-            <span class="label">📅 Data:</span>
+            <span class="label"><i class="bi bi-calendar-event"></i> Data:</span>
             <span class="value">{{ selectedEvent.start | date:'dd/MM/yyyy' }}</span>
           </div>
 
           <div class="info-row">
-            <span class="label">🕐 Orario:</span>
+            <span class="label"><i class="bi bi-clock"></i> Orario:</span>
             <span class="value">{{ selectedEvent.start | date:'HH:mm' }} - {{ selectedEvent.end | date:'HH:mm' }}</span>
           </div>
 
           <div class="info-row">
-            <span class="label">👨‍⚕️ Medico:</span>
+            <span class="label"><i class="bi bi-person-badge"></i> Medico:</span>
             <span class="value">Dr. {{ selectedEvent.meta?.medico?.nome }} {{ selectedEvent.meta?.medico?.cognome }}</span>
           </div>
 
           <div class="info-row">
-            <span class="label">📋 Motivo:</span>
+            <span class="label"><i class="bi bi-file-text"></i> Motivo:</span>
             <span class="value">{{ selectedEvent.meta?.motivo }}</span>
           </div>
 
           @if (selectedEvent.meta?.type === 'RIFIUTATO') {
             <div class="alert-message">
-              ⚠️ Questa prenotazione è stata rifiutata dal medico. Puoi richiedere una nuova prenotazione.
+              <i class="bi bi-exclamation-triangle-fill"></i> Questa prenotazione è stata rifiutata dal medico. Puoi richiedere una nuova prenotazione.
             </div>
           }
         </div>

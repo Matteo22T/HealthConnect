@@ -6,8 +6,7 @@
          class="message-row"
          [ngClass]="{'user-row': msg.sender === 'USER', 'bot-row': msg.sender === 'BOT'}">
 
-      <div class="avatar" *ngIf="msg.sender === 'BOT'">🤖</div>
-
+      <div class="avatar" *ngIf="msg.sender === 'BOT'"><i class="bi bi-robot"></i></div>
       <div class="bubble" [ngClass]="msg.sender === 'USER' ? 'user-bubble' : 'bot-bubble'">
         <p>{{ msg.text }}</p>
 
@@ -22,7 +21,7 @@
     </div>
 
     <div class="message-row bot-row" *ngIf="isTyping">
-      <div class="avatar">🤖</div>
+      <div class="avatar"><i class="bi bi-robot"></i></div>
       <div class="bubble bot-bubble typing">
         <span>.</span><span>.</span><span>.</span>
       </div>
@@ -37,7 +36,7 @@
            placeholder="Scrivi qui la tua domanda..." />
 
     <button class="send-btn" (click)="sendMessage()" [disabled]="!userInput.trim()">
-      ➤
+      <i class="bi bi-send-fill"></i>
     </button>
   </div>
 

@@ -2,7 +2,7 @@
 
   <div class="card metriche-card" *ngIf="pesoData.datasets.length > 0">
     <div class="card-header">
-      <h3>⚖️ Peso</h3>
+      <h3><i class="bi bi-speedometer2"></i> Peso</h3>
     </div>
     <div class="chart-container">
       <canvas baseChart [data]="pesoData" [options]="lineChartOptions" [type]="'line'"></canvas>
@@ -11,7 +11,7 @@
 
   <div class="card metriche-card" *ngIf="pressioneData.datasets.length > 0">
     <div class="card-header">
-      <h3>💉 Pressione Sanguigna</h3>
+      <h3><i class="bi bi-heart-pulse"></i> Pressione Sanguigna</h3>
     </div>
     <div class="chart-container">
       <canvas baseChart [data]="pressioneData" [options]="lineChartOptions" [type]="'line'"></canvas>
@@ -20,7 +20,7 @@
 
   <div class="card metriche-card" *ngIf="glicemiaData.datasets.length > 0">
     <div class="card-header">
-      <h3>🩸 Glicemia</h3>
+      <h3><i class="bi bi-droplet"></i> Glicemia</h3>
     </div>
     <div class="chart-container">
       <canvas baseChart [data]="glicemiaData" [options]="lineChartOptions" [type]="'line'"></canvas>

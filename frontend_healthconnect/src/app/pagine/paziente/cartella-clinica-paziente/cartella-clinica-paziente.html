@@ -4,9 +4,15 @@
   </div>
 
   <div class="tabs-nav">
-    <button [class.active]="activeTab === 'visite'" (click)="setTab('visite')">📅 Storia Visite</button>
-    <button [class.active]="activeTab === 'prescrizioni'" (click)="setTab('prescrizioni')">💊 Farmaci</button>
-    <button [class.active]="activeTab === 'metriche'" (click)="setTab('metriche')">📈 Metriche</button>
+    <button [class.active]="activeTab === 'visite'" (click)="setTab('visite')">
+      <i class="bi bi-clock-history"></i> Storia Visite
+    </button>
+    <button [class.active]="activeTab === 'prescrizioni'" (click)="setTab('prescrizioni')">
+      <i class="bi bi-capsule"></i> Farmaci
+    </button>
+    <button [class.active]="activeTab === 'metriche'" (click)="setTab('metriche')">
+      <i class="bi bi-graph-up"></i> Metriche
+    </button>
   </div>
 
   <div class="tab-content">

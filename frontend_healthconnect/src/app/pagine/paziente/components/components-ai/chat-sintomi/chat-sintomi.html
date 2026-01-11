@@ -1,7 +1,7 @@
 <div class="container">
   <!-- Disclaimer permanente -->
   <div class="disclaimer">
-    ⚠️ <strong>Attenzione:</strong> Questa è solo un'analisi indicativa. Non sostituisce il parere medico professionale. In caso di sintomi gravi, contatta immediatamente un medico.
+    <i class="bi bi-exclamation-triangle-fill"></i> <strong> Attenzione:</strong> Questa è solo un'analisi indicativa. Non sostituisce il parere medico professionale. In caso di sintomi gravi, contatta immediatamente un medico.
   </div>
 
   <!-- Step: Start -->
@@ -45,7 +45,7 @@
              [class.selected]="selectedSymptomIds.has(item.id)"
              [class.disabled]="isLoading">
           <div class="custom-checkbox">
-            <span *ngIf="selectedSymptomIds.has(item.id)">✔</span>
+            <span *ngIf="selectedSymptomIds.has(item.id)"><i class="bi bi-check-lg"></i></span>
           </div>
           <span class="label-text">{{ item.name }}</span>
         </div>

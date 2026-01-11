@@ -4,8 +4,12 @@
   </div>
 
   <div class="tabs-nav">
-    <button [class.active]="activeTab === 'trova'" (click)="setTab('trova')">🔍 Trova Medico</button>
-    <button [class.active]="activeTab === 'miei'" (click)="setTab('miei')">⚕️️ I miei Medici</button>
+    <button [class.active]="activeTab === 'trova'" (click)="setTab('trova')">
+      <i class="bi bi-search"></i> Trova Medico
+    </button>
+    <button [class.active]="activeTab === 'miei'" (click)="setTab('miei')">
+      <i class="bi bi-person-heart"></i> I miei Medici
+    </button>
   </div>
 
   <div class="tab-content">

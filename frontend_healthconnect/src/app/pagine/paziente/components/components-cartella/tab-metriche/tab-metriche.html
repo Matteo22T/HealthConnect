@@ -4,7 +4,7 @@
 
   <div class="tabella-container card" *ngIf="!loading && elencoMetriche.length > 0">
     <div class="card-header">
-      <h3>📋 Storico Dettagliato</h3>
+      <h3><i class="bi bi-journal-text"></i> Storico Dettagliato</h3>
     </div>
 
     <div class="table-responsive">
@@ -29,7 +29,7 @@
 
           <td class="doctor-cell">
             <div *ngIf="item.medico" class="medico-badge">
-              👨‍⚕️ Dr. {{ item.medico.cognome }}
+              <i class="bi bi-person-badge"></i> Dr. {{ item.medico.cognome }}
             </div>
             <span *ngIf="!item.medico" class="no-data">-</span>
           </td>

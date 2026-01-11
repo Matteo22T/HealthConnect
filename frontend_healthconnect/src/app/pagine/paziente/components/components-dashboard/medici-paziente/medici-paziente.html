@@ -1,84 +1,37 @@
 <div class="card">
   <div class="card-header">
     <h2>Medici in cura</h2>
-    <a href="#" class="view-all" *ngIf="medici.length > 0" (click)="vaiAiMedici($event)">Vedi tutti →</a>
+    <a href="#" class="view-all" *ngIf="medici.length > 0" (click)="vaiAiMedici($event)">
+      Vedi tutti <i class="bi bi-arrow-right"></i>
+    </a>
   </div>
 
+  <div class="scroll-container" *ngIf="medici.length > 0">
 
-    <div class="scroll-container" *ngIf="medici.length > 0">
+    <div class="med-item" *ngFor="let med of medici">
 
-      <div class="med-item" *ngFor="let med of medici">
+      <div class="avatar-placeholder emoji-avatar">
+        <i class="bi bi-person-badge"></i>
+      </div>
 
-        <div class="avatar-placeholder emoji-avatar">
-          👨‍⚕️
-        </div>
+      <div class="med-info">
+        <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
+      </div>
 
-        <div class="med-info">
-          <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
-        </div>
-
-        <button class="btn-contact" (click)="apriChatMedico(med.id)">
-          💬
-        </button>
-        <button class="btn-prenota" (click)="apriPrenotazione(med)">
-        Prenota
+      <button class="btn-contact" (click)="apriChatMedico(med.id)" title="Chat">
+        <i class="bi bi-chat-text-fill"></i>
       </button>
-      </div>
 
-    </div>
-
-    <div class="empty-state" *ngIf="medici.length === 0">
-      <div class="empty-icon">🩺</div>
-      <p>Non hai ancora medici assegnati.</p>
+      <button class="btn-prenota" (click)="apriPrenotazione(med)">
+        <i class="bi bi-calendar-plus"></i> Prenota
+      </button>
     </div>
 
   </div>
 
-
-
-<div class="modal-overlay" *ngIf="showModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Prenota visita</h3>
-      <p>Con Dr. {{ nomeMedicoSelezionato }}</p>
-    </div>
-
-    <div class="modal-body">
-      <div class="form-group">
-        <label>Seleziona Data e Ora:</label>
-        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" [min]="minDate" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Motivo della visita:</label>
-        <select [(ngModel)]="nuovaPrenotazione.motivo" class="form-control">
-          <option value="" disabled selected>-- Seleziona un motivo --</option>
-          <option value="Prima Visita">Prima Visita</option>
-          <option value="Visita di Controllo">Visita di Controllo</option>
-          <option value="Visione Esami">Visione Esami</option>
-          <option value="Rinnovo Prescrizione">Rinnovo Prescrizione</option>
-          <option value="Consulto">Consulto</option>
-          <option value="Altro">Altro</option>
-        </select>
-      </div>
-
-      <div *ngIf="errorMessage" class="alert-box">
-        <span>⚠️</span> {{ errorMessage }}
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-cancel" (click)="chiudiModal()">Annulla</button>
-      <button class="btn-confirm" (click)="confermaPrenotazione()">Conferma Prenotazione</button>
-    </div>
+  <div class="empty-state" *ngIf="medici.length === 0">
+    <div class="empty-icon"><i class="bi bi-heart-pulse"></i></div>
+    <p>Non hai ancora medici assegnati.</p>
   </div>
-</div>
 
-<div class="modal-overlay" *ngIf="showSuccess">
-  <div class="modal-content success-content">
-    <div class="success-icon">✓</div>
-    <h3>Ottimo!</h3>
-    <p>Prenotazione effettuata con successo.</p>
-    <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>
-  </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="lista-container">
 
   <div *ngIf="loading" class="loading-spinner">
-    <div class="spinner-icon">⏳</div>
+    <div class="spinner-icon"><i class="bi bi-hourglass-split"></i></div>
     <p>Caricamento dati...</p>
   </div>
 
@@ -11,7 +11,7 @@
       <button class="tab-btn"
               [class.active]="activeTab === 'confermate'"
               (click)="activeTab = 'confermate'">
-        <span class="tab-icon">✅</span>
+        <span class="tab-icon"><i class="bi bi-check-circle-fill"></i></span>
         <span class="tab-label">Confermate</span>
         <span class="tab-count">{{ visite.length }}</span>
       </button>
@@ -19,7 +19,7 @@
       <button class="tab-btn"
               [class.active]="activeTab === 'pending'"
               (click)="activeTab = 'pending'">
-        <span class="tab-icon">⏳</span>
+        <span class="tab-icon"><i class="bi bi-hourglass-split"></i></span>
         <span class="tab-label">In Attesa</span>
         <span class="tab-count">{{ prenotazioniPending.length }}</span>
       </button>
@@ -27,7 +27,7 @@
       <button class="tab-btn"
               [class.active]="activeTab === 'rifiutate'"
               (click)="activeTab = 'rifiutate'">
-        <span class="tab-icon">❌</span>
+        <span class="tab-icon"><i class="bi bi-x-circle-fill"></i></span>
         <span class="tab-label">Rifiutate</span>
         <span class="tab-count">{{ prenotazioniRifiutate.length }}</span>
       </button>
@@ -37,7 +37,7 @@
 
       <div *ngIf="activeTab === 'confermate'" class="tab-panel">
         <div *ngIf="visite.length === 0" class="empty-state">
-          <div class="empty-icon">📭</div>
+          <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
           <h3>Nessuna visita confermata</h3>
           <p>Le tue visite confermate appariranno qui</p>
         </div>
@@ -52,13 +52,13 @@
                   <span class="date-month">{{ formatMonth(visita.dataVisita) }}</span>
                 </div>
                 <div class="time-info">
-                  <span class="time">{{ formatOrario(visita.dataVisita) }}</span>
+                  <span class="time"><i class="bi bi-clock"></i> {{ formatOrario(visita.dataVisita) }}</span>
                 </div>
               </div>
 
               <div class="card-body">
                 <div class="doctor-info">
-                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-avatar"><i class="bi bi-person-badge"></i></div>
                   <div class="doctor-details">
                     <span class="doctor-label">Medico</span>
                     <span class="doctor-name">Dr. {{ visita.medico.nome }} {{ visita.medico.cognome }}</span>
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="reason-box">
-                  <span class="reason-label">📋 Motivo della visita</span>
+                  <span class="reason-label"><i class="bi bi-clipboard-data"></i> Motivo della visita</span>
                   <p class="reason-text">{{ visita.prenotazione.motivo }}</p>
                 </div>
               </div>
@@ -77,7 +77,7 @@
 
       <div *ngIf="activeTab === 'pending'" class="tab-panel">
         <div *ngIf="prenotazioniPending.length === 0" class="empty-state">
-          <div class="empty-icon">📭</div>
+          <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
           <h3>Nessuna prenotazione in attesa</h3>
           <p>Le prenotazioni in attesa di conferma appariranno qui</p>
         </div>
@@ -93,13 +93,13 @@
                   <span class="date-month">{{ formatMonth(pren.dataVisita) }}</span>
                 </div>
                 <div class="time-info">
-                  <span class="time">{{ formatOrario(pren.dataVisita) }}</span>
+                  <span class="time"><i class="bi bi-clock"></i> {{ formatOrario(pren.dataVisita) }}</span>
                 </div>
               </div>
 
               <div class="card-body">
                 <div class="doctor-info">
-                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-avatar"><i class="bi bi-person-badge"></i></div>
                   <div class="doctor-details">
                     <span class="doctor-label">Medico</span>
                     <span class="doctor-name">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
@@ -107,12 +107,12 @@
                 </div>
 
                 <div class="reason-box">
-                  <span class="reason-label">📋 Motivo della visita</span>
+                  <span class="reason-label"><i class="bi bi-clipboard-data"></i> Motivo della visita</span>
                   <p class="reason-text">{{ pren.motivo }}</p>
                 </div>
 
                 <div class="status-message pending">
-                  <span class="status-icon">ℹ️</span>
+                  <span class="status-icon"><i class="bi bi-info-circle-fill"></i></span>
                   <span>In attesa di conferma dal medico</span>
                 </div>
               </div>
@@ -123,7 +123,7 @@
 
       <div *ngIf="activeTab === 'rifiutate'" class="tab-panel">
         <div *ngIf="prenotazioniRifiutate.length === 0" class="empty-state">
-          <div class="empty-icon">📭</div>
+          <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
           <h3>Nessuna prenotazione rifiutata</h3>
           <p>Le prenotazioni rifiutate appariranno qui</p>
         </div>
@@ -138,13 +138,13 @@
                   <span class="date-month">{{ formatMonth(pren.dataVisita) }}</span>
                 </div>
                 <div class="time-info">
-                  <span class="time">{{ formatOrario(pren.dataVisita) }}</span>
+                  <span class="time"><i class="bi bi-clock"></i> {{ formatOrario(pren.dataVisita) }}</span>
                 </div>
               </div>
 
               <div class="card-body">
                 <div class="doctor-info">
-                  <div class="doctor-avatar">👨‍⚕️</div>
+                  <div class="doctor-avatar"><i class="bi bi-person-badge"></i></div>
                   <div class="doctor-details">
                     <span class="doctor-label">Medico</span>
                     <span class="doctor-name">Dr. {{ pren.medico.nome }} {{ pren.medico.cognome }}</span>
@@ -152,12 +152,12 @@
                 </div>
 
                 <div class="reason-box">
-                  <span class="reason-label">📋 Motivo della visita</span>
+                  <span class="reason-label"><i class="bi bi-clipboard-data"></i> Motivo della visita</span>
                   <p class="reason-text">{{ pren.motivo }}</p>
                 </div>
 
                 <div class="status-message rifiutata">
-                  <span class="status-icon">⚠️</span>
+                  <span class="status-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
                   <span>Prenotazione rifiutata. Puoi richiedere una nuova visita.</span>
                 </div>
               </div>

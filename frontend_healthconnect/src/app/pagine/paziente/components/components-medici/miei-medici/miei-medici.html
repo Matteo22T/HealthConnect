@@ -4,7 +4,7 @@
 
   <div class="search-section">
     <div class="search-container">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><i class="bi bi-search"></i></span>
       <input
         type="text"
         class="search-bar"
@@ -32,19 +32,19 @@
       <div class="med-info">
         <h4>Dr. {{ med.cognome }} {{ med.nome }}</h4>
         <div class="sub-details">
-          <span class="detail-item">📅 {{ med.dataNascita | date:'dd/MM/yyyy' }}</span>
+          <span class="detail-item"><i class="bi bi-calendar3"></i> {{ med.dataNascita | date:'dd/MM/yyyy' }}</span>
           <span class="detail-item separator">•</span>
-          <span class="detail-item">👤 Sesso: {{ med.sesso }}</span>
+          <span class="detail-item"><i class="bi bi-person"></i> Sesso: {{ med.sesso }}</span>
         </div>
       </div>
 
 
       <div class="med-actions">
         <button class="btn-prenota" (click)="apriChatMedico(med.id); $event.stopPropagation()" title="Invia messaggio">
-          💬 Invia messaggio
+          <i class="bi bi-chat-text-fill"></i> Invia messaggio
         </button>
         <button class="btn-prenota btn-green" (click)="apriPrenotazione(med); $event.stopPropagation()">
-          📅 Prenota Visita
+          <i class="bi bi-calendar-plus"></i> Prenota Visita
         </button>
       </div>
 
@@ -52,7 +52,7 @@
   </div>
 
   <div class="empty-state" *ngIf="mediciFiltrati.length === 0">
-    <div class="empty-icon">🩺</div>
+    <div class="empty-icon"><i class="bi bi-bandaid"></i></div>
     <p>Non hai ancora medici assegnati.</p>
   </div>
 
@@ -85,7 +85,7 @@
       </div>
 
       <div *ngIf="errorMessage" class="alert-box">
-        <span>⚠️</span> {{ errorMessage }}
+        <span><i class="bi bi-exclamation-triangle-fill"></i></span> {{ errorMessage }}
       </div>
     </div>
 
@@ -98,7 +98,7 @@
 
 <div class="modal-overlay" *ngIf="showSuccess">
   <div class="modal-content success-content">
-    <div class="success-icon">✓</div>
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
     <h3>Ottimo!</h3>
     <p>Prenotazione effettuata con successo.</p>
     <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>

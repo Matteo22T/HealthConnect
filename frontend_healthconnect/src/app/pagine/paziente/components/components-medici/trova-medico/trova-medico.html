@@ -1,14 +1,18 @@
 <div class="card-container">
   <div class="card-header">
-    <a style="cursor: pointer;" class="see-all" *ngIf="medici.length > 5 && !isExpanded" (click)="toggleVediTutti()">Vedi tutti &rarr;</a>
-    <a style="cursor: pointer; color: #dc3545;" class="see-all" *ngIf="isExpanded" (click)="toggleVediTutti()">Vedi meno &uarr;</a>
+    <a style="cursor: pointer;" class="see-all" *ngIf="medici.length > 5 && !isExpanded" (click)="toggleVediTutti()">
+      Vedi tutti <i class="bi bi-arrow-right"></i>
+    </a>
+    <a style="cursor: pointer; color: #dc3545;" class="see-all" *ngIf="isExpanded" (click)="toggleVediTutti()">
+      Vedi meno <i class="bi bi-arrow-up"></i>
+    </a>
   </div>
 
   <hr class="divider">
 
   <div class="search-section">
     <div class="search-container">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><i class="bi bi-search"></i></span>
       <input
         type="text"
         class="search-bar"
@@ -37,8 +41,12 @@
         </div>
       </div>
       <div class="actions-wrapper">
-        <button class="btn-prenota" (click)="contattaMedico(medico.id);$event.stopPropagation()">💬 Invia messaggio</button>
-        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico); $event.stopPropagation()">📅 Prenota visita</button>
+        <button class="btn-prenota" (click)="contattaMedico(medico.id);$event.stopPropagation()">
+          <i class="bi bi-chat-text-fill"></i> Invia messaggio
+        </button>
+        <button class="btn-prenota btn-green" (click)="apriPrenotazione(medico); $event.stopPropagation()">
+          <i class="bi bi-calendar-plus"></i> Prenota visita
+        </button>
       </div>
     </div>
     <div *ngIf="medici.length === 0" class="empty-state">Nessun medico trovato con questo nome.</div>
@@ -73,7 +81,7 @@
       </div>
 
       <div *ngIf="errorMessage" class="alert-box">
-        <span>⚠️</span> {{ errorMessage }}
+        <span><i class="bi bi-exclamation-triangle-fill"></i></span> {{ errorMessage }}
       </div>
     </div>
 
@@ -86,7 +94,7 @@
 
 <div class="modal-overlay" *ngIf="showSuccess">
   <div class="modal-content success-content">
-    <div class="success-icon">✓</div>
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
     <h3>Ottimo!</h3>
     <p>Prenotazione effettuata con successo.</p>
     <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>

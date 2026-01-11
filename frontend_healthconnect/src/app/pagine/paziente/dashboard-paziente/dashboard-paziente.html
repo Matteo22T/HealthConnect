@@ -1,33 +1,50 @@
 <main class="container">
   <div class="welcome-section">
-    <h1 class="title">Bentornato, {{nomePaziente}} {{cognomePaziente}}️</h1>
+    <h1 class="title">Bentornato, {{nomePaziente}} {{cognomePaziente}}</h1>
 
     <div class="dashboard-grid">
-      <app-stat-card-paziente tipo="appointments"  icona="📅" etichetta="Prossime visite" [contatore]="visite.length" (cardClick)="scrollToSection($event)"></app-stat-card-paziente>
-      <app-stat-card-paziente tipo="prescriptions"    icona="💊" etichetta="Prescrizioni attive" [contatore]="prescrizioni.length" (cardClick)="scrollToSection($event)"></app-stat-card-paziente>
-      <app-stat-card-paziente tipo="doctors" icona="👨‍⚕️" etichetta="Medici in Cura" [contatore]="medici.length" (cardClick)="scrollToSection($event)"></app-stat-card-paziente>
-      <app-stat-card-paziente tipo="messages" icona="💬" etichetta="Ultimi messaggi" [contatore]="messaggi.length" (cardClick)="scrollToSection($event)"></app-stat-card-paziente>
+      <app-stat-card-paziente
+        tipo="appointments"
+        icona="bi bi-calendar-event"
+        etichetta="Prossime visite"
+        [contatore]="visite.length"
+        (cardClick)="scrollToSection($event)">
+      </app-stat-card-paziente>
+
+      <app-stat-card-paziente
+        tipo="prescriptions"
+        icona="bi bi-capsule"
+        etichetta="Prescrizioni attive"
+        [contatore]="prescrizioni.length"
+        (cardClick)="scrollToSection($event)">
+      </app-stat-card-paziente>
+
+      <app-stat-card-paziente
+        tipo="doctors"
+        icona="bi bi-person-badge"
+        etichetta="Medici in Cura"
+        [contatore]="medici.length"
+        (cardClick)="scrollToSection($event)">
+      </app-stat-card-paziente>
+
+      <app-stat-card-paziente
+        tipo="messages"
+        icona="bi bi-chat-dots"
+        etichetta="Ultimi messaggi"
+        [contatore]="messaggi.length"
+        (cardClick)="scrollToSection($event)">
+      </app-stat-card-paziente>
     </div>
   </div>
 
   <div class="main-grid">
-    <app-lista-visite
-      id="appointments"
-      [visite]="visite">
-    </app-lista-visite>
-    <app-lista-prescrizioni
-      id="prescriptions"
-      [prescrizioni]="prescrizioni">
-    </app-lista-prescrizioni>
-    <app-messaggi-paziente
-      id="messages"
-      [ultimiMessaggi]="messaggi">
-    </app-messaggi-paziente>
+    <app-lista-visite id="appointments" [visite]="visite"></app-lista-visite>
+    <app-lista-prescrizioni id="prescriptions" [prescrizioni]="prescrizioni"></app-lista-prescrizioni>
+    <app-messaggi-paziente id="messages" [ultimiMessaggi]="messaggi"></app-messaggi-paziente>
     <app-medici-paziente id="doctors" [medici]="medici" [user]="user.id"></app-medici-paziente>
-
   </div>
+
   <div class="charts-section">
     <app-andamento-metriche-vitali [user]="user"></app-andamento-metriche-vitali>
   </div>
 </main>
-
