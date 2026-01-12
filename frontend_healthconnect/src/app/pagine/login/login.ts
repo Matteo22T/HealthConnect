@@ -33,8 +33,6 @@ export class Login {
     this.auth.login(this.email, this.password).subscribe({
       next: (utente) => {
         if (utente) {
-          console.log('Benvenuto ' + utente.nome);
-
           // Reindirizza in base al ruolo
           if (utente.ruolo === 'ADMIN') {
             this.router.navigate(['/admin/dashboard']);
@@ -45,7 +43,6 @@ export class Login {
           }
 
           else if (utente.ruolo === 'PAZIENTE') {
-            console.log('Paziente loggato');
             this.router.navigate(['/paziente/dashboard']);
           }
 

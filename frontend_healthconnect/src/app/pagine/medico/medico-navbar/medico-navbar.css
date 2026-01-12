@@ -96,11 +96,6 @@ header:hover::before {
   transform: rotate(-5deg) scale(1.05);
 }
 
-.logo span {
-  color: var(--secondary-color);
-  font-weight: 600;
-}
-
 .header-right {
   display: flex;
   align-items: center;

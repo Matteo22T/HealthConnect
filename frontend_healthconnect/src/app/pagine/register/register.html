@@ -1,15 +1,14 @@
 <div class="login-page">
   <div class="login-container">
     <div class="login-card">
-      <div class="logo"><img src="/logo.png"></div>
+      <div class="logo"><img src="/logo.png" alt="Logo"></div>
 
       <div class="login-header">
         <h1>Crea il tuo account</h1>
         <p>Registrati per iniziare a utilizzare i nostri servizi</p>
       </div>
 
-      <form class="login-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
+      <form class="login-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="ruolo">Tipo di Account</label>
           <div class="input-wrapper">
@@ -35,7 +34,9 @@
                 id="nome"
                 formControlName="nome"
                 placeholder="Mario"
-                [class.error]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched">
+                autocomplete="given-name"
+                [class.error]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched"
+              />
             </div>
             <span class="field-error" *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched">
               Campo obbligatorio
@@ -53,7 +54,9 @@
                 id="cognome"
                 formControlName="cognome"
                 placeholder="Rossi"
-                [class.error]="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched">
+                autocomplete="family-name"
+                [class.error]="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched"
+              />
             </div>
             <span class="field-error" *ngIf="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched">
               Campo obbligatorio
@@ -72,7 +75,9 @@
               id="email"
               formControlName="email"
               placeholder="tuo@email.com"
-              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              autocomplete="email"
+              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            />
           </div>
           <span class="field-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
             <span *ngIf="registerForm.get('email')?.errors?.['required']">Campo obbligatorio</span>
@@ -91,21 +96,24 @@
               id="password"
               formControlName="password"
               placeholder="••••••••"
-              [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              autocomplete="new-password"
+              class="password-input"
+              [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+            />
 
             <button
               type="button"
               class="password-toggle"
               (click)="togglePassword()"
-              [attr.aria-label]="showPassword ? 'Nascondi password' : 'Mostra password'">
+              [attr.aria-label]="showPassword ? 'Nascondi password' : 'Mostra password'"
+            >
               <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
             </button>
           </div>
+
           <span class="field-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
             <span *ngIf="registerForm.get('password')?.errors?.['required']">Campo obbligatorio</span>
-            <div *ngIf="registerForm.get('password')?.errors?.['pattern']" class="password-requirements">
-              <p>Requisiti password non rispettati...</p>
-            </div>
+            <span *ngIf="registerForm.get('password')?.errors?.['pattern']">Password non valida</span>
           </span>
         </div>
 
@@ -120,7 +128,10 @@
               id="telefono"
               formControlName="telefono"
               placeholder="3331234567"
-              [class.error]="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched">
+              inputmode="tel"
+              autocomplete="tel"
+              [class.error]="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched"
+            />
           </div>
           <span class="field-error" *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched">
             <span *ngIf="registerForm.get('telefono')?.errors?.['required']">Campo obbligatorio</span>
@@ -139,7 +150,9 @@
                 type="date"
                 id="dataNascita"
                 formControlName="dataNascita"
-                [class.error]="registerForm.get('dataNascita')?.invalid && registerForm.get('dataNascita')?.touched">
+                autocomplete="bday"
+                [class.error]="registerForm.get('dataNascita')?.invalid && registerForm.get('dataNascita')?.touched"
+              />
             </div>
             <span class="field-error" *ngIf="registerForm.get('dataNascita')?.invalid && registerForm.get('dataNascita')?.touched">
               Età minima richiesta: 18 anni.
@@ -156,7 +169,8 @@
                 id="sesso"
                 formControlName="sesso"
                 class="form-select"
-                [class.error]="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched">
+                [class.error]="registerForm.get('sesso')?.invalid && registerForm.get('sesso')?.touched"
+              >
                 <option value="">Seleziona</option>
                 <option value="M">Maschio</option>
                 <option value="F">Femmina</option>
@@ -184,7 +198,9 @@
                 id="specializzazione_id"
                 formControlName="specializzazione_id"
                 class="form-select"
-                [class.error]="registerForm.get('specializzazione_id')?.invalid && registerForm.get('specializzazione_id')?.touched">
+                [class.error]="registerForm.get('specializzazione_id')?.invalid && registerForm.get('specializzazione_id')?.touched"
+              >
+                <option [ngValue]="null">Seleziona…</option>
                 <option *ngFor="let spec of specializzazioni" [ngValue]="spec.id">
                   {{ spec.nome }}
                 </option>
@@ -206,45 +222,52 @@
                 id="numero_albo"
                 formControlName="numero_albo"
                 placeholder="es. 12345"
-                [class.error]="registerForm.get('numero_albo')?.invalid && registerForm.get('numero_albo')?.touched">
+                autocomplete="off"
+                [class.error]="registerForm.get('numero_albo')?.invalid && registerForm.get('numero_albo')?.touched"
+              />
             </div>
             <span class="field-error" *ngIf="registerForm.get('numero_albo')?.invalid && registerForm.get('numero_albo')?.touched">
               Campo obbligatorio
             </span>
           </div>
 
-          <div class="form-group" *ngIf="isMedico">
+          <div class="form-group">
             <label for="indirizzo_studio">Indirizzo Studio</label>
 
             <div
               class="input-wrapper address-wrapper"
-              [class.error]="registerForm.get('indirizzo_studio')?.invalid && registerForm.get('indirizzo_studio')?.touched">
-
+              [class.error]="(registerForm.get('indirizzo_studio')?.invalid || registerForm.get('indirizzo_studio')?.hasError('notSelected')) && registerForm.get('indirizzo_studio')?.touched"
+            >
               <gmp-place-autocomplete
-                #addressInput
                 [attr.theme]="'light'"
                 placeholder="Es. Via Roma 10, Milano"
-                (gmp-select)="onAddressSelected($event)">
-              </gmp-place-autocomplete>
+                (gmp-select)="onAddressSelected($event)"
+              ></gmp-place-autocomplete>
             </div>
 
             <span
               class="field-error"
-              *ngIf="registerForm.get('indirizzo_studio')?.invalid && registerForm.get('indirizzo_studio')?.touched">
-                L'indirizzo è obbligatorio
-              </span>
+              *ngIf="(registerForm.get('indirizzo_studio')?.invalid || registerForm.get('indirizzo_studio')?.hasError('notSelected')) && registerForm.get('indirizzo_studio')?.touched"
+            >
+              Seleziona un indirizzo dall’elenco
+            </span>
           </div>
 
           <div class="form-group">
             <label for="biografia">Biografia</label>
             <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="bi bi-card-text"></i>
+              </span>
               <textarea
                 id="biografia"
                 formControlName="biografia"
                 class="form-textarea"
                 rows="3"
                 placeholder="Descrivi la tua esperienza..."
-                [class.error]="registerForm.get('biografia')?.invalid && registerForm.get('biografia')?.touched"></textarea>
+                autocomplete="off"
+                [class.error]="registerForm.get('biografia')?.invalid && registerForm.get('biografia')?.touched"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -253,13 +276,11 @@
           {{ errorMessage }}
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="registerForm.invalid || isLoading">
+        <button type="submit" class="btn-login" [disabled]="isLoading">
           <ng-container *ngIf="isLoading; else defaultText">
             <span class="spinner"></span> Attendere...
           </ng-container>
-          <ng-template #defaultText>
-            Registrati
-          </ng-template>
+          <ng-template #defaultText>Registrati</ng-template>
         </button>
       </form>
 
@@ -267,6 +288,9 @@
         <p>Hai già un account? <a routerLink="/login" class="link-register">Accedi</a></p>
       </div>
     </div>
-    <div class="back-home"><a class="link-back" routerLink="/">← Torna alla Home</a></div>
+
+    <div class="back-home">
+      <a class="link-back" routerLink="/">← Torna alla Home</a>
+    </div>
   </div>
 </div>

@@ -52,7 +52,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (userString) {
       const user = JSON.parse(userString);
       this.utenteCorrenteid = user.id;
-      console.log("✅ Login confermato. ID Utente:", this.utenteCorrenteid);
       this.caricaContatti();
     } else {
       console.error("❌ Errore: Nessun utente loggato.");

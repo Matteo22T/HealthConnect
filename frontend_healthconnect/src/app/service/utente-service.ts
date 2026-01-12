@@ -1,13 +1,22 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {utenteDTO} from '../model/utenteDTO';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {ImpostazioniNotifiche} from '../model/ImpostazioniNotificheDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtenteService {
+  private _refreshNeeded$ = new Subject<void>();
+
+  get refreshNeeded$() {
+    return this._refreshNeeded$.asObservable();
+  }
+
+  triggerRefresh() {
+    this._refreshNeeded$.next();
+  }
 
   API_URL = "http://localhost:8080/api/utenti";
 

@@ -9,7 +9,6 @@ import {MedicoLayout} from './pagine/medico/medico-layout/medico-layout';
 import {PazienteLayout} from './pagine/paziente/paziente-layout/paziente-layout';
 import {CalendarioMedico} from './pagine/medico/calendario-medico/calendario-medico';
 import {PazientiMedico} from './pagine/medico/pazienti-medico/pazienti-medico';
-import {AppuntamentiMedico} from './pagine/medico/appuntamenti-medico/appuntamenti-medico';
 import {AssistenteAi} from './pagine/paziente/assistente-ai/assistente-ai';
 import {CartellaClinicaPaziente} from './pagine/paziente/cartella-clinica-paziente/cartella-clinica-paziente';
 import { TrovaMedicoComponent } from './pagine/paziente/components/components-medici/trova-medico/trova-medico';
@@ -19,13 +18,11 @@ import {DettaglioPazienteMedico} from './pagine/medico/dettaglio-paziente-medico
 import {VisitaDettaglioMedico} from './pagine/medico/visita-dettaglio-medico/visita-dettaglio-medico';
 import {ProfiloPaziente} from './pagine/paziente/profilo-paziente/profilo-paziente';
 import {ImpostazioniPaziente} from './pagine/paziente/impostazioni-paziente/impostazioni-paziente';
-import {CalendarioPaziente} from './pagine/paziente/components/components-calendario/calendario-paziente/calendario-paziente';
 import {guestGuard} from './guards/guest.guard';
 import {AuthGuard} from './guards/auth.guard';
 import {MieiMedici} from './pagine/paziente/components/components-medici/miei-medici/miei-medici';
 import {MediciTabs} from './pagine/paziente/medici-tabs/medici-tabs';
 import {CalendarioTabs} from './pagine/paziente/calendario-tabs/calendario-tabs';
-import {ChatSupporto} from './pagine/paziente/components/components-ai/chat-supporto/chat-supporto';
 import {ChiSiamo} from './pagine/footer/chi-siamo/chi-siamo';
 import { ChatComponent } from './pagine/chat/chat';
 import {AdminLayout} from './pagine/admin/admin-layout/admin-layout';
@@ -79,7 +76,6 @@ export const routes: Routes = [
       {path: 'chat', component: ChatComponent},
       {path: 'paziente/:id', component: DettaglioPazienteMedico},
       {path: 'pazienti', component: PazientiMedico},
-      {path: 'richieste', component: AppuntamentiMedico},
       {path: 'visite/:id', component: VisitaDettaglioMedico},
     ]},
   { path: '**', redirectTo:''}

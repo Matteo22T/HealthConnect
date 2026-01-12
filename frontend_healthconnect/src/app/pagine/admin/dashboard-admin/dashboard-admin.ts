@@ -32,6 +32,7 @@ export class DashboardAdmin implements OnInit{
   constructor(private specService : SpecializzazioniService, private visiteService: VisitaService ,private utenteService: UtenteService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.utenteService.refreshNeeded$.subscribe()
     forkJoin({
       vis: this.visiteService.getNumeroVisiteOdierne(),
       ut: this.utenteService.getUtenteAll(),
@@ -50,16 +51,19 @@ export class DashboardAdmin implements OnInit{
     });
   }
 
-  dividiUtenti(){
-    for (const utente of this.utenti){
-      if(utente.ruolo==='MEDICO'){
-        this.medici+=1;
-        if(utente.stato_approvazione==='PENDING'){
+  dividiUtenti() {
+    this.medici = 0;
+    this.pazienti = 0;
+    this.mediciDaApprovare = [];
+
+    for (const utente of this.utenti) {
+      if (utente.ruolo === 'MEDICO') {
+        this.medici += 1;
+        if (utente.stato_approvazione === 'PENDING') {
           this.mediciDaApprovare.push(utente);
         }
-      }
-      else if(utente.ruolo==='PAZIENTE'){
-        this.pazienti+=1;
+      } else if (utente.ruolo === 'PAZIENTE') {
+        this.pazienti += 1;
       }
     }
   }
@@ -67,27 +71,27 @@ export class DashboardAdmin implements OnInit{
   accettaMedico(idMedico: number) {
     this.utenteService.approvaMedico(idMedico).subscribe({
       next: (res) => {
-        console.log('Medico accettato', res);
-        this.mediciDaApprovare = this.mediciDaApprovare.filter(m => m.id !== idMedico);
+        const m = this.utenti.find(u => u.id === idMedico);
+        if (m) m.stato_approvazione = 'APPROVATO';
+
+        this.dividiUtenti();
         this.cd.detectChanges();
       },
-      error: (err) => {
-        console.error('Errore server', err);
-      }
-    })
+      error: (err) => console.error('Errore server', err)
+    });
   }
 
   rifiutaMedico(idMedico: number) {
     this.utenteService.rifiutaMedico(idMedico).subscribe({
       next: (res) => {
-        console.log('Medico rifiutato', res);
-        this.mediciDaApprovare = this.mediciDaApprovare.filter(m => m.id !== idMedico);
+        const m = this.utenti.find(u => u.id === idMedico);
+        if (m) m.stato_approvazione = 'RIFIUTATO';
+
+        this.dividiUtenti();
         this.cd.detectChanges();
       },
-      error: (err) => {
-        console.error('Errore server', err);
-      }
-    })
+      error: (err) => console.error('Errore server', err)
+    });
   }
 
   caricaSpecializzazioni(){

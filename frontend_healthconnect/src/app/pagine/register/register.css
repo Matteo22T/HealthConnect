@@ -1,3 +1,12 @@
+:host {
+  --primary-color: var(--primary-color, #0066cc);
+  --text-dark: var(--text-dark, #0f172a);
+  --text-light: var(--text-light, #64748b);
+  --white: var(--white, #ffffff);
+  --shadow-lg: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1));
+  --error-color: var(--error-color, #dc2626);
+}
+
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -166,10 +175,14 @@
   appearance: none;
 }
 
-.form-textarea {
+.input-wrapper textarea.form-textarea {
   min-height: 80px;
   resize: vertical;
-  padding-left: 1rem !important;
+  padding-left: 2.8rem;
+}
+
+.password-input {
+  padding-right: 3.2rem;
 }
 
 .input-wrapper input:focus,
@@ -182,7 +195,15 @@
 }
 
 .input-wrapper input.error,
-.input-wrapper select.error {
+.input-wrapper select.error,
+.input-wrapper textarea.error {
+  border-color: var(--error-color);
+  background: #fffafa;
+}
+
+.input-wrapper.error input,
+.input-wrapper.error select,
+.input-wrapper.error textarea {
   border-color: var(--error-color);
   background: #fffafa;
 }
@@ -210,21 +231,6 @@
   color: var(--error-color);
   margin-left: 0.2rem;
   font-weight: 500;
-}
-
-.password-requirements {
-  font-size: 0.8rem;
-  color: var(--text-light);
-  background: #f8f9fa;
-  padding: 0.8rem;
-  border-radius: 8px;
-  margin-top: 0.5rem;
-  border: 1px solid #e9ecef;
-}
-
-.password-requirements ul {
-  padding-left: 1.2rem;
-  margin-top: 0.3rem;
 }
 
 .medico-section {
@@ -270,7 +276,7 @@
 .btn-login {
   margin-top: 1rem;
   padding: 1rem;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #0052a3 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -282,7 +288,12 @@
 }
 
 .btn-login:disabled {
-  background: #9abbdb;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(#0066cc) 60%, white),
+    color-mix(in srgb, #0052a3 60%, white)
+  );
+  opacity: 0.75;
   box-shadow: none;
   cursor: wait;
 }
@@ -295,14 +306,17 @@
 .login-footer {
   text-align: center;
   margin-top: 2rem;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   border-top: 1px solid rgba(0, 102, 204, 0.1);
+}
+
+.login-footer p {
   color: var(--text-light);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .link-register {
-  color: var(--primary-color);
+  color: #0066cc;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -316,7 +330,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--primary-color);
+  background: #0066cc;
   transition: width 0.3s ease;
 }
 
@@ -334,7 +348,7 @@
 }
 
 .link-back {
-  color: var(--text-light);
+  color: #5e6d82;
   text-decoration: none;
   font-size: 0.95rem;
   transition: all 0.3s ease;
@@ -346,7 +360,7 @@
 }
 
 .link-back:hover {
-  color: var(--primary-color);
+  color: #0066cc;
   background: rgba(0, 102, 204, 0.05);
   transform: translateX(-3px);
 }
@@ -427,6 +441,10 @@
   box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
 }
 
+.address-wrapper.error gmp-place-autocomplete {
+  border-color: var(--error-color);
+  background: #fffafa;
+}
 
 .error-message {
   background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
@@ -440,6 +458,10 @@
   gap: 0.8rem;
   animation: errorSlideIn 0.4s ease-out;
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+  color: #991b1b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .error-message::before {
@@ -447,13 +469,6 @@
   font-size: 1.5rem;
   line-height: 1;
   flex-shrink: 0;
-}
-
-.error-message {
-  color: #991b1b;
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.5;
 }
 
 @keyframes errorSlideIn {
@@ -465,35 +480,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Variante alternativa con icona più professionale */
-.error-message.professional {
-  background: #fff;
-  border: 2px solid rgba(220, 38, 38, 0.3);
-}
-
-.error-message.professional::before {
-  content: '✕';
-  background: var(--error-color);
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-/* Animazione di shake per enfatizzare l'errore */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.error-message.shake {
-  animation: shake 0.4s ease-in-out, errorSlideIn 0.4s ease-out;
 }
