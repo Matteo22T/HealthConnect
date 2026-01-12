@@ -3,14 +3,10 @@
   <span *ngIf="sidebarVisible"><i class="bi bi-x-lg"></i></span>
 </button>
 
-<div class="sidebar-overlay"
-     [class.show]="sidebarVisible"
-     (click)="closeSidebar()"></div>
+<div class="sidebar-overlay" [class.show]="sidebarVisible" (click)="closeSidebar()"></div>
 
 <div class="whatsapp-container">
-
   <div class="sidebar" [class.show]="sidebarVisible">
-
     <div class="sidebar-header">
       <h3>Lista contatti ({{ listaContatti.length }})</h3>
       <button class="close-sidebar-btn" (click)="closeSidebar()">
@@ -19,17 +15,17 @@
     </div>
 
     <div class="contacts-list">
-
       <div *ngIf="listaContatti.length === 0" class="empty-state">
         <div class="empty-state-icon"><i class="bi bi-clipboard"></i></div>
-        <div class="empty-state-text">Caricamento in corso o lista vuota...</div>
+        <div class="empty-state-text">Nessuna chat ancora!</div>
       </div>
 
-      <div *ngFor="let contatto of listaContatti"
-           class="contact-item"
-           [class.active]="contattoSelezionato?.id === contatto.id"
-           (click)="selezionaContatto(contatto)">
-
+      <div
+        *ngFor="let contatto of listaContatti"
+        class="contact-item"
+        [class.active]="contattoSelezionato?.id === contatto.id"
+        (click)="selezionaContatto(contatto)"
+      >
         <div class="avatar-circle">
           {{ contatto.nome ? contatto.nome.charAt(0).toUpperCase() : '?' }}{{ contatto.cognome ? contatto.cognome.charAt(0).toUpperCase() : '?' }}
         </div>
@@ -42,15 +38,11 @@
         <span class="unread-badge" *ngIf="contatto.unreadCount > 0">
           {{ contatto.unreadCount }}
         </span>
-
       </div>
-
     </div>
   </div>
 
-
   <div class="main-chat">
-
     <div *ngIf="!contattoSelezionato" class="welcome-screen">
       <div class="welcome-content">
         <h2><i class="bi bi-chat-text"></i> HealthConnect Web</h2>
@@ -59,7 +51,6 @@
     </div>
 
     <div *ngIf="contattoSelezionato" class="chat-wrapper">
-
       <div class="chat-header">
         <button class="back-btn" (click)="backToContacts()">
           <i class="bi bi-arrow-left"></i>
@@ -75,16 +66,16 @@
       </div>
 
       <div class="chat-body" #scrollContainer>
-
         <div *ngIf="messaggi.length === 0" class="empty-messages">
           <div class="empty-messages-icon"><i class="bi bi-chat-dots"></i></div>
           <p>Nessun messaggio ancora. Inizia la conversazione!</p>
         </div>
 
-        <div *ngFor="let msg of messaggi"
-             class="message-bubble"
-             [ngClass]="{'sent': msg.mittente_id === utenteCorrenteid, 'received': msg.mittente_id !== utenteCorrenteid}">
-
+        <div
+          *ngFor="let msg of messaggi"
+          class="message-bubble"
+          [ngClass]="{ sent: msg.mittente_id === utenteCorrenteid, received: msg.mittente_id !== utenteCorrenteid }"
+        >
           <div class="bubble-content">
             <span>{{ msg.testo }}</span>
             <span class="time">
@@ -98,21 +89,19 @@
       </div>
 
       <div class="chat-footer">
-        <input type="text"
-               [(ngModel)]="nuovoMessaggio"
-               (keyup.enter)="invia()"
-               placeholder="Scrivi un messaggio..."
-               [disabled]="isLoading"
-               autofocus>
-        <button class="btn-send"
-                (click)="invia()"
-                [disabled]="!nuovoMessaggio.trim() || isLoading">
+        <input
+          type="text"
+          [(ngModel)]="nuovoMessaggio"
+          (keyup.enter)="invia()"
+          placeholder="Scrivi un messaggio..."
+          [disabled]="isLoading"
+          autofocus
+        />
+        <button class="btn-send" (click)="invia()" [disabled]="!nuovoMessaggio.trim() || isLoading">
           <span *ngIf="!isLoading"><i class="bi bi-send"></i></span>
           <span *ngIf="isLoading" class="loading-spinner"><i class="bi bi-arrow-clockwise"></i></span>
         </button>
       </div>
     </div>
-
   </div>
-
 </div>

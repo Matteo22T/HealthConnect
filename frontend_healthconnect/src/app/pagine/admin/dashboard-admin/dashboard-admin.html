@@ -1,45 +1,39 @@
 <main class="container">
+  <div class="dashboard-grid">
+    <app-stat-card-admin
+      tipo="pazienti-tot"
+      icona="bi bi-people"
+      etichetta="Pazienti Totali"
+      [contatore]="pazienti">
+    </app-stat-card-admin>
 
-  <div class="admin-dashboard">
+    <app-stat-card-admin
+      tipo="medici-attivi"
+      icona="bi bi-person-badge"
+      etichetta="Medici Attivi"
+      [contatore]="medici">
+    </app-stat-card-admin>
 
-    <div class="dashboard-grid">
-      <app-stat-card-admin
-        tipo="pazienti-tot"
-        icona="bi bi-people"
-        etichetta="Pazienti Totali"
-        [contatore]="pazienti">
-      </app-stat-card-admin>
-
-      <app-stat-card-admin
-        tipo="medici-attivi"
-        icona="bi bi-person-badge"
-        etichetta="Medici Attivi"
-        [contatore]="medici">
-      </app-stat-card-admin>
-
-      <app-stat-card-admin
-        tipo="visite"
-        icona="bi bi-calendar-event"
-        etichetta="Visite Oggi"
-        [contatore]="visite">
-      </app-stat-card-admin>
-    </div>
-
-    <div class="main-grid">
-
-      <app-lista-pending
-        [mediciDaApprovare]="mediciDaApprovare"
-        (accettaMedico)="accettaMedico($event)"
-        (rifiutaMedico)="rifiutaMedico($event)">
-      </app-lista-pending>
-
-      <app-lista-specializzazioni
-        [specializzazioni]="specializzazioni"
-        (onAggiornaLista)="caricaSpecializzazioni()">
-      </app-lista-specializzazioni>
-
-    </div>
-    <app-lista-utenti [utenti]="utenti"></app-lista-utenti>
-
+    <app-stat-card-admin
+      tipo="visite"
+      icona="bi bi-calendar-event"
+      etichetta="Visite Oggi"
+      [contatore]="visite">
+    </app-stat-card-admin>
   </div>
+
+  <div class="main-grid">
+    <app-lista-pending
+      [mediciDaApprovare]="mediciDaApprovare"
+      (accettaMedico)="accettaMedico($event)"
+      (rifiutaMedico)="rifiutaMedico($event)">
+    </app-lista-pending>
+
+    <app-lista-specializzazioni
+      [specializzazioni]="specializzazioni"
+      (onAggiornaLista)="caricaSpecializzazioni()">
+    </app-lista-specializzazioni>
+  </div>
+
+  <app-lista-utenti [utenti]="utenti"></app-lista-utenti>
 </main>
