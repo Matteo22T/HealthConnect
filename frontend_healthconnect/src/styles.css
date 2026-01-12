@@ -10,6 +10,7 @@
   --text-dark: #1a2b4b;
   --text-light: #5e6d82;
   --white: #ffffff;
+  --error-color: #dc2626;
 
   --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 25px rgba(0, 50, 100, 0.08);
