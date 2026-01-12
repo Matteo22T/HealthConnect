@@ -812,88 +812,92 @@ input[type="datetime-local"].form-control::-webkit-calendar-picker-indicator {
 }
 
 
+@media (max-width: 992px) {
+  .card {
+    padding: 1.5rem;
+  }
 
-@media (max-width: 600px) {
-  .modal-overlay {
-    padding: 16px;
+  .med-item {
+    padding: 1.2rem;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .med-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .med-info {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .sub-details {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .med-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-prenota {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .card-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .view-all {
+    font-size: 0.85rem;
   }
 
   .modal-content {
-    max-width: 100%;
     border-radius: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .modal-header {
-    padding: 28px 24px 24px;
-  }
-
-  .modal-header h3 {
-    font-size: 24px;
-  }
-
-  .modal-header p {
-    font-size: 14px;
+    padding: 20px;
   }
 
   .modal-body {
-    padding: 24px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .form-control {
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-
-  .modal-actions {
-    flex-direction: column;
-    padding: 20px 24px 24px;
-  }
-
-  .modal-actions button {
-    width: 100%;
-    padding: 14px 24px;
-  }
-
-  .success-content {
-    padding: 36px 28px;
-    max-width: 100%;
-  }
-
-  .success-icon {
-    width: 80px;
-    height: 80px;
-    font-size: 40px;
-  }
-
-  .success-content h3 {
-    font-size: 26px;
-  }
-
-  .success-content p {
-    font-size: 15px;
+    padding: 20px;
   }
 }
-
-@media (max-width: 400px) {
-  .modal-header h3 {
-    font-size: 22px;
-  }
-
-  .form-control {
-    font-size: 14px;
-  }
-
-  .success-icon {
-    width: 70px;
-    height: 70px;
-    font-size: 35px;
-  }
-}
-
 
 
 /* --- BARRA DI RICERCA --- */
