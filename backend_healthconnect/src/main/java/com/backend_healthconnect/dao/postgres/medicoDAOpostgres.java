@@ -25,15 +25,14 @@ public class medicoDAOpostgres implements medicoDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(Long idUtente, Long specializzazione, String  numeroAlbo, String biografia, String indirizzo_studio, StatoApprovazione stato_approvazione) {
-        String query = "INSERT INTO dettagli_medici (utente_id, specializzazione_id, numero_albo, biografia, indirizzo_studio, stato_approvazione) VALUES (?, ?, ?, ?, ?, ?::stato_approvazione_enum)";
+    public void save(Long idUtente, Long specializzazione, String  numeroAlbo, String biografia, String indirizzo_studio) {
+        String query = "INSERT INTO dettagli_medici (utente_id, specializzazione_id, numero_albo, biografia, indirizzo_studio) VALUES (?, ?, ?, ?, ?)";
         try(Connection connection = this.dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setLong(1, idUtente);
             preparedStatement.setLong(2, specializzazione);
             preparedStatement.setString(3, numeroAlbo);
             preparedStatement.setString(4, biografia);
             preparedStatement.setString(5, indirizzo_studio);
-            preparedStatement.setString(6, stato_approvazione.toString());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e){

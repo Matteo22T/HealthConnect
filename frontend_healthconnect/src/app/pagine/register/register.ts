@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -28,7 +28,8 @@ export class Register implements OnInit {
     private authService: AuthService,
     private router: Router,
     private googleMapsService: GoogleMapsService,
-    private specializzazioniService: SpecializzazioniService
+    private specializzazioniService: SpecializzazioniService,
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -162,7 +163,8 @@ export class Register implements OnInit {
         },
         error: (error) => {
           this.isLoading = false;
-          this.errorMessage = error.error?.message || 'Errore durante la registrazione';
+          this.errorMessage = error.error || 'Errore durante la registrazione';
+          this.cd.detectChanges();
         },
         complete: () => {
           this.isLoading = false;

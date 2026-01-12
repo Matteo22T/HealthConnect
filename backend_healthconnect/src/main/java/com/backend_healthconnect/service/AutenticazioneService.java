@@ -40,7 +40,7 @@ public class AutenticazioneService {
         utenteDTO nuovoUtente = this.utenteDAO.save(utente);
 
         if ( nuovoUtente.getRuolo() == Ruolo.MEDICO){
-            this.medicoDAO.save(nuovoUtente.getId(), nuovoUtente.getSpecializzazione_id(), nuovoUtente.getNumero_albo(), nuovoUtente.getBiografia(), nuovoUtente.getIndirizzo_studio(), nuovoUtente.getStato_approvazione());
+            this.medicoDAO.save(nuovoUtente.getId(), nuovoUtente.getSpecializzazione_id(), nuovoUtente.getNumero_albo(), nuovoUtente.getBiografia(), nuovoUtente.getIndirizzo_studio());
         }
     }
 
