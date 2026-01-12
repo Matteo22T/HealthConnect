@@ -1,24 +1,30 @@
 <div class="card">
   <div class="card-header">
     <h2>Visite di Oggi</h2>
-    <a routerLink="/medico/calendario" class="view-all">Calendario completo →</a>
+    <a routerLink="/medico/calendario" class="view-all">
+      Calendario completo <i class="bi bi-arrow-right ms-1"></i>
+    </a>
   </div>
 
   <div class="scroll-container">
 
     <div class="empty-state" *ngIf="prossimeVisite.length === 0">
-      <p>Nessuna visita programmata per oggi ☕️</p>
+      <p>Nessuna visita programmata per oggi <i class="bi bi-cup-hot ms-2"></i></p>
     </div>
 
     <div class="appointment-item" *ngFor="let visit of prossimeVisite">
 
       <div class="appointment-time-block">
-        <span class="time-display">{{ visit.dataVisita | date: 'HH:mm' }}</span>
+        <span class="time-display">
+          <i class="bi bi-clock me-1"></i> {{ visit.dataVisita | date: 'HH:mm' }}
+        </span>
       </div>
 
       <div class="appointment-details">
-        <h4>{{ visit.paziente.nome +" "+ visit.paziente.cognome }}</h4>
-        <p> {{ visit.prenotazione.motivo }}</p>
+        <h4>
+          <i class="bi bi-person me-1"></i> {{ visit.paziente.nome +" "+ visit.paziente.cognome }}
+        </h4>
+        <p>{{ visit.prenotazione.motivo }}</p>
       </div>
 
     </div>

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService, ChatMessaggioDTO } from '../../service/chat-service';
 import { MedicoService } from '../../service/medico-service';
+import {MessaggioService} from '../../service/messaggio-service';
 
 @Component({
   selector: 'app-chat',
@@ -39,7 +40,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private chatService: ChatService,
     private medicoService: MedicoService,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messService: MessaggioService
   ) {
     this.checkScreenSize();
   }
@@ -164,6 +166,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.chatService.getStoria(this.utenteCorrenteid, this.contattoSelezionato.id).subscribe(data => {
       this.messaggi = data;
+      this.messService.triggerRefresh()
       this.cd.detectChanges();
       setTimeout(() => this.scrollToBottom(), 100);
     });

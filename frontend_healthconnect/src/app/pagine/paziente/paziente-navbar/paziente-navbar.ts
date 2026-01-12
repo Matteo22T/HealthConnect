@@ -36,16 +36,24 @@ export class PazienteNavbar implements OnInit{
     if (currentUser) {
       this.nomePaziente = currentUser.nome;
       this.cognomePaziente = currentUser.cognome;
-      this.messService.getMessaggiNonLetti(currentUser.id).subscribe({
-        next: mess => {
-          this.messaggi = mess;
-          this.changeDet.detectChanges();
-        },
-        error: (err) => {
-          console.error('Errore server', err);
-        }
+      this.messService.refreshNeeded$.subscribe(() => {
+        this.getMessaggiNonLetti(currentUser.id);
       });
+      this.getMessaggiNonLetti(currentUser.id);
     }
+  }
+
+  getMessaggiNonLetti(id: number) {
+    this.messService.getMessaggiNonLetti(id).subscribe({
+      next: mess => {
+        this.messaggi = mess;
+        this.changeDet.detectChanges();
+      }
+      ,
+      error: (err) => {
+        console.error('Errore server', err);
+      }
+    })
   }
 
   toggleProfileMenu() {

@@ -1,12 +1,15 @@
 <div class="card" style="margin-bottom: 2rem;">
   <div class="card-header">
     <h2>Messaggi Non Letti</h2>
-    <a routerLink="/paziente/chat" class="view-all">Vedi tutti →</a>
+    <a routerLink="/paziente/chat" class="view-all">
+      Vedi tutti <i class="bi bi-arrow-right ms-1"></i>
+    </a>
   </div>
 
   <div class="scroll-container">
+
     <div *ngIf="ultimiMessaggi.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-      <p>Nessun nuovo messaggio 📭</p>
+      <p><i class="bi bi-inbox me-2"></i> Nessun nuovo messaggio</p>
     </div>
 
     <div class="message-item"
@@ -14,7 +17,11 @@
          [class.unread]="!msg.letto">
 
       <div class="message-header">
-        <span class="message-sender">{{ msg.mittente.nome + " " + msg.mittente.cognome }}</span>
+        <span class="message-sender">
+          <i class="bi bi-person-circle me-1"></i>
+          {{ msg.mittente.nome + " " + msg.mittente.cognome }}
+        </span>
+
         <span class="message-time">{{ msg.dataInvio | timeAgo }}</span>
       </div>
 
@@ -23,5 +30,5 @@
       </p>
 
     </div>
-    </div>
+  </div>
 </div>

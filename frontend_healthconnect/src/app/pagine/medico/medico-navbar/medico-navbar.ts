@@ -42,6 +42,9 @@ export class MedicoNavbar implements OnInit{
       this.nomeMedico = currentUser.nome;
       this.cognomeMedico = currentUser.cognome;
       if (currentUser.specializzazione_id != null) {
+        this.messService.refreshNeeded$.subscribe(() => {
+          this.getMessaggiNonLetti(currentUser.id);
+        });
         forkJoin({
           mess: this.messService.getMessaggiNonLetti(currentUser.id),
           spec: this.specService.getSpecializzazione(currentUser.specializzazione_id),
@@ -61,6 +64,19 @@ export class MedicoNavbar implements OnInit{
         });
       }
     }
+  }
+
+  getMessaggiNonLetti(id: number) {
+    this.messService.getMessaggiNonLetti(id).subscribe({
+      next: mess => {
+        this.messaggi = mess;
+        this.changeDet.detectChanges();
+      }
+      ,
+      error: (err) => {
+        console.error('Errore server', err);
+      }
+    })
   }
 
   logout() {

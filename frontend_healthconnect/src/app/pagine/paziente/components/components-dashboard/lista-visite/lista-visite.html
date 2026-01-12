@@ -1,8 +1,11 @@
 <div class="card">
   <div class="card-header">
     <h2>{{ titolo }}</h2>
-    <a class="view-all" routerLink="/paziente/calendario">Vedi Calendario →</a>
+    <a class="view-all" routerLink="/paziente/calendario">
+      Vedi Calendario <i class="bi bi-arrow-right ms-1"></i>
+    </a>
   </div>
+
   <div class="scroll-container" (scroll)="onScroll($event)">
     <div class="appointment-item" *ngFor="let app of visiteMostrate">
 
@@ -14,14 +17,16 @@
       <div class="appointment-details">
         <h4>Dott. {{ app.medico.nome }} {{ app.medico.cognome }}</h4>
 
-        <p>{{  getSpecializzazione(app.medico) }} - {{ app.prenotazione.motivo }}</p>
+        <p>{{ getSpecializzazione(app.medico) }} - {{ app.prenotazione.motivo }}</p>
 
-        <span class="appointment-time">🕐 {{ app.dataVisita | date:'HH:mm' }}</span>
+        <span class="appointment-time">
+          <i class="bi bi-clock me-1"></i> {{ app.dataVisita | date:'HH:mm' }}
+        </span>
       </div>
     </div>
 
     <div class="empty-state" *ngIf="visite.length === 0">
-      <p>Nessuna visita in programma.</p>
+      <p><i class="bi bi-calendar-x me-2"></i> Nessuna visita in programma.</p>
     </div>
   </div>
 </div>

@@ -6,14 +6,18 @@
   <div class="scroll-container">
 
     <div *ngIf="prenotazioniInAttesa.length === 0" style="padding: 2rem; text-align: center; color: #999;">
-      <p>Nessuna richiesta in attesa 🎉</p>
+      <p>Nessuna richiesta in attesa <i class="bi bi-check-circle ms-2"></i></p>
     </div>
 
     <div class="request-item" *ngFor="let pren of prenotazioniInAttesa">
       <div class="request-info">
         <h4>{{ pren.paziente.nome + " " + pren.paziente.cognome}}</h4>
 
-        <p>📅 {{ pren.dataVisita | date: 'dd/MM/yyyy'}} - 🕐 {{ pren.dataVisita | date: 'HH:mm'}}</p>
+        <p>
+          <i class="bi bi-calendar-event me-1"></i> {{ pren.dataVisita | date: 'dd/MM/yyyy'}}
+          <span class="mx-2">-</span>
+          <i class="bi bi-clock me-1"></i> {{ pren.dataVisita | date: 'HH:mm'}}
+        </p>
 
         <p>{{pren.motivo}}</p>
       </div>
@@ -22,13 +26,13 @@
         <button class="btn-icon btn-accept"
                 title="Accetta"
                 (click)="accettaPrenotazione.emit(pren.id)">
-          ✓
+          <i class="bi bi-check-lg"></i>
         </button>
 
         <button class="btn-icon btn-reject"
                 title="Rifiuta"
                 (click)="rifiutaPrenotazione.emit(pren.id)">
-          ✗
+          <i class="bi bi-x-lg"></i>
         </button>
       </div>
     </div>
