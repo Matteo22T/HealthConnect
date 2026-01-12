@@ -661,3 +661,18 @@ header:hover::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+.badge {
+  background: var(--error-color);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  font-weight: 700;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
+}

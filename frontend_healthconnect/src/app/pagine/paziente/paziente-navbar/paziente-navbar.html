@@ -16,6 +16,9 @@
       </a>
       <a routerLink="/paziente/chat" routerLinkActive="active-link">
         <i class="bi bi-chat-dots"></i> Chat
+        <span class="badge" *ngIf="messaggi.length > 0">
+          {{ messaggi.length }}
+        </span>
       </a>
       <a routerLink="/paziente/ai" routerLinkActive="active-link">
         <i class="bi bi-robot"></i> Assistente AI

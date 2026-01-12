@@ -2,6 +2,8 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../service/auth-service';
+import {MessaggioDTO} from '../../../model/messaggioDTO';
+import {MessaggioService} from '../../../service/messaggio-service';
 
 @Component({
   selector: 'app-paziente-navbar',
@@ -18,10 +20,13 @@ export class PazienteNavbar implements OnInit{
   isMobileMenuOpen = false;
   nomePaziente: string = "";
   cognomePaziente: string = "";
+  messaggi: MessaggioDTO[] = [];
+
 
   constructor(
     private auth: AuthService,
     private router: Router,
+    private messService: MessaggioService,
     private changeDet: ChangeDetectorRef
   ) {}
 
@@ -31,6 +36,15 @@ export class PazienteNavbar implements OnInit{
     if (currentUser) {
       this.nomePaziente = currentUser.nome;
       this.cognomePaziente = currentUser.cognome;
+      this.messService.getMessaggiNonLetti(currentUser.id).subscribe({
+        next: mess => {
+          this.messaggi = mess;
+          this.changeDet.detectChanges();
+        },
+        error: (err) => {
+          console.error('Errore server', err);
+        }
+      });
     }
   }
 
