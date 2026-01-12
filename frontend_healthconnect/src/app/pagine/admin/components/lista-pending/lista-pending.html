@@ -4,32 +4,25 @@
   </div>
 
   <div class="scroll-container">
-
-    <div *ngIf="mediciDaApprovare.length === 0" style="padding: 2rem; text-align: center; color: #999;">
+    <div *ngIf="mediciDaApprovare.length === 0" class="empty-state">
       <p>Nessuna richiesta di approvazione in attesa <i class="bi bi-check-circle"></i></p>
     </div>
 
     <div class="request-item" *ngFor="let med of mediciDaApprovare">
       <div class="request-info">
-        <h4>{{ med.nome + " " + " " + med.cognome}}</h4>
-
-        <p>{{med.numero_albo}}</p>
+        <h4>{{ med.nome + " " + " " + med.cognome }}</h4>
+        <p> Albo: {{ med.numero_albo }}</p>
       </div>
 
       <div class="request-actions">
-        <button class="btn-icon btn-accept"
-                title="Accetta"
-                (click)="accettaMedico.emit(med.id)">
+        <button class="btn-icon btn-accept" title="Accetta" (click)="accettaMedico.emit(med.id)">
           <i class="bi bi-check-lg"></i>
         </button>
 
-        <button class="btn-icon btn-reject"
-                title="Rifiuta"
-                (click)="rifiutaMedico.emit(med.id)">
+        <button class="btn-icon btn-reject" title="Rifiuta" (click)="rifiutaMedico.emit(med.id)">
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
     </div>
-
   </div>
 </div>

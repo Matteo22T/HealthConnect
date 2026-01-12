@@ -1,47 +1,47 @@
 <div class="card">
   <div class="card-header">
     <h2>Specializzazioni</h2>
-    <button class="btn-add" (click)="mostraModale()" title="Aggiungi Specializzazione">
+    <button class="btn-add" type="button" (click)="mostraModale()" title="Aggiungi Specializzazione">
       <i class="bi bi-plus-lg"></i>
     </button>
-    <a href="#" class="view-all" *ngIf="specializzazioni.length > 0"></a>
   </div>
 
-  <div class="content-panel" *ngIf="specializzazioni.length > 0">
-    <div class="table-responsive">
-      <table class="admin-table">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome Specializzazione</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let spec of specializzazioni">
-          <td>
-            <span class="id-badge">#{{spec.id}}</span>
-          </td>
-          <td>
-            <div class="spec-cell">
-              <span class="spec-name">{{spec.nome}}</span>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+  <div *ngIf="specializzazioni.length > 0" class="table-responsive">
+    <table class="admin-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome Specializzazione</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let spec of specializzazioni">
+        <td><span class="id-badge">#{{ spec.id }}</span></td>
+        <td>
+          <div class="spec-cell">
+            <span class="spec-name">{{ spec.nome }}</span>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="empty-state" *ngIf="specializzazioni.length === 0">
-    <div class="empty-icon"><i class="bi bi-activity display-1"></i></div>
+    <span class="empty-icon"><i class="bi bi-activity"></i></span>
     <p>Non esistono specializzazioni registrate.</p>
   </div>
 </div>
 
 <div class="modal-overlay" *ngIf="showModal">
-  <div class="modal-box">
-    <h3>Nuova Specializzazione</h3>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h3 id="modalTitle">Nuova Specializzazione</h3>
     <p>Inserisci il nome della nuova specializzazione da aggiungere.</p>
+
+    <div *ngIf="errorMessage" class="alert-error" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
 
     <div class="form-group">
       <input
@@ -49,12 +49,12 @@
         [(ngModel)]="nuovaSpecializzazioneNome"
         placeholder="Es. Cardiologia"
         (keyup.enter)="salvaSpecializzazione()"
-      >
+      />
     </div>
 
     <div class="modal-actions">
-      <button class="btn-cancel" (click)="chiudiModale()">Annulla</button>
-      <button class="btn-save" (click)="salvaSpecializzazione()">Salva</button>
+      <button class="btn-cancel" type="button" (click)="chiudiModale()">Annulla</button>
+      <button class="btn-save" type="button" (click)="salvaSpecializzazione()">Salva</button>
     </div>
   </div>
 </div>

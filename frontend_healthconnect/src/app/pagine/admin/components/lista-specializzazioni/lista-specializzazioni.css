@@ -269,3 +269,29 @@
   background-color: var(--accent-color, #0052a3);
   box-shadow: 0 4px 6px rgba(0, 102, 204, 0.2);
 }
+
+.alert-error {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fee2e2;
+  color: var(--error-color, #dc2626);
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+  animation: shake 0.4s ease;
+}
+
+.alert-error i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}

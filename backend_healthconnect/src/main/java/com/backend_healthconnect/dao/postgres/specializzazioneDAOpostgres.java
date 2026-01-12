@@ -40,6 +40,24 @@ public class specializzazioneDAOpostgres implements specializzazioneDAO {
     }
 
     @Override
+    public boolean getSpecializzazioneByNome(String nome) {
+        String query = "SELECT * FROM specializzazioni WHERE nome = ?";
+
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, nome);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<specializzazioneDTO> getSpecializzazioniAll() {
         List<specializzazioneDTO> specializzazioni = new ArrayList<>();
         String query = "SELECT * FROM specializzazioni ORDER BY id ASC";
@@ -60,6 +78,9 @@ public class specializzazioneDAOpostgres implements specializzazioneDAO {
 
     @Override
     public boolean salvaSpecializzazione(String nome) {
+        if (getSpecializzazioneByNome(nome)) {
+            throw new IllegalArgumentException("Attenzione! Specializzazione già esistente");
+        }
         String query = "INSERT INTO specializzazioni (nome) VALUES (?)";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement stmt = conn.prepareStatement(query)){

@@ -7,6 +7,8 @@ import java.util.List;
 public interface specializzazioneDAO {
     specializzazioneDTO getSpecializzazioneById(Long id);
 
+    boolean getSpecializzazioneByNome(String nome);
+
     List<specializzazioneDTO> getSpecializzazioniAll();
 
     boolean salvaSpecializzazione(String nome);

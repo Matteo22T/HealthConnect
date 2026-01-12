@@ -28,7 +28,12 @@ public class SpecializzazioneController {
     }
 
     @PostMapping("/admin/aggiungi/{nomeSpec}")
-    public ResponseEntity<Boolean> aggiungiSpecializzazione(@PathVariable String nomeSpec){
-        return ResponseEntity.ok(specService.salvaSpecializzazione(nomeSpec));
+    public ResponseEntity<?> aggiungiSpecializzazione(@PathVariable String nomeSpec) {
+        try {
+            specService.salvaSpecializzazione(nomeSpec);
+            return ResponseEntity.ok(true);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 }
