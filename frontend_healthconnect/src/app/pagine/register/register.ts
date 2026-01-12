@@ -1,20 +1,7 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  OnDestroy,
-  OnInit
+import {AfterViewInit, ChangeDetectorRef,Component,CUSTOM_ELEMENTS_SCHEMA,OnDestroy,OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
+import {AbstractControl,FormBuilder,FormGroup,ReactiveFormsModule,ValidationErrors,ValidatorFn,Validators
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -35,6 +22,8 @@ import { SpecializzazioniService } from '../../service/specializzazioni-service'
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
+
+
 export class Register implements OnInit, AfterViewInit, OnDestroy {
   registerForm!: FormGroup;
   showPassword = false;
