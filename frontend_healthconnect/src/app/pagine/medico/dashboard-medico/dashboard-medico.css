@@ -119,12 +119,10 @@ app-pazienti-senza-diagnosi {
   }
 }
 
-/* Aggiungi questo in fondo al file css */
-
 .error-alert {
-  background-color: #fee2e2; /* Rosso chiaro */
-  border: 1px solid #ef4444; /* Bordo rosso */
-  color: #b91c1c; /* Testo rosso scuro */
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   margin-bottom: 2rem;
