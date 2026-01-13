@@ -35,3 +35,50 @@
   </div>
 
 </div>
+
+
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Prenota visita</h3>
+      <p>Con Dr. {{ nomeMedicoSelezionato }}</p>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Seleziona Data e Ora:</label>
+        <input type="datetime-local" [(ngModel)]="nuovaPrenotazione.data_visita" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Motivo della visita:</label>
+        <select [(ngModel)]="nuovaPrenotazione.motivo" class="form-control">
+          <option value="" disabled selected>-- Seleziona un motivo --</option>
+          <option value="Prima Visita">Prima Visita</option>
+          <option value="Visita di Controllo">Visita di Controllo</option>
+          <option value="Visione Esami">Visione Esami</option>
+          <option value="Rinnovo Prescrizione">Rinnovo Prescrizione</option>
+          <option value="Consulto">Consulto</option>
+          <option value="Altro">Altro</option>
+        </select>
+      </div>
+      <div *ngIf="errorMessage" class="alert-box">
+        <span><i class="bi bi-exclamation-triangle-fill"></i></span> {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="chiudiModal()">Annulla</button>
+      <button class="btn-confirm" (click)="confermaPrenotazione()">Conferma Prenotazione</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showSuccess">
+  <div class="modal-content success-content">
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
+    <h3>Ottimo!</h3>
+    <p>Prenotazione effettuata con successo.</p>
+    <button class="btn-confirm" (click)="chiudiSuccess()">Ok, grazie</button>
+  </div>
+</div>
