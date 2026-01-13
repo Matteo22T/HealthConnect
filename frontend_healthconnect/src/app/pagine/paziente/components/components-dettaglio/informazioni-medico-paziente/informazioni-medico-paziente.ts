@@ -37,6 +37,7 @@ export class InformazioniMedicoPaziente implements OnInit {
   showSuccess: boolean = false;
   nomeMedicoSelezionato: string = '';
   id: number = 0;
+  errorMessage: string= "";
 
 
 
@@ -83,13 +84,29 @@ export class InformazioniMedicoPaziente implements OnInit {
   }
 
   confermaPrenotazione() {
+    this.errorMessage = '';
 
     if (!this.nuovaPrenotazione.data_visita || !this.nuovaPrenotazione.motivo) {
-      alert("Per favore compila data e motivo.");
+      this.errorMessage = "Per favore compila data e motivo.";
       return;
     }
 
-    console.log("Invio prenotazione in corso..."); // LOG DI DEBUG
+    const dataSelezionata = new Date(this.nuovaPrenotazione.data_visita);
+    const dataOdierna = new Date();
+    const ora = dataSelezionata.getHours();
+
+    if (dataSelezionata <= dataOdierna) {
+      this.errorMessage = "La data della visita deve essere successiva ad adesso.";
+      return;
+    }
+
+
+    if (ora < 8 || ora >= 20) {
+      this.errorMessage = "Gli appuntamenti sono disponibili solo dalle 08:00 alle 20:00.";
+      return;
+    }
+
+    console.log("Invio prenotazione in corso...");
     this.prenService.prenotaVisita(this.nuovaPrenotazione).subscribe({
 
       next: (response) => {
@@ -106,7 +123,8 @@ export class InformazioniMedicoPaziente implements OnInit {
           this.gestisciSuccesso();
         } else {
           console.error("Errore vero:", err);
-          alert("Errore durante la prenotazione. Controlla la console.");
+          this.errorMessage = err.error;
+          this.cd.detectChanges();
         }
       }
     });
