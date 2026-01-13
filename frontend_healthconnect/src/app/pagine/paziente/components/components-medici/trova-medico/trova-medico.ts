@@ -155,7 +155,8 @@ export class TrovaMedicoComponent implements OnInit {
             this.gestisciSuccesso();
           } else {
             console.error("Errore vero:", err);
-            this.errorMessage = "Errore durante la prenotazione. Riprova più tardi.";
+            this.errorMessage = err.error;
+            this.cd.detectChanges();
           }
         }
       });
