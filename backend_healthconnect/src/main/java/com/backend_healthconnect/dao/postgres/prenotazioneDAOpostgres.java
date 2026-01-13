@@ -189,10 +189,10 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
         LocalDateTime inizioRange = dataVisita.minusMinutes(30);
         LocalDateTime fineRange = dataVisita.plusMinutes(30);
 
-        String query = "SELECT COUNT(*) AS count FROM prenotazioni " +
+        String query = "SELECT COUNT(*) AS count FROM visite " +
                 "WHERE medico_id = ? " +
-                "AND data_visita > ? AND data_visita < ? " +
-                "AND stato IN ('RICHIESTA', 'CONFERMATA')";
+                "AND data_visita > ? AND data_visita < ? "
+                ;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

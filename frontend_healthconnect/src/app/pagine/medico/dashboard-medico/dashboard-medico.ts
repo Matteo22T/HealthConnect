@@ -13,7 +13,6 @@ import {ListaVisita} from '../components/lista-visita/lista-visita';
 import {Messaggi} from '../components/messaggi/messaggi';
 import {PazientiSenzaDiagnosi} from '../components/pazienti-senza-diagnosi/pazienti-senza-diagnosi';
 import {Router} from '@angular/router';
-import {StatCardPaziente} from '../../paziente/components/components-dashboard/stat-card-paziente/stat-card-paziente';
 import {NgIf} from '@angular/common';
 
 
@@ -83,20 +82,26 @@ export class DashboardMedico implements OnInit{
           } else {
             console.error('Errore server', err);
             this.erroreMessage = err.error;
+            this.changeDet.detectChanges();
           }
         }
       })
     }
   }
 
-  gestisciAccettazionePrenotazione(idPrenotazione: number){
+  gestisciAccettazionePrenotazione(idPrenotazione: number) {
     this.prenotazioneService.accettaPrenotazione(idPrenotazione).subscribe({
       next: (res) => {
         this.erroreMessage = '';
+        this.prenotazioni = this.prenotazioni.filter(p => p.id !== idPrenotazione);
+        this.caricaVisiteOdierne();
+        this.changeDet.detectChanges();
       },
       error: (err) => {
         console.error('Errore server', err);
+        console.log(err.error)
         this.erroreMessage = err.error;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         this.changeDet.detectChanges();
       }
     })
@@ -104,9 +109,9 @@ export class DashboardMedico implements OnInit{
 
   gestisciRifiutoPrenotazione(idPrenotazione: number){
     this.prenotazioneService.rifiutaPrenotazione(idPrenotazione).subscribe({
-      next: (res) => {
-        console.log('Prenotazione rifiutata', res);
+      next: () => {
         this.prenotazioni = this.prenotazioni.filter(p => p.id !== idPrenotazione);
+        this.erroreMessage = '';
         this.changeDet.detectChanges();
       },
       error: (err) => {

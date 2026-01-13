@@ -48,10 +48,18 @@ public class PrenotazioneController {
 
 
     @PatchMapping("/accetta/{id}")
-    public ResponseEntity<Boolean> accettaPrenotazione(@PathVariable Long id){
-        boolean risultato = prenotazioneService.accettaPrenotazione(id);
-        if (risultato) return ResponseEntity.ok(risultato);
-        else return ResponseEntity.notFound().build();
+    public ResponseEntity<?> accettaPrenotazione(@PathVariable Long id){
+        try {
+            boolean risultato = prenotazioneService.accettaPrenotazione(id);
+            if (risultato) {
+                return ResponseEntity.ok(risultato);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
+        catch(Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 
     @PatchMapping("/rifiuta/{id}")
