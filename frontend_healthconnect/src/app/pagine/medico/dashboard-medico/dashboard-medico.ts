@@ -92,13 +92,12 @@ export class DashboardMedico implements OnInit{
   gestisciAccettazionePrenotazione(idPrenotazione: number){
     this.prenotazioneService.accettaPrenotazione(idPrenotazione).subscribe({
       next: (res) => {
-        this.prenotazioni = this.prenotazioni.filter(p => p.id !== idPrenotazione);
-        this.visitaService.triggerRefresh();
-        this.prenotazioneService.triggerRefresh();
-        this.changeDet.detectChanges();
+        this.erroreMessage = '';
       },
       error: (err) => {
         console.error('Errore server', err);
+        this.erroreMessage = err.error;
+        this.changeDet.detectChanges();
       }
     })
   }
