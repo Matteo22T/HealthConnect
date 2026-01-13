@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,7 +213,39 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     }
 
     @Override
+    public boolean orarioNonValido(LocalDateTime dataVisita, Long idPaziente) {
+        LocalDateTime inizioRange = dataVisita.minusMinutes(30);
+        LocalDateTime fineRange = dataVisita.plusMinutes(30);
+
+        String query = "SELECT COUNT(*) AS count FROM prenotazioni " +
+                "WHERE paziente_id = ? " +
+                "AND data_visita > ? AND data_visita < ? " +
+                "AND stato IN ('RICHIESTA', 'CONFERMATA')";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idPaziente);
+            stmt.setTimestamp(2, Timestamp.valueOf(inizioRange));
+            stmt.setTimestamp(3, Timestamp.valueOf(fineRange));
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la verifica dell'orario della prenotazione", e);
+        }
+    }
+
+    @Override
     public boolean salvaPrenotazione(prenotazioneDTO p) {
+        if (orarioNonValido(p.getDataVisita(), p.getPaziente().getId())) {
+            throw new RuntimeException("Hai già una prenotazione in questa fascia oraria.");
+        }
         String query = "INSERT INTO prenotazioni (paziente_id, medico_id, data_visita, stato, motivo) VALUES (?, ?, ?, ?::stato_prenotazione_enum, ?)";
 
         try (Connection conn = dataSource.getConnection();

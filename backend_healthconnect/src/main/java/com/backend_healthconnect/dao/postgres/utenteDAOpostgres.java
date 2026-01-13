@@ -297,15 +297,7 @@ public class utenteDAOpostgres implements utenteDAO {
         String query = "UPDATE dettagli_medici SET stato_approvazione = 'RIFIUTATO' WHERE utente_id = ?";
         try (Connection connection = this.dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            boolean risultato = statement.executeUpdate() > 0;
-            if (risultato){
-                String queryDeleteUtente = "DELETE FROM utenti WHERE id = ?";
-                try (PreparedStatement deleteStatement = connection.prepareStatement(queryDeleteUtente)) {
-                    deleteStatement.setLong(1, id);
-                    deleteStatement.executeUpdate();
-                }
-            }
-            return risultato;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Errore durante la modifica del profilo dell'utente", e);
         }

@@ -91,7 +91,7 @@ public class PrenotazioneController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Errore nei dati inviati: " + e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

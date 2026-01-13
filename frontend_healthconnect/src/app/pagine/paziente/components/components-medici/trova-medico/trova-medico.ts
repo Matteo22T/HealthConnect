@@ -11,7 +11,6 @@ import {SpecializzazioneDTO} from '../../../../../model/specializzazioneDTO';
 import {SpecializzazioniService} from '../../../../../service/specializzazioni-service';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 
-
 @Component({
   selector: 'app-trova-medico',
   standalone: true,
