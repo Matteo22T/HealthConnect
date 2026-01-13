@@ -411,7 +411,8 @@ public class visitaDAOpostgres implements visitaDAO {
             stmt.setLong(2, idPaziente);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
-                return rs.getInt(1) == 0;
+                System.out.println("Numero visite trovate: " + rs.getInt(1));
+                return rs.getInt(1) == 1;
             }
         }catch (SQLException e){
             throw new RuntimeException("Errore durante la richiesta della visita", e);

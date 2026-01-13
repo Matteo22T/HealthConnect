@@ -45,7 +45,6 @@ export class VisitaDettaglioMedico implements OnInit{
 
       this.visService.salvaVisita(this.visita).subscribe({
         next: risposta => {
-          console.log('Visita salvata con successo', risposta);
           this.messaggio_successo = 'Visita salvata con successo!'
           this.changeDet.detectChanges();
           window.scrollBy({

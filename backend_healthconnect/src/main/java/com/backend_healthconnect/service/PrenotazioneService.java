@@ -9,6 +9,7 @@ import com.backend_healthconnect.model.utenteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class PrenotazioneService {
     }
 
     public List<prenotazioneDTO> getPrenotazioniInAttesaByMedico(Long id){
-        System.out.println(id);
         return prenotazioneDAO.getPrenotazioniInAttesaByMedico(id);
     }
 
@@ -52,16 +52,20 @@ public class PrenotazioneService {
 
     public boolean accettaPrenotazione(Long id){
         prenotazioneDTO pren = prenotazioneDAO.accettaPrenotazione(id);
-        if (notificaService.getImpostazioniNotifiche(pren.getPaziente().getId()).isNotificheEmail()){
-            String oggetto = "Richiesta Prenotazione - HealthConnect";
-            String testo = "Salve, la sua richiesta di appuntamento per il " + "Dott." + pren.getMedico().getCognome() + "\n\n" +
-                    "in data " + pren.getDataVisita().format(DateTimeFormatter.ISO_LOCAL_DATE) + " è stata accettata."+
-                    "\n\n" +
-                    "Accedi alla piattaforma per maggiori informazioni.";
 
-            notificaService.inviaEmail(pren.getPaziente().getEmail(), oggetto, testo);
-        }
         if (visitaDAO.creaVisita(pren)){
+            // notifica mail
+            if (notificaService.getImpostazioniNotifiche(pren.getPaziente().getId()).isNotificheEmail()){
+                String oggetto = "Richiesta Prenotazione - HealthConnect";
+                String testo = "Salve, la sua richiesta di appuntamento per il " + "Dott. " + pren.getMedico().getCognome() + "\n\n" +
+                        "in data " + pren.getDataVisita().format(DateTimeFormatter.ISO_LOCAL_DATE) + " è stata accettata."+
+                        "\n\n" +
+                        "Accedi alla piattaforma per maggiori informazioni.";
+
+                notificaService.inviaEmail(pren.getPaziente().getEmail(), oggetto, testo);
+            }
+
+            // messaggio di benvenuto se è la prima visita
             if (visitaDAO.primaVisita(pren.getMedico().getId(), pren.getPaziente().getId())){
                 messaggioDAO.inviaMessaggio(pren.getMedico().getId(), pren.getPaziente().getId(), "Grazie per avermi scelto, per qualsiasi dubbio sono a sua completa disposizione!");
             }
@@ -89,7 +93,7 @@ public class PrenotazioneService {
                         notificaService.inviaEmail(medico.getEmail(), oggetto, testo);
                 }
             } catch (Exception e) {
-                System.err.println("Errore nell'invio della notifica (ma la prenotazione è salvata): " + e.getMessage());
+                e.printStackTrace();
             }
         }
         return salvato;

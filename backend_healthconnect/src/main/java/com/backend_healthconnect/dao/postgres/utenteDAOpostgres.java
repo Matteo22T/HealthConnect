@@ -181,7 +181,6 @@ public class utenteDAOpostgres implements utenteDAO {
         } catch (SQLException e){
             throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
         }
-        System.out.println("ritorna null");
         return null;
     }
 
@@ -202,7 +201,6 @@ public class utenteDAOpostgres implements utenteDAO {
         } catch (SQLException e){
             throw new RuntimeException("Errore durante la modifica del profilo dell'utente",e);
         }
-        System.out.println("ritorna null");
         return null;
     }
 

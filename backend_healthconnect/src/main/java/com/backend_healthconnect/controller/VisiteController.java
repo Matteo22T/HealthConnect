@@ -30,7 +30,6 @@ public class VisiteController {
     public ResponseEntity<List<visitaDTO>> getVisiteTutteMedico(@PathVariable Long id){
         List<visitaDTO> visite = visiteService.getVisiteByMedico(id);
         if (visite != null) {
-            System.out.println(visite.size());
             return ResponseEntity.ok(visite);
         }
         else return ResponseEntity.notFound().build();

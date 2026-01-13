@@ -114,7 +114,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       if (idMedicoUrl) {
         const id = Number(idMedicoUrl);
-        console.log("🔗 Richiesta chat con medico ID:", id);
 
         //Cerco se il medico è già nella lista contatti
         const medicoGiaInLista = this.listaContatti.find(m => m.id === id);
@@ -124,7 +123,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.selezionaContatto(medicoGiaInLista);
         } else {
           //Chat NUOVA. Devo scaricare i suoi dati dal MedicoService
-          console.log("🆕 Nuova chat! Scarico dati medico...");
           this.medicoService.getMedicoById(id).subscribe({
             next: (medicoNuovo) => {
               const nuovoContatto = {
@@ -147,7 +145,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   selezionaContatto(contatto: any) {
     if (this.contattoSelezionato && this.contattoSelezionato.id === contatto.id) return;
-    console.log(`Cambio chat: apro Dr. ${contatto.cognome}`);
 
     this.contattoSelezionato = contatto;
     this.messaggi = [];
