@@ -57,3 +57,16 @@
     </app-pazienti-senza-diagnosi>
   </div>
 </main>
+
+<main class="container">
+  <div *ngIf="erroreMessage" class="error-alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <span>{{ erroreMessage }}</span>
+    <button (click)="erroreMessage = ''" class="close-btn">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+  <div class="welcome-section">
+    <h1 class="title">Bentornato, Dott. {{cognomeMedico}}</h1>
+    <p>Ecco una panoramica della tua giornata</p>
+  </div>

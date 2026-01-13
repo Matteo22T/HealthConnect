@@ -14,6 +14,7 @@ import {Messaggi} from '../components/messaggi/messaggi';
 import {PazientiSenzaDiagnosi} from '../components/pazienti-senza-diagnosi/pazienti-senza-diagnosi';
 import {Router} from '@angular/router';
 import {StatCardPaziente} from '../../paziente/components/components-dashboard/stat-card-paziente/stat-card-paziente';
+import {NgIf} from '@angular/common';
 
 
 @Component({
@@ -25,6 +26,7 @@ import {StatCardPaziente} from '../../paziente/components/components-dashboard/s
     ListaVisita,
     Messaggi,
     PazientiSenzaDiagnosi,
+    NgIf,
   ],
   templateUrl: './dashboard-medico.html',
   styleUrl: './dashboard-medico.css',
@@ -42,6 +44,8 @@ export class DashboardMedico implements OnInit{
   numeroPazienti : number = 0;
 
   VisiteSenzaDiagnosi: VisitaDTO[] = [];
+
+  erroreMessage: string = '';
 
   get cognomeMedico(): string {
     return this.auth.currentUserValue?.cognome || "";
@@ -78,6 +82,7 @@ export class DashboardMedico implements OnInit{
             console.error('Errore 404 prenotazioni non trovate');
           } else {
             console.error('Errore server', err);
+            this.erroreMessage = err.error;
           }
         }
       })
@@ -87,7 +92,6 @@ export class DashboardMedico implements OnInit{
   gestisciAccettazionePrenotazione(idPrenotazione: number){
     this.prenotazioneService.accettaPrenotazione(idPrenotazione).subscribe({
       next: (res) => {
-        console.log('Prenotazione accettata', res);
         this.prenotazioni = this.prenotazioni.filter(p => p.id !== idPrenotazione);
         this.visitaService.triggerRefresh();
         this.prenotazioneService.triggerRefresh();

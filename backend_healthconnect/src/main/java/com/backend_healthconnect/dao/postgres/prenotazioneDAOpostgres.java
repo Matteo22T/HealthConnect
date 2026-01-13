@@ -135,8 +135,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
             }
             return prenotazioni;
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Errore durante la lettura delle prenotazioni rifiutate dal database", e);
         }
 
@@ -178,7 +177,47 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     }
 
     @Override
+    public boolean orarioNonValidoMedico(Long idPrenotazione) {
+        prenotazioneDTO prenotazione = getPrenotazioneById(idPrenotazione);
+        if (prenotazione == null) {
+            throw new RuntimeException("Prenotazione non trovata");
+        }
+
+        LocalDateTime dataVisita = prenotazione.getDataVisita();
+        Long idMedico = prenotazione.getMedico().getId();
+
+        LocalDateTime inizioRange = dataVisita.minusMinutes(30);
+        LocalDateTime fineRange = dataVisita.plusMinutes(30);
+
+        String query = "SELECT COUNT(*) AS count FROM prenotazioni " +
+                "WHERE medico_id = ? " +
+                "AND data_visita > ? AND data_visita < ? " +
+                "AND stato IN ('RICHIESTA', 'CONFERMATA')";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idMedico);
+            stmt.setTimestamp(2, Timestamp.valueOf(inizioRange));
+            stmt.setTimestamp(3, Timestamp.valueOf(fineRange));
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la verifica dell'orario della prenotazione", e);
+        }
+    }
+
+    @Override
     public prenotazioneDTO accettaPrenotazione(Long id) {
+        if (orarioNonValidoMedico(id)){
+            throw new RuntimeException("Hai già una prenotazione in questa fascia oraria.");
+        }
         String query = "UPDATE prenotazioni SET stato = 'CONFERMATA' WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

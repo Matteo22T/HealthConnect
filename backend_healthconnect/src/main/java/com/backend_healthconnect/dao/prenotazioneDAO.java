@@ -12,6 +12,7 @@ public interface prenotazioneDAO {
     boolean rifiutaPrenotazione(Long id);
     boolean salvaPrenotazione(prenotazioneDTO prenotazione);
     boolean orarioNonValido(LocalDateTime dataVisita, Long idPaziente);
+    boolean orarioNonValidoMedico(Long id);
     List<prenotazioneDTO> getPrenotazioniInAttesaByPaziente(Long id);
     List<prenotazioneDTO> getPrenotazioniRifiutateByPaziente(Long id);
 }

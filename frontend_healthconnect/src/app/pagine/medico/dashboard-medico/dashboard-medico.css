@@ -118,3 +118,41 @@ app-pazienti-senza-diagnosi {
     transform: scale(1);
   }
 }
+
+/* Aggiungi questo in fondo al file css */
+
+.error-alert {
+  background-color: #fee2e2; /* Rosso chiaro */
+  border: 1px solid #ef4444; /* Bordo rosso */
+  color: #b91c1c; /* Testo rosso scuro */
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 500;
+  animation: fadeInDown 0.5s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1);
+}
+
+.error-alert i {
+  font-size: 1.25rem;
+}
+
+.close-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: rgba(185, 28, 28, 0.1);
+}
