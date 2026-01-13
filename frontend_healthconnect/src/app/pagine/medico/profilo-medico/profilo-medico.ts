@@ -205,10 +205,13 @@ export class ProfiloMedico implements OnInit {
           center: loc,
           zoom: 17,
           mapId: 'DEMO_MAP_ID',
+
           disableDefaultUI: true,
-          gestureHandling: 'cooperative',
+          draggable: false,
+          scrollwheel: false,
+          disableDoubleClickZoom: true,
           keyboardShortcuts: false,
-          zoomControl: true,
+          gestureHandling: 'none'
         });
 
         //  Marker
@@ -240,10 +243,16 @@ export class ProfiloMedico implements OnInit {
 
       // Creazione mappa interattiva
       this.editMap = new Map(this.mapContainer.nativeElement, {
+        disableDefaultUI: true,
+        draggable: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        keyboardShortcuts: false,
+        gestureHandling: 'none',
+
         center: defaultLocation,
         zoom: 13,
         mapId: 'EDIT_MAP_ID',
-        disableDefaultUI: false, // UI abilitata per permettere zoom ecc.
       });
 
       // Creazione marker

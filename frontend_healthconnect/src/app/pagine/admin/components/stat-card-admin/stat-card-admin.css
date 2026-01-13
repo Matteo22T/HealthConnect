@@ -24,16 +24,16 @@
   border-radius: 12px;
 }
 
-.stat-icon.appointments {
-  background: #e3f2fd;
+.stat-icon.pending {
+  background: #fff3cd;
 }
 
-.stat-icon.prescriptions {
-  background: #f3e5f5;
+.stat-icon.today {
+  background: #d1ecf1;
 }
 
-.stat-icon.doctors {
-  background: #e8f5e9;
+.stat-icon.patients {
+  background: #d4edda;
 }
 
 .stat-icon.messages {
