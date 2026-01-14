@@ -62,7 +62,6 @@ typings/
 
 ### --- SICUREZZA & ENVIRONMENT (CRUCIALE) --- ###
 # Ignora file che contengono password, chiavi API o configurazioni locali
-frontend_healthconnect/src/environments/environment.ts
 .env
 .env.local
 env.js
