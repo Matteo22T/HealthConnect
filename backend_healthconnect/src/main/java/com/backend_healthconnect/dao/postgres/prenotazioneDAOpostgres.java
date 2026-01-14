@@ -186,8 +186,8 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
         LocalDateTime dataVisita = prenotazione.getDataVisita();
         Long idMedico = prenotazione.getMedico().getId();
 
-        LocalDateTime inizioRange = dataVisita.minusMinutes(30);
-        LocalDateTime fineRange = dataVisita.plusMinutes(30);
+        LocalDateTime inizioRange = dataVisita.minusMinutes(29);
+        LocalDateTime fineRange = dataVisita.plusMinutes(29);
 
         String query = "SELECT COUNT(*) AS count FROM visite " +
                 "WHERE medico_id = ? " +
@@ -253,8 +253,8 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
 
     @Override
     public boolean orarioNonValido(LocalDateTime dataVisita, Long idPaziente) {
-        LocalDateTime inizioRange = dataVisita.minusMinutes(30);
-        LocalDateTime fineRange = dataVisita.plusMinutes(30);
+        LocalDateTime inizioRange = dataVisita.minusMinutes(29);
+        LocalDateTime fineRange = dataVisita.plusMinutes(29);
 
         String query = "SELECT COUNT(*) AS count FROM prenotazioni " +
                 "WHERE paziente_id = ? " +

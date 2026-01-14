@@ -151,6 +151,7 @@
 }
 
 .patient-row {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -386,6 +387,8 @@
   .table-section {
     padding: 1.8rem;
     border-radius: 20px;
+    overflow-x: hidden;
+
   }
 
   .search-bar {
