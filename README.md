@@ -17,17 +17,22 @@ L'applicazione gestisce tre tipologie di utenti con flussi di registrazione dist
 ## 🚀 Funzionalità Principali
 
 ### 🩺 Per i Pazienti
-* **Ricerca Avanzata:** Filtri per specializzazione e città, con ordinamento per nome del medico.
-* **Dashboard Personale:** Panoramica dei prossimi appuntamenti e delle ultime prescrizioni ricevute.
+* **Dashboard Personale:** Panoramica dei prossimi appuntamenti, delle ultime prescrizioni ricevute, dei messaggi non letti e dei propri medici.
+* **Ricerca Avanzata:** Ricerca medici con filtro specializzazione, con ordinamento per nome del medico.
+* **I Miei Medici** Sezione dedicata con visualizzazione dei propri medici e possibilità di prenotare o messaggiare con loro.
+* **Cartella Clinica** Cartella Clinica digitale contenente storico visite, prescrizioni e metriche registrate.
 * **Monitoraggio Grafico (Chart.js):** Visualizzazione dell'andamento delle metriche vitali (pressione, peso, glicemia) inserite dal medico tramite grafici interattivi.
-* **Prenotazione Visite:** Selezione diretta degli slot liberi dal calendario del medico.
+* **Prenotazione Visite:** Possibilità di inviare richieste di prenotazione al medico scelto.
+* **Calendario** Sezione dedicata alla visualizzazione di tutte le visite e prenotazioni future.
 * **Assistente Virtuale AI:**
     * *Supporto:* Risposte a FAQ sulla piattaforma.
     * *Triage Sintomi:* Analisi preliminare dei sintomi tramite API Infermedica (con disclaimer medico).
+* **Chat Interna:** Canale di comunicazione diretto con i medici.
 
 ### 👨‍⚕️ Per i Medici
 * **Profilo Professionale:** Include biografia, specializzazione e **integrazione Google Maps** per mostrare la posizione esatta dell'ambulatorio.
 * **Gestione Agenda:** Controllo completo sulle fasce orarie e facoltà di accettare o rifiutare le richieste di prenotazione.
+* **Calendario** Sezione dedicata alla visualizzazione di tutte le visite future.
 * **Cartella Clinica Digitale:** Accesso all'anagrafica pazienti (dopo accettazione) per gestire:
     * Storico visite e diagnosi.
     * Note private del medico.
@@ -38,7 +43,7 @@ L'applicazione gestisce tre tipologie di utenti con flussi di registrazione dist
 ### 🛠️ Per gli Amministratori
 * **Validazione Medici:** Pannello dedicato "Medici in Attesa" per visualizzare i profili PENDING e approvarne (o rifiutarne) l'iscrizione.
 * **Visualizzazione Utenti:** Visualizzazione di tutti gli utenti registrati.
-* **Configurazione Piattaforma:** Gestione dinamica delle Specializzazioni (es. aggiunta/rimozione "Oculistica").
+* **Configurazione Piattaforma:** Gestione dinamica delle Specializzazioni (es. aggiunta "Oculistica").
 
 ---
 
