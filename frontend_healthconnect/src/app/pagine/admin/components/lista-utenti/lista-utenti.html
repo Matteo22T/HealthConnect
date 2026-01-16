@@ -18,7 +18,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let ut of utenti" class="row-item">
+      <tr *ngFor="let ut of utenti.slice(0,10)" class="row-item">
         <td>
           <div class="user-cell">
             <div class="avatar">{{ ut.nome.charAt(0).toUpperCase() }}</div>

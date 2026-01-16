@@ -34,8 +34,10 @@ export class ProfiloPaziente implements OnInit {
 
   ModificaDatiPersonali() {
     if (!this.isEditingPersonal) {
+      //copio il paziente per poter annullare le modifiche
       this.originalPaziente = JSON.parse(JSON.stringify(this.paziente));
     } else {
+      //annullo le modifiche
       this.paziente = JSON.parse(JSON.stringify(this.originalPaziente));
     }
     this.isEditingPersonal = !this.isEditingPersonal;

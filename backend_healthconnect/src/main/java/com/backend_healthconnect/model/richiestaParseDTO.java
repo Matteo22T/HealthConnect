@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
+// DTO per rappresentare una richiesta di parsing con testo, età, sesso e altre opzioni
 public class richiestaParseDTO {
     private String text;
     private Age age;

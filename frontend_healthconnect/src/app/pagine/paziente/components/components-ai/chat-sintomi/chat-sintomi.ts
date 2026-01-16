@@ -20,9 +20,11 @@ export class ChatSintomi {
   age: number = 30;
   sex: string = 'male';
 
+  // Stato dell'applicazione: start, question, result
   step: 'start' | 'question' | 'result' = 'start';
   isLoading: boolean = false;
 
+  // Array di 'Evidence': contiene i sintomi confermati o smentiti (present/absent)
   evidence: Evidence[] = [];
   currentQuestion: Question | null = null;
   conditions: Condition[] = [];
@@ -36,6 +38,7 @@ export class ChatSintomi {
     if (!this.userInput.trim()) return;
 
     this.isLoading = true;
+    // Inizializza la diagnosi con il sintomo iniziale
     this.symptomService.initDiagnosis(this.userInput, this.age, this.sex)
       .subscribe({
         next: (response) => this.handleResponse(response),
@@ -51,12 +54,14 @@ export class ChatSintomi {
     this.isLoading = false;
     this.conditions = response.conditions;
 
+    // Controlla se dobbiamo fermarci o continuare con una nuova domanda
     if (response.should_stop || !response.question) {
       this.step = 'result';
       this.cd.detectChanges()
       this.currentQuestion = null;
     } else {
       this.step = 'question';
+      // Imposta la nuova domanda e resetta le selezioni
       this.currentQuestion = response.question;
       this.selectedSymptomIds.clear();
       this.cd.detectChanges();
@@ -103,6 +108,7 @@ export class ChatSintomi {
     this.evidence.push(newEvidence);
   }
 
+  //Chiama il backend per ottenere la prossima domanda o il risultato
   private callDiagnosisBackend() {
     const request = {
       sex: this.sex,
@@ -112,6 +118,7 @@ export class ChatSintomi {
 
     this.isLoading = true;
 
+    // Chiamata al servizio di diagnosi
     this.symptomService.updateDiagnosis(request)
       .subscribe({
         next: (res) => {
@@ -126,6 +133,7 @@ export class ChatSintomi {
       });
   }
 
+  // Resetta l'intero flusso di diagnosi
   reset() {
     this.step = 'start';
     this.userInput = '';

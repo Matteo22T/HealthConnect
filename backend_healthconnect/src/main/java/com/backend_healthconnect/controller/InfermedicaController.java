@@ -19,6 +19,8 @@ public class InfermedicaController {
     @PostMapping("/diagnosis")
     public ResponseEntity<?> inizioDiagnosi(@RequestBody InputUtenteDTO inputUtenteDTO) {
         Object result = infermedicaService.ottieniParseSintomi(inputUtenteDTO.getText(), inputUtenteDTO.getSex(), inputUtenteDTO.getAge());
+
+        // Controlla se il risultato è un errore e restituisci un bad request se lo è
         if (result instanceof erroreDiagnosisDTO) {
             return ResponseEntity
                     .badRequest()
@@ -33,6 +35,7 @@ public class InfermedicaController {
 
         Object result = infermedicaService.aggiornaDiagnosis(request);
 
+        // Controlla se il risultato è un errore e restituisci un bad request se lo è
         if (result instanceof erroreDiagnosisDTO) {
             return ResponseEntity.badRequest().body(result);
         }

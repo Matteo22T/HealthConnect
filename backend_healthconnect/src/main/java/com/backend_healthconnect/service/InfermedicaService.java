@@ -33,25 +33,28 @@ public class InfermedicaService {
     @Value("${app.simulation.mode}")
     private boolean simulationMode;
 
+    // ObjectMapper per la serializzazione/deserializzazione JSON
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    // RestTemplate per le chiamate HTTP
     private final RestTemplate restTemplate = new RestTemplate();
 
+    // Metodo principale per ottenere la diagnosi
    public Object ottieniParseSintomi(String input, String sex, int age){
        if (simulationMode) {
            System.out.println("--- MODALITÀ SIMULAZIONE: Parse ---");
            return getMockQuestionResponse(0);
        }
 
+       // Traduce il testo in inglese
        String englishText = translationService.translateToEnglish(input);
        System.out.println(englishText);
        richiestaParseDTO richiestaParseDTO = new richiestaParseDTO(englishText, age, sex);
 
 
-
+       // Chiama l'endpoint /parse di Infermedica
        Object risposta = chiamaInfermedicaParse(richiestaParseDTO);
-       if (risposta instanceof erroreParseDTO){
-           erroreParseDTO    errore = (erroreParseDTO) risposta;
+       if (risposta instanceof erroreParseDTO errore){
            System.err.println("--- ERRORE INFERMEDICA RILEVATO ---");
 
            // Controlliamo se c'è un messaggio di dettaglio
@@ -63,12 +66,15 @@ public class InfermedicaService {
            }           return risposta;
        }
 
+       // Processa la risposta di parsing
        rispostaParseDTO rispostaParseDTO = (rispostaParseDTO) risposta;
 
+       // Controlla se sono stati trovati sintomi
        if (rispostaParseDTO.getMentions() == null || rispostaParseDTO.getMentions().isEmpty()) {
            System.out.println("Nessun sintomo trovato nel testo.");
            throw new RuntimeException("Nessun sintomo rilevato nel testo.");
        }
+       // Prepara l'evidence per la diagnosi
        List<richiestaDiagnosisDTO.Evidence> evidenceList = rispostaParseDTO.getMentions().stream()
                .map(mention -> new richiestaDiagnosisDTO.Evidence(
                        mention.getId(),       // ID del sintomo (es. s_21)
@@ -76,9 +82,11 @@ public class InfermedicaService {
                        "initial"              // source è sempre "initial" all'inizio
                ))
                .collect(Collectors.toList());
+       // Chiama l'endpoint /diagnosis di Infermedica
        return callInfermedicaDiagnosis(evidenceList, richiestaParseDTO.getAge(), richiestaParseDTO.getSex());
    }
 
+   // Metodo privato per chiamare l'endpoint /diagnosis di Infermedica
     private Object callInfermedicaDiagnosis(List<richiestaDiagnosisDTO.Evidence> evidence, richiestaParseDTO.Age age, String sex) {
        System.out.println("callinInfermedicaDiagnosis");
         String url = infermedicaUrl + "/diagnosis";
@@ -98,15 +106,18 @@ public class InfermedicaService {
         HttpEntity<richiestaDiagnosisDTO> entity = new HttpEntity<>(diagnosisRequest, headers);
 
         try {
+            // Effettua la chiamata POST
             rispostaDiagnosisDTO response = restTemplate.postForObject(url, entity, rispostaDiagnosisDTO.class);
 
             if (response != null) {
                 traduciRispostaInItaliano(response);
             }
 
+            // Logica di controllo per decidere se fermarsi o continuare
             int MAX_DOMANDE = 10;
             double SOGLIA_SICUREZZA = 0.65;
 
+            // Controllo emergenza
             if (response.isHasEmergencyEvidence()) {
                 System.out.println("🚨 Rilevata emergenza! STOP Immediato.");
                 response.setShouldStop(true);
@@ -114,9 +125,11 @@ public class InfermedicaService {
                 return response;
             }
 
+            // Controllo probabilità condizioni
             if (response.getConditions() != null && !response.getConditions().isEmpty()) {
                 double prob = response.getConditions().get(0).getProbability();
 
+                // Se la probabilità della condizione più probabile supera la soglia, fermati
                 if (prob >= SOGLIA_SICUREZZA) {
                     System.out.println("✅ Probabilità sufficiente (" + prob + "). STOP.");
                     response.setShouldStop(true);
@@ -125,6 +138,7 @@ public class InfermedicaService {
                 }
             }
 
+            // Controllo numero di domande poste finora dall'evidence e mi fermo se supero il limite
             if (evidence.size() >= MAX_DOMANDE) {
                 System.out.println("✋ Raggiunto limite domande (" + evidence.size() + "). STOP.");
                 response.setShouldStop(true);
@@ -147,6 +161,7 @@ public class InfermedicaService {
         }
     }
 
+    // Metodo privato per chiamare l'endpoint /parse di Infermedica
    private Object chiamaInfermedicaParse(richiestaParseDTO richiestaParseDTO){
        System.out.println("DEBUG KEYS -> AppId: " + appId + " | AppKey: " + (appKey != null ? "Presente" : "NULL"));
        String url = infermedicaUrl + "/parse";
@@ -174,6 +189,7 @@ public class InfermedicaService {
            }
        }   }
 
+    // Metodo per aggiornare la diagnosi con nuove evidenze
     public Object aggiornaDiagnosis(richiestaDiagnosisDTO request) {
 
        System.out.println("aggiornaDiagnosis");
@@ -205,13 +221,16 @@ public class InfermedicaService {
         );
     }
 
+    // Metodo per tradurre la risposta di diagnosi in italiano
     private void traduciRispostaInItaliano(rispostaDiagnosisDTO response) {
         if (response == null) return;
 
         if (response.getQuestion() != null) {
             String questionText = response.getQuestion().getText();
+            // Traduce il testo della domanda in italiano
             response.getQuestion().setText(translationService.translateToItalian(questionText));
 
+            // Traduce gli items e le scelte
             if (response.getQuestion().getItems() != null) {
                 for (rispostaDiagnosisDTO.Item item : response.getQuestion().getItems()) {
                     item.setName(translationService.translateToItalian(item.getName()));
@@ -233,6 +252,7 @@ public class InfermedicaService {
             }
         }
 
+        // Traduce le condizioni diagnosticate in italiano
         if (response.getConditions() != null) {
             for (rispostaDiagnosisDTO.Condition condition : response.getConditions()) {
                 String translatedName = translationService.translateToItalian(condition.getCommonName());
@@ -319,6 +339,7 @@ public class InfermedicaService {
         return mock;
     }
 
+    // Metodo di utilità per creare scelte standard
     private List<rispostaDiagnosisDTO.Choice> getStandardChoices() {
         rispostaDiagnosisDTO.Choice c1 = new rispostaDiagnosisDTO.Choice();
         c1.setId("present"); c1.setLabel("Sì");

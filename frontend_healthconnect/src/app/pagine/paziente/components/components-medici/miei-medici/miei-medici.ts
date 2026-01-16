@@ -85,6 +85,7 @@ export class MieiMedici implements OnInit{
     const specId = this.selectedSpec;
 
 
+    // Filtra i medici in base al testo e alla specializzazione selezionata
     this.mediciFiltrati = this.medici.filter(medico => {
       const nomeCompleto = (medico.nome?.toLowerCase() || '') + ' ' + (medico.cognome?.toLowerCase() || '');
       const matchNome = !testo || nomeCompleto.includes(testo);

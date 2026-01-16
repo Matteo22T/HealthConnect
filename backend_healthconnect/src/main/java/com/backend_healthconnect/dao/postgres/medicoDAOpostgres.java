@@ -40,12 +40,13 @@ public class medicoDAOpostgres implements medicoDAO {
         }
     }
 
-
+    //query dimamica utilizzando jdbcTemplate
     @Override
     public List<medicoCardDTO> getMediciPerCard(String ricerca, String specializzazione) {
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
 
+        // selezione di base medici approvati
         sql.append("SELECT u.id, u.nome, u.cognome, d.indirizzo_studio, ");
         sql.append("CAST(d.specializzazione_id AS VARCHAR) as spec_id ");
         sql.append("FROM dettagli_medici d ");
@@ -53,7 +54,7 @@ public class medicoDAOpostgres implements medicoDAO {
         sql.append("WHERE CAST(u.ruolo AS VARCHAR) = 'MEDICO' ");
         sql.append("AND CAST(d.stato_approvazione AS VARCHAR) = 'APPROVATO' ");
 
-        // Filtro Ricerca (Nome/Cognome)
+        // Logica di ricerca testuale: concatena nome e cognome per permettere ricerche incrociate
         if (ricerca != null && !ricerca.trim().isEmpty()) {
             sql.append("AND (LOWER(u.nome) LIKE LOWER(?) OR LOWER(u.cognome) LIKE LOWER(?) ");
             sql.append("OR LOWER(COALESCE(u.nome, '') || ' ' || COALESCE(u.cognome, '')) LIKE LOWER(?) ");
@@ -73,6 +74,7 @@ public class medicoDAOpostgres implements medicoDAO {
             params.add(specializzazione);
         }
 
+        // esecuzione e mappatura nel dto
         return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new medicoCardDTO(
                 rs.getLong("id"),
                 rs.getString("nome"),

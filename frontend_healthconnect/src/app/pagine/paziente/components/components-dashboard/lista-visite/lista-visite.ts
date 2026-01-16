@@ -48,14 +48,17 @@ export class ListaVisite implements OnChanges{
   }
 
   private caricaSpecializzazioni() {
+    // Uso il Set per rimuovere duplicati istantaneamente
     const specializzazioniIds = [...new Set(this.visite
       .map(visita => {
         if (!visita.medico) return null;
         return visita.medico.specializzazione_id;
       })
+      //Il filter rimuove eventuali null/undefined.
       .filter(id => id !== null && id !== undefined))] as number[];
 
     specializzazioniIds.forEach(specializzazioneId => {
+      //Se la specializzazione non è già stata caricata
       if (!this.specializzazioni[specializzazioneId]) {
         this.specService.getSpecializzazione(specializzazioneId).subscribe({
           next: (spec: SpecializzazioneDTO) => {

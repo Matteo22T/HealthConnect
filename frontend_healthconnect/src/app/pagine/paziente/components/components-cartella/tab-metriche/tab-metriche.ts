@@ -32,6 +32,7 @@ export class TabMetriche implements OnInit {
       this.user = user;
       this.metricheService.getMetricheUltimi6Mesi(user.id).subscribe({
         next: (data) => {
+          // Ordina le metriche per data decrescente
           this.elencoMetriche = data.sort((a, b) =>
             new Date(b.data).getTime() - new Date(a.data).getTime()
           );
@@ -46,6 +47,7 @@ export class TabMetriche implements OnInit {
     }
   }
 
+  // Formatta il tipo di metrica per una visualizzazione più leggibile
   formattaLabel(tipo: string): string {
     return tipo.replace(/_/g, ' ').toLowerCase();
   }

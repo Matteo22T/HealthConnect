@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
+// DTO per rappresentare la risposta del parsing con le menzioni estratte
 public class rispostaParseDTO {
     private List<Mention> mentions;
 

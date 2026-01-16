@@ -32,6 +32,7 @@ export class CalendarioPaziente implements OnInit{
   @Input() listaPending: prenotazioneDTO[] = [];
   @Input() listaRifiutate: prenotazioneDTO[] = [];
 
+  // Configurazione iniziale della vista: Settimana (Week).
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
 
@@ -39,6 +40,7 @@ export class CalendarioPaziente implements OnInit{
 
   refresh = new Subject<void>();
 
+  // Evento selezionato per la visualizzazione del popup.
   selectedEvent: CalendarEvent | null = null;
 
   openEventPopup(event: CalendarEvent) {
@@ -79,6 +81,7 @@ export class CalendarioPaziente implements OnInit{
     }
   }
 
+  // Mappa le visite confermate in eventi del calendario.
   mappaEventi(visite: VisitaDTO[]): CalendarEvent[] {
     return visite.map(v => {
       if (!v.dataVisita) return null;
@@ -104,6 +107,7 @@ export class CalendarioPaziente implements OnInit{
     }).filter(e => e !== null) as CalendarEvent[];
   }
 
+  // Mappa le prenotazioni in attesa in eventi del calendario.
   mappaPrenotazioniPending(prenotazioni: prenotazioneDTO[]): CalendarEvent[] {
     return prenotazioni.map(p => {
       const start = new Date(p.dataVisita);
@@ -129,6 +133,7 @@ export class CalendarioPaziente implements OnInit{
     });
   }
 
+  // Mappa le prenotazioni rifiutate in eventi del calendario.
   mappaPrenotazioniRifiutate(prenotazioni: prenotazioneDTO[]): CalendarEvent[] {
     return prenotazioni.map(p => {
       const start = new Date(p.dataVisita);

@@ -6,7 +6,7 @@
   border: 1px solid rgba(0, 102, 204, 0.08);
   transition: all 0.3s ease;
   height: 500px;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -45,7 +45,9 @@
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
+  max-height: 85%;
+  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 

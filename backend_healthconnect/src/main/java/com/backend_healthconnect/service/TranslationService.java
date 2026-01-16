@@ -16,10 +16,12 @@ public class TranslationService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    // Traduci da Italiano a Inglese
     public String translateToEnglish(String text) {
         return callMyMemory(text, "it|en");
     }
 
+    // Traduci da Inglese a Italiano
     public String translateToItalian(String text) {
         return callMyMemory(text, "en|it");
     }
@@ -27,11 +29,14 @@ public class TranslationService {
     private String callMyMemory(String text, String langPair) {
         if (text == null || text.trim().isEmpty()) return text;
 
+        // Costruisco l'URL della richiesta MyMemory API
         String url = String.format("%s?q=%s&langpair=%s&de=%s",
                 myMemoryUrl, text, langPair, myMemoryEmail);
 
         try {
+            // Effettuo la richiesta GET
             Map response = restTemplate.getForObject(url, Map.class);
+            // Estraggo il testo tradotto dalla risposta
             if (response != null && response.containsKey("responseData")) {
                 Map responseData = (Map) response.get("responseData");
                 String translated = (String) responseData.get("translatedText");

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
+// DTO per rappresentare un errore di parsing con dettagli specifici sull'errore
 public class erroreParseDTO {
     private List<Detail> detail;
 

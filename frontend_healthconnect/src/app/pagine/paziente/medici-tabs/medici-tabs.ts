@@ -23,6 +23,7 @@ export class MediciTabs implements OnInit{
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // Controlla i parametri della query per impostare la scheda attiva
     this.route.queryParams.subscribe(params => {
       const tab = params['tab'];
       if (tab) {
