@@ -32,6 +32,7 @@ export class TabPrescrizioni implements OnInit {
     }
   }
 
+  // Divide le prescrizioni in attive e scadute
   private dividiPrescrizioni(tutte: prescrizioneDTO[]) {
     const oggi = new Date();
     oggi.setHours(0, 0, 0, 0);

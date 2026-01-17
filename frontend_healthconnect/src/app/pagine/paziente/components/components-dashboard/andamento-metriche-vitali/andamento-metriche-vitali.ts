@@ -20,6 +20,8 @@ import {
 } from 'chart.js';
 import {utenteDTO} from '../../../../../model/utenteDTO';
 
+//Chart.js è una libreria "tree-shakable". Per evitare di caricare codice inutile
+//registro esplicitamente solo i componenti che uso
 Chart.register(
   CategoryScale,
   LinearScale,
@@ -49,7 +51,8 @@ export class AndamentoMetricheVitali implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  public pesoData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
+  // Inizializzazione degli oggetti che conterranno i dati
+  public pesoData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] }; //labels indica le date, datasets l'insieme delle serie di dati (linee)
   public pressioneData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
   public glicemiaData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
 
@@ -57,17 +60,18 @@ export class AndamentoMetricheVitali implements OnInit {
 
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: false, // Permette al grafico di espandersi nel contenitore CSS
     plugins: {
       legend: { display: true, position: 'top' }
     },
     scales: {
-      y: { beginAtZero: false }
+      y: { beginAtZero: false } // Non forza lo zero come base
     }
   };
 
   ngOnInit(): void {
     this.caricaDati(this.user.id);
+    // Aggiorna i dati quando viene emesso un evento di refresh (campanello)
     this.metricheService.refreshNeeded$.subscribe(() => this.caricaDati(this.user.id));
   }
 
@@ -106,10 +110,12 @@ export class AndamentoMetricheVitali implements OnInit {
       return { labels: [], datasets: [] };
     }
 
+    // Crea l'asse X (date) unico: estrae le date, le formatta "gg/mm" e rimuove i duplicati con Set.
     const dateLabels = [...new Set(datiPertinenti.map(d =>
       this.datePipe.transform(d.data, 'dd/MM') || ''
-    ))].sort();
+    ))];
 
+    // Per ogni tipo di metrica richiesto, crea un dataset (una linea sul grafico).
     const datasets = tipi.map((tipo, index) => {
       return this.creaDataset(datiPertinenti, tipo, labels[index], colori[index], dateLabels);
     });
@@ -123,9 +129,10 @@ export class AndamentoMetricheVitali implements OnInit {
   creaDataset(datiFiltrati: MetricheSaluteDTO[], tipo: TipoMetrica, label: string, color: string, labelsX: string[]) {
     const metricheTipo = datiFiltrati.filter(d => d.tipoMetrica === tipo);
 
+    // Allineamento dati: per ogni data sull'asse X, cerca se esiste un valore.
     const dataPoints = labelsX.map(lbl => {
       const point = metricheTipo.find(d => (this.datePipe.transform(d.data, 'dd/MM') || '') === lbl);
-      return point ? point.valore : null;
+      return point ? point.valore : null; // Usa null per i punti mancanti
     });
 
     return {
@@ -135,8 +142,8 @@ export class AndamentoMetricheVitali implements OnInit {
       backgroundColor: color,
       pointBackgroundColor: '#fff',
       pointBorderColor: color,
-      tension: 0.3,
-      spanGaps: true
+      tension: 0.3, // Rende la linea curva (smooth) invece che a spigoli vivi
+      spanGaps: true // Collega i punti anche se ci sono valori nulli
     };
   }
 }

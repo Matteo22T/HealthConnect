@@ -29,12 +29,12 @@ export class AiService {
     );
   }
 
-
   initDiagnosis(text: string, age: number, sex: string): Observable<DiagnosisResponse> {
     const body = { text, age, sex };
     return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis`, body, {withCredentials: true});
   }
 
+  // Metodo per aggiornare la diagnosi con nuove informazioni
   updateDiagnosis(request: DiagnosisRequest): Observable<DiagnosisResponse> {
     return this.http.post<DiagnosisResponse>(`${this.API_URL_DIAGNOSIS}/diagnosis/update`, request, {withCredentials: true});
   }

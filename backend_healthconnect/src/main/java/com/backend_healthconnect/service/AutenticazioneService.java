@@ -34,6 +34,7 @@ public class AutenticazioneService {
             throw new IllegalArgumentException("Email già registrata!");
         }
 
+        // Criptazione della password
         String cryptedPassword = passwordEncoder.encode(utente.getPassword());
         utente.setPassword(cryptedPassword);
 
@@ -56,6 +57,7 @@ public class AutenticazioneService {
 
     public void cambiaPassword(Long id,String passwordAttuale, String nuovaPassword){
         utenteDTO utente = this.utenteDAO.getUtenteById(id);
+        // Verifica della password attuale
         if (!passwordEncoder.matches(passwordAttuale, utente.getPassword())) {
             throw new RuntimeException("Password attuale errata");
         }

@@ -25,13 +25,19 @@ import { GoogleMapsService } from '../../../../../service/google-maps-service';
 export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChanges {
   @Input() medico: utenteDTO | undefined;
 
+  // Riferimento all'elemento HTML <div #visualizzaMappa> dove verrà renderizzata la mappa.
   @ViewChild('visualizzaMappa') mapView?: ElementRef<HTMLElement>;
 
   nomeSpecializzazione: string = 'Caricamento...';
 
+  // Proprietà private per gestire l'istanza della mappa e del segnalino (marker)
   private map?: google.maps.Map;
   private marker?: google.maps.marker.AdvancedMarkerElement;
+
+  // Flag per assicurarsi che l'HTML sia pronto prima di inizializzare la mappa
   private viewReady = false;
+
+  // Ultimo indirizzo geocodificato per evitare ricariche inutili della mappa
   private lastAddress?: string;
 
   constructor(
@@ -44,6 +50,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
     this.trovaSpecializzazione();
   }
 
+  //eseguito dopo che Angular ha renderizzato l'HTML.
   ngAfterViewInit(): void {
     this.viewReady = true;
     this.tryInitOrUpdateMap();
@@ -56,6 +63,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
     }
   }
 
+  // Recupera il nome della specializzazione partendo dall'ID numerico presente nel medico.
   trovaSpecializzazione(): void {
     const specId = this.medico?.specializzazione_id;
 
@@ -78,22 +86,26 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
     });
   }
 
+  // Inizializza o aggiorna la mappa Google Maps con il marker basato sull'indirizzo del medico.
   private async tryInitOrUpdateMap(): Promise<void> {
+    // Assicura che la vista sia pronta e che l'elemento della mappa esista
     if (!this.viewReady) return;
     if (!this.mapView?.nativeElement) return;
 
     const address = this.medico?.indirizzo_studio?.trim();
     if (!address) return;
 
+    // Evita di ricaricare la mappa se l'indirizzo non è cambiato
     if (this.lastAddress === address && this.map) return;
     this.lastAddress = address;
 
     try {
+      //carico le librerie necessarie
       const mapsLib = await this.googleMaps.loadMaps();
       const markerLib = await this.googleMaps.loadMarker();
       const geocodingLib = await this.googleMaps.loadGeocoding();
 
-     //geocodifico prima di creare la mappa
+     //geocodifico prima di creare la mappa (ottengo lat/lng dall'indirizzo)
       const geocoder = new geocodingLib.Geocoder();
 
       geocoder.geocode({ address }, (results: any, status: any) => {
@@ -121,7 +133,7 @@ export class SpecificheMedicoPaziente implements OnInit, AfterViewInit, OnChange
           this.map.setZoom(17);
         }
 
-        // 3) marker: crea o aggiorna
+        // marker: crea o aggiorna
         if (!this.marker) {
           this.marker = new markerLib.AdvancedMarkerElement({
             map: this.map!,

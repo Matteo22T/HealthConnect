@@ -8,8 +8,10 @@ import java.util.*;
 @Service
 public class AssistenteAiService {
 
+    // Mappa di risposte predefinite basate sugli intenti
     private final Map<String, rispostaAiDTO> risposteMap = new HashMap<>();
 
+    // Mappa di parole chiave per ogni intento
     private final Map<String, List<String>> paroleChiaveMap = new HashMap<>();
 
     public AssistenteAiService() {
@@ -26,17 +28,23 @@ public class AssistenteAiService {
         ));
 
         // PRESCRIZIONI
-        paroleChiaveMap.put("PRESCRIZIONE", List.of("prescrizion", "ricetta", "farmac", "medicina", "rossa", "bianca"));
+        paroleChiaveMap.put("PRESCRIZIONE", List.of("prescrizion", "ricetta", "farmac", "medicina", "bianca"));
         risposteMap.put("PRESCRIZIONE", new rispostaAiDTO(
                 "💊 **Le tue Ricette**\nTrovi lo storico completo delle tue prescrizioni e i dettagli dei farmaci nella tua sezione 'Cartella Clinica'.",
                 "/paziente/cartella"
         ));
 
         // PROFILO
-        paroleChiaveMap.put("PROFILO", List.of("profilo", "account", "password", "email", "dati", "cambiar", "modific"));
+        paroleChiaveMap.put("PROFILO", List.of("profilo", "account", "email", "dati"));
         risposteMap.put("PROFILO", new rispostaAiDTO(
-                "👤 **Il tuo Profilo**\nPuoi aggiornare i tuoi dati personali, l'indirizzo e la password nelle Impostazioni del Profilo.",
+                "👤 **Il tuo Profilo**\nPuoi aggiornare i tuoi dati personali nella sezione Profilo.",
                 "/paziente/profilo"
+        ));
+
+        paroleChiaveMap.put("PASSWORD", List.of("password"));
+        risposteMap.put("PASSWORD", new rispostaAiDTO(
+                "🔐 **Impostazioni**\nPuoi aggiornare la tua password, nelle Impostazioni del tuo account.",
+                "/paziente/impostazioni"
         ));
 
         // MEDICI
@@ -53,7 +61,7 @@ public class AssistenteAiService {
         }
 
         String testo = messaggio.toLowerCase().replaceAll("[^a-z0-9 ]", ""); // Pulisce punteggiatura
-        String[] paroleUtente = testo.split("\\s+");
+        String[] paroleUtente = testo.split("\\s+"); // Divide in parole
 
         String intentoTrovato = trovaIntento(paroleUtente);
 
@@ -73,6 +81,7 @@ public class AssistenteAiService {
 
     private String trovaIntento(String[] paroleUtente) {
         for (String parola : paroleUtente) {
+            // Controlla ogni parola rispetto alle parole chiave definite
             for (Map.Entry<String, List<String>> entry : paroleChiaveMap.entrySet()) {
                 for (String keyword : entry.getValue()) {
 
@@ -92,31 +101,48 @@ public class AssistenteAiService {
         return null;
     }
 
+    // Calcola la distanza di Levenshtein tra due stringhe ovvero il numero minimo di operazioni necessarie per trasformare una stringa nell'altra
     private int calcolaDistanzaLevenshtein(String s1, String s2) {
+        // Creiamo una griglia dove le righe rappresentano i caratteri di s1 e le colonne quelli di s2.
+        // Le dimensioni sono +1 per includere il caso di "stringa vuota".
         int[][] dp = new int[s1.length() + 1][s2.length() + 1];
 
+        // Esaminiamo ogni cella della griglia e calcoliamo il costo minimo
         for (int i = 0; i <= s1.length(); i++) {
             for (int j = 0; j <= s2.length(); j++) {
+                // Caso base: una delle stringhe è vuota
                 if (i == 0) {
                     dp[i][j] = j;
-                } else if (j == 0) {
+                }
+                // Caso base: l'altra stringa è vuota
+                else if (j == 0) {
                     dp[i][j] = i;
-                } else {
+                }
+                // calcolo del costo
+                else {
+                    // Calcolo del costo minimo tra sostituzione, cancellazione e inserimento
                     dp[i][j] = min(
+                            // Sostituzione
                             dp[i - 1][j - 1] + costOfSubstitution(s1.charAt(i - 1), s2.charAt(j - 1)),
+                            // Cancellazione
                             dp[i - 1][j] + 1,
+                            // Inserimento
                             dp[i][j - 1] + 1
                     );
                 }
             }
         }
+        // L'ultima cella in basso a destra della matrice contiene il numero minimo
+        // totale di operazioni necessarie.
         return dp[s1.length()][s2.length()];
     }
 
+    // Costo di sostituzione tra due caratteri ovvero 0 se uguali, 1 altrimenti
     private int costOfSubstitution(char a, char b) {
         return a == b ? 0 : 1;
     }
 
+    // Restituisce il minimo tra una serie di numeri
     private int min(int... numbers) {
         return Arrays.stream(numbers).min().orElse(Integer.MAX_VALUE);
     }

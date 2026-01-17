@@ -12,6 +12,7 @@ import java.util.Map;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
+// DTO per rappresentare la risposta della diagnosi con domande, condizioni e altre informazioni
 public class rispostaDiagnosisDTO {
     private Question question;
     private List<Condition> conditions;

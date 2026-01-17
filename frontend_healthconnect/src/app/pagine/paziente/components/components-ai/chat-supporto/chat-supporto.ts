@@ -36,6 +36,7 @@ export class ChatSupporto implements AfterViewChecked {
 
     const textToSend = this.userInput;
 
+    // Aggiungo il messaggio dell'utente alla chat
     this.messages.push({
       sender: 'USER',
       text: textToSend,
@@ -45,11 +46,14 @@ export class ChatSupporto implements AfterViewChecked {
     this.userInput = '';
     this.isTyping = true;
 
+    // Invio il messaggio al servizio AI
     this.aiService.sendMessage(textToSend).subscribe({
       next: (res) => {
+        // Simulo un ritardo di digitazione per il bot
         setTimeout(() => {
           this.isTyping = false;
 
+          // Aggiungo la risposta del bot alla chat
           this.messages.push({
             sender: 'BOT',
             text: res.risposta,

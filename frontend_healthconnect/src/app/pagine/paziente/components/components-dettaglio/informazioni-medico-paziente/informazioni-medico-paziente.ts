@@ -53,6 +53,7 @@ export class InformazioniMedicoPaziente implements OnInit {
     }
   }
 
+  // Calcolo dell'età reale basata sulla data di nascita
   get etaReale(): string | number {
     if (!this.utente || !this.utente.dataNascita) return '--';
     const nascita = new Date(this.utente.dataNascita);
@@ -128,6 +129,12 @@ export class InformazioniMedicoPaziente implements OnInit {
         }
       }
     });
+  }
+
+  get minDate(): string {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
   }
 
 

@@ -29,7 +29,6 @@ public class ChatController {
         return ResponseEntity.ok(chatService.getContatti(idMio));
     }
 
-    // POST: /api/chat/invia (Invia un messaggio)
     @PostMapping("/invia")
     public ResponseEntity<?> inviaMessaggio(@RequestBody ChatMessaggioDTO messaggio) {
         boolean successo = chatService.inviaMessaggio(messaggio);

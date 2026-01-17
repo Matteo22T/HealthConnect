@@ -177,6 +177,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     }
 
     @Override
+    // Funzione per evitare accavallamenti di visite
     public boolean orarioNonValidoMedico(Long idPrenotazione) {
         prenotazioneDTO prenotazione = getPrenotazioneById(idPrenotazione);
         if (prenotazione == null) {
@@ -252,6 +253,7 @@ public class prenotazioneDAOpostgres implements prenotazioneDAO {
     }
 
     @Override
+    // Funzione per evitare accavallamenti di prenotazioni
     public boolean orarioNonValido(LocalDateTime dataVisita, Long idPaziente) {
         LocalDateTime inizioRange = dataVisita.minusMinutes(29);
         LocalDateTime fineRange = dataVisita.plusMinutes(29);

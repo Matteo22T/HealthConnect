@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+// DTO per rappresentare una richiesta di diagnosi con sesso, età, evidenze e opzioni extra
 public class richiestaDiagnosisDTO {
     private String sex;
     private richiestaParseDTO.Age age;

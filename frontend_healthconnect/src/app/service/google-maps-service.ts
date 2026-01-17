@@ -24,21 +24,25 @@ export class GoogleMapsService {
     this.configured = true;
   }
 
+  // Carica la libreria Places che fornisce funzionalità come la ricerca di luoghi, i dettagli dei luoghi e le autocomplete
   loadPlaces(): Promise<google.maps.PlacesLibrary> {
     this.ensureConfigured();
     return (this.placesPromise ??= importLibrary('places') as Promise<google.maps.PlacesLibrary>);
   }
 
+  // Carica la libreria Marker che consente di creare e gestire marker personalizzati sulla mappa
   loadMarker(): Promise<google.maps.MarkerLibrary> {
     this.ensureConfigured();
     return (this.markerPromise ??= importLibrary('marker') as Promise<google.maps.MarkerLibrary>);
   }
 
+  // Carica la libreria principale delle mappe di Google Maps
   loadMaps(): Promise<google.maps.MapsLibrary> {
     this.ensureConfigured();
     return (this.mapsPromise ??= importLibrary('maps') as Promise<google.maps.MapsLibrary>);
   }
 
+  // Carica la libreria di geocoding che consente di convertire indirizzi in coordinate geografiche e viceversa
   loadGeocoding(): Promise<google.maps.GeocodingLibrary> {
     this.ensureConfigured();
     return (this.geocodingPromise ??= importLibrary('geocoding') as Promise<google.maps.GeocodingLibrary>);

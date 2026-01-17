@@ -52,8 +52,10 @@
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  max-height: 500px;
 }
 
 .admin-table {
