@@ -37,7 +37,6 @@ export class ProfiloMedico implements OnInit {
 
   @ViewChild('visualizzaMappa') mapView?: ElementRef<HTMLElement>;
   @ViewChild('MappaGoogle') mapContainer?: ElementRef<HTMLElement>;
-  // Nota: addressInput serve ancora per l'inizializzazione, ma non aggiungiamo listener manuali qui
   @ViewChild('indirizzoInputUtente') addressInput?: ElementRef<google.maps.places.PlaceAutocompleteElement>;
 
   constructor(
@@ -69,7 +68,7 @@ export class ProfiloMedico implements OnInit {
       }
     }
 
-    // Inizializza la mappa statica (view-only) al caricamento
+    // mappa statica
     setTimeout(() => this.initViewMap(), 0);
   }
 
@@ -132,20 +131,17 @@ export class ProfiloMedico implements OnInit {
   async onAddressSelected(event: any) {
     console.log('gmp-select event:', event);
 
-    // Nuova API: arriva una placePrediction (come nel tuo screenshot)
     const prediction = event.placePrediction ?? event.detail?.placePrediction;
     if (!prediction?.toPlace) return;
 
     const place = prediction.toPlace();
 
-    // Chiedi i campi che ti servono (inclusa location per la mappa)
     await place.fetchFields({
       fields: ['formattedAddress', 'displayName', 'location'],
     });
 
     const formatted = place.formattedAddress;
 
-    // displayName a volte è string, a volte { text, languageCode }
     const display =
       typeof place.displayName === 'string'
         ? place.displayName

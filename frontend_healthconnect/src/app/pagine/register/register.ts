@@ -128,11 +128,14 @@ export class Register implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  //appeno seleziono un indirizzo dalla lista
   async onAddressSelected(event: any) {
     const prediction = event.placePrediction ?? event.detail?.placePrediction;
     if (!prediction) return;
 
+    //prediction era soltanto un PlacePrediction mentre ora lo trasformo in Place che è un oggetto
     const place = prediction.toPlace();
+
 
     await place.fetchFields({
       fields: ['formattedAddress', 'displayName']
@@ -147,6 +150,7 @@ export class Register implements OnInit, AfterViewInit, OnDestroy {
 
     const ctrl = this.registerForm.get('indirizzo_studio');
     ctrl?.setValue(address);
+    //attivo interazioni utente, rimuovo errori precedenti e rivalido il campo
     ctrl?.markAsDirty();
     ctrl?.markAsTouched();
     ctrl?.setErrors(null);
