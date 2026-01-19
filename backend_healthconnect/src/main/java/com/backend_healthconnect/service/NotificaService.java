@@ -16,7 +16,7 @@ public class NotificaService {
     @Autowired
     ImpostazioniDAO impostazioniDAO;
 
-    @Async
+    @Async //metodo asincrono così non blocco il thread principale
     public void inviaEmail(String emailDestinatario, String oggetto, String testo) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("HealthConnect <webproject.unical@gmail.com>");

@@ -129,8 +129,6 @@ export class ProfiloMedico implements OnInit {
 
 
   async onAddressSelected(event: any) {
-    console.log('gmp-select event:', event);
-
     const prediction = event.placePrediction ?? event.detail?.placePrediction;
     if (!prediction?.toPlace) return;
 
