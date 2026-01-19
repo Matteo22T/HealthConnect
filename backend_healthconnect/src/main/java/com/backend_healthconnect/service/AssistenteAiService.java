@@ -21,7 +21,7 @@ public class AssistenteAiService {
     private void inizializzaConoscenza() {
 
         // PRENOTAZIONI
-        paroleChiaveMap.put("PRENOTAZIONE", List.of("prenot", "appuntamento", "visita", "calendario", "orari", "disponib"));
+        paroleChiaveMap.put("PRENOTAZIONE", List.of("prenot", "appuntamento", "visita", "calendario", "orari"));
         risposteMap.put("PRENOTAZIONE", new rispostaAiDTO(
                 "📅 **Gestione Appuntamenti**\nPuoi prenotare una nuova visita nella sezione 'Medici' e controllare quelle già programmate nella sezione 'Calendario' della tua dashboard.",
                 "/paziente/dashboard"
@@ -86,7 +86,7 @@ public class AssistenteAiService {
                 for (String keyword : entry.getValue()) {
 
                     // A. Match Esatto o Parziale
-                    if (parola.contains(keyword) || keyword.contains(parola)) {
+                    if (parola.contains(keyword) || (parola.length() > 3 && keyword.contains(parola))) {
                         return entry.getKey();
                     }
 

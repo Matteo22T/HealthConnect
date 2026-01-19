@@ -26,7 +26,7 @@ L'applicazione gestisce tre tipologie di utenti con flussi di registrazione dist
 * **Calendario** Sezione dedicata alla visualizzazione di tutte le visite e prenotazioni future.
 * **Assistente Virtuale AI:**
     * *Supporto:* Risposte a FAQ sulla piattaforma.
-    * *Triage Sintomi:* Analisi preliminare dei sintomi tramite API Infermedica (con disclaimer medico).
+    * *Triage Sintomi:* Analisi preliminare dei sintomi tramite API Infermedica (con disclaimer medico). (l'app è momentaneamente in modalità simulazione per conservare le chiamate API poichè limitate, per consentire la visualizzazione della funzionalità il giorno dell'esame)
 * **Chat Interna:** Canale di comunicazione diretto con i medici.
 
 ### 👨‍⚕️ Per i Medici
